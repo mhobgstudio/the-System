@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <base href="" />
+    <title>Solo Leveling: Your Path to Power</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+  <body>
+    <div class="container">
+      <h1>Solo Leveling: Your Path to Power</h1>
+      <h2>
+        Welcome, <span id="username-display" class="glow">Anonymous</span>
+      </h2>
+
+      <div class="level-up">
+        <div class="level">Level <span id="current-level">0</span></div>
+        <div class="xp-bar">
+          <div class="xp-progress" id="xp-progress"></div>
+        </div>
+        <p>
+          XP: <span id="current-xp">0</span> / <span id="xp-required">10</span>
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div>Strength</div>
+          <div class="stat-value" id="strength">1</div>
+        </div>
+        <div class="stat">
+          <div>Agility</div>
+          <div class="stat-value" id="agility">1</div>
+        </div>
+        <div class="stat">
+          <div>Intelligence</div>
+          <div class="stat-value" id="intelligence">1</div>
+        </div>
+        <div class="stat">
+          <div>Stamina</div>
+          <div class="stat-value" id="stamina">1</div>
+        </div>
+        <div class="stat">
+          <div>Willpower</div>
+          <div class="stat-value" id="willpower">1</div>
+        </div>
+        <div class="stat">
+          <div>Discipline</div>
+          <div class="stat-value" id="discipline">1</div>
+        </div>
+      </div>
+
+      <div
+        id="loading-spinner"
+        style="
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 1.5rem;
+          color: #4a90e2;
+        "
+      >
+        Loading...
+      </div>
+
+      <h2 id="motivation-quote"></h2>
+      <div class="quests" id="quests">
+        <!-- Quests will be dynamically added here -->
+      </div>
+
+      <button id="add-quest-btn">Add New Quest</button>
+
+      <div class="level-up">
+        <button id="level-up-btn" style="display: none">Level Up!</button>
+      </div>
+    </div>
+
+    <div class="settings-icon" id="settings-icon">⚙️</div>
+
+    <div class="settings-modal" id="settings-modal">
+      <span class="modal-close" id="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <button id="edit-username-btn">Edit Username</button>
+      <button id="save-btn">Save Game</button>
+      <button id="load-btn">Load Game</button>
+      <button id="restart-btn">Restart Game</button>
+      <button id="reset-btn">Reset Game</button>
+      <button id="tour-guide-btn">How to Use (Tour Guide)</button>
+    </div>
+
+    <div class="settings-modal" id="load-modal">
+      <span class="modal-close" id="load-modal-close">&times;</span>
+      <h2>Load Game</h2>
+      <ul id="saved-games-list">
+        <!-- Saved games will populate here -->
+      </ul>
+    </div>
+
+    <div class="spider-chart-modal" id="spider-chart-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close" id="spider-chart-modal-close">&times;</span>
+            <h2>Character Stats Spider Chart</h2>
+            <div class="stats-chart-container">
+                <div class="stats-chart"></div>
+                <div class="stats-connection"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
