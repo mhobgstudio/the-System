@@ -3,6 +3,7 @@
     <base href="" />
     <title>Solo Leveling: Your Path to Power</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
   <body>
@@ -20,6 +21,21 @@
         <p>
           XP: <span id="current-xp">0</span> / <span id="xp-required">10</span>
         </p>
+      </div>
+
+      <div class="streak-container">
+        <div class="streak-count">
+          <i class="fas fa-fire"></i> Streak: <span id="current-streak">0</span> days
+        </div>
+        <div class="streak-bar">
+          <div class="streak-day" data-day="0">M</div>
+          <div class="streak-day" data-day="1">T</div>
+          <div class="streak-day" data-day="2">W</div>
+          <div class="streak-day" data-day="3">T</div>
+          <div class="streak-day" data-day="4">F</div>
+          <div class="streak-day" data-day="5">S</div>
+          <div class="streak-day" data-day="6">S</div>
+        </div>
       </div>
 
       <div class="stats">
@@ -65,6 +81,44 @@
       </div>
 
       <h2 id="motivation-quote"></h2>
+
+      <div class="quest-controls">
+        <div class="search-container">
+          <input type="text" id="quest-search" placeholder="Search quests..." class="quest-input">
+          <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter-container">
+          <select id="category-filter" class="quest-input">
+            <option value="all">All Categories</option>
+            <option value="work">Work</option>
+            <option value="health">Health</option>
+            <option value="learning">Learning</option>
+            <option value="personal">Personal</option>
+          </select>
+          <select id="difficulty-filter" class="quest-input">
+            <option value="all">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+          <select id="stat-filter" class="quest-input">
+            <option value="all">All Stats</option>
+            <option value="strength">Strength</option>
+            <option value="agility">Agility</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="stamina">Stamina</option>
+            <option value="willpower">Willpower</option>
+            <option value="discipline">Discipline</option>
+          </select>
+          <button id="sort-btn"><i class="fas fa-sort"></i></button>
+          <div id="sort-options" class="sort-options">
+            <div data-sort="title">Title</div>
+            <div data-sort="difficulty">Difficulty</div>
+            <div data-sort="xp">XP</div>
+          </div>
+        </div>
+      </div>
+
       <div class="quests" id="quests">
         <!-- Quests will be dynamically added here -->
       </div>
@@ -73,6 +127,30 @@
 
       <div class="level-up">
         <button id="level-up-btn" style="display: none">Level Up!</button>
+      </div>
+
+      <div class="pomodoro-container">
+        <h3>Pomodoro Timer</h3>
+        <div class="timer-display">
+          <span id="minutes">25</span>:<span id="seconds">00</span>
+        </div>
+        <div class="timer-controls">
+          <button id="start-timer"><i class="fas fa-play"></i></button>
+          <button id="pause-timer"><i class="fas fa-pause"></i></button>
+          <button id="reset-timer"><i class="fas fa-redo"></i></button>
+        </div>
+        <div class="timer-modes">
+          <button class="timer-mode active" data-time="25">Work</button>
+          <button class="timer-mode" data-time="5">Break</button>
+          <button class="timer-mode" data-time="15">Long Break</button>
+        </div>
+      </div>
+
+      <div class="achievements-container">
+        <h3>Achievements <span class="achievement-count">0/10</span></h3>
+        <div class="achievements-grid" id="achievements-grid">
+          <!-- Achievements will be dynamically added here -->
+        </div>
       </div>
     </div>
 
