@@ -1,9 +1,10 @@
 const db = new Dexie("SoloLevelingDB");
-db.version(3).stores({
+db.version(4).stores({
   playerStats:
-    "++id, level, xp, strength, agility, intelligence, stamina, willpower, discipline, lastActive, consecutiveMissedDays, username",
-  quests: "++id, title, difficulty, xp, stat, status",
-  savedGames: "++id, timestamp, stats, quests"
+    "++id, level, xp, strength, agility, intelligence, stamina, willpower, discipline, lastActive, consecutiveDays, currentStreak, longestStreak, username",
+  quests: "++id, title, difficulty, xp, stat, status, category, createdAt, completedAt",
+  savedGames: "++id, timestamp, stats, quests",
+  achievements: "++id, title, description, unlocked, unlockedAt, icon, category"
 });
 
 const motivationQuotes = [
@@ -32,6 +33,92 @@ const motivationQuotes = [
   "In the end, strength is the only thing that matters. - Fang Yuan",
   "A mind without ambition is a body without a soul. - Leylin Farlier",
   "To rise above all, you must be willing to stand alone. - Fang Yuan",
+];
+
+// Achievement definitions
+const achievementDefinitions = [
+  {
+    id: 1,
+    title: "First Steps",
+    description: "Complete your first quest",
+    icon: "fa-solid fa-shoe-prints",
+    category: "quests",
+    condition: (stats) => stats.completedQuests >= 1
+  },
+  {
+    id: 2,
+    title: "Quest Master",
+    description: "Complete 50 quests",
+    icon: "fa-solid fa-trophy",
+    category: "quests",
+    condition: (stats) => stats.completedQuests >= 50
+  },
+  {
+    id: 3, 
+    title: "Level 10",
+    description: "Reach level 10",
+    icon: "fa-solid fa-award",
+    category: "level",
+    condition: (stats) => stats.level >= 10
+  },
+  {
+    id: 4,
+    title: "Balanced",
+    description: "Get all stats to level 5",
+    icon: "fa-solid fa-scale-balanced",
+    category: "stats",
+    condition: (stats) => 
+      Object.keys(statsElems).every(stat => stats[stat] >= 5)
+  },
+  {
+    id: 5,
+    title: "Specialist",
+    description: "Get any stat to level 10",
+    icon: "fa-solid fa-user-graduate",
+    category: "stats",
+    condition: (stats) => 
+      Object.keys(statsElems).some(stat => stats[stat] >= 10)
+  },
+  {
+    id: 6,
+    title: "Consistent",
+    description: "Maintain a 3-day streak",
+    icon: "fa-solid fa-calendar-check",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 3
+  },
+  {
+    id: 7,
+    title: "Dedicated",
+    description: "Maintain a 7-day streak",
+    icon: "fa-solid fa-fire",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 7
+  },
+  {
+    id: 8,
+    title: "Unstoppable",
+    description: "Maintain a 30-day streak",
+    icon: "fa-solid fa-fire-flame-curved",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 30
+  },
+  {
+    id: 9,
+    title: "Pomodoro Master",
+    description: "Complete 10 pomodoro sessions",
+    icon: "fa-solid fa-clock",
+    category: "pomodoro",
+    condition: (stats) => stats.pomodoroCompleted >= 10
+  },
+  {
+    id: 10,
+    title: "All-Rounder",
+    description: "Complete at least one quest in each category",
+    icon: "fa-solid fa-circle-check",
+    category: "quests",
+    condition: (stats) => stats.categoriesCompleted && stats.categoriesCompleted.length >= 4
+  }
 ];
 
 let currentLevel = 0;
@@ -64,6 +151,31 @@ const resetBtn = document.getElementById("reset-btn");
 const editUsernameBtn = document.getElementById("edit-username-btn");
 const tourGuideBtn = document.getElementById("tour-guide-btn");
 
+// Streak references
+const currentStreakElem = document.getElementById("current-streak");
+const streakDayElems = document.querySelectorAll(".streak-day");
+
+// Quest filter references
+const questSearchInput = document.getElementById("quest-search");
+const searchBtn = document.getElementById("search-btn");
+const categoryFilter = document.getElementById("category-filter");
+const difficultyFilter = document.getElementById("difficulty-filter");
+const statFilter = document.getElementById("stat-filter");
+const sortBtn = document.getElementById("sort-btn");
+const sortOptions = document.getElementById("sort-options");
+
+// Pomodoro timer references
+const minutesElem = document.getElementById("minutes");
+const secondsElem = document.getElementById("seconds");
+const startTimerBtn = document.getElementById("start-timer");
+const pauseTimerBtn = document.getElementById("pause-timer");
+const resetTimerBtn = document.getElementById("reset-timer");
+const timerModeButtons = document.querySelectorAll(".timer-mode");
+
+// Achievements references
+const achievementsGrid = document.getElementById("achievements-grid");
+const achievementCountElem = document.querySelector(".achievement-count");
+
 const sounds = {
   complete: new Howl({
     src: ["sounds/complete.mp3"],
@@ -71,6 +183,15 @@ const sounds = {
   levelUp: new Howl({
     src: ["sounds/level-up.mp3"],
   }),
+  achievement: new Howl({
+    src: ["sounds/achievement.mp3"], 
+  }),
+  streakUp: new Howl({
+    src: ["sounds/streak.mp3"],
+  }),
+  timerComplete: new Howl({
+    src: ["sounds/timer-complete.mp3"],
+  })
 };
 
 function calculateXPForNextLevel(level) {
@@ -80,19 +201,19 @@ function calculateXPForNextLevel(level) {
 async function initializeGame() {
   // Define default quests
   const defaultQuests = [
-    { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 3, stat: "intelligence" },
-    { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 3, stat: "intelligence" },
-    { title: "Systematic Review || At least 15 mins", difficulty: "Medium", xp: 2, stat: "intelligence" },
-    { title: "Zad University", difficulty: "Medium", xp: 2, stat: "intelligence" },
-    { title: "Workout", difficulty: "Medium", xp: 2, stat: "strength" },
-    { title: "Health", difficulty: "Easy", xp: 1, stat: "stamina" },
-    { title: "Money Research || At least 1 Idea", difficulty: "Medium", xp: 2, stat: "intelligence" },
-    { title: "Starting Prayer", difficulty: "Easy", xp: 1, stat: "willpower" },
-    { title: "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", difficulty: "Medium", xp: 2, stat: "intelligence" },
-    { title: "109 Words", difficulty: "Easy", xp: 1, stat: "discipline" },
-    { title: "ARLOOPA", difficulty: "Medium", xp: 2, stat: "intelligence" },
-    { title: "Email", difficulty: "Easy", xp: 1, stat: "discipline" },
-    { title: "Revise students Quran with AudioBook || At least 1 page", difficulty: "Medium", xp: 2, stat: "discipline" },
+    { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 3, stat: "intelligence", category: "learning" },
+    { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 3, stat: "intelligence", category: "learning" },
+    { title: "Systematic Review || At least 15 mins", difficulty: "Medium", xp: 2, stat: "intelligence", category: "learning" },
+    { title: "Zad University", difficulty: "Medium", xp: 2, stat: "intelligence", category: "work" },
+    { title: "Workout", difficulty: "Medium", xp: 2, stat: "strength", category: "health" },
+    { title: "Health", difficulty: "Easy", xp: 1, stat: "stamina", category: "health" },
+    { title: "Money Research || At least 1 Idea", difficulty: "Medium", xp: 2, stat: "intelligence", category: "personal" },
+    { title: "Starting Prayer", difficulty: "Easy", xp: 1, stat: "willpower", category: "personal" },
+    { title: "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", difficulty: "Medium", xp: 2, stat: "intelligence", category: "learning" },
+    { title: "109 Words", difficulty: "Easy", xp: 1, stat: "discipline", category: "learning" },
+    { title: "ARLOOPA", difficulty: "Medium", xp: 2, stat: "intelligence", category: "work" },
+    { title: "Email", difficulty: "Easy", xp: 1, stat: "discipline", category: "work" },
+    { title: "Revise students Quran with AudioBook || At least 1 page", difficulty: "Medium", xp: 2, stat: "discipline", category: "learning" },
   ];
 
   // Load existing quests from the database
@@ -107,12 +228,87 @@ async function initializeGame() {
     await db.quests.bulkAdd(questsToAdd);
   }
 
+  // Update existing quests to add categories if they're missing
+  if (existingQuests.some(quest => !quest.category)) {
+    for (const existingQuest of existingQuests) {
+      if (!existingQuest.category) {
+        const defaultQuest = defaultQuests.find(q => q.title === existingQuest.title);
+        if (defaultQuest && defaultQuest.category) {
+          existingQuest.category = defaultQuest.category;
+          await db.quests.put(existingQuest);
+        } else {
+          // Assign a default category if not found
+          existingQuest.category = "personal";
+          await db.quests.put(existingQuest);
+        }
+      }
+    }
+  }
+
+  // Initialize achievements if they don't exist
+  const existingAchievements = await db.achievements.toArray();
+  if (existingAchievements.length === 0) {
+    const achievementsToAdd = achievementDefinitions.map(achievement => ({
+      ...achievement,
+      unlocked: false,
+      unlockedAt: null
+    }));
+    await db.achievements.bulkAdd(achievementsToAdd);
+  }
+
+  // Initialize player statistics if they don't exist
+  const playerStats = await db.playerStats.toArray();
+  if (playerStats.length === 0) {
+    await db.playerStats.add({
+      level: 0,
+      xp: 0,
+      strength: 1,
+      agility: 1,
+      intelligence: 1,
+      stamina: 1,
+      willpower: 1,
+      discipline: 1,
+      lastActive: new Date(),
+      consecutiveDays: 0,
+      currentStreak: 0,
+      longestStreak: 0,
+      username: "Anonymous",
+      completedQuests: 0,
+      categoriesCompleted: [],
+      pomodoroCompleted: 0
+    });
+  } else {
+    // Update existing player stats with new fields if they're missing
+    const stats = playerStats[0];
+    if (stats.currentStreak === undefined) {
+      stats.currentStreak = 0;
+      stats.longestStreak = 0;
+      stats.consecutiveDays = 0;
+      stats.completedQuests = 0;
+      stats.categoriesCompleted = [];
+      stats.pomodoroCompleted = 0;
+      await db.playerStats.put(stats);
+    }
+  }
+
   // Load all quests from the database
   const quests = await db.quests.toArray();
   quests.forEach(quest => {
     const questElement = createQuestElement(quest);
     document.getElementById('quests').appendChild(questElement);
   });
+
+  // Initialize streak display
+  updateStreakDisplay();
+  
+  // Initialize achievements display
+  initializeAchievements();
+
+  // Initialize quest filters
+  initializeQuestFilters();
+
+  // Initialize pomodoro timer
+  initializePomodoro();
 
   // Hide the loading spinner after data loads
   document.getElementById("loading-spinner").style.display = "none";
@@ -158,6 +354,11 @@ function createQuestElement(quest) {
   const questElem = document.createElement("div");
   questElem.className = "quest";
   questElem.dataset.questId = quest.id; // Store quest ID for reference
+  questElem.dataset.category = quest.category || "personal"; // Default to personal if no category
+  questElem.dataset.difficulty = quest.difficulty;
+  questElem.dataset.stat = quest.stat;
+  questElem.dataset.xp = quest.xp;
+  questElem.dataset.title = quest.title;
   
   questElem.innerHTML = `
   <span class="quest-status status-${quest.status || 'inbox'}"></span>
@@ -170,6 +371,7 @@ function createQuestElement(quest) {
   <span class="quest-difficulty">${quest.difficulty}</span>
   <span class="quest-xp">${quest.xp} XP</span>
   <span class="quest-stat">${quest.stat}</span>
+  <span class="quest-category category-${quest.category || 'personal'}">${quest.category || 'personal'}</span>
   ${quest.comment && quest.isPinned ? `<div class="pinned-comment">${quest.comment}</div>` : ''}
 `;
 
@@ -464,28 +666,73 @@ questElem.remove(); // Remove the quest creation element
 
 
 async function completeQuest(xp, stat, questElem) {
+  // Prevent event bubbling to avoid edit panel
+  event.stopPropagation();
+  
+  // Check if there's an edit panel open and close it
+  const existingPanel = document.querySelector('.quest-edit-panel');
+  if (existingPanel) {
+    existingPanel.className = 'quest';
+    existingPanel.innerHTML = existingPanel.dataset.originalContent;
+  }
+
+  // Play sound effect
+  sounds.complete.play();
+  
+  // Remove the quest
+  questElem.style.opacity = 0;
+  setTimeout(() => questElem.remove(), 300);
+
+  // Get the quest ID to update in database
+  const questId = parseInt(questElem.dataset.questId);
+  const questCategory = questElem.dataset.category;
+  
+  // Update quest in database
+  if (questId) {
+    const quest = await db.quests.get(questId);
+    if (quest) {
+      quest.status = 'completed';
+      quest.completedAt = new Date();
+      await db.quests.put(quest);
+    }
+  }
+
+  // Update player stats
+  const playerStats = await db.playerStats.toArray();
+  if (playerStats.length > 0) {
+    const stats = playerStats[0];
+    
+    // Increase completed quests count
+    stats.completedQuests = (stats.completedQuests || 0) + 1;
+    
+    // Track category completion
+    if (questCategory) {
+      if (!stats.categoriesCompleted) {
+        stats.categoriesCompleted = [];
+      }
+      if (!stats.categoriesCompleted.includes(questCategory)) {
+        stats.categoriesCompleted.push(questCategory);
+      }
+    }
+    
+    // Update last active date
+    stats.lastActive = new Date();
+    
+    await db.playerStats.put(stats);
+    
+    // Check for streak
+    checkDailyActivity();
+    
+    // Check for achievements
+    checkAchievements();
+  }
+
+  // Increase XP
   currentXP += xp;
   updateXP();
+
+  // Increase stat
   await increaseStat(stat);
-  sounds.complete.play();
-
-  const playerStats = await db.playerStats.toArray();
-  const stats = playerStats[0];
-  stats.consecutiveMissedDays = 0;
-  stats.lastActive = new Date().toISOString().split("T")[0];
-  stats.xp = currentXP;
-  await db.playerStats.put(stats);
-
-  const randomQuote =
-    motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
-  motivationQuoteElem.textContent = randomQuote;
-
-  questElem.style.transition = "opacity 0.5s, transform 0.5s";
-  questElem.style.opacity = "0";
-  questElem.style.transform = "scale(0.8)";
-  setTimeout(() => {
-    questElem.remove();
-  }, 500);
 }
 
 async function increaseStat(stat) {
@@ -544,21 +791,55 @@ document.getElementById('level-up-btn').addEventListener('click', async () => {
 
 async function checkDailyActivity() {
   const playerStats = await db.playerStats.toArray();
+  if (playerStats.length === 0) return;
+
   const stats = playerStats[0];
-  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
+  const lastActive = new Date(stats.lastActive);
 
-  if (stats.lastActive !== today) {
-    stats.consecutiveMissedDays++;
-    stats.willpower = Math.max(0, stats.willpower - 1);
-
-    if (stats.consecutiveMissedDays >= 3) {
-      enterPenaltyZone();
-    }
-
-    stats.lastActive = today;
+  // Reset day streak if more than 1 day has passed since last activity
+  if (lastActive && daysBetween(lastActive, now) > 1) {
+    stats.currentStreak = 0;
+    stats.consecutiveDays = 0;
     await db.playerStats.put(stats);
-    updateStats();
+    updateStreakDisplay();
+    showNotification("Your streak has been reset due to inactivity!");
+    return;
   }
+
+  // If it's a new day and they've completed at least one activity
+  if (lastActive && daysBetween(lastActive, now) === 1) {
+    stats.currentStreak = (stats.currentStreak || 0) + 1;
+    stats.consecutiveDays = (stats.consecutiveDays || 0) + 1;
+    stats.longestStreak = Math.max(stats.longestStreak || 0, stats.currentStreak);
+    
+    await db.playerStats.put(stats);
+    updateStreakDisplay();
+    
+    // Play streak sound and show notification
+    if (stats.currentStreak > 0 && stats.currentStreak % 3 === 0) {
+      sounds.streakUp.play();
+      showNotification(`Amazing! You've maintained a ${stats.currentStreak}-day streak!`);
+      
+      // Check for streak achievements
+      checkAchievements();
+    }
+  }
+
+  // Update last active date to today
+  stats.lastActive = now;
+  await db.playerStats.put(stats);
+}
+
+// Helper function to calculate days between two dates
+function daysBetween(date1, date2) {
+  // Convert both dates to UTC midnight to ignore time of day
+  const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+  const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+  
+  // Calculate difference and convert to days
+  const msPerDay = 1000 * 60 * 60 * 24;
+  return Math.floor((utc2 - utc1) / msPerDay);
 }
 
 function updateStats() {
@@ -1087,6 +1368,7 @@ async function saveQuestEdit(buttonElement) {
     if (questId === 'new') {
       updatedQuest.id = await db.quests.add(updatedQuest);
     } else {
+      updatedQuest.id = id;
       await db.quests.put(updatedQuest);
     }
     
@@ -1424,3 +1706,306 @@ spiderChartModal.addEventListener('click', (event) => {
         closeSpiderChart();
     }
 });
+
+async function updateStreakDisplay() {
+  const playerStats = await db.playerStats.toArray();
+  if (playerStats.length === 0) return;
+
+  const stats = playerStats[0];
+  currentStreakElem.textContent = stats.currentStreak || 0;
+
+  // Clear all active classes first
+  streakDayElems.forEach(elem => {
+    elem.classList.remove('active');
+  });
+
+  // Get current day of week (0 = Sunday, 1 = Monday, etc.)
+  const today = new Date().getDay();
+  // Adjust to our display format (0 = Monday, 6 = Sunday)
+  const adjustedDay = today === 0 ? 6 : today - 1;
+
+  // Mark days as active based on streak and current day
+  for (let i = 0; i <= adjustedDay; i++) {
+    const dayElement = document.querySelector(`.streak-day[data-day="${i}"]`);
+    if (dayElement) {
+      if (stats.lastActive) {
+        const lastActive = new Date(stats.lastActive);
+        const lastActiveDay = lastActive.getDay();
+        const adjustedLastActiveDay = lastActiveDay === 0 ? 6 : lastActiveDay - 1;
+        
+        if (i <= adjustedLastActiveDay) {
+          dayElement.classList.add('active');
+        }
+      }
+    }
+  }
+}
+
+function initializeQuestFilters() {
+  // Search functionality
+  questSearchInput.addEventListener('input', filterQuests);
+  searchBtn.addEventListener('click', filterQuests);
+  
+  // Category filter
+  categoryFilter.addEventListener('change', filterQuests);
+  
+  // Difficulty filter
+  difficultyFilter.addEventListener('change', filterQuests);
+  
+  // Stat filter
+  statFilter.addEventListener('change', filterQuests);
+  
+  // Sort functionality
+  sortBtn.addEventListener('click', () => {
+    sortOptions.style.display = sortOptions.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  // Hide sort options when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#sort-btn') && !e.target.closest('#sort-options')) {
+      sortOptions.style.display = 'none';
+    }
+  });
+  
+  // Sort option click handlers
+  document.querySelectorAll('#sort-options div').forEach(option => {
+    option.addEventListener('click', () => {
+      const sortBy = option.dataset.sort;
+      sortQuests(sortBy);
+      sortOptions.style.display = 'none';
+    });
+  });
+}
+
+function filterQuests() {
+  const searchTerm = questSearchInput.value.toLowerCase();
+  const category = categoryFilter.value;
+  const difficulty = difficultyFilter.value;
+  const stat = statFilter.value;
+  
+  // Get all quests
+  const quests = document.querySelectorAll('.quest');
+  
+  quests.forEach(quest => {
+    const title = quest.dataset.title.toLowerCase();
+    const questCategory = quest.dataset.category;
+    const questDifficulty = quest.dataset.difficulty;
+    const questStat = quest.dataset.stat;
+    
+    // Check if the quest matches all filters
+    const matchesSearch = title.includes(searchTerm);
+    const matchesCategory = category === 'all' || questCategory === category;
+    const matchesDifficulty = difficulty === 'all' || questDifficulty === difficulty;
+    const matchesStat = stat === 'all' || questStat === stat;
+    
+    // Show or hide based on filters
+    if (matchesSearch && matchesCategory && matchesDifficulty && matchesStat) {
+      quest.style.display = 'block';
+    } else {
+      quest.style.display = 'none';
+    }
+  });
+}
+
+function sortQuests(sortBy) {
+  const quests = Array.from(document.querySelectorAll('.quest'));
+  const questsContainer = document.getElementById('quests');
+  
+  quests.sort((a, b) => {
+    switch (sortBy) {
+      case 'title':
+        return a.dataset.title.localeCompare(b.dataset.title);
+      case 'difficulty':
+        const difficultyOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+        return difficultyOrder[a.dataset.difficulty] - difficultyOrder[b.dataset.difficulty];
+      case 'xp':
+        return parseInt(b.dataset.xp) - parseInt(a.dataset.xp);
+      default:
+        return 0;
+    }
+  });
+  
+  // Clear and re-append sorted quests
+  questsContainer.innerHTML = '';
+  quests.forEach(quest => questsContainer.appendChild(quest));
+}
+
+async function initializeAchievements() {
+  // Get all achievements from the database
+  const achievements = await db.achievements.toArray();
+  
+  // Clear the grid first
+  achievementsGrid.innerHTML = '';
+  
+  // Count unlocked achievements
+  const unlockedCount = achievements.filter(a => a.unlocked).length;
+  achievementCountElem.textContent = `${unlockedCount}/${achievements.length}`;
+  
+  // Add achievements to the grid
+  achievements.forEach(achievement => {
+    const achievementElem = document.createElement('div');
+    achievementElem.className = `achievement ${achievement.unlocked ? 'unlocked' : 'locked'}`;
+    achievementElem.title = achievement.unlocked 
+      ? `${achievement.title} - ${achievement.description} (Unlocked: ${new Date(achievement.unlockedAt).toLocaleDateString()})`
+      : `?????? - Complete to unlock`;
+    
+    achievementElem.innerHTML = `
+      <div class="achievement-icon">
+        <i class="${achievement.unlocked ? achievement.icon : 'fa-solid fa-lock'}"></i>
+      </div>
+      <div class="achievement-title">${achievement.unlocked ? achievement.title : '??????'}</div>
+      <div class="achievement-description">${achievement.unlocked ? achievement.description : 'Complete to unlock'}</div>
+    `;
+    
+    achievementsGrid.appendChild(achievementElem);
+  });
+}
+
+async function checkAchievements() {
+  // Get current player stats
+  const playerStats = await db.playerStats.toArray();
+  if (playerStats.length === 0) return;
+  
+  const stats = playerStats[0];
+  
+  // Get all achievements
+  const achievements = await db.achievements.toArray();
+  let newlyUnlocked = false;
+  
+  // Check each achievement
+  for (const achievement of achievements) {
+    // Skip already unlocked achievements
+    if (achievement.unlocked) continue;
+    
+    // Check if achievement condition is met
+    const condition = achievementDefinitions.find(a => a.id === achievement.id)?.condition;
+    
+    if (condition && condition(stats)) {
+      // Unlock the achievement
+      achievement.unlocked = true;
+      achievement.unlockedAt = new Date();
+      await db.achievements.put(achievement);
+      
+      // Show notification and play sound
+      showNotification(`Achievement Unlocked: ${achievement.title}`);
+      sounds.achievement.play();
+      
+      newlyUnlocked = true;
+    }
+  }
+  
+  // Update achievements display if any were unlocked
+  if (newlyUnlocked) {
+    initializeAchievements();
+  }
+}
+
+function initializePomodoro() {
+  // Initialize variables
+  let timer;
+  let minutes = 25;
+  let seconds = 0;
+  let isRunning = false;
+  
+  // Event listeners for timer controls
+  startTimerBtn.addEventListener('click', startTimer);
+  pauseTimerBtn.addEventListener('click', pauseTimer);
+  resetTimerBtn.addEventListener('click', resetTimer);
+  
+  // Event listeners for timer modes
+  timerModeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      timerModeButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      minutes = parseInt(button.dataset.time);
+      seconds = 0;
+      updateTimerDisplay();
+      
+      // If timer is running, reset it with new time
+      if (isRunning) {
+        clearInterval(timer);
+        startTimer();
+      }
+    });
+  });
+  
+  function startTimer() {
+    if (isRunning) return;
+    
+    isRunning = true;
+    timer = setInterval(() => {
+      // Decrease time
+      if (seconds === 0) {
+        if (minutes === 0) {
+          // Timer complete
+          clearInterval(timer);
+          isRunning = false;
+          
+          // Play sound and show notification
+          sounds.timerComplete.play();
+          showNotification("Pomodoro session complete!");
+          
+          // Update pomodoro stats
+          updatePomodoroStats();
+          
+          return;
+        }
+        minutes--;
+        seconds = 59;
+      } else {
+        seconds--;
+      }
+      
+      // Update display
+      updateTimerDisplay();
+    }, 1000);
+  }
+  
+  function pauseTimer() {
+    clearInterval(timer);
+    isRunning = false;
+  }
+  
+  function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    
+    // Reset to active mode time
+    const activeMode = document.querySelector('.timer-mode.active');
+    minutes = parseInt(activeMode.dataset.time);
+    seconds = 0;
+    
+    updateTimerDisplay();
+  }
+  
+  function updateTimerDisplay() {
+    minutesElem.textContent = String(minutes).padStart(2, '0');
+    secondsElem.textContent = String(seconds).padStart(2, '0');
+  }
+}
+
+async function updatePomodoroStats() {
+  const playerStats = await db.playerStats.toArray();
+  if (playerStats.length === 0) return;
+  
+  const stats = playerStats[0];
+  
+  // Increment pomodoro count
+  stats.pomodoroCompleted = (stats.pomodoroCompleted || 0) + 1;
+  
+  // Grant XP for completing a pomodoro
+  stats.xp = (stats.xp || 0) + 2;
+  
+  // Update discipline by small amount
+  stats.discipline = (stats.discipline || 1) + 0.2;
+  
+  await db.playerStats.put(stats);
+  
+  // Update UI
+  updateXP();
+  updateStats();
+  
+  // Check achievements
+  checkAchievements();
+}
