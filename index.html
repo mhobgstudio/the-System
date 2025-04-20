@@ -1,0 +1,337 @@
+<html>
+  <head>
+    <base href="" />
+    <title>Solo Leveling: Your Path to Power</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
+</head>
+
+  <body class="theme-dark">
+    <div class="theme-toggle">
+      <button id="theme-button">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+
+    <div class="container">
+      <header class="app-header">
+        <h1>Solo Leveling: Your Path to Power</h1>
+        <div class="user-profile">
+          <div class="avatar-wrapper">
+            <div class="avatar">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <h2>
+            Welcome, <span id="username-display" class="glow">Anonymous</span>
+          </h2>
+        </div>
+      </header>
+
+      <div class="level-up">
+        <div class="level">Level <span id="current-level">0</span></div>
+        <div class="xp-bar">
+          <div class="xp-progress" id="xp-progress"></div>
+        </div>
+        <p>
+          XP: <span id="current-xp">0</span> / <span id="xp-required">10</span>
+        </p>
+      </div>
+
+      <div class="streak-container">
+        <div class="streak-count">
+          <i class="fas fa-fire"></i> Streak: <span id="current-streak">0</span> days
+        </div>
+        <div class="streak-bar">
+          <div class="streak-day" data-day="0">M</div>
+          <div class="streak-day" data-day="1">T</div>
+          <div class="streak-day" data-day="2">W</div>
+          <div class="streak-day" data-day="3">T</div>
+          <div class="streak-day" data-day="4">F</div>
+          <div class="streak-day" data-day="5">S</div>
+          <div class="streak-day" data-day="6">S</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div>Strength</div>
+          <div class="stat-value" id="strength">1</div>
+        </div>
+        <div class="stat">
+          <div>Agility</div>
+          <div class="stat-value" id="agility">1</div>
+        </div>
+        <div class="stat">
+          <div>Intelligence</div>
+          <div class="stat-value" id="intelligence">1</div>
+        </div>
+        <div class="stat">
+          <div>Stamina</div>
+          <div class="stat-value" id="stamina">1</div>
+        </div>
+        <div class="stat">
+          <div>Willpower</div>
+          <div class="stat-value" id="willpower">1</div>
+        </div>
+        <div class="stat">
+          <div>Discipline</div>
+          <div class="stat-value" id="discipline">1</div>
+        </div>
+      </div>
+
+      <div
+        id="loading-spinner"
+        style="
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 1.5rem;
+          color: #4a90e2;
+        "
+      >
+        Loading...
+      </div>
+
+      <div class="quote-container">
+        <div class="quote-content">
+          <div class="quote-text" id="quote-text"></div>
+          <div class="quote-author">
+            <span id="quote-author"></span>
+            <span class="quote-source" id="quote-source"></span>
+          </div>
+        </div>
+        <div class="quote-actions">
+          <button id="favorite-quote" class="quote-button">
+            <i class="far fa-heart"></i>
+          </button>
+          <button id="new-quote" class="quote-button">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+          <div class="quote-categories">
+            <button data-category="power" class="category-button">Power</button>
+            <button data-category="wisdom" class="category-button">Wisdom</button>
+            <button data-category="discipline" class="category-button">Discipline</button>
+            <button data-category="growth" class="category-button">Growth</button>
+            <button data-category="perseverance" class="category-button">Perseverance</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="quest-controls">
+        <div class="search-container">
+          <input type="text" id="quest-search" placeholder="Search quests..." class="quest-input">
+          <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filter-container">
+          <select id="category-filter" class="quest-input">
+            <option value="all">All Categories</option>
+            <option value="work">Work</option>
+            <option value="health">Health</option>
+            <option value="learning">Learning</option>
+            <option value="personal">Personal</option>
+          </select>
+          <select id="difficulty-filter" class="quest-input">
+            <option value="all">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+          <select id="stat-filter" class="quest-input">
+            <option value="all">All Stats</option>
+            <option value="strength">Strength</option>
+            <option value="agility">Agility</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="stamina">Stamina</option>
+            <option value="willpower">Willpower</option>
+            <option value="discipline">Discipline</option>
+          </select>
+          <button id="sort-btn"><i class="fas fa-sort"></i></button>
+          <div id="sort-options" class="sort-options">
+            <div data-sort="title">Title</div>
+            <div data-sort="difficulty">Difficulty</div>
+            <div data-sort="xp">XP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quests" id="quests">
+        <!-- Quests will be dynamically added here -->
+      </div>
+
+      <button id="add-quest-btn">Add New Quest</button>
+
+      <div class="level-up">
+        <button id="level-up-btn" style="display: none">Level Up!</button>
+      </div>
+
+      <div class="pomodoro-container">
+        <h3>Pomodoro Timer</h3>
+        <div class="timer-display">
+          <span id="minutes">25</span>:<span id="seconds">00</span>
+        </div>
+        <div class="timer-controls">
+          <button id="start-timer"><i class="fas fa-play"></i></button>
+          <button id="pause-timer"><i class="fas fa-pause"></i></button>
+          <button id="reset-timer"><i class="fas fa-redo"></i></button>
+        </div>
+        <div class="timer-modes">
+          <button class="timer-mode active" data-time="25">Work</button>
+          <button class="timer-mode" data-time="5">Break</button>
+          <button class="timer-mode" data-time="15">Long Break</button>
+        </div>
+      </div>
+
+      <div class="achievements-container">
+        <h3>Achievements <span class="achievement-count">0/10</span></h3>
+        <div class="achievements-grid" id="achievements-grid">
+          <!-- Achievements will be dynamically added here -->
+        </div>
+      </div>
+
+      <div class="favorites-container">
+        <h3>Favorite Quotes <span class="toggle-favorites">Show</span></h3>
+        <div class="favorites-grid" id="favorites-grid">
+          <!-- Favorite quotes will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-icon" id="settings-icon">⚙️</div>
+
+    <div class="settings-modal" id="settings-modal">
+      <span class="modal-close" id="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <button id="edit-username-btn">Edit Username</button>
+      <button id="save-btn">Save Game</button>
+      <button id="load-btn">Load Game</button>
+      <button id="restart-btn">Restart Game</button>
+      <button id="reset-btn">Reset Game</button>
+      <button id="tour-guide-btn">How to Use (Tour Guide)</button>
+    </div>
+
+    <div class="settings-modal" id="load-modal">
+      <span class="modal-close" id="load-modal-close">&times;</span>
+      <h2>Load Game</h2>
+      <ul id="saved-games-list">
+        <!-- Saved games will populate here -->
+      </ul>
+    </div>
+
+    <div class="spider-chart-modal" id="spider-chart-modal" style="display: none;">
+        <div class="modal-content spider-chart-content">
+            <span class="modal-close" id="spider-chart-modal-close">&times;</span>
+            <h2>Character Stats Visualization</h2>
+            
+            <div class="chart-controls">
+                <div class="chart-toggle">
+                    <button id="view-current" class="chart-tab active">Current Stats</button>
+                    <button id="view-history" class="chart-tab">History</button>
+                    <button id="view-compare" class="chart-tab">Compare</button>
+                </div>
+                <div class="time-range" id="time-range-controls" style="display: none;">
+                    <button data-range="week" class="time-button active">Week</button>
+                    <button data-range="month" class="time-button">Month</button>
+                    <button data-range="alltime" class="time-button">All Time</button>
+                </div>
+            </div>
+            
+            <div class="stats-chart-container">
+                <div class="stats-chart"></div>
+                <div class="stats-connection current"></div>
+                <div class="stats-connection previous" style="display: none;"></div>
+                <div class="chart-legend" style="display: none;">
+                    <div class="legend-item">
+                        <span class="legend-color current"></span>
+                        <span class="legend-label">Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color previous"></span>
+                        <span class="legend-label">Previous</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-details-container">
+                <h3>Stat Details</h3>
+                <div class="stat-details">
+                    <div class="stat-detail" data-stat="strength">
+                        <div class="stat-name">Strength</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="strength-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="strength-value">1</span>
+                            <span class="stat-change" id="strength-change">+0</span>
+                        </div>
+                    </div>
+                    <div class="stat-detail" data-stat="agility">
+                        <div class="stat-name">Agility</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="agility-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="agility-value">1</span>
+                            <span class="stat-change" id="agility-change">+0</span>
+                        </div>
+                    </div>
+                    <div class="stat-detail" data-stat="intelligence">
+                        <div class="stat-name">Intelligence</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="intelligence-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="intelligence-value">1</span>
+                            <span class="stat-change" id="intelligence-change">+0</span>
+                        </div>
+                    </div>
+                    <div class="stat-detail" data-stat="stamina">
+                        <div class="stat-name">Stamina</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="stamina-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="stamina-value">1</span>
+                            <span class="stat-change" id="stamina-change">+0</span>
+                        </div>
+                    </div>
+                    <div class="stat-detail" data-stat="willpower">
+                        <div class="stat-name">Willpower</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="willpower-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="willpower-value">1</span>
+                            <span class="stat-change" id="willpower-change">+0</span>
+                        </div>
+                    </div>
+                    <div class="stat-detail" data-stat="discipline">
+                        <div class="stat-name">Discipline</div>
+                        <div class="stat-bar">
+                            <div class="stat-progress" id="discipline-progress"></div>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value-display" id="discipline-value">1</span>
+                            <span class="stat-change" id="discipline-change">+0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="history-chart-container" style="display: none;">
+                <div class="history-chart" id="history-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
