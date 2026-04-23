@@ -23,7 +23,7 @@ const rawDefaultQuests = [
   { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
   { title: "Email", difficulty: "Easy", xp: 3, stat: "discipline", category: "work" },
   { title: "watch teleGratitude", difficulty: "Easy", xp: 3, stat: "discipline", category: "personal" },
-  { title: "Poetry", difficulty: "Easy", xp: 3, stat: "discipline", category: "personal" },
+  { title: "All Actions As Worship", difficulty: "Easy", xp: 333, stat: "discipline", category: "personal" },
   { title: "HealthCheck", difficulty: "Easy", xp: 3, stat: "stamina", category: "health" },
   { title: "Be an Observer", difficulty: "Easy", xp: 15, stat: "willpower", category: "personal", isPinned: true },
   { title: "Dont get stuck in a 1hr+ loop", difficulty: "Easy", xp: 15, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
@@ -1571,6 +1571,23 @@ async function completeQuest(xp, stat, questElem) {
     // Show XP Toast
     showXPToast(xp, stat);
 
+    // Update stat display immediately with animation
+    const statElem = document.getElementById(stat);
+    if (statElem && currentStats) {
+      statElem.textContent = currentStats[stat] || stats[stat];
+      statElem.classList.remove('animate');
+      statElem.offsetHeight; // Trigger reflow
+      statElem.classList.add('animate');
+      setTimeout(() => statElem.classList.remove('animate'), 500);
+    }
+
+    // Update progress bar
+    const progressBar = document.getElementById(`${stat}-progress-main`);
+    if (progressBar && currentStats) {
+      const pct = Math.min(100, Math.round((currentStats[stat] / 100) * 100));
+      progressBar.style.width = pct + '%';
+    }
+
     // Display a quest completion quote
     displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
     
@@ -1840,23 +1857,26 @@ async function updateStats() {
   if (playerStats.length > 0) {
     const stats = playerStats[0];
     
+    // Update currentStats for consistency
+    currentStats = {
+      strength: stats.strength || 1,
+      agility: stats.agility || 1,
+      intelligence: stats.intelligence || 1,
+      stamina: stats.stamina || 1,
+      willpower: stats.willpower || 1,
+      discipline: stats.discipline || 1
+    };
+    
     // Update stat text values
     for (const stat of statsKeys) {
-      statsElems[stat].textContent = stats[stat];
+      if (statsElems[stat]) statsElems[stat].textContent = stats[stat];
     }
-    
-    // Update currentStats object for progress bars
-    currentStats = {
-      strength: stats.strength,
-      agility: stats.agility,
-      intelligence: stats.intelligence,
-      stamina: stats.stamina,
-      willpower: stats.willpower,
-      discipline: stats.discipline
-    };
     
     // Update progress bars
     updateStatDetails();
+    
+    // Update main stats display
+    updateMainStatsDisplay();
   }
 }
 
