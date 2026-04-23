@@ -48,7 +48,7 @@ const rawDefaultQuests = [
   { title: "Email", difficulty: "Medium", xp: 21, stat: "discipline", category: "work" },
   { title: "Thesis Project NoteBookLM", difficulty: "Medium", xp: 23, stat: "intelligence", category: "work" },
   { title: "watch teleGratitude", difficulty: "Medium", xp: 21, stat: "discipline", category: "personal" },
-  { title: "Poetry", difficulty: "Medium", xp: 21, stat: "discipline", category: "personal" },
+  { title: "All actions are acts of worship.", difficulty: "Medium", xp: 21, stat: "discipline", category: "personal" },
   { title: "Word4word Quran", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
   { title: "Quantum Code", difficulty: "Medium", xp: 23, stat: "intelligence", category: "learning" },
   { title: "Workout", difficulty: "Medium", xp: 22, stat: "strength", category: "health" },
@@ -1498,6 +1498,8 @@ async function completeQuest(xp, stat, questElem) {
 
     // Update player stats
     const playerStats = await db.playerStats.toArray();
+    const previousLevel = playerStats.length > 0 ? playerStats[0].level : 0;
+    
     if (playerStats.length > 0) {
       const stats = playerStats[0];
       
@@ -1538,6 +1540,16 @@ async function completeQuest(xp, stat, questElem) {
 
     // Increase stat
     await increaseStat(stat);
+
+    // Show XP Toast Notification
+    showXPToast(xp, stat);
+
+    // Check for level up
+    const newLevel = playerStats.length > 0 ? playerStats[0].level : 0;
+    if (newLevel > previousLevel) {
+      setTimeout(() => showLevelUpOverlay(newLevel), 500);
+      if (sounds && sounds.levelUp && typeof sounds.levelUp.play === 'function') sounds.levelUp.play();
+    }
 
     // Display a quest completion quote
     displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
@@ -1906,6 +1918,75 @@ function showNotification(message, type = "info") {
       document.body.removeChild(notification);
     }, 500);
   }, 5000);
+}
+
+// XP Toast Notification
+function showXPToast(xp, stat) {
+  let toast = document.getElementById('xp-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'xp-toast';
+    toast.className = 'xp-toast';
+    toast.innerHTML = `
+      <div class="xp-toast-content">
+        <div class="xp-toast-icon"><i class="fas fa-bolt"></i></div>
+        <div class="xp-toast-info">
+          <span class="xp-toast-title">Quest Complete!</span>
+          <span class="xp-toast-value">+<span id="xp-gained">0</span> XP</span>
+          <span class="xp-toast-stat" id="xp-stat-name"></span>
+        </div>
+      </div>
+      <div class="xp-toast-bar">
+        <div class="xp-toast-progress" id="xp-toast-progress"></div>
+      </div>
+    `;
+    document.body.appendChild(toast);
+  }
+  
+  document.getElementById('xp-gained').textContent = xp;
+  document.getElementById('xp-stat-name').textContent = stat ? `${stat.charAt(0).toUpperCase() + stat.slice(1)} +1` : '';
+  
+  // Show toast
+  toast.classList.add('show');
+  
+  // Hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// Level Up Overlay
+function showLevelUpOverlay(level) {
+  let overlay = document.getElementById('level-up-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'level-up-overlay';
+    overlay.className = 'level-up-overlay';
+    overlay.innerHTML = `
+      <div class="level-up-content">
+        <div class="level-up-icon">
+          <i class="fas fa-arrow-up"></i>
+        </div>
+        <h2 class="level-up-text">LEVEL UP!</h2>
+        <div class="level-up-number" id="new-level-display">1</div>
+        <p class="level-up-subtitle">Your power grows stronger</p>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    
+    // Click to close
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('show');
+    });
+  }
+  
+  document.getElementById('new-level-display').textContent = level;
+  overlay.classList.add('show');
+  
+  // Auto hide after 3 seconds
+  setTimeout(() => {
+    overlay.classList.remove('show');
+  }, 3000);
 }
 
 async function editUsername() {
