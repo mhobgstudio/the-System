@@ -13,67 +13,73 @@ db.version(8).stores({
 const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
- { title: "99 Names", difficulty: "Easy", xp: 112, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
-  { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Always Choose the Pleasure of Allah", difficulty: "Hard", xp: 115, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Aura Farming With Allah", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Be an Observer", difficulty: "Hard", xp: 115, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
-  { title: "Please ask for help from Allah in each sujuud", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Be the Observer", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal" },
-  { title: "Don't Disregard Allah in times of sin_softHeart", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal" },
-  { title: "Dont get stuck in a 1hr+ loop", difficulty: "Hard", xp: 115, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
-  { title: "Dua Daily", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "English Tafseer 1pg/Quran", difficulty: "Easy", xp: 112, stat: "intelligence", category: "learning" },
-  { title: "extras Research", difficulty: "Easy", xp: 112, stat: "intelligence", category: "work", comment: "https://floor796.com/", isPinned: true },
-  { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal" },
-  { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Hard", xp: 113, stat: "willpower", category: "personal" },
-  { title: "Liquid Drop concentration", difficulty: "Easy", xp: 112, stat: "intelligence", category: "learning" },
-  { title: "LOCK IN: Be to Allah what fang yuan is to u PLTARM", difficulty: "Hard", xp: 113, stat: "willpower", category: "personal" },
-  { title: "Nawwafi_Murájá", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal", comment: "1/3 of page per raka; Deep", isPinned: true },
-  { title: "people doing what u don't want to do", difficulty: "Easy", xp: 112, stat: "discipline", category: "personal" },
-  { title: "Pray b4 Sleep then Quran Buffs", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Quiet Dhikr", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Real Maths", difficulty: "Hard", xp: 113, stat: "intelligence", category: "learning" },
-  { title: "Resurrection Spell", difficulty: "Easy", xp: 112, stat: "intelligence", category: "learning", comment: "the 3 Quls", isPinned: true },
-  { title: "Sleeping Prayer", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "think of imam abroad, Allah's is better", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Take Haram Seriously, it's a big deal in GodSight.", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal" },
-  { title: "There is more to life than your desires", difficulty: "Easy", xp: 112, stat: "discipline", category: "personal" },
-  { title: "Systematic Review || At least 15 mins", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
-  { title: "Grad school", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Agentic Ai", difficulty: "Medium", xp: 22, stat: "discipline", category: "work" },
-  { title: "Teach Quran", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
-  { title: "Nahwu", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
-  { title: "Email", difficulty: "Medium", xp: 21, stat: "discipline", category: "work" },
-  { title: "Thesis Project NoteBookLM", difficulty: "Medium", xp: 23, stat: "intelligence", category: "work" },
-  { title: "watch teleGratitude", difficulty: "Medium", xp: 21, stat: "discipline", category: "personal" },
-  { title: "All actions are acts of worship.", difficulty: "Medium", xp: 21, stat: "discipline", category: "personal" },
-  { title: "Word4word Quran", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
-  { title: "Quantum Code", difficulty: "Medium", xp: 23, stat: "intelligence", category: "learning" },
-  { title: "Workout", difficulty: "Medium", xp: 22, stat: "strength", category: "health" },
-  { title: "Complete 5 sets of 25 push-ups", difficulty: "Medium", xp: 23, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Complete a 30-minute intense agility drill session", difficulty: "Medium", xp: 23, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Madina series", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
-  { title: "Juz Daily - get 1pg/min of each juz pg", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning", comment: "EBOOK", isPinned: true },
-  { title: "Maintain a rigorous daily workout routine for a month", difficulty: "Hard", xp: 33, stat: "strength", category: "personal", comment: "GAME: Tele", isPinned: true },
-  { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 33, stat: "intelligence", category: "learning" },
-  { title: "Project", difficulty: "Hard", xp: 32, stat: "intelligence", category: "work" },
-  { title: "n8n tasks", difficulty: "Hard", xp: 32, stat: "discipline", category: "work" },
-  { title: "Seerah / Khushu of the Ruh and Nafs", difficulty: "Hard", xp: 32, stat: "intelligence", category: "learning" },
-  { title: "Revise students Quran with AudioBook || At least 1 page", difficulty: "Hard", xp: 32, stat: "discipline", category: "learning" },
-  { title: "Money Research || At least 1 Idea", difficulty: "Hard", xp: 32, stat: "intelligence", category: "personal" },
-  { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 33, stat: "intelligence", category: "learning" },
-  { title: "MUJAWWAD .5P", difficulty: "Hard", xp: 32, stat: "discipline", category: "personal" },
-  { title: "MultiTask => Brain =< Sleep", difficulty: "Hard", xp: 32, stat: "stamina", category: "health" },
-  { title: "CyberExpo_Dev", difficulty: "Hard", xp: 32, stat: "intelligence", category: "work" },
-  { title: "Do 100 push-ups throughout the day", difficulty: "Hard", xp: 33, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Do a 300m run", difficulty: "Hard", xp: 33, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "HealthCheck", difficulty: "Easy", xp: 31, stat: "stamina", category: "health" },
-  { title: "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", difficulty: "Hard", xp: 32, stat: "intelligence", category: "learning", comment: "https://floor796.com/", isPinned: true },
-  { title: "Hifz revision", difficulty: "Hard", xp: 32, stat: "intelligence", category: "learning" },
-  { title: "Yoruba perfection", difficulty: "Hard", xp: 32, stat: "intelligence", category: "learning" },
-  { title: "Zad University", difficulty: "Hard", xp: 32, stat: "intelligence", category: "work", comment: "GAME: 2048", isPinned: true }
+  // EASY - Quick daily spiritual tasks (5 XP)
+  { title: "Dua Daily", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "Quiet Dhikr", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "Sleeping Prayer", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "Pray b4 Sleep then Quran Buffs", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "Please ask for help from Allah in each sujuud", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "think of imam abroad, Allah's is better", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 5, stat: "willpower", category: "personal" },
+  { title: "Email", difficulty: "Easy", xp: 3, stat: "discipline", category: "work" },
+  { title: "watch teleGratitude", difficulty: "Easy", xp: 3, stat: "discipline", category: "personal" },
+  { title: "Poetry", difficulty: "Easy", xp: 3, stat: "discipline", category: "personal" },
+  { title: "HealthCheck", difficulty: "Easy", xp: 3, stat: "stamina", category: "health" },
+
+  // MEDIUM - Moderate effort tasks (10 XP Islamic, 8 XP others)
+  { title: "Always Choose the Pleasure of Allah", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Aura Farming With Allah", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
+  { title: "Be the Observer", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal" },
+  { title: "Don't Disregard Allah in times of sin_softHeart", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal" },
+  { title: "Nawwafi_Murájá", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal", comment: "1/3 of page per raka; Deep", isPinned: true },
+  { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal" },
+  { title: "Take Haram Seriously, it's a big deal in GodSight.", difficulty: "Medium", xp: 10, stat: "willpower", category: "personal" },
+  { title: "Resurrection Spell", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning", comment: "the 3 Quls", isPinned: true },
+  { title: "99 Names", difficulty: "Medium", xp: 8, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
+  { title: "English Tafseer 1pg/Quran", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Liquid Drop concentration", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "There is more to life than your desires", difficulty: "Medium", xp: 8, stat: "discipline", category: "personal" },
+  { title: "people doing what u don't want to do", difficulty: "Medium", xp: 8, stat: "discipline", category: "personal" },
+  { title: "Systematic Review || At least 15 mins", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Grad school", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
+  { title: "Teach Quran", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Nahwu", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Agentic Ai", difficulty: "Medium", xp: 8, stat: "discipline", category: "work" },
+  { title: "Word4word Quran", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Madina series", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Juz Daily - get 1pg/min of each juz pg", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning", comment: "EBOOK", isPinned: true },
+  { title: "extras Research", difficulty: "Medium", xp: 8, stat: "intelligence", category: "work", comment: "https://floor796.com/", isPinned: true },
+  { title: "Project", difficulty: "Medium", xp: 8, stat: "intelligence", category: "work" },
+  { title: "n8n tasks", difficulty: "Medium", xp: 8, stat: "discipline", category: "work" },
+  { title: "Seerah / Khushu of the Ruh and Nafs", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Revise students Quran with AudioBook || At least 1 page", difficulty: "Medium", xp: 8, stat: "discipline", category: "learning" },
+  { title: "Money Research || At least 1 Idea", difficulty: "Medium", xp: 8, stat: "intelligence", category: "personal" },
+  { title: "MUJAWWAD .5P", difficulty: "Medium", xp: 8, stat: "discipline", category: "personal" },
+  { title: "MultiTask => Brain =< Sleep", difficulty: "Medium", xp: 8, stat: "stamina", category: "health" },
+  { title: "CyberExpo_Dev", difficulty: "Medium", xp: 8, stat: "intelligence", category: "work" },
+  { title: "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning", comment: "https://floor796.com/", isPinned: true },
+  { title: "Hifz revision", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Yoruba perfection", difficulty: "Medium", xp: 8, stat: "intelligence", category: "learning" },
+  { title: "Zad University", difficulty: "Medium", xp: 8, stat: "intelligence", category: "work", comment: "GAME: 2048", isPinned: true },
+  { title: "Workout", difficulty: "Medium", xp: 8, stat: "strength", category: "health" },
+
+  // HARD - High effort, high reward tasks (15 XP Islamic, 10 XP others)
+  { title: "Be an Observer", difficulty: "Hard", xp: 15, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Dont get stuck in a 1hr+ loop", difficulty: "Hard", xp: 15, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
+  { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Hard", xp: 15, stat: "willpower", category: "personal" },
+  { title: "LOCK IN: Be to Allah what fang yuan is to u PLTARM", difficulty: "Hard", xp: 15, stat: "willpower", category: "personal" },
+  { title: "Always Choose the Pleasure of Allah", difficulty: "Hard", xp: 15, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Real Maths", difficulty: "Hard", xp: 10, stat: "intelligence", category: "learning" },
+  { title: "Quantum Code", difficulty: "Hard", xp: 10, stat: "intelligence", category: "learning" },
+  { title: "Thesis Project NoteBookLM", difficulty: "Hard", xp: 10, stat: "intelligence", category: "work" },
+  { title: "Complete 5 sets of 25 push-ups", difficulty: "Hard", xp: 10, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
+  { title: "Complete a 30-minute intense agility drill session", difficulty: "Hard", xp: 10, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
+  { title: "Maintain a rigorous daily workout routine for a month", difficulty: "Hard", xp: 10, stat: "strength", category: "personal", comment: "GAME: Tele", isPinned: true },
+  { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 10, stat: "intelligence", category: "learning" },
+  { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 10, stat: "intelligence", category: "learning" },
+  { title: "Do 100 push-ups throughout the day", difficulty: "Hard", xp: 10, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
+  { title: "Do a 300m run", difficulty: "Hard", xp: 10, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true }
 ];
 
 const GLOBAL_DEFAULT_QUESTS = (() => {
@@ -569,7 +575,7 @@ addQuestBtn.addEventListener('click', () => {
     id: 'new',
     title: '',
     difficulty: 'Medium',
-    xp: 22,
+    xp: 2,
     stat: 'discipline',
     status: 'inbox',
     comment: '',
@@ -1373,9 +1379,9 @@ function setupEditPanelListeners(questElem) {
       
       // Update XP based on difficulty
       const xpInput = questElem.querySelector('.xp-input');
-      if (selectedDifficulty === 'Easy') xpInput.value = 111;
-      if (selectedDifficulty === 'Medium') xpInput.value = 22;
-      if (selectedDifficulty === 'Hard') xpInput.value = 112;
+      if (selectedDifficulty === 'Easy') xpInput.value = 5;
+      if (selectedDifficulty === 'Medium') xpInput.value = 8;
+      if (selectedDifficulty === 'Hard') xpInput.value = 10;
     });
   });
 }
@@ -1499,7 +1505,6 @@ async function completeQuest(xp, stat, questElem) {
     // Update player stats
     const playerStats = await db.playerStats.toArray();
     const previousLevel = playerStats.length > 0 ? playerStats[0].level : 0;
-    
     if (playerStats.length > 0) {
       const stats = playerStats[0];
       
@@ -1538,18 +1543,20 @@ async function completeQuest(xp, stat, questElem) {
     // Update UI for XP
     updateXP(); // This will use the now-correct global currentXP
 
-    // Increase stat
-    await increaseStat(stat);
-
-    // Show XP Toast Notification
-    showXPToast(xp, stat);
-
     // Check for level up
     const newLevel = playerStats.length > 0 ? playerStats[0].level : 0;
     if (newLevel > previousLevel) {
-      setTimeout(() => showLevelUpOverlay(newLevel), 500);
-      if (sounds && sounds.levelUp && typeof sounds.levelUp.play === 'function') sounds.levelUp.play();
+      setTimeout(() => {
+        showLevelUpOverlay(newLevel);
+        if (sounds && sounds.levelUp) sounds.levelUp.play();
+      }, 500);
     }
+
+    // Increase stat
+    await increaseStat(stat);
+
+    // Show XP Toast
+    showXPToast(xp, stat);
 
     // Display a quest completion quote
     displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
@@ -1846,7 +1853,7 @@ addQuestBtn.addEventListener("click", async () => {
         id: 'new', // Mark as a new quest
         title: '',
         difficulty: 'Medium',
-        xp: 32,
+        xp: 2,
         stat: 'discipline',
         status: 'inbox',
         comment: '',
@@ -1920,73 +1927,23 @@ function showNotification(message, type = "info") {
   }, 5000);
 }
 
-// XP Toast Notification
 function showXPToast(xp, stat) {
-  let toast = document.getElementById('xp-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'xp-toast';
-    toast.className = 'xp-toast';
-    toast.innerHTML = `
-      <div class="xp-toast-content">
-        <div class="xp-toast-icon"><i class="fas fa-bolt"></i></div>
-        <div class="xp-toast-info">
-          <span class="xp-toast-title">Quest Complete!</span>
-          <span class="xp-toast-value">+<span id="xp-gained">0</span> XP</span>
-          <span class="xp-toast-stat" id="xp-stat-name"></span>
-        </div>
-      </div>
-      <div class="xp-toast-bar">
-        <div class="xp-toast-progress" id="xp-toast-progress"></div>
-      </div>
-    `;
-    document.body.appendChild(toast);
+  const toast = document.getElementById('xp-toast');
+  if (toast) {
+    document.getElementById('xp-gained').textContent = xp;
+    document.getElementById('xp-stat-name').textContent = stat ? `${stat.charAt(0).toUpperCase() + stat.slice(1)} +1` : '';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
   }
-  
-  document.getElementById('xp-gained').textContent = xp;
-  document.getElementById('xp-stat-name').textContent = stat ? `${stat.charAt(0).toUpperCase() + stat.slice(1)} +1` : '';
-  
-  // Show toast
-  toast.classList.add('show');
-  
-  // Hide after 3 seconds
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
 }
 
-// Level Up Overlay
 function showLevelUpOverlay(level) {
-  let overlay = document.getElementById('level-up-overlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'level-up-overlay';
-    overlay.className = 'level-up-overlay';
-    overlay.innerHTML = `
-      <div class="level-up-content">
-        <div class="level-up-icon">
-          <i class="fas fa-arrow-up"></i>
-        </div>
-        <h2 class="level-up-text">LEVEL UP!</h2>
-        <div class="level-up-number" id="new-level-display">1</div>
-        <p class="level-up-subtitle">Your power grows stronger</p>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-    
-    // Click to close
-    overlay.addEventListener('click', () => {
-      overlay.classList.remove('show');
-    });
+  const overlay = document.getElementById('level-up-overlay');
+  if (overlay) {
+    document.getElementById('new-level-display').textContent = level;
+    overlay.classList.add('show');
+    setTimeout(() => overlay.classList.remove('show'), 3000);
   }
-  
-  document.getElementById('new-level-display').textContent = level;
-  overlay.classList.add('show');
-  
-  // Auto hide after 3 seconds
-  setTimeout(() => {
-    overlay.classList.remove('show');
-  }, 3000);
 }
 
 async function editUsername() {
