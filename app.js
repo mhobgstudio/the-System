@@ -15,7 +15,6 @@ const MAX_STAT = 10000;
 const rawDefaultQuests = [
  { title: "99 Names", difficulty: "Easy", xp: 112, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
   { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 111, stat: "willpower", category: "personal" },
-  { title: "Agentic Ai", difficulty: "Easy", xp: 112, stat: "discipline", category: "work" },
   { title: "Always Choose the Pleasure of Allah", difficulty: "Hard", xp: 115, stat: "willpower", category: "personal", isPinned: true },
   { title: "Aura Farming With Allah", difficulty: "Easy", xp: 112, stat: "willpower", category: "personal", isPinned: true },
   { title: "Be an Observer", difficulty: "Hard", xp: 115, stat: "willpower", category: "personal", isPinned: true },
@@ -43,6 +42,7 @@ const rawDefaultQuests = [
   { title: "There is more to life than your desires", difficulty: "Easy", xp: 112, stat: "discipline", category: "personal" },
   { title: "Systematic Review || At least 15 mins", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
   { title: "Grad school", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
+  { title: "Agentic Ai", difficulty: "Medium", xp: 22, stat: "discipline", category: "work" },
   { title: "Teach Quran", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
   { title: "Nahwu", difficulty: "Medium", xp: 22, stat: "intelligence", category: "learning" },
   { title: "Email", difficulty: "Medium", xp: 21, stat: "discipline", category: "work" },
