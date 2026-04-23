@@ -597,6 +597,17 @@ const resetBtn = document.getElementById("reset-btn");
 const editUsernameBtn = document.getElementById("edit-username-btn");
 const tourGuideBtn = document.getElementById("tour-guide-btn");
 
+// Settings modal functionality - wrapped in DOMContentLoaded for safety
+function initSettingsHandlers() {
+  if (settingsIcon) {
+    settingsIcon.addEventListener("click", () => {
+      settingsModal.classList.add("show");
+      document.getElementById("modal-overlay").classList.add("show");
+      document.body.style.overflow = "hidden";
+    });
+  }
+}
+
 
 // Streak references
 const currentStreakElem = document.getElementById("current-streak");
@@ -1960,12 +1971,8 @@ async function editUsername() {
 
 editUsernameBtn.addEventListener("click", editUsername);
 
-// Enhanced Settings Modal Functionality
-settingsIcon.addEventListener("click", () => {
-  settingsModal.classList.add("show");
-  document.getElementById("modal-overlay").classList.add("show");
-  document.body.style.overflow = "hidden"; // Prevent background scrolling
-});
+// Initialize settings handlers
+initSettingsHandlers();
 
 modalClose.addEventListener("click", () => {
   closeSettingsModal();
