@@ -30,7 +30,6 @@ const rawDefaultQuests = [
   { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Easy", xp: 15, stat: "willpower", category: "personal" },
   { title: "LOCK IN: Be to Allah what fang yuan is to u PLTARM", difficulty: "Easy", xp: 15, stat: "willpower", category: "personal" },
   { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 15, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 10, stat: "willpower", category: "personal", isPinned: true },
   { title: "Aura Farming With Allah", difficulty: "Easy", xp: 10, stat: "willpower", category: "personal", isPinned: true },
   { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Easy", xp: 10, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
   { title: "Be the Observer", difficulty: "Easy", xp: 10, stat: "willpower", category: "personal" },
@@ -1586,6 +1585,12 @@ async function completeQuest(xp, stat, questElem) {
     if (progressBar && currentStats) {
       const pct = Math.min(100, Math.round((currentStats[stat] / 100) * 100));
       progressBar.style.width = pct + '%';
+    }
+    
+    // Update progress text (e.g., "5/100")
+    const progressText = document.getElementById(`${stat}-progress-text`);
+    if (progressText && currentStats) {
+      progressText.textContent = `${currentStats[stat]}/100`;
     }
 
     // Display a quest completion quote
@@ -3389,6 +3394,10 @@ function updateMainStatsDisplay(){
         if (mainBar){
           const pct = Math.min(100, Math.round((currentStats[stat] / (typeof MAX_STAT !== 'undefined'? MAX_STAT:100)) * 100));
           mainBar.style.width = pct + '%';
+        }
+        const progressText = document.getElementById(`${stat}-progress-text`);
+        if (progressText) {
+          progressText.textContent = `${currentStats[stat]}/100`;
         }
       });
     }
