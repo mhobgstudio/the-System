@@ -676,7 +676,7 @@ const timerModeButtons = document.querySelectorAll(".timer-mode");
 
 // Achievements references
 const achievementsGrid = document.getElementById("achievements-grid");
-const achievementCountElem = document.querySelector(".achievement-count");
+const achievementCountElem = document.getElementById("achievement-count");
 
 const sounds = {
   complete: new Howl({
@@ -1373,9 +1373,9 @@ function setupEditPanelListeners(questElem) {
       
       // Update XP based on difficulty
       const xpInput = questElem.querySelector('.xp-input');
-      if (selectedDifficulty === 'Easy') xpInput.value = 1;
-      if (selectedDifficulty === 'Medium') xpInput.value = 2;
-      if (selectedDifficulty === 'Hard') xpInput.value = 3;
+      if (selectedDifficulty === 'Easy') xpInput.value = 111;
+      if (selectedDifficulty === 'Medium') xpInput.value = 22;
+      if (selectedDifficulty === 'Hard') xpInput.value = 112;
     });
   });
 }
