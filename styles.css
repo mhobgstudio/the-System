@@ -1313,30 +1313,30 @@ gap: 0.5rem;
 justify-content: center;
 }
 
-.difficulty-tag, .stat-tag {
-background: rgba(40, 40, 50, 0.7);
-color: var(--text-primary);
-border: 2px solid rgba(78, 205, 196, 0.3);
-padding: 0.6rem 1rem;
-border-radius: var(--border-radius-md);
-cursor: pointer;
-transition: all 0.3s ease;
-font-weight: 500;
-font-size: 0.9rem;
-text-transform: capitalize;
+.tag-button {
+  background: rgba(40, 40, 50, 0.7);
+  color: var(--text-primary);
+  border: 2px solid rgba(78, 205, 196, 0.3);
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: capitalize;
 }
 
-.difficulty-tag:hover, .stat-tag:hover {
-background: rgba(78, 205, 196, 0.1);
-border-color: var(--accent-primary);
-transform: translateY(-1px);
+.tag-button:hover {
+  background: rgba(78, 205, 196, 0.1);
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
 }
 
-.difficulty-tag.selected, .stat-tag.selected {
-background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-color: white;
-border-color: transparent;
-box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+.tag-button.selected {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 
 .comment-section {
@@ -1824,6 +1824,24 @@ font-size: 0.9rem;
 .search-btn:hover {
   transform: translateY(-50%) scale(1.05);
   box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.clear-search-btn:hover {
+  color: #e0e0e0;
 }
 
 .filter-container {
@@ -3211,6 +3229,24 @@ button:active {
   box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 
+.clear-search-btn {
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.clear-search-btn:hover {
+  color: #e0e0e0;
+}
+
 .filter-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -4582,3 +4618,4 @@ select:focus {
   background-color: #d0021b; /* A red color for overdue items */
 }
 
+/* Cleanup */

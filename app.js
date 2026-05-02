@@ -20,6 +20,7 @@ const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
   // EASY - Quick daily spiritual tasks (5 XP)
+  { title: "SACREFICE UR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },   
   { title: "Dua Daily", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Quiet Dhikr", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Sleeping Prayer", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
@@ -28,8 +29,8 @@ const rawDefaultQuests = [
   { title: "think of imam abroad, Allah's is better", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Email", difficulty: "Easy", xp: 333, stat: "discipline", category: "work" },
-  { title: "watch teleGratitude", difficulty: "Easy", xp: 333, stat: "discipline", category: "personal" },
-  { title: "All Actions As Worship", difficulty: "Easy", xp: 33333, stat: "discipline", category: "personal" },
+  { title: "watch teleGratitude", difficulty: "Easy", xp: 333, stat: "discipline", category: "personal" },        
+  { title: "All Actions As Worship", difficulty: "Easy", xp: 33333, stat: "discipline", category: "personal" },   
   { title: "HealthCheck", difficulty: "Easy", xp: 333, stat: "stamina", category: "health" },
   { title: "Be an Observer", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
   { title: "Dont get stuck in a 1hr+ loop", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
@@ -41,17 +42,21 @@ const rawDefaultQuests = [
   { title: "Don't Disregard Allah in times of sin_softHeart", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
   { title: "Nawwafi_Murájá", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "1/3 of page per raka; Deep", isPinned: true },
   { title: "Take Haram Seriously, it's a big deal in GodSight.", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
-  { title: "Resurrection Spell", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning", comment: "the 3 Quls", isPinned: true },
+  { title: "Resurrection Spell", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning", comment: "the 3 Quls", isPinned: true },      
   { title: "99 Names", difficulty: "Easy", xp: 338, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
   { title: "English Tafseer 1pg/Quran", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "Liquid Drop concentration", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "There is more to life than your desires", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
   { title: "people doing what u don't want to do", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
   { title: "Systematic Review || At least 15 mins", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
-
-
-
+  { title: "Effectiveness Audit", difficulty: "Easy", xp: 500, stat: "discipline", category: "cultivation" },
+  { title: "Quran Word Memorization", difficulty: "Easy", xp: 500, stat: "intelligence", category: "cultivation" },
+  { title: "Posture Alignment", difficulty: "Easy", xp: 300, stat: "stamina", category: "physical" },
+  { title: "50 Push-ups (Punishment)", difficulty: "Easy", xp: 500, stat: "strength", category: "physical" },
+  
+  
   // MEDIUM - Moderate effort tasks (10 XP Islamic, 8 XP others)
+  { title: "SACREFICE UR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Medium", xp: 2310, stat: "willpower", category: "personal" },
   { title: "Grad school", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
   { title: "Teach Quran", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
@@ -74,8 +79,9 @@ const rawDefaultQuests = [
   { title: "Yoruba perfection", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
   { title: "Zad University", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work", comment: "GAME: 2048", isPinned: true },
   { title: "Workout", difficulty: "Medium", xp: 238, stat: "strength", category: "health" },
-
+  
   // HARD - High effort, high reward tasks (15 XP Islamic, 10 XP others)
+  { title: "SACREFICE UR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Real Maths", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Quantum Code", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Thesis Project NoteBookLM", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "work" },
@@ -109,7 +115,8 @@ const motivationalQuotesSystem = {
     WISDOM: "wisdom",
     DISCIPLINE: "discipline",
     GROWTH: "growth",
-    PERSEVERANCE: "perseverance"
+    PERSEVERANCE: "perseverance",
+    FAITH: "faith"
   },
   contexts: {
     QUEST_COMPLETE: "questComplete",
@@ -388,6 +395,681 @@ const motivationalQuotesSystem = {
       category: "perseverance",
       contexts: ["streakMilestone"],
       favorite: false
+    },
+    {
+      id: 31,
+      text: "A time comes when you need to stop waiting for the man you want to become and start being the man you want to be.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 32,
+      text: "The longer you wait to do something you should do now, the greater the odds that you will never actually do it.",
+      author: "Unknown",
+      source: "The Law of Diminishing Intent",
+      category: "discipline",
+      contexts: ["questComplete", "daily"],
+      favorite: false
+    },
+    {
+      id: 33,
+      text: "You cannot change your destination overnight, but you can change your direction overnight.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "growth",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 34,
+      text: "The first step toward change is awareness. The second step is acceptance.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 35,
+      text: "You cannot win if you do not begin! The people who get ahead in the world are the ones who look for the circumstances they want, and if they can't find them, they make them.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "power",
+      contexts: ["questComplete", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 36,
+      text: "Your vision will become clear only when you look into your heart. Who looks outside, dreams. Who looks inside, awakens.",
+      author: "Carl Jung",
+      source: "Modern Psychology",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 37,
+      text: "If you put a small value on yourself, rest assured the world will not raise the price.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 38,
+      text: "When a man has put a limit on what he will do, he has put a limit on what he can do.",
+      author: "Unknown",
+      source: "Personal Development Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 39,
+      text: "You will never change your life until you change something you do daily.",
+      author: "John Maxwell",
+      source: "Today Matters",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 40,
+      text: "Once you learn to quit it becomes a habit.",
+      author: "Vince Lombardi",
+      source: "Leadership Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 41,
+      text: "Life begins at the end of your comfort zone.",
+      author: "Neale Donald Walsch",
+      source: "Conversations with God",
+      category: "growth",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 42,
+      text: "Facing difficulties is inevitable. Learning from them is optional.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 43,
+      text: "Success in life comes not from holding a good hand, but in playing a poor hand well.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["questComplete", "daily"],
+      favorite: false
+    },
+    {
+      id: 44,
+      text: "If you go to work on your goals, your goals will go to work on you. Whatever good things we build end up building us.",
+      author: "Jim Rohn",
+      source: "Personal Development",
+      category: "growth",
+      contexts: ["streakMilestone", "daily"],
+      favorite: false
+    },
+    {
+      id: 45,
+      text: "The secret of your success is found in your daily routine.",
+      author: "John Maxwell",
+      source: "Today Matters",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 46,
+      text: "You only live once. But if you work it right, once is enough.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 47,
+      text: "If you don't design your own life plan, chances are you'll fall into someone else's plan.",
+      author: "Jim Rohn",
+      source: "Personal Development",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 48,
+      text: "It's never too late to be what you might have been.",
+      author: "George Eliot",
+      source: "Literature",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 49,
+      text: "God's gift to us: potential. Our gift to God: developing it.",
+      author: "Unknown",
+      source: "Faith Reflections",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 50,
+      text: "Habit is the daily battleground of character.",
+      author: "Unknown",
+      source: "Character Development",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 51,
+      text: "There is no finish line.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 52,
+      text: "The potential that exists within us is limitless and largely untapped… when you think of limits, you create them.",
+      author: "Unknown",
+      source: "Personal Growth",
+      category: "growth",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 53,
+      text: "The cure for boredom is curiosity. There is no cure for curiosity.",
+      author: "Dorothy Parker",
+      source: "Literature",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 54,
+      text: "I am always doing that which I cannot do, in order to learn how to do it.",
+      author: "Vincent van Gogh",
+      source: "Art & Creativity",
+      category: "growth",
+      contexts: ["questComplete", "daily"],
+      favorite: false
+    },
+    {
+      id: 55,
+      text: "Man's mind, once stretched by a new idea, never regains its original dimensions.",
+      author: "Oliver Wendell Holmes Jr.",
+      source: "Legal Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 56,
+      text: "The greatest gift you can give to someone is your own personal development.",
+      author: "Jim Rohn",
+      source: "Personal Development",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 57,
+      text: "Wisdom is the lost property of the believer.",
+      author: "Prophet Muhammad (saw)",
+      source: "Hadith",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 58,
+      text: "Today is the beginning of the rest of your life.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 59,
+      text: "Opportunity favors those who are prepared.",
+      author: "Louis Pasteur",
+      source: "Science",
+      category: "discipline",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 60,
+      text: "Greatness is a choice.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 61,
+      text: "My mercy prevails over my wrath.",
+      author: "Allah",
+      source: "Hadith Qudsi",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 62,
+      text: "I am as My servant thinks I am. I am with him when he makes mention of Me.",
+      author: "Allah",
+      source: "Hadith Qudsi",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 63,
+      text: "Spend (on charity), O son of Adam, and I shall spend on you.",
+      author: "Allah",
+      source: "Hadith Qudsi",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 64,
+      text: "If My servant likes to meet Me, I like to meet him.",
+      author: "Allah",
+      source: "Hadith Qudsi",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 65,
+      text: "I have prepared for My righteous servants what no eye has seen and no ear has heard.",
+      author: "Allah",
+      source: "Hadith Qudsi",
+      category: "faith",
+      contexts: ["achievementUnlocked", "daily"],
+      favorite: false
+    },
+    {
+      id: 66,
+      text: "We will not change the condition of the people until they change that which is within themselves.",
+      author: "Allah",
+      source: "Qur'an 13:11",
+      category: "faith",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 67,
+      text: "Allah has a plan for you, don't worry.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 68,
+      text: "Prostrate and get closer to Allah, That Is Your Purpose.",
+      author: "Unknown",
+      source: "Spiritual Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 69,
+      text: "When your Salah is straight, your life is straight.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 70,
+      text: "Whoever is protected from his natural greed—it is they who are successful.",
+      author: "Allah",
+      source: "Qur'an 59:9",
+      category: "faith",
+      contexts: ["achievementUnlocked", "daily"],
+      favorite: false
+    },
+    {
+      id: 71,
+      text: "If you have gained the love of Allah, what have you truly lost? Nothing.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 72,
+      text: "I wonder for the one who is certain that there is death, and yet laughs.",
+      author: "Prophet Dawud",
+      source: "Zabura (Psalms)",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 73,
+      text: "I wonder for the one who is certain that there is Hellfire and its chastisement, and yet sleeps without fleeing from it.",
+      author: "Prophet Dawud",
+      source: "Zabura (Psalms)",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 74,
+      text: "I wonder for the one who is certain that there is Paradise and its pleasure, and yet sleeps without seeking it.",
+      author: "Prophet Dawud",
+      source: "Zabura (Psalms)",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 75,
+      text: "I wonder for the one who is certain about this world and its transience, and yet trusts in it implicitly.",
+      author: "Prophet Dawud",
+      source: "Zabura (Psalms)",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 76,
+      text: "The Divine Seal Altar's 33 steps. One day, if I am to step onto the peak of martial arts, then let this be the beginning of my journey!",
+      author: "Lin Ming",
+      source: "Reverend Insanity",
+      category: "growth",
+      contexts: ["levelUp", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 77,
+      text: "The road of martial arts means to live a lonely and desolate life... suffering in silence.",
+      author: "Lin Ming",
+      source: "Reverend Insanity",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 78,
+      text: "I love money, but I'm my own master. I'll never let material things control me!",
+      author: "Fang Yuan",
+      source: "Reverend Insanity",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 79,
+      text: "Chess pieces are pieces because they were meant to be used, they were also meant to be discarded when necessary.",
+      author: "Fang Yuan",
+      source: "Reverend Insanity",
+      category: "wisdom",
+      contexts: ["questComplete", "daily"],
+      favorite: false
+    },
+    {
+      id: 80,
+      text: "My goal for all eternity will be to exceed myself! To constantly exceed myself, to continually break through my own barriers!",
+      author: "Meng Hao",
+      source: "Reverend Insanity",
+      category: "growth",
+      contexts: ["levelUp", "achievementUnlocked"],
+      favorite: false
+    },
+    {
+      id: 81,
+      text: "Freedom! Independence! No cares or worries! What I want, the Heavens shall NOT lack! What I don't want, had BETTER not exist in the Heavens!",
+      author: "Meng Hao",
+      source: "Reverend Insanity",
+      category: "power",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 82,
+      text: "The strong and weak would never be on equal footing; the difference was as wide as heaven and earth.",
+      author: "Wang Lin",
+      source: "Renegade Immortal",
+      category: "power",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 83,
+      text: "If you are weak, the other person is strong. If you are strong, the other person is weak.",
+      author: "Wang Lin",
+      source: "Renegade Immortal",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 84,
+      text: "Strike the iron while it's hot, cultivate when you are still young... even if you don't become emperor, you will find many surprises ahead while traveling at the apex.",
+      author: "Li Qiye",
+      source: "Emperor's Domination",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 85,
+      text: "The reason why the strong are strong, is exactly because they are able to endure what normal people aren't able to.",
+      author: "Jasmine",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["streakMilestone", "daily"],
+      favorite: false
+    },
+    {
+      id: 86,
+      text: "Man, no matter which world they lived in, conquer; conquer the enemy and conquer themselves.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "power",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 87,
+      text: "No matter which world, how could one gain anything without paying a price?",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 88,
+      text: "Stop being satisfied with such meagre progress.",
+      author: "Unknown",
+      source: "Personal Growth",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 89,
+      text: "As long as u haven't fallen yet, there is still a chance to turn everything around.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 90,
+      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Ur Expectations.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 91,
+      text: "MASTER THE ART OF PATIENCE.",
+      author: "Unknown",
+      source: "Spiritual Wisdom",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 92,
+      text: "ENDURE THE HARDSHIP FOR EASE FOLLOWS.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 93,
+      text: "Sometimes in life, your situation will KEEP REPEATING ITSELF UNTIL YOU LEARN YOUR LESSON.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 94,
+      text: "WORK WHILE THEY SLEEP. LEARN WHILE THEY PARTY. SAVE WHILE THEY SPEND. THEN LIVE LIKE THEY DREAM.",
+      author: "Unknown",
+      source: "Success Principle",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 95,
+      text: "When Allah said: 'I test only those I love' I took the pain like it was an honour.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 96,
+      text: "I WOULD RATHER DIE THAN STOP NOW.",
+      author: "Unknown",
+      source: "Determination",
+      category: "perseverance",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 97,
+      text: "The man whom even the devil was afraid of.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "power",
+      contexts: ["levelUp", "daily"],
+      favorite: false
+    },
+    {
+      id: 98,
+      text: "Don't waste ur potential.",
+      author: "Unknown",
+      source: "Personal Growth",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 99,
+      text: "O Human, you have done enough wrong... Paradise for you? I cannot tell, / Undoubtedly you will dwell in hell.",
+      author: "Unknown",
+      source: "Divine Exhortation",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 100,
+      text: "Change your living and make amends / For heaven, on your deeds depends.",
+      author: "Unknown",
+      source: "Divine Exhortation",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 101,
+      text: "O child of Adam! your religion is yours, your work is yours, your flesh is yours, and your blood is yours. If your religion becomes bad, your work, flesh, and blood, too, would become bad.",
+      author: "Allah",
+      source: "Divine Exhortation - Chapter 14",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 102,
+      text: "O child of Adam! do not be like a lamp which burns itself in order to provide light for people. Remove the love of the world from your heart.",
+      author: "Allah",
+      source: "Divine Exhortation - Chapter 14",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 103,
+      text: "The best wisdom is the fear of Allah. The best wealth is contentment. The best preparation (in life) is consciousness of Allah.",
+      author: "Allah",
+      source: "Divine Exhortation - Chapter 14",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 104,
+      text: "O child of Adam! obey Me in exact degree as your heart is inclined to the world, and if you will not do that, then remove My love from your heart.",
+      author: "Allah",
+      source: "Divine Exhortation - Chapter 30",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 105,
+      text: "O child of Adam! many a time you will stand before Allah while you think of another thing. If you had known the reality of Allah, you would not have concerned yourself with something different from Allah.",
+      author: "Allah",
+      source: "Divine Exhortation - Chapter 30",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
     }
   ],
   
@@ -624,21 +1306,42 @@ const streakDayElems = document.querySelectorAll(".streak-day");
 
 const streakTitles = [
   { days: 0, title: "Mortal" },
-  { days: 1, title: "Quasi Apprentice" },
-  { days: 3, title: "Apprentice" },
-  { days: 7, title: "Quasi Student" },
-  { days: 14, title: "Student" },
-  { days: 21, title: "Quasi Master" },
-  { days: 30, title: "Master" },
-  { days: 45, title: "Quasi Grand Master" },
-  { days: 60, title: "Grand Master" },
-  { days: 90, title: "Quasi Great Grand Master" },
-  { days: 120, title: "Great Grand Master" },
-  { days: 150, title: "Legendary Grand Master" },
-  { days: 210, title: "Demi-Immortal" },
-  { days: 300, title: "Ascendant" },
+  { days: 3, title: "Quasi Apprentice" },
+  { days: 7, title: "Apprentice" },
+  { days: 14, title: "Quasi Student" },
+  { days: 21, title: "Student" },
+  { days: 30, title: "Quasi Master" },
+  { days: 60, title: "Master" },
+  { days: 90, title: "Quasi Grand Master" },
+  { days: 120, title: "Grand Master" },
+  { days: 150, title: "Quasi Great Grand Master" },
+  { days: 180, title: "Great Grand Master" },
   { days: 365, title: "Immortal" },
 ];
+
+const levelTitles = [
+  { level: 1, title: "E-Rank Hunter" },
+  { level: 5, title: "D-Rank Hunter" },
+  { level: 10, title: "C-Rank Hunter" },
+  { level: 20, title: "B-Rank Hunter" },
+  { level: 35, title: "A-Rank Hunter" },
+  { level: 50, title: "S-Rank Hunter" },
+  { level: 75, title: "National Level Hunter" },
+  { level: 100, title: "Monarch" },
+  { level: 150, title: "Ruler" },
+  { level: 200, title: "Divine Ruler" },
+];
+
+function updateCharacterTitle() {
+  let title = "Mortal";
+  for (const t of levelTitles) {
+    if (currentLevel >= t.level) {
+      title = t.title;
+    }
+  }
+  characterTitleElem.textContent = title;
+  if (characterTitleStatsElem) characterTitleStatsElem.textContent = title;
+}
 
 async function updateStreakDisplay() {
   const playerStats = await db.playerStats.toArray();
@@ -654,8 +1357,7 @@ async function updateStreakDisplay() {
       }
     }
     streakTitleElem.textContent = `(${currentTitle})`;
-    characterTitleElem.textContent = currentTitle;
-    if (characterTitleStatsElem) characterTitleStatsElem.textContent = currentTitle;
+    updateCharacterTitle();
 
     let today = new Date().getDay(); // 0 for Sunday, 1 for Monday, etc.
     // Adjust to match data-day mapping (0 for Monday, 6 for Sunday)
@@ -1019,7 +1721,7 @@ function createQuestElement(quest) {
         <span class="quest-difficulty difficulty-${quest.difficulty.toLowerCase()}">${ quest.difficulty }</span>
         <span class="quest-xp">${quest.xp} XP</span>
         <span class="quest-stat stat-${quest.stat}">${quest.stat}</span>
-        <span class="quest-category category-${quest.category || 'personal'}">${ quest.category || 'personal' }</span>
+        <span class="quest-category category-${(quest.category || 'personal').toLowerCase()}">${ quest.category || 'personal' }</span>
         ${countdownHTML}
       </div>
       ${ quest.comment ? `<div class="pinned-comment">${quest.comment}</div>` : '' }
@@ -1038,9 +1740,9 @@ function createQuestElement(quest) {
     }
 
     // Check if another edit panel is open
-    const existingPanel = document.querySelector(".quest-edit-panel");
+    const existingPanel = document.querySelector('.quest-edit-panel');
     if (existingPanel && existingPanel !== questElem) {
-      existingPanel.className = "quest";
+      existingPanel.className = 'quest';
       existingPanel.innerHTML = existingPanel.dataset.originalContent;
     }
 
@@ -1071,85 +1773,80 @@ async function toggleDefaultQuest(questTitle, heartIcon) {
   }
 }
 
-function generateSuggestedQuests(stat, difficulty) {
+function generateSuggestedQuests(stat, difficulty, category) {
   const suggestions = {
     strength: {
       Easy: ["Do 10 push-ups", "Do 20 squats"],
       Medium: ["Complete 3 sets of 15 push-ups", "Do 30 burpees"],
-      Hard: [
-        "Do 100 push-ups throughout the day",
-        "Complete a 30-minute bodyweight strength routine",
-      ],
+      Hard: ["Do 100 push-ups throughout the day", "Complete a 30-minute bodyweight strength routine"],
     },
     agility: {
-      Easy: [
-        "Do 50 jumping jacks",
-        "Practice quick feet drills for 5 minutes",
-      ],
-      Medium: [
-        "Complete a 15-minute HIIT workout",
-        "Do 100 mountain climbers",
-      ],
-      Hard: [
-        "Complete a 30-minute intense agility drill session",
-        "Do 200 high knees",
-      ],
+      Easy: ["Do 50 jumping jacks", "Practice quick feet drills for 5 minutes"],
+      Medium: ["Complete a 15-minute HIIT workout", "Do 100 mountain climbers"],
+      Hard: ["Complete a 30-minute intense agility drill session", "Do 200 high knees"],
     },
     stamina: {
       Easy: ["Jog in place for 10 minutes", "Do 50 jumping jacks"],
-      Medium: [
-        "Complete a 20-minute home cardio workout",
-        "Do 100 jump ropes",
-      ],
-      Hard: [
-        "Complete a 45-minute high-intensity cardio session",
-        "Do a 1-hour indoor cycling session",
-      ],
+      Medium: ["Complete a 20-minute home cardio workout", "Do 100 jump ropes"],
+      Hard: ["Complete a 45-minute high-intensity cardio session", "Do a 1-hour indoor cycling session"],
     },
     willpower: {
-      Easy: [
-        "Meditate for 10 minutes",
-        "Resist a small temptation for a day",
-      ],
+      Easy: ["Meditate for 10 minutes", "Resist a small temptation for a day"],
       Medium: ["Fast for 16 hours", "Take a cold shower for a week"],
-      Hard: [
-        "Complete a 72-hour fast",
-        "Maintain a strict diet for a month",
-      ],
+      Hard: ["Complete a 72-hour fast", "Maintain a strict diet for a month"],
     },
     discipline: {
-      Easy: [
-        "Wake up 30 minutes earlier than usual",
-        "Stick to a daily to-do list",
-      ],
-      Medium: [
-        "Follow a strict study/work schedule for a week",
-        "Practice a skill daily for 30 days",
-      ],
-      Hard: [
-        "Maintain a rigorous daily routine for a month",
-        "Complete a challenging long-term project",
-      ],
+      Easy: ["Wake up 30 minutes earlier than usual", "Stick to a daily to-do list"],
+      Medium: ["Follow a strict study/work schedule for a week", "Practice a skill daily for 30 days"],
+      Hard: ["Maintain a rigorous daily routine for a month", "Complete a challenging long-term project"],
     },
-    intelligence: {
-      Easy: [
-        "Read a chapter of a challenging book",
-        "Solve a logic puzzle",
-      ],
-      Medium: [
-        "Study a new language for 30 minutes",
-        "Learn and apply a new mental model",
-      ],
-      Hard: [
-        "Write an essay on a complex topic",
-        "Teach someone a difficult concept you've mastered",
-      ],
+    spiritual: {
+      Easy: ["Recite one page of Quran", "Perform morning/evening Dhikr"],
+      Medium: ["Memorize 5 Quranic words", "Perform Sunday Night Nafilah"],
+      Hard: ["Perform Salatu Tasbih", "Complete Istikhara for a major life decision"],
     },
+    marketing: {
+      Easy: ["Post 1 affiliate link on Quora", "Research 1 new affiliate site"],
+      Medium: ["Set up a niche affiliate website", "Create a content plan for affiliate marketing"],
+      Hard: ["Launch a full-scale affiliate marketing campaign", "Achieve first sale through affiliate links"],
+    },
+    cultivation: {
+      Easy: ["Effectiveness Audit (10m)", "Quran Word Memorization (10m)"],
+      Medium: ["Deep read 1 chapter of Quran", "Review study goals for the week"],
+      Hard: ["Prepare for exams as if tomorrow", "Complete 4 hours of cultivation study"],
+    }
   };
 
-  // Safely return suggestions; fallback to an empty array when not found
-  if (!suggestions[stat] || !suggestions[stat][difficulty]) return [];
-  return suggestions[stat][difficulty];
+  const catSuggestions = {
+    work: ["Write merge algorithm", "Agentic AI project", "Complete daily report", "Affiliate research", "Upload app to console"],
+    health: ["500 pushups", "Posture alignment", "Drink 2L water", "10-min walk", "30-minute workout"],
+    learning: ["Learn Kotlin", "Recite Quran page", "Memorize Quran word", "Nahwu study", "Juz Daily", "Read for school"],
+    personal: ["Effectiveness Audit", "Train brain", "Plan week", "Organize files", "Dua Daily", "Recite Quran"],
+    cultivation: ["Salatu Tasbih", "Perform Nafilah", "Quran recitation", "Study spiritual text", "Morning/Evening Dhikr", "Effectiveness Audit"]
+  };
+
+  const statSugs = (suggestions[stat] && suggestions[stat][difficulty]) ? suggestions[stat][difficulty] : [];
+  const catSugs = (category && catSuggestions[category.toLowerCase()]) ? catSuggestions[category.toLowerCase()] : [];
+  
+  const all = [...new Set([...statSugs, ...catSugs])];
+  return all.length > 0 ? all : ["Stay focused", "Keep improving"];
+}
+
+function updateSuggestionsWithClickable(stat, difficulty, questElem) {
+  const category = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
+  const suggestions = generateSuggestedQuests(stat, difficulty, category);
+  const suggestionContainer = questElem.querySelector('#quest-suggestions');
+  
+  if (suggestionContainer) {
+    suggestionContainer.innerHTML = suggestions.map(suggestion => `
+      <div class="suggested-quest-item glow-button" onclick="applySuggestion('${suggestion}', this.closest('.quest-edit-panel'))">
+          ${suggestion}
+      </div>
+    `).join('');
+    
+    // Open the popup once suggestions are generated
+    openSuggestionPopup();
+  }
 }
 
 function updateSuggestions(stat, difficulty, container) {
@@ -1170,10 +1867,29 @@ function updateSuggestions(stat, difficulty, container) {
 function initializeQuestFilters(){
   try {
     if (searchBtn) searchBtn.addEventListener('click', filterQuests);
-    if (questSearchInput) questSearchInput.addEventListener('input', filterQuests);
+    if (questSearchInput) {
+      questSearchInput.addEventListener('input', () => {
+        filterQuests();
+        // Show/hide clear button
+        const clearBtn = document.getElementById('clear-search-btn');
+        if (clearBtn) {
+          clearBtn.style.display = questSearchInput.value ? 'block' : 'none';
+        }
+      });
+    }
     if (categoryFilter) categoryFilter.addEventListener('change', filterQuests);
     if (difficultyFilter) difficultyFilter.addEventListener('change', filterQuests);
     if (statFilter) statFilter.addEventListener('change', filterQuests);
+
+    // Clear search button functionality
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    if (clearSearchBtn && questSearchInput) {
+      clearSearchBtn.addEventListener('click', () => {
+        questSearchInput.value = '';
+        clearSearchBtn.style.display = 'none';
+        filterQuests();
+      });
+    }
 
     if (sortBtn && sortOptions) {
       sortBtn.addEventListener('click', () => {
@@ -1273,23 +1989,37 @@ function openQuestEditPanel(quest, questElemToEdit) {
       <div class="edit-panel-content" onclick="event.stopPropagation()">
           <input type="text" class="quest-input" value="${quest.title || ''}" placeholder="Quest title">
           
-          <div class="difficulty-tags">
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Easy' ? 'selected' : ''}" data-difficulty="Easy">Easy</button>
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Medium' ? 'selected' : ''}" data-difficulty="Medium">Medium</button>
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Hard' ? 'selected' : ''}" data-difficulty="Hard">Hard</button>
+          <div class="panel-section">
+            <label>Category</label>
+            <div class="category-tags">
+                ${['Work', 'Health', 'Learning', 'Personal', 'Cultivation'].map(cat => 
+                  `<button type="button" class="tag-button glow-button ${cat.toLowerCase() === (quest.category || '').toLowerCase() ? 'selected' : ''}" 
+                           data-category="${cat}">${cat}</button>`).join('')}
+            </div>
           </div>
           
-          <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="5">
+          <div class="panel-section">
+            <label>Difficulty & XP</label>
+            <div class="difficulty-tags">
+                ${['Easy', 'Medium', 'Hard'].map(diff => 
+                  `<button type="button" class="tag-button glow-button ${diff === quest.difficulty ? 'selected' : ''}" 
+                           data-difficulty="${diff}">${diff}</button>`).join('')}
+            </div>
+            <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="10" placeholder="XP">
+          </div>
           
-          <div class="stat-tags">
-              ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
-                  .map(stat => `<button class="stat-tag glow-button ${stat === quest.stat ? 'selected' : ''}" 
-                                      data-stat="${stat}">${stat}</button>`).join('')}
+          <div class="panel-section">
+            <label>Focus Stat</label>
+            <div class="stat-tags">
+                ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
+                    .map(stat => `<button type="button" class="tag-button glow-button ${stat === quest.stat ? 'selected' : ''}" 
+                                        data-stat="${stat}">${stat}</button>`).join('')}
+            </div>
           </div>
 
-          <div class="due-date-section">
-              <label for="due-date-input">Due Date:</label>
-              <input type="date" id="due-date-input" class="quest-input" value="${dueDate}">
+          <div class="panel-section">
+            <label>Due Date</label>
+            <input type="date" id="due-date-input" class="quest-input" value="${dueDate}">
           </div>
           
           <div class="comment-section">
@@ -1300,81 +2030,14 @@ function openQuestEditPanel(quest, questElemToEdit) {
               </label>
           </div>
           
-          <div class="suggested-quests">
-              <h4>Suggested Quests:</h4>
-              <div id="quest-suggestions" class="suggestions-container"></div>
-          </div>
-          
           <div class="action-buttons">
-              <button class="save-quest glow-button" onclick="saveQuestEdit(this)">Save</button>
-              <button class="cancel-quest glow-button" onclick="cancelQuestEdit(this.closest('.quest-edit-panel'))">Cancel</button>
+              <button type="button" class="save-quest glow-button" onclick="saveQuestEdit(this)">Save</button>
+              <button type="button" class="cancel-quest glow-button" onclick="cancelQuestEdit(this.closest('.quest-edit-panel'))">Cancel</button>
           </div>
       </div>
-  `;
-
-  setupEditPanelListeners(questElem);
-  updateSuggestionsWithClickable(quest.stat || 'discipline', quest.difficulty || 'Medium', questElem);
-}
-
-function openQuestEditPanel(quest, questElemToEdit) {
-  if (!questElemToEdit) {
-    console.error("Quest element not passed for editing.");
-    return;
-  }
-  const questElem = questElemToEdit; // Use the existing element passed for editing
-
-  // Store original content and ensure single edit panel
-  const existingPanel = document.querySelector('.quest-edit-panel');
-  if (existingPanel && existingPanel !== questElem) {
-      existingPanel.className = 'quest';
-      existingPanel.innerHTML = existingPanel.dataset.originalContent;
-  }
-
-  questElem.dataset.originalContent = questElem.innerHTML;
-  questElem.dataset.questId = quest.id;
-  questElem.className = 'quest quest-edit-panel';
-
-  const dueDate = quest.dueDate ? new Date(quest.dueDate).toISOString().split('T')[0] : '';
-  questElem.innerHTML = `
-      <div class="edit-panel-content" onclick="event.stopPropagation()">
-          <input type="text" class="quest-input" value="${quest.title || ''}" placeholder="Quest title">
-          
-          <div class="difficulty-tags">
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Easy' ? 'selected' : ''}" data-difficulty="Easy">Easy</button>
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Medium' ? 'selected' : ''}" data-difficulty="Medium">Medium</button>
-              <button class="difficulty-tag glow-button ${quest.difficulty === 'Hard' ? 'selected' : ''}" data-difficulty="Hard">Hard</button>
-          </div>
-          
-          <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="5">
-          
-          <div class="stat-tags">
-              ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
-                  .map(stat => `<button class="stat-tag glow-button ${stat === quest.stat ? 'selected' : ''}" 
-                                      data-stat="${stat}">${stat}</button>`).join('')}
-          </div>
-
-          <div class="due-date-section">
-              <label for="due-date-input">Due Date:</label>
-              <input type="date" id="due-date-input" class="quest-input" value="${dueDate}">
-          </div>
-          
-          <div class="comment-section">
-              <textarea class="quest-input" placeholder="Add a comment...">${quest.comment || ''}</textarea>
-              <label class="pin-checkbox">
-                  <input type="checkbox" ${quest.isPinned ? 'checked' : ''} class="pin-comment">
-                  Pin Comment
-              </label>
-          </div>
-          
-          <div class="suggested-quests">
-              <h4>Suggested Quests:</h4>
-              <div id="quest-suggestions" class="suggestions-container"></div>
-          </div>
-          
-          <div class="action-buttons">
-              <button class="save-quest glow-button" onclick="saveQuestEdit(this)">Save</button>
-              <button class="cancel-quest glow-button" onclick="cancelQuestEdit(this.closest('.quest-edit-panel'))">Cancel</button>
-          </div>
+      <div id="quest-suggestion-popup" class="suggestion-popup" style="display: none;">
+        <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
+        <div id="quest-suggestions" class="suggestions-container"></div>
       </div>
   `;
 
@@ -1383,24 +2046,41 @@ function openQuestEditPanel(quest, questElemToEdit) {
 }
 
 function setupEditPanelListeners(questElem) {
-  questElem.querySelectorAll('.difficulty-tag, .stat-tag').forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const siblings = this.parentElement.querySelectorAll('button');
-      siblings.forEach(sib => sib.classList.remove('selected'));
-      this.classList.add('selected');
-      
-      const selectedStat = questElem.querySelector('.stat-tag.selected').dataset.stat;
-      const selectedDifficulty = questElem.querySelector('.difficulty-tag.selected').dataset.difficulty;
-      updateSuggestionsWithClickable(selectedStat, selectedDifficulty, questElem);
-      
-      // Update XP based on difficulty
-      const xpInput = questElem.querySelector('.xp-input');
-      if (selectedDifficulty === 'Easy') xpInput.value = 5;
-      if (selectedDifficulty === 'Medium') xpInput.value = 8;
-      if (selectedDifficulty === 'Hard') xpInput.value = 10;
+  // Generic toggle helper for button groups
+  const setupToggleGroup = (selector) => {
+    questElem.querySelectorAll(selector).forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation();
+        // Remove 'selected' from all siblings in this group
+        this.parentElement.querySelectorAll(selector).forEach(sib => sib.classList.remove('selected'));
+        // Add 'selected' to clicked button
+        this.classList.add('selected');
+
+        // Trigger updates if this is a difficulty or stat change
+        if (selector === '.stat-tags .tag-button' || selector === '.difficulty-tags .tag-button' || selector === '.category-tags .tag-button') {
+          const selectedStat = questElem.querySelector('.stat-tags .tag-button.selected')?.dataset.stat;
+          const selectedDifficulty = questElem.querySelector('.difficulty-tags .tag-button.selected')?.dataset.difficulty;
+          const selectedCategory = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
+          
+          if (selectedStat && selectedDifficulty) {
+            updateSuggestionsWithClickable(selectedStat, selectedDifficulty, questElem);
+          }
+          
+          // Update XP based on difficulty
+          const xpInput = questElem.querySelector('.xp-input');
+          if (xpInput) {
+            if (selectedDifficulty === 'Easy') xpInput.value = 5;
+            else if (selectedDifficulty === 'Medium') xpInput.value = 8;
+            else if (selectedDifficulty === 'Hard') xpInput.value = 10;
+          }
+        }
+      });
     });
-  });
+  };
+
+  setupToggleGroup('.category-tags .tag-button');
+  setupToggleGroup('.difficulty-tags .tag-button');
+  setupToggleGroup('.stat-tags .tag-button');
 }
 
 function applySuggestion(suggestion, questElem) {
@@ -1412,7 +2092,8 @@ function applySuggestion(suggestion, questElem) {
 }
 
 function updateSuggestionsWithClickable(stat, difficulty, questElem) {
-  const suggestions = generateSuggestedQuests(stat, difficulty);
+  const category = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
+  const suggestions = generateSuggestedQuests(stat, difficulty, category);
   const suggestionContainer = questElem.querySelector('#quest-suggestions');
   
   if (suggestionContainer) {
@@ -1421,7 +2102,21 @@ function updateSuggestionsWithClickable(stat, difficulty, questElem) {
           ${suggestion}
       </div>
     `).join('');
+    
+    // Open the popup once suggestions are generated
+    openSuggestionPopup();
   }
+}
+
+// Suggestion Popup management
+function closeSuggestionPopup() {
+  const popup = document.getElementById('quest-suggestion-popup');
+  if (popup) popup.style.display = 'none';
+}
+
+function openSuggestionPopup() {
+  const popup = document.getElementById('quest-suggestion-popup');
+  if (popup) popup.style.display = 'block';
 }
 
 // Function to cancel quest editing
@@ -1442,9 +2137,10 @@ async function saveQuestEdit(buttonElement) {
   const updatedQuest = {
     id: questId === 'new' ? undefined : questId,
     title: questElem.querySelector('input[type="text"]').value.trim(),
-    difficulty: questElem.querySelector('.difficulty-tag.selected').dataset.difficulty,
+    category: questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category || 'Personal',
+    difficulty: questElem.querySelector('.difficulty-tags .tag-button.selected')?.dataset.difficulty,
     xp: parseInt(questElem.querySelector('.xp-input').value),
-    stat: questElem.querySelector('.stat-tag.selected').dataset.stat,
+    stat: questElem.querySelector('.stat-tags .tag-button.selected')?.dataset.stat,
     comment: questElem.querySelector('textarea').value.trim(),
     isPinned: questElem.querySelector('.pin-comment').checked,
     status: 'inbox',
@@ -1555,7 +2251,7 @@ async function completeQuest(xp, stat, questElem) {
       
       // Check for achievements
       checkAchievements();
-    } // End of if (playerStats.length > 0)
+    } // End of if (if (playerStats.length > 0)
 
     // Update UI for XP
     updateXP(); // This will use the now-correct global currentXP
@@ -1767,6 +2463,7 @@ document.getElementById('level-up-btn').addEventListener('click', async () => {
         xpElem.textContent = currentXP;
         xpRequiredElem.textContent = calculateXPForNextLevel(currentLevel);
         updateXP(); // Re-render XP bar after level up
+        updateCharacterTitle(); // Update character title based on new level
 
         // Play level-up sound
         sounds.levelUp.play();
@@ -3379,6 +4076,7 @@ async function initializeStats(){
     if (xpElem) xpElem.textContent = currentXP;
     updateXP();
     updateStats();
+    updateCharacterTitle();
   }catch(e){console.error('initializeStats error',e);} 
 }
 
