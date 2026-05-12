@@ -1070,6 +1070,1023 @@ const motivationalQuotesSystem = {
       category: "faith",
       contexts: ["daily"],
       favorite: false
+    },
+    {
+      id: 106,
+      text: "Challenge ur limits again and again and again.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 107,
+      text: "Pain of Discipline OR Pain of Regret.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 108,
+      text: "PRIORITIES STRAIGHT.",
+      author: "Unknown",
+      source: "Personal Development",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 109,
+      text: "Stay calm under pressure.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 110,
+      text: "BE PROACTIVE IN UR AFFAIRS.",
+      author: "Unknown",
+      source: "Personal Development",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 111,
+      text: "My soul calls me to evil.",
+      author: "Prophet Yusuf (AS)",
+      source: "Qur'an 12:53",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 112,
+      text: "Self-confidence was the most basic requirement of a truly strong expert.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 113,
+      text: "Knowledge is the Noor of Allah to His Beloved",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 114,
+      text: "No matter how ruthless the devil is, u can be more ruthless.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 115,
+      text: "heaven will always leave a path for you, as long as you want to walk, there will always be a road for you to step on!",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 116,
+      text: "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings comes with calamities.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 117,
+      text: "His greatest quirk was that, when he made up his mind to concentrate, nothing could distract him.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 118,
+      text: "Heart filled with resolution from his pursuit of truth. There was no fear of death.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 119,
+      text: "Hardest choices require strongest wills",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 120,
+      text: "If Everyone else can do it, then why can't I?",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 121,
+      text: "She needed rivals and opponents, and she needed pressure that would force her to transform into someone greater than she was before.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 122,
+      text: "He always thought it right to keep improving instead of having fun so that you wouldn't be regretful when u found yourself in trouble yet lacked strength.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 123,
+      text: "It was when I achieved everything I ever wanted when I realised what was truly important to me.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 124,
+      text: "No matter how busy he was, he would always find time for it.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 125,
+      text: "Everytime u wake up to reality is a new day.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 126,
+      text: "Freedom while not depending on oneself is merely an illusion.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 127,
+      text: "The faster u act on ur dreams the more successful u will be.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 128,
+      text: "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 129,
+      text: "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 130,
+      text: "Life is only a few hundred years, it is all a great gamble.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 131,
+      text: "It is merely another version of ur self that has exceeded ur current limits.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 132,
+      text: "There was no absolutely desperate situation in this world, there were only people who despair. The answer to resolving problems will always be in our own hands.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 133,
+      text: "Increase ur Rank in the sight of ALLAH.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 134,
+      text: "Be more ruthless to thyself, verily...all the great ones were ruthless to others n more ruthless to themselves.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 135,
+      text: "ALLAH tells iblis about those who resist their lower selves that satan will have no authority over them.",
+      author: "Allah",
+      source: "Qur'an 16:99",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 136,
+      text: "The physical body is a carrier for the mind and spirit. With a rise in spiritual force, it would naturally require an even more sturdy body to support it!",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 137,
+      text: "Rather make ALLAH Happy. Satisfied.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 138,
+      text: "Do people think that they will be left (at ease) only on their saying, 'We believe' and will not be put to any test?",
+      author: "Allah",
+      source: "Qur'an 29:2",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 139,
+      text: "The journey was difficult, there Would always be some obstacles preventing people from progressing.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 140,
+      text: "Monks were people devils did not want to meet at all. They rejected the pleasures of life, their staunch souls not corroded by anything.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 141,
+      text: "No matter who u are, u do not truly know what kind of man u'v become...Until u reach the very end.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 142,
+      text: "Deceiving ur self to believe u hav not been deceived.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 143,
+      text: "If u don't Trust ALLAH, then trust ur self experience.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 144,
+      text: "humans possess great wisdom. If they used this wisdom only to fight, they would be letting down this gift from Allah.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 145,
+      text: "He withstood the loneliness of seclusion.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 146,
+      text: "The ability of a peerless genius is not something that we ordinary people can ever begin to imagine! But it doesn't come easy.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 147,
+      text: "ALLAH wanted to see if HIS WORDS carried any weight in Man's heart.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 148,
+      text: "Oh young Muslim, those of old sacrificed much for Islam, what have u sacrificed.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 149,
+      text: "Too bad, there were no pills that could cure one's regrets.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 150,
+      text: "Even if this increase wad very little, a little progress every day would accumulate to a terrifying amount after several days.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 151,
+      text: "His mind had been trained to stay calm no matter what situation he was facing",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 152,
+      text: "What is ur purpose.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 153,
+      text: "FOCUS ON TODAY",
+      author: "Unknown",
+      source: "Motivation",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 154,
+      text: "THE TRUTH LIES IN DETACHMENT.",
+      author: "Unknown",
+      source: "Spiritual Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 155,
+      text: "Stop being destracted, the world will chase u when u chase Allah.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 156,
+      text: "When ur Salah is crooked, ur life is crooked.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 157,
+      text: "When a man makes a choice, he should stick to it till the end, even if the results of his choice may seem bad.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 158,
+      text: "No matter how big of a genius you are, you will only be able to grow under constant competition.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 159,
+      text: "This is life after all, hard work does not mean results, nor success. But if one does not work hard, they are destined to fail.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 160,
+      text: "Making mistakes was a normal thing, even the men of old made mistakes in their lives. After making a mistake, realizing the mistake and correcting it was the behavior of an outstanding person!",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 161,
+      text: "Before obtaining the greatest strength at the apex, do not plan to slow ur footsteps.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 162,
+      text: "Know that ur words n actions shackle u.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 163,
+      text: "Every single person who was cheated, was it because they were stupid? No, it was only because they wanted to believe in it from the depths of their heart.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 164,
+      text: "People who could confidently say they did their best",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 165,
+      text: "If u were not this challenging, how then would u be worthy of my effort.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 166,
+      text: "Heaven does not want us to succeed, thus it sent such a calamity, but I will defy heaven. Competing with men, competing with heaven, this is the fun of life.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 167,
+      text: "The mentality of the Companions was a hundred times more powerful than mere mortals'. They could withstand tremendous physical pain, they could withstand cultivating in loneliness.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 168,
+      text: "There is time for everything.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 169,
+      text: "Opportunities favor those who are prepared.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 170,
+      text: "As long as u haven't fallen, there is a chance to turn everything around.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 171,
+      text: "Everything is merely an illusion.",
+      author: "Unknown",
+      source: "Spiritual Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 172,
+      text: "Collective seemingly insignificant choices lead to success.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 173,
+      text: "No matter how busy he was, he would always find time for it.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 174,
+      text: "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 175,
+      text: "Every time u wake up to reality is a new day.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 176,
+      text: "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings come with calamities.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 177,
+      text: "People are anxious to improve their circumstances but are unwilling to improve themselves; they therefore remain bound by their own words and actions.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 178,
+      text: "There is no absolutely desperate situation in this world, there are only people who despair.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 179,
+      text: "Those who produce rather than consume in their free time",
+      author: "Unknown",
+      source: "Motivation",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 180,
+      text: "Be so strong even the demons are afraid of u.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "power",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 181,
+      text: "Keep silent and do the right thing at the right time",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 182,
+      text: "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 183,
+      text: "U will stay like this till the end if u do not make the 1st move",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 184,
+      text: "How could a farmer understand the thoughts of a conqueror.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "power",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 185,
+      text: "Only the foolishness of mortals is eternal in the rivers of time!",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 186,
+      text: "Allah takes away somethings in other for u to return, if u do not wish 4 it to be taken away...never leave in the first place.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 187,
+      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Ur Expectations.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 188,
+      text: "A mistake is simply another way of doing things.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 189,
+      text: "You cannot change your destination overnight, but you can change your direction overnight.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 190,
+      text: "There are two great days in a person's life: the day you were born and the day you discover why.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 191,
+      text: "If someone is going down the wrong road, he doesn't need motivation to speed up. He needs to stop.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 192,
+      text: "If you develop the habits of success, you'll make success a habit.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 193,
+      text: "The wise man questions himself, the fool others.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 194,
+      text: "A bend in the road is not the end of the road unless you fail to make the turn.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 195,
+      text: "If you plan on being anything less than you are capable of being, you will probably be unhappy all the days of your life.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 196,
+      text: "To know the road ahead, ask those coming back.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 197,
+      text: "Everything looks like a failure in the middle.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 198,
+      text: "If you want to keep giving, you have to keep growing.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 199,
+      text: "You have to give up to grow up.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 200,
+      text: "O son of Adam, so long as you call upon Me and ask of Me, I shall forgive you for what you have done.",
+      author: "Hadith Qudsi",
+      source: "Sacred Hadith",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 201,
+      text: "Strike the iron while it's hot, cultivate when you are still young.",
+      author: "Li Qiye",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 202,
+      text: "The road to the peak is one with battles, to begin with.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 203,
+      text: "IF YOUR PARENTS COUNT ON YOU, DON'T PLAY THE SAME GAME AS THOSE WHO COUNT ON THEIR PARENTS.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 204,
+      text: "Take care of the first half of your deen before seeking the other half.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 205,
+      text: "You will not achieve virtuous conduct until you give of what you cherish.",
+      author: "Unknown",
+      source: "Islamic Wisdom",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 206,
+      text: "THE JOURNEY AWAITS.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 207,
+      text: "Many geniuses are born but only a few reach their potential.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "growth",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 208,
+      text: "I wonder for the one who is pre-occupied by the faults of others while he forgets about his own.",
+      author: "Unknown",
+      source: "Excellence Exhortations",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 209,
+      text: "Faith is trusting in advance what will only make sense in reverse.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 210,
+      text: "Unhappiness is not knowing what we want and killing ourselves to get it.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 211,
+      text: "Spend (on charity), O son of Adam, and I shall spend on you.",
+      author: "Hadith Qudsi",
+      source: "Sacred Hadith",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 212,
+      text: "Like naruto, struggle through the pain.",
+      author: "Unknown",
+      source: "Motivation",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 213,
+      text: "Don't just go with the flow.",
+      author: "Unknown",
+      source: "Life Wisdom",
+      category: "discipline",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 214,
+      text: "Heaven's will is unable to control men completely.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "power",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 215,
+      text: "The sweet scent of a woman is the grave of a hero!",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 216,
+      text: "Remember your wish to travel throughout all the realms.",
+      author: "Unknown",
+      source: "Cultivation Wisdom",
+      category: "perseverance",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 217,
+      text: "If u don't Trust ur self, then at least TRUST ALLAH.",
+      author: "Unknown",
+      source: "Faith Reflection",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 218,
+      text: "On the Day [some] faces will turn white and [some] faces will turn black.",
+      author: "Qur'an 3:106",
+      source: "Holy Quran",
+      category: "faith",
+      contexts: ["daily"],
+      favorite: false
     }
   ],
   
