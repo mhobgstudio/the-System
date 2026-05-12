@@ -1229,9 +1229,53 @@ let currentXP = 0;
 // Add these variables for spider chart tracking
 let previousStats = null;
 let currentStats = null;
+let statIncreases = { strength: 0, agility: 0, intelligence: 0, stamina: 0, willpower: 0, discipline: 0 };
 let statHistory = [];
 let currentChartView = 'current'; // 'current', 'history', or 'compare'
 let timeRange = 'week'; // 'week', 'month', or 'alltime'
+let achievementCategory = 'all';
+let achievementStatus = 'all';
+
+// Track stat changes for relative increase display
+function trackStatIncrease(stat, oldValue, newValue) {
+  if (oldValue !== undefined && newValue > oldValue) {
+    statIncreases[stat] = newValue - oldValue;
+    // Reset increase after 3 seconds
+    setTimeout(() => {
+      statIncreases[stat] = 0;
+      // Re-render to remove increase indicator
+      if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
+    }, 3000);
+  }
+}
+
+// Helper to update a single stat's progress bar
+function updateStatProgressBar(stat) {
+  const mainBar = document.getElementById(`${stat}-progress-main`);
+  const progressText = document.getElementById(`${stat}-progress-text`);
+  if (mainBar && currentStats) {
+    // Use bucket size (100) so each point = 1% of bar (visible movement)
+    const bucketSize = 100;
+    const progressInBucket = currentStats[stat] % bucketSize;
+    // Show progress within current bucket as percentage
+    const pct = Math.min(100, Math.round((progressInBucket / bucketSize) * 100));
+    mainBar.style.width = pct + '%';
+    
+    if (statIncreases[stat] > 0) {
+      mainBar.classList.add('stat-increase');
+      void mainBar.offsetWidth; // Force reflow
+    } else {
+      mainBar.classList.remove('stat-increase');
+    }
+  }
+  if (progressText && currentStats) {
+    const increaseText = statIncreases[stat] > 0 ? ` (+${statIncreases[stat]})` : '';
+    // Show: current/total [bucket progress]
+    const bucketSize = 100;
+    const currentBucket = Math.floor(currentStats[stat] / bucketSize) + 1;
+    progressText.textContent = `${currentStats[stat]}/${MAX_STAT} [${currentBucket}00s]${increaseText}`;
+  }
+}
 
 const statsElems = {
   strength: document.getElementById("strength"),
@@ -1256,8 +1300,8 @@ addQuestBtn.addEventListener('click', () => {
 
   // Create a placeholder quest element and open the standard edit panel for it
   const newQuestElem = document.createElement('div');
-  newQuestElem.className = 'quest';
-  questsElem.appendChild(newQuestElem);
+  newQuestElem.className = 'quest quest-enter';
+  appendQuestWithAnimation(questsElem, newQuestElem);
 
   const newQuestObj = {
     id: 'new',
@@ -1577,10 +1621,18 @@ async function initializeGame() {
 
   // Load all quests from the database
   const quests = await db.quests.toArray();
-  quests.forEach(quest => {
-    const questElement = createQuestElement(quest);
-    document.getElementById('quests').appendChild(questElement);
-  });
+  const questsContainer = document.getElementById('quests');
+  const emptyState = document.getElementById('quests-empty');
+  if (quests.length === 0) {
+    if (emptyState) emptyState.style.display = 'flex';
+  } else {
+    if (emptyState) emptyState.style.display = 'none';
+    quests.forEach((quest, i) => {
+      const questElement = createQuestElement(quest);
+      questElement.style.animationDelay = `${i * 0.05}s`;
+      appendQuestWithAnimation(questsContainer, questElement);
+    });
+  }
 
   // Initialize currentStats for progress bars
   if (playerStats.length > 0) {
@@ -1663,11 +1715,11 @@ async function generateDailyQuests(quests) {
   const dailyQuests = getRandomQuests(quests, 31);
   dailyQuests.forEach((quest) => {
     const questElem = createQuestElement(quest);
-    questsElem.appendChild(questElem);
+    appendQuestWithAnimation(questsElem, questElem);
   });
 }
 
-function createQuestElement(quest) {
+function createQuestElement(quest, animate = true) {
   const questElem = document.createElement("div");
   questElem.className = "quest";
   questElem.dataset.questId = quest.id; // Store quest ID for reference
@@ -1749,7 +1801,25 @@ function createQuestElement(quest) {
     openQuestEditPanel(quest, questElem);
   });
 
+  if (animate) {
+    questElem.classList.add('quest-enter');
+  }
+
   return questElem;
+}
+
+function updateQuestsEmptyState() {
+  const container = document.getElementById('quests');
+  const empty = document.getElementById('quests-empty');
+  if (!container || !empty) return;
+  const hasQuests = container.querySelector('.quest:not(.quest-edit-panel)');
+  empty.style.display = hasQuests ? 'none' : 'flex';
+}
+
+function appendQuestWithAnimation(container, questElem, delay = 0) {
+  if (delay) questElem.style.animationDelay = `${delay}s`;
+  container.appendChild(questElem);
+  updateQuestsEmptyState();
 }
 
 async function toggleDefaultQuest(questTitle, heartIcon) {
@@ -2016,6 +2086,10 @@ function openQuestEditPanel(quest, questElemToEdit) {
                                         data-stat="${stat}">${stat}</button>`).join('')}
             </div>
           </div>
+          <div id="quest-suggestion-popup" class="suggestion-popup" style="display: none;">
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
+            <div id="quest-suggestions" class="suggestions-container"></div>
+          </div>
 
           <div class="panel-section">
             <label>Due Date</label>
@@ -2034,10 +2108,6 @@ function openQuestEditPanel(quest, questElemToEdit) {
               <button type="button" class="save-quest glow-button" onclick="saveQuestEdit(this)">Save</button>
               <button type="button" class="cancel-quest glow-button" onclick="cancelQuestEdit(this.closest('.quest-edit-panel'))">Cancel</button>
           </div>
-      </div>
-      <div id="quest-suggestion-popup" class="suggestion-popup" style="display: none;">
-        <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
-        <div id="quest-suggestions" class="suggestions-container"></div>
       </div>
   `;
 
@@ -2198,7 +2268,7 @@ async function completeQuest(xp, stat, questElem) {
     // Remove the quest from DOM smoothly
     if (questElem) {
       questElem.style.opacity = 0;
-      setTimeout(() => { if (questElem && questElem.parentNode) questElem.remove(); }, 300);
+      setTimeout(() => { if (questElem && questElem.parentNode) { questElem.remove(); updateQuestsEmptyState(); } }, 300);
     }
 
     // Get the quest ID to update in database
@@ -2281,17 +2351,30 @@ async function completeQuest(xp, stat, questElem) {
       setTimeout(() => statElem.classList.remove('animate'), 500);
     }
 
-    // Update progress bar
+    // Update progress bar with relative increase
     const progressBar = document.getElementById(`${stat}-progress-main`);
     if (progressBar && currentStats) {
-      const pct = Math.min(100, Math.round((currentStats[stat] / 100) * 100));
+      // Calculate percentage based on MAX_STAT (10000), but display as 0-100%
+      const pct = Math.min(100, Math.round((currentStats[stat] / MAX_STAT) * 100));
       progressBar.style.width = pct + '%';
+      
+      // Add increase indicator if there was a recent increase
+      if (statIncreases[stat] > 0) {
+        progressBar.classList.add('stat-increase');
+        // Calculate the increase as a percentage of MAX_STAT
+        const increasePct = Math.min(100 - pct, Math.round((statIncreases[stat] / MAX_STAT) * 100));
+        progressBar.style.setProperty('--increase-width', `${increasePct}%`);
+      } else {
+        progressBar.classList.remove('stat-increase');
+      }
     }
     
-    // Update progress text (e.g., "5/100")
+    // Update progress text with relative increase - show actual stat value and next milestone
     const progressText = document.getElementById(`${stat}-progress-text`);
     if (progressText && currentStats) {
-      progressText.textContent = `${currentStats[stat]}/100`;
+      const increaseText = statIncreases[stat] > 0 ? ` (+${statIncreases[stat]})` : '';
+      // Show as "current/max" with max being 10000
+      progressText.textContent = `${currentStats[stat]}/${MAX_STAT}${increaseText}`;
     }
 
     // Display a quest completion quote
@@ -2336,7 +2419,7 @@ async function deleteQuest(questId, questElem) {
 
         // Remove from DOM
         questElem.style.opacity = 0;
-        setTimeout(() => questElem.remove(), 300);
+        setTimeout(() => { questElem.remove(); updateQuestsEmptyState(); }, 300);
       }
 
       showNotification("Quest deleted successfully!", "success");
@@ -2359,8 +2442,14 @@ async function increaseStat(stat) {
         stats[stat] = 1;
       }
       
+      // Track old value before increase
+      const oldValue = stats[stat] || 1;
+      
       // Increase stat by 1
       stats[stat]++;
+      
+      // Track the increase for visual feedback
+      trackStatIncrease(stat, oldValue, stats[stat]);
       
       // Update database
       await db.playerStats.put(stats);
@@ -2858,9 +2947,10 @@ tourGuideBtn.addEventListener("click", startTourGuide);
 async function refreshData() {
   questsElem.innerHTML = ""; // Clear current quests
   const quests = await db.quests.toArray(); // Fetch updated quests
-  quests.forEach((quest) => {
-    const newQuestElem = createQuestElement(quest); // Create the quest element
-    questsElem.appendChild(newQuestElem); // Add it to the UI
+  quests.forEach((quest, i) => {
+    const newQuestElem = createQuestElement(quest);
+    newQuestElem.style.animationDelay = `${i * 0.05}s`;
+    appendQuestWithAnimation(questsElem, newQuestElem);
   });
 
   filterQuests(); // Re-apply current filters
@@ -2882,9 +2972,10 @@ async function restartGame() {
   await initializeGame(); // You might keep your existing initialization logic
   const quests = await db.quests.toArray(); // Fetch all quests from the database
 
-  quests.forEach((quest) => {
-    const newQuestElem = createQuestElement(quest); // Create the quest element
-    questsElem.appendChild(newQuestElem); // Add it to the UI
+  quests.forEach((quest, i) => {
+    const newQuestElem = createQuestElement(quest);
+    newQuestElem.style.animationDelay = `${i * 0.05}s`;
+    appendQuestWithAnimation(questsElem, newQuestElem);
   });
 }
 
@@ -3179,27 +3270,60 @@ function initializeQuotes() {
       const favEntries = await db.favoriteQuotes.toArray().catch(()=>[]);
       const favoriteIds = (favEntries||[]).map(f=>f.quoteId);
       const favQuotes = motivationalQuotesSystem.quotes.filter(q=>favoriteIds.includes(q.id));
-      favoritesGrid.innerHTML = favQuotes.map(q=>`
-        <div class="favorite-quote-item" data-quoteid="${q.id}">
+      if (favQuotes.length === 0){
+        favoritesGrid.innerHTML = '<div class="favorites-empty">No favorites yet. Click the <i class="far fa-heart"></i> on a quote to save it!</div>';
+        return;
+      }
+      favoritesGrid.innerHTML = favQuotes.map((q, idx)=>`
+        <div class="favorite-quote-item" data-quoteid="${q.id}" style="animation-delay:${idx * 0.05}s">
           <div class="favorite-quote-text">${escapeHtml(q.text)}</div>
           <div class="favorite-quote-author">${escapeHtml(q.author || '')}</div>
-          <div class="favorite-quote-category">${escapeHtml(q.category || '')}</div>
+          <div class="favorite-quote-category" data-category="${escapeHtml(q.category || '')}">${escapeHtml(q.category || '')}</div>
+          <button class="favorite-quote-remove" data-quoteid="${q.id}"><i class="fas fa-times"></i></button>
         </div>
-      `).join('') || '<div>No favorites yet</div>';
+      `).join('');
     }
 
     render(currentQuote);
 
-    if (newBtn) newBtn.addEventListener('click', () => render(motivationalQuotesSystem.getRandomQuote()));
+    if (newBtn) newBtn.addEventListener('click', () => {
+      newBtn.classList.add('spinning');
+      setTimeout(() => newBtn.classList.remove('spinning'), 500);
+      render(motivationalQuotesSystem.getRandomQuote());
+    });
     if (favBtn) favBtn.addEventListener('click', async () => {
       if (!currentQuote) return;
       const nowFav = await motivationalQuotesSystem.toggleFavorite(currentQuote.id).catch(() => null);
-      if (nowFav !== null) favBtn.classList.toggle('favorited', !!nowFav);
+      if (nowFav !== null) {
+        favBtn.classList.toggle('favorited', !!nowFav);
+        if (sounds && sounds.favorite && typeof sounds.favorite.play === 'function') try{ sounds.favorite.play(); }catch(e){}
+      }
       renderFavorites();
     });
 
+    // Remove favorite via event delegation
+    if (favoritesGrid) {
+      favoritesGrid.addEventListener('click', async (e) => {
+        const removeBtn = e.target.closest('.favorite-quote-remove');
+        if (!removeBtn) return;
+        const qid = parseInt(removeBtn.dataset.quoteid, 10);
+        if (!qid) return;
+        const item = removeBtn.closest('.favorite-quote-item');
+        if (item) {
+          item.classList.add('favorite-removing');
+          await new Promise(r => setTimeout(r, 280));
+        }
+        await db.favoriteQuotes.where('quoteId').equals(qid).delete().catch(()=>{});
+        renderFavorites();
+        // Also update the heart icon if the removed quote is the current one
+        if (currentQuote && currentQuote.id === qid && favBtn) favBtn.classList.remove('favorited');
+      });
+    }
+
     document.querySelectorAll('.category-button').forEach(btn => {
       btn.addEventListener('click', () => {
+        document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         const cat = btn.dataset.category;
         render(motivationalQuotesSystem.getQuoteByCategory(cat));
       });
@@ -3255,11 +3379,13 @@ function updateStatDetails() {
     }
     maxVal = Math.max(100, maxVal); // Ensure a minimum max value for scaling
 
+    let total = 0;
     statKeys.forEach(async stat => { // Made async to await getStatChanges
       const bar = document.getElementById(`${stat}-progress`);
       const valEl = document.getElementById(`${stat}-value`);
       const changeEl = document.getElementById(`${stat}-change`); // Get the change element
       const value = stats[stat] || 0;
+      total += value;
 
       if (bar) {
         const pct = Math.min(100, Math.round((value / maxVal) * 100));
@@ -3269,18 +3395,33 @@ function updateStatDetails() {
       
       // Update stat changes
       if (changeEl) {
-        const changes = await getStatChanges(); // Await the changes
-        if (changes && changes[stat] !== undefined) {
-          const change = changes[stat];
-          changeEl.textContent = change > 0 ? `+${change}` : (change < 0 ? `${change}` : '0');
-          changeEl.classList.toggle('positive', change > 0);
-          changeEl.classList.toggle('negative', change < 0);
+        if (currentChartView === 'compare' && previousStats) {
+          const prev = previousStats[stat] || 0;
+          const diff = value - prev;
+          const pct = prev > 0 ? Math.round((diff / prev) * 100) : (diff > 0 ? 100 : 0);
+          changeEl.textContent = `${diff > 0 ? '+' : ''}${diff} (${pct > 0 ? '+' : ''}${pct}%)`;
+          changeEl.classList.toggle('positive', diff > 0);
+          changeEl.classList.toggle('negative', diff < 0);
         } else {
-          changeEl.textContent = '0'; // No change or no history
-          changeEl.classList.remove('positive', 'negative');
+          const changes = await getStatChanges(); // Await the changes
+          if (changes && changes[stat] !== undefined) {
+            const change = changes[stat];
+            changeEl.textContent = change > 0 ? `+${change}` : (change < 0 ? `${change}` : '0');
+            changeEl.classList.toggle('positive', change > 0);
+            changeEl.classList.toggle('negative', change < 0);
+          } else {
+            changeEl.textContent = '0'; // No change or no history
+            changeEl.classList.remove('positive', 'negative');
+          }
         }
       }
     });
+
+    // Update total and average in header
+    const totalEl = document.getElementById('stat-total-value');
+    const avgEl = document.getElementById('stat-avg-value');
+    if (totalEl) totalEl.textContent = total;
+    if (avgEl) avgEl.textContent = Math.round(total / statKeys.length);
 
     // Render the spider/radar polygon visualization
     try { 
@@ -3518,22 +3659,91 @@ function drawComparisonChart(stats, maxVal) {
   }
 }
 
-// Draw historical stats line chart (placeholder for now)
+// Draw historical stats line chart (SVG)
 function drawHistoryChart(historyData) {
   const historyChart = document.getElementById('history-chart');
   if (!historyChart) return;
 
-  historyChart.innerHTML = ''; // Clear previous chart content
+  if (!historyData || historyData.length === 0) {
+    historyChart.innerHTML = '<div class="history-placeholder">No historical data yet. Complete quests to start tracking!</div>';
+    return;
+  }
 
-  // Display a placeholder message
-  const placeholder = document.createElement('div');
-  placeholder.className = 'history-placeholder';
-  placeholder.textContent = 'Historical stat tracking is coming soon!';
-  historyChart.appendChild(placeholder);
+  const keys = ['strength','agility','intelligence','stamina','willpower','discipline'];
+  const colors = ['#e74c3c','#2ecc71','#3498db','#f39c12','#9b59b6','#1abc9c'];
 
-  // In a full implementation, you would use a charting library or SVG to draw the historical data here.
-  // The 'historyData' array contains objects with date and stat values.
-  // Example: historyData = [{ date: "...", strength: 5, agility: 7, ... }]
+  const rect = historyChart.getBoundingClientRect();
+  const width = Math.max(rect.width || 600, 300);
+  const height = 250;
+  const pad = { top: 20, right: 20, bottom: 45, left: 45 };
+  const cw = width - pad.left - pad.right;
+  const ch = height - pad.top - pad.bottom;
+
+  const sorted = [...historyData].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  let maxVal = 0;
+  sorted.forEach(d => keys.forEach(k => { maxVal = Math.max(maxVal, Number(d[k] || 0)); }));
+  maxVal = Math.max(100, maxVal);
+
+  const xF = (i) => pad.left + (sorted.length > 1 ? (i / (sorted.length - 1)) * cw : cw / 2);
+  const yF = (v) => pad.top + ch - (v / maxVal) * ch;
+
+  const lines = keys.map((key, ki) => {
+    const pts = sorted.map((d, i) => `${xF(i)},${yF(Number(d[key] || 0))}`).join(' ');
+    return `<polyline points="${pts}" fill="none" stroke="${colors[ki]}" stroke-width="2" opacity="0.85" stroke-linejoin="round" />`;
+  }).join('');
+
+  const dots = keys.map((key, ki) => {
+    return sorted.map((d, i) => {
+      const cx = xF(i), cy = yF(Number(d[key] || 0));
+      const isLast = i === sorted.length - 1;
+      return `<circle cx="${cx}" cy="${cy}" r="${isLast ? 4 : 2.5}" fill="${colors[ki]}" stroke="#1a1a2e" stroke-width="1" opacity="0.9" />`;
+    }).join('');
+  }).join('');
+
+  const xLabels = sorted.map((d, i) => {
+    const date = new Date(d.date);
+    const show = sorted.length <= 14 || i % Math.ceil(sorted.length / 10) === 0 || i === sorted.length - 1;
+    return show
+      ? `<text x="${xF(i)}" y="${height - pad.bottom + 18}" font-size="9" fill="#999" text-anchor="middle">${date.getMonth()+1}/${date.getDate()}</text>`
+      : '';
+  }).join('');
+
+  const yLabels = [];
+  const steps = 4;
+  for (let i = 0; i <= steps; i++) {
+    const val = Math.round((maxVal / steps) * i);
+    const y = yF(val);
+    yLabels.push(`
+      <text x="${pad.left - 8}" y="${y + 3}" font-size="9" fill="#999" text-anchor="end">${val}</text>
+      <line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#333" stroke-width="0.5" stroke-dasharray="3,3" />
+    `);
+  }
+
+  const cols = 3;
+  const legend = keys.map((key, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const lx = pad.left + col * (cw / cols);
+    const ly = height - pad.bottom + 32 + row * 16;
+    const lastVal = sorted[sorted.length - 1][key] || 0;
+    return `
+      <line x1="${lx}" y1="${ly}" x2="${lx + 14}" y2="${ly}" stroke="${colors[i]}" stroke-width="2.5" stroke-linecap="round" />
+      <text x="${lx + 18}" y="${ly + 4}" font-size="9" fill="#bbb">${key.charAt(0).toUpperCase() + key.slice(1)}</text>
+      <text x="${lx + 18 + key.length * 6 + 4}" y="${ly + 4}" font-size="9" fill="#666">${lastVal}</text>
+    `;
+  }).join('');
+
+  historyChart.innerHTML = `
+    <svg width="100%" height="${height}" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent" />
+      ${yLabels.join('')}
+      ${lines}
+      ${dots}
+      ${xLabels}
+      ${legend}
+    </svg>
+  `;
 }
 
 
@@ -3646,6 +3856,13 @@ function initializeEnhancedUI() {
       if (overlay) overlay.classList.add('show');
       document.body.style.overflow = 'hidden';
 
+      const content = spiderModal.querySelector('.spider-chart-content');
+      if (content) {
+        content.classList.remove('modal-enter');
+        void content.offsetWidth;
+        content.classList.add('modal-enter');
+      }
+
       await recordStatHistory(); // Record current stats when opening the chart
       switchChartView('current'); // Set default view
 
@@ -3687,6 +3904,11 @@ function initializeEnhancedUI() {
         if (spiderModal && spiderModal.style.display === 'flex') closeSpider();
       });
     }
+
+    // Escape key closes the modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && spiderModal && spiderModal.style.display === 'flex') closeSpider();
+    });
 
     // Chart tab handling
     chartTabs.forEach(tab => {
@@ -3789,20 +4011,42 @@ function highlightStat(stat) {
 }
 
 
+function applyView(view) {
+  const containerEl = document.querySelector('.container');
+  const questsEl = document.getElementById('quests');
+  const statsEl = document.querySelector('.stats');
+  if (!containerEl) return;
+  containerEl.classList.remove('dashboard-view', 'detailed-view', 'compact-view');
+  containerEl.classList.add(`${view}-view`);
+  if (questsEl) {
+    questsEl.classList.remove('view-detailed', 'view-compact', 'view-dashboard');
+    questsEl.classList.add(`view-${view}`);
+  }
+  if (statsEl) {
+    statsEl.classList.remove('view-detailed', 'view-compact', 'view-dashboard');
+    statsEl.classList.add(`view-${view}`);
+  }
+  localStorage.setItem('preferredView', view);
+  // Dispatch event so other components can react
+  document.dispatchEvent(new CustomEvent('viewchange', { detail: { view } }));
+}
+
 function initializeViewToggle(){
   try{
     const btns = document.querySelectorAll('.view-btn');
-    const containerEl = document.querySelector('.container');
+    const savedView = localStorage.getItem('preferredView') || 'dashboard';
+    // Activate saved view button
+    const targetBtn = document.querySelector(`.view-btn[data-view="${savedView}"]`);
+    if (targetBtn) {
+      btns.forEach(b => b.classList.remove('active'));
+      targetBtn.classList.add('active');
+    }
+    applyView(savedView);
     btns.forEach(btn=>{
       btn.addEventListener('click', ()=>{
         btns.forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        const view = btn.dataset.view;
-        if (!containerEl) return;
-        containerEl.classList.remove('dashboard-view', 'detailed-view', 'compact-view');
-        if (view === 'dashboard') containerEl.classList.add('dashboard-view');
-        else if (view === 'detailed') containerEl.classList.add('detailed-view');
-        else if (view === 'compact') containerEl.classList.add('compact-view');
+        applyView(btn.dataset.view);
       });
     });
   }catch(e){console.error('initializeViewToggle error',e);} 
@@ -4087,20 +4331,35 @@ function updateMainStatsDisplay(){
     const next = calculateXPForNextLevel(currentLevel);
     if (xpRequiredElem) xpRequiredElem.textContent = next;
     if (xpProgressElem) xpProgressElem.style.width = `${(currentXP / next) * 100}%`;
-
-    // update main stat elements
+    
+    // update main stat elements - use rolling 100-point buckets for visible progress
     if (currentStats){
+      const bucketSize = 100; // Each 100 points fills one bar completely
       Object.keys(currentStats).forEach(stat=>{
         const el = statsElems[stat];
         if (el) el.textContent = currentStats[stat];
         const mainBar = document.getElementById(`${stat}-progress-main`);
         if (mainBar){
-          const pct = Math.min(100, Math.round((currentStats[stat] / (typeof MAX_STAT !== 'undefined'? MAX_STAT:100)) * 100));
+          // Show progress within current 100-point bucket (0-100 → 0-100%)
+          const progressInBucket = currentStats[stat] % bucketSize;
+          const pct = Math.min(100, Math.round((progressInBucket / bucketSize) * 100));
           mainBar.style.width = pct + '%';
+          
+          // Add increase indicator if there was a recent increase
+          if (statIncreases[stat] > 0) {
+            mainBar.classList.add('stat-increase');
+            // Force reflow to restart animation
+            void mainBar.offsetWidth;
+          } else {
+            mainBar.classList.remove('stat-increase');
+          }
         }
         const progressText = document.getElementById(`${stat}-progress-text`);
         if (progressText) {
-          progressText.textContent = `${currentStats[stat]}/100`;
+          // Show: current/total [bucket] with increase if any
+          const currentBucket = Math.floor(currentStats[stat] / bucketSize) + 1;
+          const increaseText = statIncreases[stat] > 0 ? ` (+${statIncreases[stat]})` : '';
+          progressText.textContent = `${currentStats[stat]}/${MAX_STAT} [${currentBucket}00s]${increaseText}`;
         }
       });
     }
@@ -4202,18 +4461,40 @@ function initializePomodoro() {
 async function initializeAchievements(){
   try{
     const achs = await db.achievements.toArray().catch(()=>[]);
-    // If db has entries, render them; otherwise seed from definitions
     if (!achs || achs.length === 0){
       const toAdd = achievementDefinitions.map(({condition,...rest})=>({...rest, unlocked:false, unlockedAt:null}));
       await db.achievements.bulkAdd(toAdd).catch(()=>{});
     }
+
+    document.querySelectorAll('.achievement-category').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.achievement-category').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        achievementCategory = btn.dataset.category;
+        renderAchievements();
+      });
+    });
+
+    document.querySelectorAll('.achievement-status-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.achievement-status-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        achievementStatus = btn.dataset.status;
+        renderAchievements();
+      });
+    });
+
     renderAchievements();
-  }catch(e){console.error('initializeAchievements error',e);} 
+  }catch(e){console.error('initializeAchievements error',e);}
 }
 
 async function renderAchievements(){
   try{
-    const items = await db.achievements.toArray().catch(()=>[]);
+    const [items, statsArr] = await Promise.all([
+      db.achievements.toArray().catch(()=>[]),
+      db.playerStats.toArray().catch(()=>[])
+    ]);
+    const stats = statsArr[0] || {};
     const grid = document.getElementById('achievements-grid');
     const countEl = document.querySelector('.achievement-count');
     const total = items.length || achievementDefinitions.length;
@@ -4222,10 +4503,65 @@ async function renderAchievements(){
     const fill = document.getElementById('achievement-progress-fill');
     if (fill) fill.style.width = `${Math.round((unlockedCount/total)*100)}%`;
 
-    if (grid){
-      grid.innerHTML = (items || []).map(it=>`<div class="achievement-card ${it.unlocked? 'unlocked':''}"><div class="achievement-icon"><i class="${it.icon}"></i></div><div class="achievement-info"><div class="achievement-title">${escapeHtml(it.title)}</div><div class="achievement-desc">${escapeHtml(it.description)}</div></div></div>`).join('');
+    if (!grid) return;
+
+    const now = Date.now();
+    const FIVE_MIN = 5 * 60 * 1000;
+
+    let filtered = items || [];
+
+    if (achievementCategory !== 'all') {
+      filtered = filtered.filter(it => it.category === achievementCategory);
     }
-  }catch(e){console.error('renderAchievements error',e);} 
+    if (achievementStatus === 'unlocked') {
+      filtered = filtered.filter(it => it.unlocked);
+    } else if (achievementStatus === 'locked') {
+      filtered = filtered.filter(it => !it.unlocked);
+    }
+
+    const progressMap = {};
+    achievementDefinitions.forEach(def => { progressMap[def.id] = computeAchievementProgress(def, stats); });
+
+    grid.innerHTML = filtered.map((it, idx) => {
+      const prog = progressMap[it.id] || {};
+      const recently = it.unlocked && it.unlockedAt && (now - new Date(it.unlockedAt).getTime()) < FIVE_MIN;
+      return `<div class="achievement-card ${it.unlocked ? 'unlocked' : 'locked'}${recently ? ' unlock-flash' : ''}" style="animation-delay:${idx * 0.04}s">
+        ${recently ? '<span class="achievement-new-badge">NEW</span>' : ''}
+        <div class="achievement-icon"><i class="${it.icon}"></i></div>
+        <div class="achievement-info">
+          <div class="achievement-title">${escapeHtml(it.title)}</div>
+          <div class="achievement-desc">${escapeHtml(it.description)}</div>
+          ${prog.text ? `<div class="achievement-progress-text">${escapeHtml(prog.text)}</div>` : ''}
+          ${!it.unlocked && prog.condition ? `<div class="achievement-condition">${escapeHtml(prog.condition)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){console.error('renderAchievements error',e);}
+}
+
+function computeAchievementProgress(def, stats) {
+  switch (def.id) {
+    case 1: return { text: `${stats.completedQuests || 0}/1 quest completed`, condition: 'Complete 1 quest' };
+    case 2: return { text: `${stats.completedQuests || 0}/50 quests completed`, condition: 'Complete 50 quests' };
+    case 3: return { text: `Level ${stats.level || 0}/10`, condition: 'Reach level 10' };
+    case 4: {
+      const m = Math.min(stats.strength || 0, stats.agility || 0, stats.intelligence || 0, stats.stamina || 0, stats.willpower || 0, stats.discipline || 0);
+      return { text: `All stats \u2265 ${m}/5`, condition: 'Get all stats to 5' };
+    }
+    case 5: {
+      const m = Math.max(stats.strength || 0, stats.agility || 0, stats.intelligence || 0, stats.stamina || 0, stats.willpower || 0, stats.discipline || 0);
+      return { text: `Highest stat ${m}/10`, condition: 'Get any stat to 10' };
+    }
+    case 6: return { text: `Streak: ${stats.currentStreak || 0}/3 days`, condition: 'Maintain a 3-day streak' };
+    case 7: return { text: `Streak: ${stats.currentStreak || 0}/7 days`, condition: 'Maintain a 7-day streak' };
+    case 8: return { text: `Streak: ${stats.currentStreak || 0}/30 days`, condition: 'Maintain a 30-day streak' };
+    case 9: return { text: `${stats.pomodoroCompleted || 0}/10 sessions`, condition: 'Complete 10 pomodoro sessions' };
+    case 10: {
+      const c = (stats.categoriesCompleted && stats.categoriesCompleted.length) || 0;
+      return { text: `${c}/4 categories`, condition: 'Complete 1 quest in each category' };
+    }
+    default: return {};
+  }
 }
 
 async function checkAchievements(){
@@ -4249,7 +4585,6 @@ async function checkAchievements(){
 
 // Re-initialize small features
 initializePomodoro();
-initializeAchievements();
 
 // Export Game Functionality
 // Save Default Quests to File

@@ -226,6 +226,9 @@
           <div class="search-wrapper">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="quest-search" placeholder="Search quests..." class="quest-input">
+            <button id="clear-search-btn" class="clear-search-btn" style="display: none;">
+              <i class="fas fa-times"></i>
+            </button>
             <button id="search-btn" class="search-btn">
               <i class="fas fa-search"></i>
             </button>
@@ -311,18 +314,23 @@
           <button id="new-quote" class="quote-button">
             <i class="fas fa-sync-alt"></i>
           </button>
-          <div class="quote-categories">
-            <button data-category="power" class="category-button">Power</button>
-            <button data-category="wisdom" class="category-button">Wisdom</button>
-            <button data-category="discipline" class="category-button">Discipline</button>
-            <button data-category="growth" class="category-button">Growth</button>
-            <button data-category="perseverance" class="category-button">Perseverance</button>
-          </div>
+           <div class="quote-categories">
+             <button data-category="power" class="category-button">Power</button>
+             <button data-category="wisdom" class="category-button">Wisdom</button>
+             <button data-category="discipline" class="category-button">Discipline</button>
+             <button data-category="growth" class="category-button">Growth</button>
+             <button data-category="perseverance" class="category-button">Perseverance</button>
+             <button data-category="faith" class="category-button">Faith</button>
+           </div>
         </div>
       </div>
 
       <div class="quests quests-grid" id="quests">
-        <!-- Quests will be dynamically added here -->
+        <div class="quests-empty" id="quests-empty">
+          <i class="fas fa-scroll"></i>
+          <h3>No Quests Yet</h3>
+          <p>Click "Add New Quest" to start your journey, or load default quests from settings.</p>
+        </div>
       </div>
 
       <button id="add-quest-btn">Add New Quest</button>
@@ -374,6 +382,12 @@
           </button>
         </div>
         
+        <div class="achievement-status-filters">
+          <button class="achievement-status-btn active" data-status="all">All</button>
+          <button class="achievement-status-btn" data-status="unlocked">Unlocked</button>
+          <button class="achievement-status-btn" data-status="locked">Locked</button>
+        </div>
+        
         <div class="achievements-grid" id="achievements-grid">
           <div class="achievement-card">
             <div class="achievement-icon"><i class="fas fa-shoe-prints"></i></div>
@@ -386,14 +400,12 @@
       </div>
 
       <div class="favorites-container">
-        <h3>Favorite Quotes</h3>
-        <div class="favorites-grid" id="favorites-grid">
-          <div class="favorite-quote-item">
-            <div class="favorite-quote-text">"Great power comes with great benefits."</div>
-            <div class="favorite-quote-author">- Fang Yuan, Reverend Insanity</div>
-            <div class="favorite-quote-category">power</div>
-            <button class="favorite-quote-remove"><i class="fas fa-times"></i></button>
-          </div>
+        <div class="favorites-header">
+          <h3>Favorite Quotes</h3>
+          <span class="toggle-favorites">Hide</span>
+        </div>
+        <div class="favorites-grid active" id="favorites-grid">
+          <div class="favorites-empty">No favorites yet. Click the <i class="far fa-heart"></i> on a quote to save it!</div>
         </div>
       </div>
     </div>
@@ -459,6 +471,10 @@
         <div class="modal-content spider-chart-content">
             <span class="modal-close" id="spider-chart-modal-close">&times;</span>
             <h2>Character Stats Visualization</h2>
+            <div class="stat-summary">
+                <span class="stat-summary-total">Total: <strong id="stat-total-value">0</strong></span>
+                <span class="stat-summary-avg">Avg: <strong id="stat-avg-value">0</strong></span>
+            </div>
             
             <div class="chart-controls">
                 <div class="chart-toggle">
@@ -566,47 +582,39 @@
     <script src="app.js"></script>
     <script>
     (function(){
+      function updateStreakTitle() {
       const streakTitles = [
         { days: 0, title: "Mortal" },
-        { days: 1, title: "Quasi Apprentice" },
-        { days: 3, title: "Apprentice" },
-        { days: 7, title: "Quasi Student" },
-        { days: 14, title: "Student" },
-        { days: 21, title: "Quasi Master" },
-        { days: 30, title: "Master" },
-        { days: 45, title: "Quasi Grand Master" },
-        { days: 60, title: "Grand Master" },
-        { days: 90, title: "Quasi Great Grand Master" },
-        { days: 120, title: "Great Grand Master" },
-        { days: 150, title: "Legendary Grand Master" },
-        { days: 210, title: "Demi-Immortal" },
-        { days: 300, title: "Ascendant" },
+        { days: 3, title: "Quasi Apprentice" },
+        { days: 7, title: "Apprentice" },
+        { days: 14, title: "Quasi Student" },
+        { days: 21, title: "Student" },
+        { days: 30, title: "Quasi Master" },
+        { days: 60, title: "Master" },
+        { days: 90, title: "Quasi Grand Master" },
+        { days: 120, title: "Grand Master" },
+        { days: 150, title: "Quasi Great Grand Master" },
+        { days: 180, title: "Great Grand Master" },
         { days: 365, title: "Immortal" },
       ];
-      function updateTitlesFromStreak() {
         const cs = document.getElementById('current-streak');
-        const ct = document.getElementById('character-title');
-        const cts = document.getElementById('character-title-stats');
         const st = document.getElementById('streak-title');
-        if (!cs) return;
+        if (!cs || !st) return;
         const val = parseInt(cs.textContent) || 0;
         let currentTitle = 'Mortal';
         for (const level of streakTitles) {
           if (val >= level.days) currentTitle = level.title;
         }
-        if (ct) ct.textContent = currentTitle;
-        if (cts) cts.textContent = currentTitle;
-        if (st) st.textContent = `(${currentTitle})`;
+        st.textContent = `(${currentTitle})`;
       }
       document.addEventListener('DOMContentLoaded', function(){
-        updateTitlesFromStreak();
+        updateStreakTitle();
         const cs = document.getElementById('current-streak');
         if (cs) {
-          const mo = new MutationObserver(updateTitlesFromStreak);
+          const mo = new MutationObserver(updateStreakTitle);
           mo.observe(cs, { childList: true, characterData: true, subtree: true });
         }
-        // Also update on hourly checks in case streak logic updates elements without mutation
-        setInterval(updateTitlesFromStreak, 60000);
+        setInterval(updateStreakTitle, 60000);
       });
     })();
     </script>

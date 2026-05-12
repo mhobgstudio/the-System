@@ -171,20 +171,24 @@
 
 /* Theme Variables */
 :root {
-  /* Dark Theme (Default) */
-  --bg-main: #0a0a0a;
-  --bg-card: rgba(30, 30, 40, 0.9);
-  --bg-card-dark: rgba(20, 20, 30, 0.7);
-  --bg-card-darker: rgba(15, 15, 25, 0.8);
-  --bg-element: rgba(40, 40, 50, 0.7);
-  --text-primary: #e0e0e0;
-  --text-secondary: #aaaaaa;
+  /* Dark Theme (Default) — Solo Leveling inspired palette */
+  --bg-main: #0d0d14;
+  --bg-card: rgba(22, 24, 35, 0.92);
+  --bg-card-dark: rgba(16, 18, 28, 0.75);
+  --bg-card-darker: rgba(12, 14, 22, 0.85);
+  --bg-element: rgba(30, 32, 45, 0.7);
+  --text-primary: #e8e8ee;
+  --text-secondary: #9898b0;
   --accent-primary: #4a90e2;
   --accent-secondary: #4ecdc4;
   --accent-tertiary: #ffd166;
   --accent-quaternary: #ff4961;
-  --accent-quinary: #9264ff;
-  --border-light: rgba(100, 100, 255, 0.3);
+  --accent-quinary: #b388ff;
+  --accent-green: #51cf66;
+  --accent-coral: #ff6b6b;
+  --accent-orange: #ff922b;
+  --border-light: rgba(74, 144, 226, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.06);
   --shadow-color: rgba(0, 0, 0, 0.7);
   --transition-speed: 0.3s;
   --border-radius-sm: 5px;
@@ -196,22 +200,28 @@
 
 /* Light Theme */
 .theme-light {
-  --bg-main: #f0f0f5;
-  --bg-card: rgba(255, 255, 255, 0.9);
-  --bg-card-dark: rgba(240, 240, 245, 0.8);
-  --bg-card-darker: rgba(230, 230, 235, 0.9);
-  --bg-element: rgba(245, 245, 250, 0.8);
-  --text-primary: #222222;
-  --text-secondary: #555555;
+  --bg-main: #e8e8f0;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-dark: rgba(240, 240, 248, 0.85);
+  --bg-card-darker: rgba(230, 230, 240, 0.9);
+  --bg-element: rgba(245, 245, 252, 0.85);
+  --text-primary: #1a1a28;
+  --text-secondary: #555570;
   --accent-primary: #2970c3;
   --accent-secondary: #3aaa9c;
-  --accent-tertiary: #e0b24a;
-  --accent-quaternary: #d7354a;
-  --accent-quinary: #7449d9;
-  --border-light: rgba(70, 70, 200, 0.15);
+  --accent-tertiary: #d4a840;
+  --accent-quaternary: #cc3350;
+  --accent-quinary: #8a5cd9;
+  --accent-green: #3da84e;
+  --accent-coral: #d45555;
+  --accent-orange: #e07a1a;
+  --border-light: rgba(41, 112, 195, 0.18);
+  --border-subtle: rgba(0, 0, 0, 0.08);
   --shadow-color: rgba(0, 0, 0, 0.1);
   --box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
+
+
 
 /* Ensure proper top visibility and spacing */
 .container {
@@ -592,7 +602,7 @@ p {
 
 .quest-title {
   font-weight: bold;
-  color: #ffd166;
+  color: var(--accent-tertiary);
 }
 
 .quest-difficulty {
@@ -607,7 +617,7 @@ p {
 
 .quest-stat {
   font-size: 0.8rem;
-  color: #4ecdc4;
+  color: var(--accent-secondary);
   margin-right: 0.5rem;
 }
 
@@ -620,33 +630,33 @@ p {
   background-color: rgba(74, 144, 226, 0.2);
   padding: 0.2rem 0.5rem;
   border-radius: 10px;
-  color: #4a90e2;
+  color: var(--accent-primary);
 }
 
-/* Category colors */
+/* Category colors (legacy) */
 .category-work {
-  background-color: rgba(255, 209, 102, 0.2);
-  color: #ffd166;
+  background-color: rgba(74, 144, 226, 0.15);
+  color: var(--accent-primary);
 }
 
 .category-health {
-  background-color: rgba(6, 214, 160, 0.2);
-  color: #06d6a0;
+  background-color: rgba(81, 207, 102, 0.15);
+  color: var(--accent-green);
 }
 
 .category-learning {
-  background-color: rgba(74, 144, 226, 0.2);
-  color: #4a90e2;
+  background-color: rgba(179, 136, 255, 0.15);
+  color: var(--accent-quinary);
 }
 
 .category-personal {
-  background-color: rgba(239, 71, 111, 0.2);
-  color: #ef476f;
+  background-color: rgba(255, 107, 107, 0.15);
+  color: var(--accent-coral);
 }
 
 .quest-check {
   cursor: pointer;
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-size: 1.2rem;
   margin-right: 0.5rem;
   transition: all 0.3s ease;
@@ -659,7 +669,7 @@ p {
 .delete-quest-btn {
   background-color: transparent;
   border: none;
-  color: #ff4961; /* Red color for delete action */
+  color: var(--accent-quaternary); /* Red color for delete action */
   cursor: pointer;
   font-size: 1.1rem;
   padding: 0.2rem 0.5rem;
@@ -691,17 +701,17 @@ p {
 }
 
 .default-quest-btn:hover {
-  color: #ff4961;
+  color: var(--accent-quaternary);
   opacity: 1;
   transform: scale(1.1);
 }
 
 .default-quest-btn.favorited {
-  color: #ff4961;
+  color: var(--accent-quaternary);
 }
 
 button {
-  background-color: #4a90e2;
+  background-color: var(--accent-primary);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -758,7 +768,7 @@ button:hover {
 .level {
   font-size: 3rem;
   font-weight: bold;
-  color: #ffd166;
+  color: var(--accent-tertiary);
   text-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
 }
 
@@ -795,7 +805,7 @@ button:hover {
 }
 
 .edit-quest {
-  background-color: #4ecdc4;
+  background-color: var(--accent-secondary);
   margin-left: 0.5rem;
 }
 
@@ -909,7 +919,7 @@ button:hover {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #4a90e2;
+  background-color: var(--accent-primary);
   color: white;
   width: 50px;
   height: 50px;
@@ -1047,11 +1057,11 @@ button:hover {
   top: 10px;
   cursor: pointer;
   font-size: 24px;
-  color: #4a90e2;
+  color: var(--accent-primary);
 }
 
 .glow {
-  text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 30px #4a90e2;
+  text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
   animation: glow 1.5s ease-in-out infinite alternate;
 }
 
@@ -1063,7 +1073,7 @@ button:hover {
 }
 
 .stat-tag {
-  background-color: #4a90e2;
+  background-color: var(--accent-primary);
   color: white;
   border: none;
   padding: 0.3rem 0.5rem;
@@ -1090,7 +1100,7 @@ button:hover {
 }
 
 .status-tag {
-  background-color: #4ecdc4;
+  background-color: var(--accent-secondary);
   color: white;
   border: none;
   padding: 0.3rem 0.5rem;
@@ -1106,11 +1116,11 @@ button:hover {
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 5px #4a90e2, 0 0 10px #4a90e2, 0 0 15px #4a90e2;
+    text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary), 0 0 15px var(--accent-primary);
   }
 
   to {
-    text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 30px #4a90e2;
+    text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
   }
 }
 
@@ -1141,28 +1151,28 @@ button:hover {
 }
 
 .tour-tooltip.top::after {
-  border-top-color: #4a90e2;
+  border-top-color: var(--accent-primary);
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .tour-tooltip.bottom::after {
-  border-bottom-color: #4a90e2;
+  border-bottom-color: var(--accent-primary);
   top: -20px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .tour-tooltip.left::after {
-  border-left-color: #4a90e2;
+  border-left-color: var(--accent-primary);
   right: -20px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .tour-tooltip.right::after {
-  border-right-color: #4a90e2;
+  border-right-color: var(--accent-primary);
   left: -20px;
   top: 50%;
   transform: translateY(-50%);
@@ -1177,7 +1187,7 @@ button:hover {
   margin-left: 10px;
   padding: 5px 10px;
   background-color: #ffffff;
-  color: #4a90e2;
+  color: var(--accent-primary);
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -1196,7 +1206,7 @@ button:hover {
 }
 
 .check-icon {
-fill: #4a90e2;
+fill: var(--accent-primary);
 transition: all 0.3s ease;
 filter: drop-shadow(0 0 5px rgba(74, 144, 226, 0.5));
 }
@@ -1215,7 +1225,7 @@ cursor: pointer;
 }
 
 .difficulty-tag:hover, .stat-tag:hover {
-border-color: #4a90e2;
+border-color: var(--accent-primary);
 box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
 
@@ -1404,27 +1414,45 @@ transform: translateX(5px);
 }
 
 .action-buttons {
-display: flex;
-gap: 1rem;
-margin-top: 1rem;
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .action-buttons button {
-flex: 1;
-padding: 0.8rem 1.5rem;
-border: none;
-border-radius: var(--border-radius-md);
-font-weight: 600;
-font-size: 1rem;
-cursor: pointer;
-transition: all 0.3s ease;
-text-transform: uppercase;
-letter-spacing: 0.5px;
+  flex: 0 1 auto;
+  padding: 0.2rem 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  min-width: 45px;
+  line-height: 1.1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.action-buttons button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.action-buttons button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .save-quest {
-background: linear-gradient(135deg, #4caf50, #45a049);
-color: white;
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .save-quest:hover {
@@ -1433,8 +1461,11 @@ box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .cancel-quest {
-background: linear-gradient(135deg, #f44336, #d32f2f);
-color: white;
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgba(244, 67, 54, 0.3);
 }
 
 .cancel-quest:hover {
@@ -1553,16 +1584,16 @@ font-size: 0.9rem;
     position: absolute;
     width: 8px;
     height: 8px;
-    background: #4a90e2;
+    background: var(--accent-primary);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px #4a90e2;
+    box-shadow: 0 0 10px var(--accent-primary);
     z-index: 2;
 }
 
 .stats-label {
     position: absolute;
-    color: #4a90e2;
+    color: var(--accent-primary);
     font-size: 0.9rem;
     white-space: nowrap;
     text-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
@@ -1596,7 +1627,7 @@ font-size: 0.9rem;
     position: absolute;
     top: 10px;
     right: 10px;
-    color: #4a90e2;
+    color: var(--accent-primary);
     cursor: pointer;
     font-size: 1.5rem;
 }
@@ -1652,7 +1683,7 @@ font-size: 0.9rem;
     right: 10px;
     cursor: pointer;
     font-size: 24px;
-    color: #4a90e2;
+    color: var(--accent-primary);
 }
 
 /* Streak System Styles */
@@ -1768,7 +1799,7 @@ font-size: 0.9rem;
 }
 
 .quest-count {
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-weight: 600;
 }
 
@@ -1803,7 +1834,7 @@ font-size: 0.9rem;
 
 .search-wrapper .quest-input:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
@@ -1812,7 +1843,7 @@ font-size: 0.9rem;
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
   color: white;
   padding: 8px 12px;
@@ -1870,7 +1901,7 @@ font-size: 0.9rem;
 }
 
 .sort-btn {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
   color: white;
   padding: 10px 20px;
@@ -1911,7 +1942,7 @@ font-size: 0.9rem;
 
 .sort-option i {
   margin-right: 8px;
-  color: #4a90e2;
+  color: var(--accent-primary);
 }
 
 /* Enhanced Achievements */
@@ -1971,7 +2002,7 @@ font-size: 0.9rem;
 }
 
 .achievement-count {
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -1990,7 +2021,7 @@ font-size: 0.9rem;
 
 .achievement-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 3px;
   width: 0%;
   transition: width 0.8s ease;
@@ -2020,13 +2051,189 @@ font-size: 0.9rem;
 }
 
 .achievement-category.active {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: white;
   border-color: transparent;
 }
 
 .achievement-category i {
   margin-right: 6px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(30, 30, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: achievementFadeIn 0.4s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.achievement-card:nth-child(1) { animation-delay: 0.02s; }
+.achievement-card:nth-child(2) { animation-delay: 0.06s; }
+.achievement-card:nth-child(3) { animation-delay: 0.10s; }
+.achievement-card:nth-child(4) { animation-delay: 0.14s; }
+.achievement-card:nth-child(5) { animation-delay: 0.18s; }
+.achievement-card:nth-child(6) { animation-delay: 0.22s; }
+.achievement-card:nth-child(7) { animation-delay: 0.26s; }
+.achievement-card:nth-child(8) { animation-delay: 0.30s; }
+.achievement-card:nth-child(9) { animation-delay: 0.34s; }
+.achievement-card:nth-child(10) { animation-delay: 0.38s; }
+
+.achievement-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 193, 7, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.achievement-card.locked {
+  opacity: 0.6;
+  filter: grayscale(0.4);
+}
+
+.achievement-card.unlocked {
+  border-color: rgba(255, 193, 7, 0.5);
+  background: rgba(40, 35, 20, 0.6);
+}
+
+.achievement-card.unlocked::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ffc107, #ff9800);
+}
+
+.achievement-card.unlocked:hover {
+  border-color: rgba(255, 193, 7, 0.7);
+  box-shadow: 0 6px 20px rgba(255, 193, 7, 0.12);
+}
+
+@keyframes achievementFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes achievementUnlockFlash {
+  0% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
+  30% { box-shadow: 0 0 25px rgba(255, 193, 7, 0.5), 0 0 50px rgba(255, 193, 7, 0.2); }
+  100% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
+}
+
+.achievement-card.unlock-flash {
+  animation: achievementFadeIn 0.4s ease forwards, achievementUnlockFlash 1s ease 0.3s;
+}
+
+.achievement-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 193, 7, 0.1);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: #ffc107;
+}
+
+.achievement-card.unlocked .achievement-icon {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffd54f;
+}
+
+.achievement-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.achievement-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.achievement-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.achievement-progress-text {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+.achievement-condition {
+  font-size: 0.72rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.achievement-new-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: linear-gradient(135deg, #ffc107, #ff9800);
+  color: #1a1a2e;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  animation: badgePulse 1.5s ease infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.achievement-status-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.achievement-status-btn {
+  background: rgba(40, 40, 50, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #b0b0b0;
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+}
+
+.achievement-status-btn:hover {
+  background: rgba(74, 144, 226, 0.1);
+  color: #e0e0e0;
+}
+
+.achievement-status-btn.active {
+  background: linear-gradient(135deg, #ffc107, #ff9800);
+  color: #1a1a2e;
+  border-color: transparent;
+  font-weight: 600;
 }
 
 /* Enhanced Pomodoro Structure */
@@ -2104,7 +2311,7 @@ font-size: 0.9rem;
 
 .favorite-quote-author {
   text-align: right;
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-size: 0.9rem;
 }
 
@@ -2124,7 +2331,7 @@ font-size: 0.9rem;
   right: 0.5rem;
   background-color: transparent;
   border: none;
-  color: #ff4961;
+  color: var(--accent-quaternary);
   cursor: pointer;
   padding: 0.3rem;
   transition: all 0.3s;
@@ -2271,6 +2478,29 @@ font-size: 0.9rem;
   padding: 30px;
   max-height: 90vh; /* Allow content to scroll */
   overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.spider-chart-content.modal-enter {
+  animation: spiderModalEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes spiderModalEnter {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.stat-summary {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin: 8px 0 16px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.stat-summary strong {
+  color: var(--text-primary);
+  font-size: 1.1rem;
 }
 
 .chart-controls {
@@ -2449,10 +2679,10 @@ font-size: 0.9rem;
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #4a90e2;
+  background: var(--accent-primary);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px #4a90e2;
+  box-shadow: 0 0 10px var(--accent-primary);
   z-index: 3;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -2478,7 +2708,7 @@ font-size: 0.9rem;
 
 .stats-label {
   position: absolute;
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-size: 0.9rem;
   white-space: nowrap;
   text-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
@@ -2591,7 +2821,7 @@ font-size: 0.9rem;
 
 .stat-name {
   font-weight: bold;
-  color: #4a90e2;
+  color: var(--accent-primary);
   margin-bottom: 8px;
 }
 
@@ -2606,7 +2836,7 @@ font-size: 0.9rem;
 
 .stat-progress {
   height: 100%;
-  background: linear-gradient(90deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   width: 0%;
   transition: width 0.5s ease-out;
   border-radius: 4px;
@@ -2993,6 +3223,378 @@ button:active {
   margin-bottom: 30px;
 }
 
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Base container */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  transition: padding 0.3s ease;
+}
+
+/* Large screens (1200px+) - default styles already applied */
+
+/* Medium screens (768px - 1199px) */
+@media (max-width: 1200px) {
+  .container {
+    padding: 15px;
+    max-width: 100%;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  
+  .stat-card {
+    padding: 18px;
+  }
+  
+  /* Adjust quest sections */
+  .quest-section {
+    padding: 15px;
+  }
+  
+  /* Make buttons slightly smaller */
+  .btn, button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablets (480px - 767px) */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 15px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+  }
+  
+  /* Make quest cards more compact */
+  .quest {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .quest-title {
+    font-size: 0.9rem;
+  }
+  
+  /* Adjust modals for tablet */
+  .modal-content {
+    width: 95%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  /* Header adjustments */
+  .app-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-profile {
+    width: 100%;
+    justify-content: center;
+  }
+}
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 15px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+  }
+  
+  /* Make quest cards more compact */
+  .quest {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .quest-title {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile phones (under 480px) */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .stat-header {
+    margin-bottom: 0;
+    flex: 1;
+  }
+  
+  .stat-progress-container {
+    margin-top: 0;
+    flex: 2;
+  }
+  
+  .stat-value {
+    font-size: 1.3rem;
+  }
+  
+  /* Full width container on mobile */
+  .container {
+    padding: 8px;
+    margin: 0;
+    max-width: 100%;
+  }
+  
+  /* Adjust header for mobile */
+  .user-profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .user-avatar {
+    margin: 0 auto;
+  }
+  
+  /* Stack quest info vertically */
+  .quest-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .quest-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  /* Make modals fullscreen on mobile */
+  .modal-content {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    margin: 0;
+    padding: 15px;
+  }
+  
+  /* Adjust buttons for touch */
+  button, .btn {
+    min-height: 44px; /* Apple's recommended touch target */
+    padding: 10px 15px;
+  }
+  
+  /* Improve readability */
+  body {
+    font-size: 14px;
+  }
+  
+  h2, h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Ultra-small screens (under 360px) */
+@media (max-width: 360px) {
+  .stats-grid {
+    gap: 8px;
+  }
+  
+  .stat-card {
+    padding: 10px;
+  }
+  
+  .stat-name {
+    font-size: 0.8rem;
+  }
+  
+  .stat-value {
+    font-size: 1.1rem;
+  }
+  
+  .stat-progress-text {
+    font-size: 0.7rem;
+  }
+  
+  /* Even more compact header */
+  .user-profile h2 {
+    font-size: 1.1rem;
+  }
+  
+  .user-profile p {
+    font-size: 0.8rem;
+  }
+  
+  /* Smaller buttons */
+  button, .btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== Additional Responsive Elements ===== */
+
+/* XP Bar responsive */
+@media (max-width: 768px) {
+  .xp-bar-container {
+    height: 10px;
+  }
+  
+  .xp-info {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .xp-bar-container {
+    height: 8px;
+  }
+  
+  .xp-info {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+}
+
+/* Quest filters responsive */
+@media (max-width: 768px) {
+  .quest-filters {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quest-filters {
+    justify-content: center;
+  }
+  
+  .filter-btn {
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+  }
+}
+
+/* Chart/Stats modal responsive */
+@media (max-width: 768px) {
+  .spider-chart-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .chart-tabs {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-tabs {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .chart-tab {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Toast notifications responsive */
+@media (max-width: 480px) {
+  .xp-toast {
+    min-width: unset;
+    width: 90%;
+    font-size: 0.9rem;
+  }
+}
+
+/* Pomodoro timer responsive */
+@media (max-width: 768px) {
+  .pomodoro-timer {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pomodoro-timer {
+    font-size: 2.5rem;
+  }
+  
+  .pomodoro-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Fix overflow issues on all screens */
+body {
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Additional responsive fixes for very small screens */
+@media (max-width: 320px) {
+  .stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .stat-progress-container {
+    width: 100%;
+  }
+  
+  .user-profile h2 {
+    font-size: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 1.2rem;
+  }
+}
+
 .stat-card {
   background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(78, 205, 196, 0.1));
   border: 1px solid rgba(74, 144, 226, 0.3);
@@ -3016,7 +3618,7 @@ button:active {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -3033,7 +3635,7 @@ button:active {
 
 .stat-icon {
   font-size: 1.5rem;
-  color: #4a90e2;
+  color: var(--accent-primary);
   margin-right: 12px;
   width: 24px;
   text-align: center;
@@ -3071,7 +3673,7 @@ button:active {
 
 .stat-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 4px;
   width: 0%;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -3087,6 +3689,110 @@ button:active {
   bottom: 0;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   animation: shimmer 2s infinite;
+}
+
+/* Stat increase animation - applied to progress fill */
+.stat-progress-fill.stat-increase {
+  animation: statPulse 0.8s ease-out;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), #69f0ae) !important;
+}
+
+@keyframes statPulse {
+  0% {
+    filter: brightness(1);
+    transform: scaleY(1);
+  }
+  50% {
+    filter: brightness(1.5);
+    transform: scaleY(1.3);
+  }
+  100% {
+    filter: brightness(1);
+    transform: scaleY(1);
+  }
+}
+
+/* Increase indicator badge - positioned to be visible */
+.stat-progress-container {
+  position: relative;
+}
+
+.stat-progress-fill.stat-increase::after {
+  content: '+1';
+  position: absolute;
+  right: -30px;
+  top: -20px;
+  background: var(--accent-secondary);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 10;
+  animation: fadeUp 1.2s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+}
+
+/* Make progress bar container have overflow visible for the +1 indicator */
+.stat-progress-bar {
+  overflow: visible !important;
+}
+
+@keyframes statPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+  }
+}
+
+/* Dynamic progress bar with increase indicator */
+.stat-progress-fill {
+  position: relative;
+  overflow: visible;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-progress-fill.stat-increase::before {
+  content: '+1';
+  position: absolute;
+  right: -25px;
+  top: -20px;
+  background: var(--accent-secondary);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  animation: fadeUp 1s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
 }
 
 @keyframes shimmer {
@@ -3138,7 +3844,7 @@ button:active {
 }
 
 .view-btn.active {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: white;
   box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
@@ -3171,7 +3877,7 @@ button:active {
 }
 
 .quest-count {
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-weight: 600;
 }
 
@@ -3206,7 +3912,7 @@ button:active {
 
 .search-wrapper .quest-input:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
@@ -3215,7 +3921,7 @@ button:active {
   right: 5px;
   top: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
   color: white;
   padding: 8px 12px;
@@ -3273,7 +3979,7 @@ button:active {
 }
 
 .sort-btn {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
   color: white;
   padding: 10px 20px;
@@ -3314,7 +4020,7 @@ button:active {
 
 .sort-option i {
   margin-right: 8px;
-  color: #4a90e2;
+  color: var(--accent-primary);
 }
 
 /* Enhanced Achievements */
@@ -3341,7 +4047,7 @@ button:active {
 }
 
 .achievement-count {
-  color: #4a90e2;
+  color: var(--accent-primary);
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -3360,7 +4066,7 @@ button:active {
 
 .achievement-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 3px;
   width: 0%;
   transition: width 0.8s ease;
@@ -3390,7 +4096,7 @@ button:active {
 }
 
 .achievement-category.active {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: white;
   border-color: transparent;
 }
@@ -3497,27 +4203,27 @@ button:active {
 }
 
 .category-work {
-  background: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
-  border: 1px solid rgba(255, 152, 0, 0.3);
+  background: rgba(74, 144, 226, 0.15);
+  color: var(--accent-primary);
+  border: 1px solid rgba(74, 144, 226, 0.25);
 }
 
 .category-health {
-  background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
-  border: 1px solid rgba(76, 175, 80, 0.3);
+  background: rgba(81, 207, 102, 0.15);
+  color: var(--accent-green);
+  border: 1px solid rgba(81, 207, 102, 0.25);
 }
 
 .category-learning {
-  background: rgba(156, 39, 176, 0.2);
-  color: #9c27b0;
-  border: 1px solid rgba(156, 39, 176, 0.3);
+  background: rgba(179, 136, 255, 0.15);
+  color: var(--accent-quinary);
+  border: 1px solid rgba(179, 136, 255, 0.25);
 }
 
 .category-personal {
-  background: rgba(33, 150, 243, 0.2);
-  color: #2196f3;
-  border: 1px solid rgba(33, 150, 243, 0.3);
+  background: rgba(255, 107, 107, 0.15);
+  color: var(--accent-coral);
+  border: 1px solid rgba(255, 107, 107, 0.25);
 }
 
 /* Enhanced notifications */
@@ -3575,12 +4281,12 @@ select:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4a90e2, #4ecdc4);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #4ecdc4, #4a90e2);
+  background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
 }
 
 /* Enhanced Quest Elements */
@@ -3797,6 +4503,35 @@ select:focus {
 /* support favorited state toggled by JS ('favorited') */
 .quote-button.favorited i { color: #f44336; }
 
+.quote-button.favorited i {
+  animation: heartPulse 0.4s ease;
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.quote-container {
+  animation: quoteContainerIn 0.5s ease-out forwards;
+}
+
+@keyframes quoteContainerIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#new-quote.spinning i {
+  animation: spin 0.5s ease-in-out;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 
 .quote-categories {
   display: flex;
@@ -3830,17 +4565,17 @@ select:focus {
 /* Category-specific colors */
 .category-button[data-category="power"] {
   border-color: rgba(255, 73, 97, 0.5);
-  color: #ff4961;
+  color: var(--accent-quaternary);
 }
 
 .category-button[data-category="wisdom"] {
   border-color: rgba(74, 144, 226, 0.5);
-  color: #4a90e2;
+  color: var(--accent-primary);
 }
 
 .category-button[data-category="discipline"] {
   border-color: rgba(146, 100, 255, 0.5);
-  color: #9264ff;
+  color: var(--accent-quinary);
 }
 
 .category-button[data-category="growth"] {
@@ -3850,7 +4585,43 @@ select:focus {
 
 .category-button[data-category="perseverance"] {
   border-color: rgba(255, 209, 102, 0.5);
-  color: #ffd166;
+  color: var(--accent-tertiary);
+}
+
+.category-button[data-category="faith"] {
+  border-color: rgba(156, 39, 176, 0.5);
+  color: #9c27b0;
+}
+
+/* Category-specific active backgrounds */
+.category-button.active[data-category="power"] {
+  background: rgba(255, 73, 97, 0.2);
+  box-shadow: 0 0 10px rgba(255, 73, 97, 0.4);
+}
+
+.category-button.active[data-category="wisdom"] {
+  background: rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.4);
+}
+
+.category-button.active[data-category="discipline"] {
+  background: rgba(146, 100, 255, 0.2);
+  box-shadow: 0 0 10px rgba(146, 100, 255, 0.4);
+}
+
+.category-button.active[data-category="growth"] {
+  background: rgba(6, 214, 160, 0.2);
+  box-shadow: 0 0 10px rgba(6, 214, 160, 0.4);
+}
+
+.category-button.active[data-category="perseverance"] {
+  background: rgba(255, 209, 102, 0.2);
+  box-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
+}
+
+.category-button.active[data-category="faith"] {
+  background: rgba(156, 39, 176, 0.2);
+  box-shadow: 0 0 10px rgba(156, 39, 176, 0.4);
 }
 
 /* Enhanced Pomodoro Timer */
@@ -3937,6 +4708,85 @@ select:focus {
 
 .toggle-favorites:hover {
   background: rgba(244, 67, 54, 0.4);
+}
+
+.favorites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.favorites-header h3 {
+  margin: 0;
+}
+
+.favorites-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.favorites-empty i {
+  color: #f44336;
+}
+
+.favorite-quote-item {
+  animation: favoriteItemIn 0.35s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.favorite-quote-item:nth-child(1) { animation-delay: 0.03s; }
+.favorite-quote-item:nth-child(2) { animation-delay: 0.08s; }
+.favorite-quote-item:nth-child(3) { animation-delay: 0.13s; }
+.favorite-quote-item:nth-child(4) { animation-delay: 0.18s; }
+.favorite-quote-item:nth-child(5) { animation-delay: 0.23s; }
+.favorite-quote-item:nth-child(6) { animation-delay: 0.28s; }
+.favorite-quote-item:nth-child(7) { animation-delay: 0.33s; }
+.favorite-quote-item:nth-child(8) { animation-delay: 0.38s; }
+
+@keyframes favoriteItemIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.favorite-quote-category[data-category="power"] {
+  background: rgba(255, 73, 97, 0.15);
+  color: var(--accent-quaternary);
+}
+
+.favorite-quote-category[data-category="wisdom"] {
+  background: rgba(74, 144, 226, 0.15);
+  color: var(--accent-primary);
+}
+
+.favorite-quote-category[data-category="discipline"] {
+  background: rgba(146, 100, 255, 0.15);
+  color: var(--accent-quinary);
+}
+
+.favorite-quote-category[data-category="growth"] {
+  background: rgba(6, 214, 160, 0.15);
+  color: #06d6a0;
+}
+
+.favorite-quote-category[data-category="perseverance"] {
+  background: rgba(255, 209, 102, 0.15);
+  color: var(--accent-tertiary);
+}
+
+.favorite-quote-category[data-category="faith"] {
+  background: rgba(156, 39, 176, 0.15);
+  color: #9c27b0;
+}
+
+.favorite-quote-item.favorite-removing {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.3s ease;
 }
 
 /* Enhanced Settings Icon */
@@ -4126,90 +4976,102 @@ select:focus {
 
 /* Difficulty-specific colors */
 .difficulty-easy {
-  background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
-  border-color: rgba(76, 175, 80, 0.3);
+  background: rgba(81, 207, 102, 0.2);
+  color: var(--accent-green);
+  border-color: rgba(81, 207, 102, 0.3);
 }
 
 .difficulty-medium {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
-  border-color: rgba(255, 193, 7, 0.3);
+  background: rgba(255, 209, 102, 0.2);
+  color: var(--accent-tertiary);
+  border-color: rgba(255, 209, 102, 0.3);
 }
 
 .difficulty-hard {
-  background: rgba(244, 67, 54, 0.2);
-  color: #f44336;
-  border-color: rgba(244, 67, 54, 0.3);
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--accent-coral);
+  border-color: rgba(255, 107, 107, 0.3);
 }
 
 /* XP tag */
 .quest-xp {
-  background: rgba(156, 39, 176, 0.2);
-  color: #9c27b0;
-  border-color: rgba(156, 39, 176, 0.3);
+  background: rgba(179, 136, 255, 0.2);
+  color: var(--accent-quinary);
+  border-color: rgba(179, 136, 255, 0.3);
 }
 
-/* Stat-specific colors */
+/* Stat-specific colors — cohesive Solo Leveling palette */
 .stat-strength {
-  background: rgba(255, 87, 34, 0.2);
-  color: #ff5722;
-  border-color: rgba(255, 87, 34, 0.3);
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--accent-coral);
+  border-color: rgba(255, 107, 107, 0.3);
 }
 
 .stat-agility {
-  background: rgba(0, 150, 136, 0.2);
-  color: #009688;
-  border-color: rgba(0, 150, 136, 0.3);
+  background: rgba(78, 205, 196, 0.2);
+  color: var(--accent-secondary);
+  border-color: rgba(78, 205, 196, 0.3);
 }
 
 .stat-intelligence {
-  background: rgba(63, 81, 181, 0.2);
-  color: #3f51b5;
-  border-color: rgba(63, 81, 181, 0.3);
+  background: rgba(74, 144, 226, 0.2);
+  color: var(--accent-primary);
+  border-color: rgba(74, 144, 226, 0.3);
 }
 
 .stat-stamina {
-  background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
-  border-color: rgba(76, 175, 80, 0.3);
+  background: rgba(81, 207, 102, 0.2);
+  color: var(--accent-green);
+  border-color: rgba(81, 207, 102, 0.3);
 }
 
 .stat-willpower {
-  background: rgba(233, 30, 99, 0.2);
-  color: #e91e63;
-  border-color: rgba(233, 30, 99, 0.3);
+  background: rgba(179, 136, 255, 0.2);
+  color: var(--accent-quinary);
+  border-color: rgba(179, 136, 255, 0.3);
 }
 
 .stat-discipline {
-  background: rgba(121, 85, 72, 0.2);
-  color: #795548;
-  border-color: rgba(121, 85, 72, 0.3);
+  background: rgba(255, 209, 102, 0.2);
+  color: var(--accent-tertiary);
+  border-color: rgba(255, 209, 102, 0.3);
 }
 
-/* Category-specific colors */
+/* Category-specific colors — cohesive Solo Leveling palette */
 .category-work {
-  background: rgba(255, 152, 0, 0.2);
-  color: #ff9800;
-  border-color: rgba(255, 152, 0, 0.3);
+  background: rgba(74, 144, 226, 0.2);
+  color: var(--accent-primary);
+  border-color: rgba(74, 144, 226, 0.3);
 }
 
 .category-health {
-  background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
-  border-color: rgba(76, 175, 80, 0.3);
+  background: rgba(81, 207, 102, 0.2);
+  color: var(--accent-green);
+  border-color: rgba(81, 207, 102, 0.3);
 }
 
 .category-learning {
-  background: rgba(156, 39, 176, 0.2);
-  color: #9c27b0;
-  border-color: rgba(156, 39, 176, 0.3);
+  background: rgba(179, 136, 255, 0.2);
+  color: var(--accent-quinary);
+  border-color: rgba(179, 136, 255, 0.3);
 }
 
 .category-personal {
-  background: rgba(33, 150, 243, 0.2);
-  color: #2196f3;
-  border-color: rgba(33, 150, 243, 0.3);
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--accent-coral);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.category-cultivation {
+  background: rgba(255, 209, 102, 0.2);
+  color: var(--accent-tertiary);
+  border-color: rgba(255, 209, 102, 0.3);
+}
+
+.category-physical {
+  background: rgba(78, 205, 196, 0.2);
+  color: var(--accent-secondary);
+  border-color: rgba(78, 205, 196, 0.3);
 }
 
 /* Hover effects for tags */
@@ -4605,7 +5467,7 @@ select:focus {
 }
 
 .quest-countdown {
-  background-color: #4a90e2;
+  background-color: var(--accent-primary);
   color: white;
   padding: 2px 8px;
   border-radius: 12px;
@@ -4618,4 +5480,121 @@ select:focus {
   background-color: #d0021b; /* A red color for overdue items */
 }
 
-/* Cleanup */
+/* Quest Grid Empty State */
+.quests-empty {
+  grid-column: 1 / -1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(40, 40, 50, 0.3);
+  border: 2px dashed rgba(74, 144, 226, 0.2);
+  border-radius: var(--border-radius-lg);
+  color: var(--text-secondary);
+}
+.quests-empty i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--accent-primary);
+  opacity: 0.5;
+}
+.quests-empty h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+}
+.quests-empty p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.7;
+}
+
+/* Quest Grid Entry Animation */
+@keyframes questEntry {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.quest.quest-enter {
+  animation: questEntry 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Quest count badge */
+.quest-stats .quest-filtered-count {
+  color: var(--accent-secondary);
+  font-size: 0.85rem;
+  margin-left: 0.3rem;
+}
+.quest-stats .quest-filtered-count::before {
+  content: '(';
+}
+.quest-stats .quest-filtered-count::after {
+  content: ')';
+}
+
+/* View-specific quest styles applied by JS */
+.quests.view-detailed {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.quests.view-detailed .quest {
+  padding: 1.5rem;
+  border: 2px solid rgba(74, 144, 226, 0.4);
+}
+.quests.view-compact {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.8rem;
+}
+.quests.view-compact .quest {
+  padding: 0.8rem;
+  border: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .quests.view-compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* View transition for container */
+.container {
+  transition: all 0.4s ease;
+}
+
+/* Stats view-specific styles */
+.stats.view-detailed .stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.stats.view-detailed .stat-card {
+  padding: 25px;
+  outline: 2px solid var(--accent-primary);
+  outline-offset: -2px;
+}
+.stats.view-compact .stats-grid {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.6rem;
+}
+.stats.view-compact .stat-card {
+  padding: 12px;
+}
+.stats.view-compact .stat-value {
+  font-size: 1.2rem;
+}
+.stats.view-compact .stat-name {
+  font-size: 0.75rem;
+}
+
+/* Dashboard quest grid baseline */
+.quests.view-dashboard {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Hide elements in compact view via container classes */
+.container.compact-view .stats-title,
+.container.compact-view .character-title-stats {
+  display: none;
+}

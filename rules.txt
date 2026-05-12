@@ -1,0 +1,10 @@
+# ERROR HANDLING RULES
+## Trigger
+When an error is reported.
+
+## Loop Workflow (repeat until resolved)
+1. Catalog all active errors
+2. Search pushed Git history for matching solutions
+3. Deep research + fix errors with no Git solutions
+4. Request user clarification *only if critical info missing* — no redundant/repeated questions
+5. If errors persist: restart loop. Else: push to Git.
