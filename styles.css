@@ -40,8 +40,15 @@
 }
 
 @keyframes xpPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .xp-toast-info {
@@ -87,8 +94,13 @@
 }
 
 @keyframes xpToastDrain {
-  from { width: 100%; }
-  to { width: 0%; }
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
 }
 
 /* Level Up Overlay */
@@ -112,8 +124,13 @@
 }
 
 @keyframes levelUpFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .level-up-content {
@@ -122,9 +139,19 @@
 }
 
 @keyframes levelUpBounce {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .level-up-icon {
@@ -143,8 +170,13 @@
 }
 
 @keyframes levelUpGlow {
-  from { box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); }
-  to { box-shadow: 0 0 60px rgba(255, 215, 0, 0.8); }
+  from {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+  }
+
+  to {
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+  }
 }
 
 .level-up-text {
@@ -241,7 +273,7 @@ body {
 }
 
 /* Add some breathing room at the very top */
-.container > *:first-child {
+.container>*:first-child {
   margin-top: 0;
 }
 
@@ -270,12 +302,12 @@ body {
   margin: 0;
   padding: 20px;
   min-height: 100vh;
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, rgba(100, 100, 255, 0.05) 0%, transparent 25%),
     radial-gradient(circle at 90% 80%, rgba(255, 100, 100, 0.05) 0%, transparent 25%);
   background-attachment: fixed;
-  transition: background-color var(--transition-speed) ease, 
-              color var(--transition-speed) ease;
+  transition: background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
   display: block;
   overflow-x: hidden;
 }
@@ -289,9 +321,9 @@ body {
   width: 100%;
   margin: 0 auto;
   border: 1px solid var(--border-light);
-  transition: background-color var(--transition-speed) ease, 
-              border-color var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease;
+  transition: background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
   animation: fadeIn 0.8s ease-out;
   position: relative;
   box-sizing: border-box;
@@ -349,7 +381,8 @@ body {
 }
 
 .theme-light .theme-toggle button i:before {
-  content: "\f185";  /* sun icon */
+  content: "\f185";
+  /* sun icon */
 }
 
 /* App Header */
@@ -425,7 +458,9 @@ body {
 }
 
 /* Typography */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--accent-primary);
   text-align: center;
   text-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
@@ -463,6 +498,7 @@ p {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -473,9 +509,11 @@ p {
   0% {
     box-shadow: 0 0 10px var(--accent-primary);
   }
+
   50% {
     box-shadow: 0 0 20px var(--accent-primary);
   }
+
   100% {
     box-shadow: 0 0 10px var(--accent-primary);
   }
@@ -486,6 +524,7 @@ p {
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -496,6 +535,7 @@ p {
   from {
     text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary), 0 0 15px var(--accent-primary);
   }
+
   to {
     text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
   }
@@ -571,9 +611,21 @@ p {
 }
 
 @keyframes statPulse {
-  0% { transform: scale(1); color: var(--accent-secondary); }
-  50% { transform: scale(1.3); color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-  100% { transform: scale(1); color: var(--accent-secondary); }
+  0% {
+    transform: scale(1);
+    color: var(--accent-secondary);
+  }
+
+  50% {
+    transform: scale(1.3);
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+
+  100% {
+    transform: scale(1);
+    color: var(--accent-secondary);
+  }
 }
 
 .stat-value.animate {
@@ -592,7 +644,8 @@ p {
   border: 1px solid rgba(100, 100, 255, 0.2);
   transition: all 0.3s ease;
   position: relative;
-  padding-bottom: 40px; /* Add padding to the bottom to make space for the button */
+  padding-bottom: 40px;
+  /* Add padding to the bottom to make space for the button */
 }
 
 .quest:hover {
@@ -669,7 +722,8 @@ p {
 .delete-quest-btn {
   background-color: transparent;
   border: none;
-  color: var(--accent-quaternary); /* Red color for delete action */
+  color: var(--accent-quaternary);
+  /* Red color for delete action */
   cursor: pointer;
   font-size: 1.1rem;
   padding: 0.2rem 0.5rem;
@@ -909,6 +963,7 @@ button:hover {
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -960,6 +1015,7 @@ button:hover {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -1016,12 +1072,18 @@ button:hover {
 .modal-overlay.show {
   display: block;
   animation: overlayFadeIn 0.3s ease-out;
-  background: rgba(0,0,0,0.35); /* lighter overlay to reduce haze */
+  background: rgba(0, 0, 0, 0.35);
+  /* lighter overlay to reduce haze */
 }
 
 @keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-content {
@@ -1206,121 +1268,127 @@ button:hover {
 }
 
 .check-icon {
-fill: var(--accent-primary);
-transition: all 0.3s ease;
-filter: drop-shadow(0 0 5px rgba(74, 144, 226, 0.5));
+  fill: var(--accent-primary);
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(74, 144, 226, 0.5));
 }
+
 .check-icon:hover {
-transform: scale(1.2);
-filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.8));
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.8));
 }
 
 
-.difficulty-tag, .stat-tag {
-background-color: transparent;
-color: #ffffff;
-border: 2px solid transparent;
-transition: all 0.3s ease;
-cursor: pointer;
+.difficulty-tag,
+.stat-tag {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.difficulty-tag:hover, .stat-tag:hover {
-border-color: var(--accent-primary);
-box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+.difficulty-tag:hover,
+.stat-tag:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }
 
-.difficulty-tag.selected, .stat-tag.selected {
-border-color: #06d6a0;
-box-shadow: 0 0 10px rgba(6, 214, 160, 0.8);
+.difficulty-tag.selected,
+.stat-tag.selected {
+  border-color: #06d6a0;
+  box-shadow: 0 0 10px rgba(6, 214, 160, 0.8);
 }
 
 /* Add these new styles */
 .glow-button {
-border: 2px solid rgba(78, 205, 196, 0.5);
-box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
-animation: glow 1.5s ease-in-out infinite alternate;
-transition: all 0.3s ease;
+  border: 2px solid rgba(78, 205, 196, 0.5);
+  box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+  animation: glow 1.5s ease-in-out infinite alternate;
+  transition: all 0.3s ease;
 }
 
 .glow-button.selected {
-background-color: #06d6a0;
-border-color: #06d6a0;
-box-shadow: 0 0 15px rgba(6, 214, 160, 0.8);
+  background-color: #06d6a0;
+  border-color: #06d6a0;
+  box-shadow: 0 0 15px rgba(6, 214, 160, 0.8);
 }
 
 @keyframes glow {
-from {
-  box-shadow: 0 0 5px rgba(78, 205, 196, 0.5);
-}
-to {
-  box-shadow: 0 0 15px rgba(78, 205, 196, 0.8);
-}
+  from {
+    box-shadow: 0 0 5px rgba(78, 205, 196, 0.5);
+  }
+
+  to {
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.8);
+  }
 }
 
 /* Add these new styles */
 .quest-edit-panel {
-background: rgba(30, 30, 40, 0.95);
-border: 2px solid var(--accent-primary);
-border-radius: var(--border-radius-md);
-padding: 1.5rem;
-margin-bottom: 1rem;
-position: relative;
-overflow: hidden;
+  background: rgba(30, 30, 40, 0.95);
+  border: 2px solid var(--accent-primary);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .quest-edit-panel::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-height: 3px;
-background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
 }
 
 .edit-panel-content {
-display: flex;
-flex-direction: column;
-gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .edit-panel-content h3 {
-margin: 0 0 1rem 0;
-color: var(--text-primary);
-font-size: 1.2rem;
-font-weight: 600;
-text-align: center;
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .quest-input {
-width: 100%;
-background: rgba(40, 40, 50, 0.8);
-color: var(--text-primary);
-border: 1px solid rgba(78, 205, 196, 0.3);
-padding: 0.8rem;
-border-radius: var(--border-radius-md);
-font-size: 1rem;
-transition: all 0.3s ease;
-box-sizing: border-box;
+  width: 100%;
+  background: rgba(40, 40, 50, 0.8);
+  color: var(--text-primary);
+  border: 1px solid rgba(78, 205, 196, 0.3);
+  padding: 0.8rem;
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .quest-input:focus {
-outline: none;
-border-color: var(--accent-primary);
-box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 .xp-input {
-max-width: 120px;
-text-align: center;
-font-weight: 600;
+  max-width: 120px;
+  text-align: center;
+  font-weight: 600;
 }
 
-.difficulty-tags, .stat-tags {
-display: flex;
-flex-wrap: wrap;
-gap: 0.5rem;
-justify-content: center;
+.difficulty-tags,
+.stat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .tag-button {
@@ -1350,67 +1418,67 @@ justify-content: center;
 }
 
 .comment-section {
-display: flex;
-flex-direction: column;
-gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .comment-section textarea {
-min-height: 80px;
-resize: vertical;
-font-family: inherit;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
 }
 
 .pin-checkbox {
-display: flex;
-align-items: center;
-gap: 0.5rem;
-color: var(--text-primary);
-font-size: 0.9rem;
-cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
 }
 
 .pin-checkbox input[type="checkbox"] {
-width: 18px;
-height: 18px;
-accent-color: var(--accent-primary);
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-primary);
 }
 
 .suggested-quests {
-background: rgba(40, 40, 50, 0.5);
-border: 1px solid rgba(78, 205, 196, 0.2);
-border-radius: var(--border-radius-md);
-padding: 1rem;
+  background: rgba(40, 40, 50, 0.5);
+  border: 1px solid rgba(78, 205, 196, 0.2);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
 }
 
 .suggested-quests h4 {
-margin: 0 0 0.8rem 0;
-color: var(--text-primary);
-font-size: 1rem;
-font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .suggestions-container {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .suggested-quest-item {
-background: rgba(78, 205, 196, 0.1);
-border: 1px solid rgba(78, 205, 196, 0.3);
-border-radius: var(--border-radius-md);
-padding: 0.6rem 1rem;
-cursor: pointer;
-transition: all 0.3s ease;
-color: var(--text-primary);
-font-size: 0.9rem;
+  background: rgba(78, 205, 196, 0.1);
+  border: 1px solid rgba(78, 205, 196, 0.3);
+  border-radius: var(--border-radius-md);
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  font-size: 0.9rem;
 }
 
 .suggested-quest-item:hover {
-background: rgba(78, 205, 196, 0.2);
-border-color: var(--accent-primary);
-transform: translateX(5px);
+  background: rgba(78, 205, 196, 0.2);
+  border-color: var(--accent-primary);
+  transform: translateX(5px);
 }
 
 .action-buttons {
@@ -1434,17 +1502,17 @@ transform: translateX(5px);
   letter-spacing: 0px;
   min-width: 45px;
   line-height: 1.1;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .action-buttons button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .action-buttons button:active {
   transform: translateY(0);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .save-quest {
@@ -1456,8 +1524,8 @@ transform: translateX(5px);
 }
 
 .save-quest:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .cancel-quest {
@@ -1469,221 +1537,230 @@ box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .cancel-quest:hover {
-transform: translateY(-2px);
-box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
 }
 
 /* Enhanced Quest Layout */
 .quest {
-display: flex;
-flex-direction: column;
-gap: 0.8rem;
-padding: 1.2rem;
-background: rgba(40, 40, 50, 0.6);
-border: 1px solid rgba(74, 144, 226, 0.2);
-border-radius: var(--border-radius-md);
-margin-bottom: 1rem;
-transition: all 0.3s ease;
-position: relative;
-overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  background: rgba(40, 40, 50, 0.6);
+  border: 1px solid rgba(74, 144, 226, 0.2);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .quest-content {
-display: flex;
-flex-direction: column;
-gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .quest-header {
-display: flex;
-align-items: center;
-gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .quest-title {
-flex: 1;
-font-size: 1.1rem;
-font-weight: 600;
-color: var(--text-primary);
-line-height: 1.4;
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
 }
 
 /* Responsive Quest Edit Panel */
 @media (max-width: 768px) {
-.quest-edit-panel {
-padding: 1rem;
-}
+  .quest-edit-panel {
+    padding: 1rem;
+  }
 
-.difficulty-tags, .stat-tags {
-justify-content: center;
-}
+  .difficulty-tags,
+  .stat-tags {
+    justify-content: center;
+  }
 
-.action-buttons {
-flex-direction: column;
-}
+  .action-buttons {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
-.quest-edit-panel {
-padding: 0.8rem;
-}
+  .quest-edit-panel {
+    padding: 0.8rem;
+  }
 
-.difficulty-tag, .stat-tag {
-padding: 0.5rem 0.8rem;
-font-size: 0.8rem;
-}
+  .difficulty-tag,
+  .stat-tag {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
 
-.quest-input {
-padding: 0.6rem;
-font-size: 0.9rem;
-}
+  .quest-input {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
 }
 
 .stats-visualization {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(20, 20, 30, 0.95);
-    padding: 1.5rem;
-    border-radius: 15px;
-    z-index: 1002;
-    border: 1px solid rgba(100, 100, 255, 0.3);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-    overflow: hidden;
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(20, 20, 30, 0.95);
+  padding: 1.5rem;
+  border-radius: 15px;
+  z-index: 1002;
+  border: 1px solid rgba(100, 100, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
 }
 
 .stats-chart {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(74, 144, 226, 0.5);
-    border-radius: 10px;
-    background-color: rgba(30, 30, 40, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    max-width: 100%;
-    max-height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(74, 144, 226, 0.5);
+  border-radius: 10px;
+  background-color: rgba(30, 30, 40, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .stats-axis {
-    position: absolute;
-    width: 1px;
-    height: 100%;
-    background: rgba(74, 144, 226, 0.3);
-    top: 0%;
-    left: 50%;
-    transform-origin: center;
-    z-index: 1;
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: rgba(74, 144, 226, 0.3);
+  top: 0%;
+  left: 50%;
+  transform-origin: center;
+  z-index: 1;
 }
 
 .stats-value {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--accent-primary);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px var(--accent-primary);
-    z-index: 2;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px var(--accent-primary);
+  z-index: 2;
 }
 
 .stats-label {
-    position: absolute;
-    color: var(--accent-primary);
-    font-size: 0.9rem;
-    white-space: nowrap;
-    text-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
-    font-weight: bold;
+  position: absolute;
+  color: var(--accent-primary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  text-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  font-weight: bold;
 }
 
 .stats-connection {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(78, 205, 196, 0.3);
-    clip-path: polygon(/* Define points based on your chart data */);
-    z-index: 0;
-    pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(78, 205, 196, 0.3);
+  clip-path: polygon(
+      /* Define points based on your chart data */
+    );
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Optional: Add grid lines for better visualization */
 .stats-chart::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-    z-index: 0;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .close-visualization {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: var(--accent-primary);
-    cursor: pointer;
-    font-size: 1.5rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--accent-primary);
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .spider-chart-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.25); /* lighter backdrop so modal isn't overly hazy */
-    display: none; /* hidden by default; shown via JS */
-    justify-content: center;
-    align-items: center;
-    z-index: 2000; /* ensure modal appears above the common overlay */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  /* lighter backdrop so modal isn't overly hazy */
+  display: none;
+  /* hidden by default; shown via JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  /* ensure modal appears above the common overlay */
 }
 
 /* modal overlay used by various modals, keep below specific modals but above main UI */
 .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 1500;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1500;
 }
+
 .modal-overlay.show {
-    display: block;
+  display: block;
 }
 
 .modal-content {
-    background-color: rgba(30, 30, 40, 0.95);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 2001; /* ensure content is above overlay */
+  background-color: rgba(30, 30, 40, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2001;
+  /* ensure content is above overlay */
 }
 
 .modal-content {
-    background-color: rgba(30, 30, 40, 0.95);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    position: relative;
+  background-color: rgba(30, 30, 40, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
 .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px;
-    color: var(--accent-primary);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--accent-primary);
 }
 
 /* Streak System Styles */
@@ -2082,16 +2159,45 @@ font-size: 0.9rem;
   overflow: hidden;
 }
 
-.achievement-card:nth-child(1) { animation-delay: 0.02s; }
-.achievement-card:nth-child(2) { animation-delay: 0.06s; }
-.achievement-card:nth-child(3) { animation-delay: 0.10s; }
-.achievement-card:nth-child(4) { animation-delay: 0.14s; }
-.achievement-card:nth-child(5) { animation-delay: 0.18s; }
-.achievement-card:nth-child(6) { animation-delay: 0.22s; }
-.achievement-card:nth-child(7) { animation-delay: 0.26s; }
-.achievement-card:nth-child(8) { animation-delay: 0.30s; }
-.achievement-card:nth-child(9) { animation-delay: 0.34s; }
-.achievement-card:nth-child(10) { animation-delay: 0.38s; }
+.achievement-card:nth-child(1) {
+  animation-delay: 0.02s;
+}
+
+.achievement-card:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.achievement-card:nth-child(3) {
+  animation-delay: 0.10s;
+}
+
+.achievement-card:nth-child(4) {
+  animation-delay: 0.14s;
+}
+
+.achievement-card:nth-child(5) {
+  animation-delay: 0.18s;
+}
+
+.achievement-card:nth-child(6) {
+  animation-delay: 0.22s;
+}
+
+.achievement-card:nth-child(7) {
+  animation-delay: 0.26s;
+}
+
+.achievement-card:nth-child(8) {
+  animation-delay: 0.30s;
+}
+
+.achievement-card:nth-child(9) {
+  animation-delay: 0.34s;
+}
+
+.achievement-card:nth-child(10) {
+  animation-delay: 0.38s;
+}
 
 .achievement-card:hover {
   transform: translateY(-3px);
@@ -2125,14 +2231,29 @@ font-size: 0.9rem;
 }
 
 @keyframes achievementFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes achievementUnlockFlash {
-  0% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
-  30% { box-shadow: 0 0 25px rgba(255, 193, 7, 0.5), 0 0 50px rgba(255, 193, 7, 0.2); }
-  100% { box-shadow: 0 0 0 rgba(255, 193, 7, 0); }
+  0% {
+    box-shadow: 0 0 0 rgba(255, 193, 7, 0);
+  }
+
+  30% {
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.5), 0 0 50px rgba(255, 193, 7, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 0 rgba(255, 193, 7, 0);
+  }
 }
 
 .achievement-card.unlock-flash {
@@ -2203,8 +2324,15 @@ font-size: 0.9rem;
 }
 
 @keyframes badgePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 .achievement-status-filters {
@@ -2347,13 +2475,15 @@ font-size: 0.9rem;
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.quote-text, .quote-author {
+.quote-text,
+.quote-author {
   animation: quoteAppear 0.5s ease-out forwards;
 }
 
@@ -2364,10 +2494,11 @@ font-size: 0.9rem;
 /* Visual pop for inline quotes */
 .quote-container.quote-pop {
   transform: scale(1.03);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  border: 1px solid rgba(74,144,226,0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(74, 144, 226, 0.4);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  z-index: 1900; /* kept below modal so modals take priority */
+  z-index: 1900;
+  /* kept below modal so modals take priority */
 }
 
 /* Views: detailed and compact adjustments */
@@ -2376,95 +2507,127 @@ font-size: 0.9rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
-.container.detailed-view .quests-grid { /* Assuming quests will also be in a grid */
+
+.container.detailed-view .quests-grid {
+  /* Assuming quests will also be in a grid */
   grid-template-columns: 1fr;
   gap: 1.5rem;
   padding: 1.5rem;
 }
+
 .container.detailed-view .achievements-container,
 .container.detailed-view .favorites-container,
 .container.detailed-view .quest-controls,
 .container.detailed-view .pomodoro-container,
 .container.detailed-view .streak-container .streak-bar {
-  display: block !important; /* Ensure these are visible in detailed view */
+  display: block !important;
+  /* Ensure these are visible in detailed view */
 }
+
 .container.detailed-view .stat-card {
   padding: 25px;
 }
+
 .container.detailed-view .quest {
   padding: 1.5rem;
 }
-.container.detailed-view .stat-value { font-size: 1.1rem; }
+
+.container.detailed-view .stat-value {
+  font-size: 1.1rem;
+}
 
 
 .container.compact-view .stats-grid {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.8rem;
 }
-.container.compact-view .quests-grid { /* Assuming quests will also be in a grid */
+
+.container.compact-view .quests-grid {
+  /* Assuming quests will also be in a grid */
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   padding: 1rem;
 }
+
 .container.compact-view .achievements-container,
 .container.compact-view .favorites-container,
-.container.compact-view .quest-controls, /* Hide quest controls */
-.container.compact-view .pomodoro-container, /* Hide pomodoro timer */
-.container.compact-view .streak-container .streak-bar { /* Hide individual streak days, keep count */
+.container.compact-view .quest-controls,
+/* Hide quest controls */
+.container.compact-view .pomodoro-container,
+/* Hide pomodoro timer */
+.container.compact-view .streak-container .streak-bar {
+  /* Hide individual streak days, keep count */
   display: none;
 }
+
 .container.compact-view .stat-card {
   padding: 15px;
 }
+
 .container.compact-view .quest {
   padding: 1rem;
 }
-.container.compact-view .stat-value { font-size: 0.9rem; }
+
+.container.compact-view .stat-value {
+  font-size: 0.9rem;
+}
 
 /* General adjustments for compact view elements */
 .container.compact-view .app-header {
   padding: 1rem 0;
   margin-bottom: 1rem;
 }
+
 .container.compact-view .user-profile {
   flex-direction: column;
   gap: 0.5rem;
 }
+
 .container.compact-view .avatar {
   width: 50px;
   height: 50px;
   font-size: 1.5rem;
 }
+
 .container.compact-view .level-up {
   padding: 1rem;
   margin-bottom: 1rem;
 }
+
 .container.compact-view .quest-controls-header {
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
 }
+
 .container.compact-view .quest-controls-header h3 {
   font-size: 1.2rem;
 }
+
 .container.compact-view .quests {
   margin-top: 1rem;
 }
+
 .container.compact-view .quest-title {
   font-size: 1rem;
 }
+
 .container.compact-view .quest-tags {
   font-size: 0.7rem;
 }
+
 .container.compact-view .streak-container {
   padding: 1rem;
   margin-bottom: 1rem;
 }
+
 .container.compact-view .streak-count {
   font-size: 1rem;
 }
+
 .container.compact-view .spider-chart-modal {
   padding: 1rem;
 }
+
 .container.compact-view .chart-controls {
   flex-direction: column;
   gap: 0.5rem;
@@ -2476,8 +2639,10 @@ font-size: 0.9rem;
   max-width: 800px;
   width: 90%;
   padding: 30px;
-  max-height: 90vh; /* Allow content to scroll */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 90vh;
+  /* Allow content to scroll */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
 }
 
 .spider-chart-content.modal-enter {
@@ -2485,8 +2650,15 @@ font-size: 0.9rem;
 }
 
 @keyframes spiderModalEnter {
-  from { opacity: 0; transform: scale(0.85) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .stat-summary {
@@ -2614,53 +2786,65 @@ font-size: 0.9rem;
 
 /* View-specific styles for .stats and .quests containers */
 .stats.view-detailed .stats-grid {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* More room for detailed cards */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* More room for detailed cards */
   gap: 2rem;
 }
 
 .quests.view-detailed {
   display: grid;
-  grid-template-columns: 1fr; /* Stack quests in detailed view */
+  grid-template-columns: 1fr;
+  /* Stack quests in detailed view */
   gap: 1.5rem;
-  background-color: rgba(40, 50, 60, 0.2); /* Subtle background for detailed view */
+  background-color: rgba(40, 50, 60, 0.2);
+  /* Subtle background for detailed view */
   border-radius: var(--border-radius-lg);
   padding: 1.5rem;
 }
 
 .stats.view-compact .stats-grid {
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Less room for compact cards */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  /* Less room for compact cards */
   gap: 0.8rem;
 }
 
 .quests.view-compact {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Two columns for compact quests */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Two columns for compact quests */
   gap: 1rem;
-  background-color: rgba(50, 40, 30, 0.2); /* Subtle background for compact view */
+  background-color: rgba(50, 40, 30, 0.2);
+  /* Subtle background for compact view */
   border-radius: var(--border-radius-lg);
   padding: 1rem;
 }
 
 /* Also ensure stat-card and quest padding is updated for detailed and compact */
 .stats.view-detailed .stat-card {
-  padding: 25px; /* Already exists, just for clarity */
-  outline: 2px solid var(--accent-primary); /* Highlight for detailed */
+  padding: 25px;
+  /* Already exists, just for clarity */
+  outline: 2px solid var(--accent-primary);
+  /* Highlight for detailed */
   outline-offset: -2px;
 }
 
 .quests.view-detailed .quest {
-  padding: 1.5rem; /* Already exists, just for clarity */
+  padding: 1.5rem;
+  /* Already exists, just for clarity */
   border: 2px solid rgba(74, 144, 226, 0.4);
 }
 
 .stats.view-compact .stat-card {
-  padding: 15px; /* Already exists, just for clarity */
-  outline: 1px solid var(--accent-secondary); /* Highlight for compact */
+  padding: 15px;
+  /* Already exists, just for clarity */
+  outline: 1px solid var(--accent-secondary);
+  /* Highlight for compact */
   outline-offset: -1px;
 }
 
 .quests.view-compact .quest {
-  padding: 1rem; /* Already exists, just for clarity */
+  padding: 1rem;
+  /* Already exists, just for clarity */
   border: 1px solid rgba(78, 205, 196, 0.3);
 }
 
@@ -2847,8 +3031,15 @@ font-size: 0.9rem;
 }
 
 @keyframes statHighlight {
-  0%, 100% { box-shadow: none; }
-  50% { box-shadow: 0 0 15px rgba(78, 205, 196, 0.8); }
+
+  0%,
+  100% {
+    box-shadow: none;
+  }
+
+  50% {
+    box-shadow: 0 0 15px rgba(78, 205, 196, 0.8);
+  }
 }
 
 .stat-info {
@@ -2894,19 +3085,37 @@ font-size: 0.9rem;
 
 /* Add keyframes for element transitions */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes pulseGlow {
-  0% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); }
-  50% { box-shadow: 0 0 15px rgba(74, 144, 226, 0.8); }
-  100% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); }
+  0% {
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 15px rgba(74, 144, 226, 0.8);
+  }
+
+  100% {
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
 }
 
 /* Apply animations to spider chart elements */
@@ -3013,8 +3222,13 @@ button {
 }
 
 @keyframes progress {
-  from { width: 100%; }
-  to { width: 0%; }
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
 }
 
 .notification.success {
@@ -3050,7 +3264,10 @@ button {
 }
 
 /* Updated Card Styles */
-.quest, .stat, .achievement, .favorite-quote-item {
+.quest,
+.stat,
+.achievement,
+.favorite-quote-item {
   backdrop-filter: blur(5px);
   transition: all 0.3s ease;
 }
@@ -3061,19 +3278,21 @@ html {
 }
 
 /* Progress Indicators */
-.xp-bar, .stat-bar {
+.xp-bar,
+.stat-bar {
   overflow: hidden;
   position: relative;
 }
 
-.xp-bar::after, .stat-bar::after {
+.xp-bar::after,
+.stat-bar::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transform: translateX(-100%);
   animation: shimmer 2s infinite;
 }
@@ -3085,7 +3304,10 @@ html {
 }
 
 /* Focus styles for better accessibility */
-button:focus, input:focus, select:focus, textarea:focus {
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.5);
 }
@@ -3126,31 +3348,31 @@ button:active {
   html {
     font-size: 15px;
   }
-  
+
   /* Enhanced top section visibility for tablets */
   body {
     padding: 10px;
   }
-  
+
   .container {
     padding: 1.5rem;
     margin-bottom: 1rem;
   }
-  
+
   .app-header h1 {
     font-size: 2rem;
   }
-  
+
   .level-up .level {
     font-size: 1.5rem;
   }
-  
+
   .streak-day {
     width: 30px;
     height: 30px;
     font-size: 0.8rem;
   }
-  
+
   .view-toggle {
     flex-direction: column;
     gap: 0.5rem;
@@ -3161,45 +3383,45 @@ button:active {
   html {
     font-size: 14px;
   }
-  
+
   .container {
     padding: 1rem;
   }
-  
+
   h1 {
     font-size: 1.8rem;
   }
-  
+
   .notification {
     min-width: auto;
     max-width: 90%;
     left: 5%;
     right: 5%;
   }
-  
+
   /* Enhanced top section visibility for mobile */
   body {
     padding: 5px;
   }
-  
+
   .app-header h1 {
     font-size: 1.5rem;
   }
-  
+
   .level-up .level {
     font-size: 1.3rem;
   }
-  
+
   .view-toggle {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .view-btn {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
-  
+
   .streak-day {
     width: 28px;
     height: 28px;
@@ -3241,23 +3463,24 @@ button:active {
     padding: 15px;
     max-width: 100%;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
   }
-  
+
   .stat-card {
     padding: 18px;
   }
-  
+
   /* Adjust quest sections */
   .quest-section {
     padding: 15px;
   }
-  
+
   /* Make buttons slightly smaller */
-  .btn, button {
+  .btn,
+  button {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
@@ -3269,30 +3492,30 @@ button:active {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 12px;
   }
-  
+
   .stat-card {
     padding: 15px;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-icon {
     font-size: 1.2rem;
     margin-right: 8px;
   }
-  
+
   /* Make quest cards more compact */
   .quest {
     padding: 12px;
     margin-bottom: 8px;
   }
-  
+
   .quest-title {
     font-size: 0.9rem;
   }
-  
+
   /* Adjust modals for tablet */
   .modal-content {
     width: 95%;
@@ -3300,43 +3523,42 @@ button:active {
     margin: 20px auto;
     padding: 20px;
   }
-  
+
   /* Header adjustments */
   .app-header {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .user-profile {
     width: 100%;
     justify-content: center;
   }
-}
-  
+
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 12px;
   }
-  
+
   .stat-card {
     padding: 15px;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-icon {
     font-size: 1.2rem;
     margin-right: 8px;
   }
-  
+
   /* Make quest cards more compact */
   .quest {
     padding: 12px;
     margin-bottom: 8px;
   }
-  
+
   .quest-title {
     font-size: 0.9rem;
   }
@@ -3348,57 +3570,57 @@ button:active {
     grid-template-columns: 1fr;
     gap: 10px;
   }
-  
+
   .stat-card {
     padding: 12px;
     display: flex;
     align-items: center;
     gap: 15px;
   }
-  
+
   .stat-header {
     margin-bottom: 0;
     flex: 1;
   }
-  
+
   .stat-progress-container {
     margin-top: 0;
     flex: 2;
   }
-  
+
   .stat-value {
     font-size: 1.3rem;
   }
-  
+
   /* Full width container on mobile */
   .container {
     padding: 8px;
     margin: 0;
     max-width: 100%;
   }
-  
+
   /* Adjust header for mobile */
   .user-profile {
     flex-direction: column;
     text-align: center;
     gap: 10px;
   }
-  
+
   .user-avatar {
     margin: 0 auto;
   }
-  
+
   /* Stack quest info vertically */
   .quest-content {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .quest-actions {
     width: 100%;
     justify-content: space-between;
   }
-  
+
   /* Make modals fullscreen on mobile */
   .modal-content {
     width: 100%;
@@ -3408,19 +3630,22 @@ button:active {
     margin: 0;
     padding: 15px;
   }
-  
+
   /* Adjust buttons for touch */
-  button, .btn {
-    min-height: 44px; /* Apple's recommended touch target */
+  button,
+  .btn {
+    min-height: 44px;
+    /* Apple's recommended touch target */
     padding: 10px 15px;
   }
-  
+
   /* Improve readability */
   body {
     font-size: 14px;
   }
-  
-  h2, h3 {
+
+  h2,
+  h3 {
     font-size: 1.2rem;
   }
 }
@@ -3430,34 +3655,35 @@ button:active {
   .stats-grid {
     gap: 8px;
   }
-  
+
   .stat-card {
     padding: 10px;
   }
-  
+
   .stat-name {
     font-size: 0.8rem;
   }
-  
+
   .stat-value {
     font-size: 1.1rem;
   }
-  
+
   .stat-progress-text {
     font-size: 0.7rem;
   }
-  
+
   /* Even more compact header */
   .user-profile h2 {
     font-size: 1.1rem;
   }
-  
+
   .user-profile p {
     font-size: 0.8rem;
   }
-  
+
   /* Smaller buttons */
-  button, .btn {
+  button,
+  .btn {
     padding: 8px 12px;
     font-size: 0.8rem;
   }
@@ -3470,7 +3696,7 @@ button:active {
   .xp-bar-container {
     height: 10px;
   }
-  
+
   .xp-info {
     font-size: 0.8rem;
   }
@@ -3480,7 +3706,7 @@ button:active {
   .xp-bar-container {
     height: 8px;
   }
-  
+
   .xp-info {
     flex-direction: column;
     gap: 5px;
@@ -3494,7 +3720,7 @@ button:active {
     flex-wrap: wrap;
     gap: 8px;
   }
-  
+
   .filter-btn {
     padding: 6px 12px;
     font-size: 0.8rem;
@@ -3505,7 +3731,7 @@ button:active {
   .quest-filters {
     justify-content: center;
   }
-  
+
   .filter-btn {
     flex: 1;
     min-width: 80px;
@@ -3519,7 +3745,7 @@ button:active {
     width: 100%;
     overflow-x: auto;
   }
-  
+
   .chart-tabs {
     flex-wrap: wrap;
   }
@@ -3530,7 +3756,7 @@ button:active {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .chart-tab {
     width: 100%;
     text-align: center;
@@ -3557,7 +3783,7 @@ button:active {
   .pomodoro-timer {
     font-size: 2.5rem;
   }
-  
+
   .pomodoro-controls {
     flex-direction: column;
     gap: 10px;
@@ -3581,15 +3807,15 @@ body {
     align-items: flex-start;
     gap: 10px;
   }
-  
+
   .stat-progress-container {
     width: 100%;
   }
-  
+
   .user-profile h2 {
     font-size: 1rem;
   }
-  
+
   .stat-value {
     font-size: 1.2rem;
   }
@@ -3702,10 +3928,12 @@ body {
     filter: brightness(1);
     transform: scaleY(1);
   }
+
   50% {
     filter: brightness(1.5);
     transform: scaleY(1.3);
   }
+
   100% {
     filter: brightness(1);
     transform: scaleY(1);
@@ -3737,9 +3965,11 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+
   70% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: translateY(-15px);
@@ -3755,9 +3985,11 @@ body {
   0% {
     box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
   }
@@ -3789,6 +4021,7 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-15px);
@@ -3796,8 +4029,13 @@ body {
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .stat-progress-text {
@@ -4111,16 +4349,16 @@ body {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
+
   .filter-container {
     grid-template-columns: 1fr;
   }
-  
+
   .view-toggle {
     flex-direction: column;
     border-radius: 12px;
   }
-  
+
   .achievement-categories {
     justify-content: center;
   }
@@ -4130,11 +4368,11 @@ body {
   .stat-card {
     padding: 15px;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .quest-controls-header {
     flex-direction: column;
     gap: 10px;
@@ -4250,8 +4488,15 @@ body {
 
 /* Loading animations */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .loading {
@@ -4292,9 +4537,12 @@ select:focus {
 /* Enhanced Quest Elements */
 .quests {
   margin-bottom: 2rem;
-  display: grid; /* Add this */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Default for dashboard */
-  gap: 1rem; /* Default for dashboard */
+  display: grid;
+  /* Add this */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* Default for dashboard */
+  gap: 1rem;
+  /* Default for dashboard */
 }
 
 .quest {
@@ -4501,17 +4749,30 @@ select:focus {
 }
 
 /* support favorited state toggled by JS ('favorited') */
-.quote-button.favorited i { color: #f44336; }
+.quote-button.favorited i {
+  color: #f44336;
+}
 
 .quote-button.favorited i {
   animation: heartPulse 0.4s ease;
 }
 
 @keyframes heartPulse {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.3); }
-  60% { transform: scale(0.95); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.3);
+  }
+
+  60% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .quote-container {
@@ -4519,8 +4780,15 @@ select:focus {
 }
 
 @keyframes quoteContainerIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #new-quote.spinning i {
@@ -4528,8 +4796,13 @@ select:focus {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 
@@ -4739,18 +5012,48 @@ select:focus {
   transform: translateY(10px);
 }
 
-.favorite-quote-item:nth-child(1) { animation-delay: 0.03s; }
-.favorite-quote-item:nth-child(2) { animation-delay: 0.08s; }
-.favorite-quote-item:nth-child(3) { animation-delay: 0.13s; }
-.favorite-quote-item:nth-child(4) { animation-delay: 0.18s; }
-.favorite-quote-item:nth-child(5) { animation-delay: 0.23s; }
-.favorite-quote-item:nth-child(6) { animation-delay: 0.28s; }
-.favorite-quote-item:nth-child(7) { animation-delay: 0.33s; }
-.favorite-quote-item:nth-child(8) { animation-delay: 0.38s; }
+.favorite-quote-item:nth-child(1) {
+  animation-delay: 0.03s;
+}
+
+.favorite-quote-item:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.favorite-quote-item:nth-child(3) {
+  animation-delay: 0.13s;
+}
+
+.favorite-quote-item:nth-child(4) {
+  animation-delay: 0.18s;
+}
+
+.favorite-quote-item:nth-child(5) {
+  animation-delay: 0.23s;
+}
+
+.favorite-quote-item:nth-child(6) {
+  animation-delay: 0.28s;
+}
+
+.favorite-quote-item:nth-child(7) {
+  animation-delay: 0.33s;
+}
+
+.favorite-quote-item:nth-child(8) {
+  animation-delay: 0.38s;
+}
 
 @keyframes favoriteItemIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .favorite-quote-category[data-category="power"] {
@@ -4928,8 +5231,13 @@ select:focus {
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .user-profile h2 {
@@ -4946,8 +5254,13 @@ select:focus {
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 10px var(--accent-primary); }
-  to { text-shadow: 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary); }
+  from {
+    text-shadow: 0 0 10px var(--accent-primary);
+  }
+
+  to {
+    text-shadow: 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
+  }
 }
 
 /* Enhanced Quest Tags */
@@ -5104,7 +5417,7 @@ select:focus {
   .quest-tags {
     gap: 0.3rem;
   }
-  
+
   .quest-difficulty,
   .quest-xp,
   .quest-stat,
@@ -5120,7 +5433,7 @@ select:focus {
     align-items: flex-start;
     gap: 0.4rem;
   }
-  
+
   .quest-difficulty,
   .quest-xp,
   .quest-stat,
@@ -5304,7 +5617,7 @@ select:focus {
 }
 
 /* Ensure no blank spaces in quest layout */
-.quest > * {
+.quest>* {
   margin: 0;
   padding: 0;
 }
@@ -5349,7 +5662,8 @@ select:focus {
 /* Spider Chart Modal Content */
 .spider-chart-modal .modal-content {
   padding: 20px;
-  max-width: 900px; /* Adjust as needed */
+  max-width: 900px;
+  /* Adjust as needed */
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
@@ -5357,7 +5671,8 @@ select:focus {
 
 /* Spider Chart SVG styles */
 .stats-chart svg {
-  overflow: visible; /* Allow labels to extend beyond SVG boundaries */
+  overflow: visible;
+  /* Allow labels to extend beyond SVG boundaries */
 }
 
 .spider-chart-grid line {
@@ -5387,7 +5702,8 @@ select:focus {
 
 .spider-chart-previous polygon {
   fill: url(#grad-prev);
-  stroke: var(--accent-tertiary); /* Use a distinct color for previous */
+  stroke: var(--accent-tertiary);
+  /* Use a distinct color for previous */
   stroke-width: 2px;
   fill-opacity: 0.5;
 }
@@ -5457,12 +5773,14 @@ select:focus {
 
 /* Stat change indicators */
 .stat-change.positive {
-  color: var(--accent-secondary); /* Green for positive change */
+  color: var(--accent-secondary);
+  /* Green for positive change */
   background-color: rgba(78, 205, 196, 0.1);
 }
 
 .stat-change.negative {
-  color: var(--accent-quaternary); /* Red for negative change */
+  color: var(--accent-quaternary);
+  /* Red for negative change */
   background-color: rgba(255, 73, 97, 0.1);
 }
 
@@ -5477,7 +5795,8 @@ select:focus {
 }
 
 .quest-countdown.overdue {
-  background-color: #d0021b; /* A red color for overdue items */
+  background-color: #d0021b;
+  /* A red color for overdue items */
 }
 
 /* Quest Grid Empty State */
@@ -5494,17 +5813,20 @@ select:focus {
   border-radius: var(--border-radius-lg);
   color: var(--text-secondary);
 }
+
 .quests-empty i {
   font-size: 3rem;
   margin-bottom: 1rem;
   color: var(--accent-primary);
   opacity: 0.5;
 }
+
 .quests-empty h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.3rem;
   color: var(--text-primary);
 }
+
 .quests-empty p {
   margin: 0;
   font-size: 0.95rem;
@@ -5513,9 +5835,17 @@ select:focus {
 
 /* Quest Grid Entry Animation */
 @keyframes questEntry {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
+
 .quest.quest-enter {
   animation: questEntry 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
@@ -5526,9 +5856,11 @@ select:focus {
   font-size: 0.85rem;
   margin-left: 0.3rem;
 }
+
 .quest-stats .quest-filtered-count::before {
   content: '(';
 }
+
 .quest-stats .quest-filtered-count::after {
   content: ')';
 }
@@ -5538,14 +5870,17 @@ select:focus {
   grid-template-columns: 1fr;
   gap: 1.5rem;
 }
+
 .quests.view-detailed .quest {
   padding: 1.5rem;
   border: 2px solid rgba(74, 144, 226, 0.4);
 }
+
 .quests.view-compact {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 0.8rem;
 }
+
 .quests.view-compact .quest {
   padding: 0.8rem;
   border: 1px solid rgba(78, 205, 196, 0.3);
@@ -5568,21 +5903,26 @@ select:focus {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
+
 .stats.view-detailed .stat-card {
   padding: 25px;
   outline: 2px solid var(--accent-primary);
   outline-offset: -2px;
 }
+
 .stats.view-compact .stats-grid {
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 0.6rem;
 }
+
 .stats.view-compact .stat-card {
   padding: 12px;
 }
+
 .stats.view-compact .stat-value {
   font-size: 1.2rem;
 }
+
 .stats.view-compact .stat-name {
   font-size: 0.75rem;
 }

@@ -4259,6 +4259,7 @@ async function loadDefaultQuestsIntoCurrent() {
 }
 
 // Initialize Quotes and Spider Chart UI
+let currentQuote = null;
 function initializeQuotes() {
   try {
     const quoteText = document.getElementById('quote-text');
@@ -4267,7 +4268,7 @@ function initializeQuotes() {
     const favBtn = document.getElementById('favorite-quote');
     const newBtn = document.getElementById('new-quote');
     const favoritesGrid = document.getElementById('favorites-grid');
-    let currentQuote = motivationalQuotesSystem.getRandomQuote();
+    currentQuote = motivationalQuotesSystem.getRandomQuote();
 
     function render(q) {
       if (!q) return;
@@ -4373,6 +4374,13 @@ function displayQuoteByContext(context) {
     if (quoteText) quoteText.textContent = q.text || '';
     if (quoteAuthor) quoteAuthor.textContent = q.author || '';
     if (quoteSource) quoteSource.textContent = q.source || '';
+    currentQuote = q;
+    const favBtn = document.getElementById('favorite-quote');
+    if (favBtn) {
+      db.favoriteQuotes.where('quoteId').equals(q.id).first().then(f => {
+        favBtn.classList.toggle('favorited', !!f);
+      }).catch(() => favBtn.classList.remove('favorited'));
+    }
     if (container) {
       container.classList.add('quote-pop');
       setTimeout(() => container.classList.remove('quote-pop'), 5000);
