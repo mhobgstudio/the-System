@@ -3168,23 +3168,6 @@ function generateSuggestedQuests(stat, difficulty, category) {
   return all.length > 0 ? all : ["Stay focused", "Keep improving"];
 }
 
-function updateSuggestionsWithClickable(stat, difficulty, questElem) {
-  const category = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
-  const suggestions = generateSuggestedQuests(stat, difficulty, category);
-  const suggestionContainer = questElem.querySelector('#quest-suggestions');
-  
-  if (suggestionContainer) {
-    suggestionContainer.innerHTML = suggestions.map(suggestion => `
-      <div class="suggested-quest-item glow-button" onclick="applySuggestion('${suggestion}', this.closest('.quest-edit-panel'))">
-          ${suggestion}
-      </div>
-    `).join('');
-    
-    // Open the popup once suggestions are generated
-    openSuggestionPopup();
-  }
-}
-
 function updateSuggestions(stat, difficulty, container) {
   const suggestions = generateSuggestedQuests(stat || 'discipline', difficulty || 'Medium');
   // Prefer suggestions in the provided container, then in the active edit panel, then global
@@ -3324,7 +3307,7 @@ function openQuestEditPanel(quest, questElemToEdit) {
       <div class="edit-panel-content" onclick="event.stopPropagation()">
           <div class="edit-title-row">
             <input type="text" class="quest-input edit-title-input" value="${quest.title || ''}" placeholder="Quest title">
-            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); openSuggestionPopup()" title="Suggestions">
+            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); onSuggestClick(this)" title="Suggestions">
               <i class="fas fa-lightbulb"></i>
             </button>
           </div>
@@ -3380,7 +3363,6 @@ function openQuestEditPanel(quest, questElemToEdit) {
   `;
 
   setupEditPanelListeners(questElem);
-  updateSuggestionsWithClickable(quest.stat || 'discipline', quest.difficulty || 'Medium', questElem);
 }
 
 function setupEditPanelListeners(questElem) {
@@ -3417,6 +3399,14 @@ function setupEditPanelListeners(questElem) {
   setupToggleGroup('.edit-stat-group > .tag-button');
 }
 
+function onSuggestClick(btn) {
+  const questElem = btn.closest('.quest-edit-panel');
+  const stat = questElem.querySelector('.edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
+  const difficulty = questElem.querySelector('.edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
+  updateSuggestionsWithClickable(stat, difficulty, questElem);
+  openSuggestionPopup();
+}
+
 function applySuggestion(suggestion, questElem) {
   const titleInput = questElem.querySelector('input[type="text"]');
   if (titleInput) {
@@ -3436,8 +3426,6 @@ function updateSuggestionsWithClickable(stat, difficulty, questElem) {
           ${suggestion}
       </div>
     `).join('');
-    
-    openSuggestionPopup();
   }
 }
 

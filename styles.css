@@ -6241,9 +6241,30 @@ select:focus {
 }
 
 .quests-empty p {
-  margin: 0;
+  margin: 0 0 1rem 0;
   font-size: 0.95rem;
   opacity: 0.7;
+}
+
+.add-quest-btn-empty {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 12px rgba(74, 144, 226, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-quest-btn-empty:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 /* Quest Grid Entry Animation */
