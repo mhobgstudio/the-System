@@ -2590,7 +2590,7 @@ function saveQuestFromModal() {
     const pinCheck = document.querySelector('#quest-modal .pin-comment');
     if (pinCheck) pinCheck.checked = false;
     renderQuests();
-    showNotification('Quest created!', 'success');
+    showNotification('New quest added', 'info');
   }).catch(e => {
     console.error('Error saving quest:', e);
     showNotification('Failed to save quest', 'error');
