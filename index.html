@@ -31,6 +31,21 @@
       </div>
     </div>
 
+    <!-- Due Date Reminder Toast -->
+    <div class="due-date-reminder" id="due-date-reminder">
+      <div class="due-date-reminder-content">
+        <div class="due-date-reminder-icon"><i class="fas fa-hourglass-half"></i></div>
+        <div class="due-date-reminder-info">
+          <span class="due-date-reminder-title">Quest Due Soon</span>
+          <span class="due-date-reminder-message" id="due-date-message"></span>
+        </div>
+        <div class="due-date-reminder-count" id="due-date-count"></div>
+      </div>
+      <div class="due-date-reminder-bar">
+        <div class="due-date-reminder-progress" id="due-date-progress"></div>
+      </div>
+    </div>
+
     <!-- Level Up Overlay -->
     <div class="level-up-overlay" id="level-up-overlay">
       <div class="level-up-content">
@@ -217,30 +232,26 @@
       <div class="quest-controls">
         <div class="quest-controls-header">
           <h3>Quest Management</h3>
-          <div class="quest-stats">
-            <span class="quest-count" id="quest-count">0</span> quests
+          <div class="quest-controls-right">
+            <div class="quest-stats">
+              <span class="quest-count" id="quest-count">0</span>
+            </div>
+            <button id="add-quest-btn" class="add-quest-btn-header">
+              <i class="fas fa-plus"></i> Add
+            </button>
           </div>
         </div>
         
-        <div class="search-container">
+        <div class="quest-toolbar">
           <div class="search-wrapper">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="quest-search" placeholder="Search quests..." class="quest-input">
             <button id="clear-search-btn" class="clear-search-btn" style="display: none;">
               <i class="fas fa-times"></i>
             </button>
-            <button id="search-btn" class="search-btn">
-              <i class="fas fa-search"></i>
-            </button>
           </div>
-        </div>
-
-
-        
-        
-        <div class="filter-container">
+          
           <div class="filter-group">
-            <label>Category:</label>
             <select id="category-filter" class="quest-input">
               <option value="all">All Categories</option>
               <option value="work">Work</option>
@@ -251,7 +262,6 @@
           </div>
           
           <div class="filter-group">
-            <label>Difficulty:</label>
             <select id="difficulty-filter" class="quest-input">
               <option value="all">All Difficulties</option>
               <option value="Easy">Easy</option>
@@ -261,7 +271,6 @@
           </div>
           
           <div class="filter-group">
-            <label>Stat:</label>
             <select id="stat-filter" class="quest-input">
               <option value="all">All Stats</option>
               <option value="strength">Strength</option>
@@ -274,8 +283,8 @@
           </div>
           
           <div class="filter-actions">
-            <button id="sort-btn" class="sort-btn">
-              <i class="fas fa-sort"></i> Sort
+            <button id="sort-btn" class="sort-btn" title="Sort quests">
+              <i class="fas fa-sort"></i>
             </button>
             <div id="sort-options" class="sort-options">
               <div data-sort="title" class="sort-option">
@@ -333,8 +342,6 @@
         </div>
       </div>
 
-      <button id="add-quest-btn">Add New Quest</button>
-
       <div class="level-up">
         <button id="level-up-btn" style="display: none">Level Up!</button>
       </div>
@@ -360,7 +367,7 @@
         <div class="achievements-header">
           <h3>Achievements</h3>
           <div class="achievement-progress">
-            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">10</span>
+            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">35</span>
             <div class="achievement-progress-bar">
               <div class="achievement-progress-fill" id="achievement-progress-fill"></div>
             </div>
@@ -379,6 +386,12 @@
           </button>
           <button class="achievement-category" data-category="stats">
             <i class="fas fa-chart-line"></i> Stats
+          </button>
+          <button class="achievement-category" data-category="level">
+            <i class="fas fa-arrow-up"></i> Level
+          </button>
+          <button class="achievement-category" data-category="pomodoro">
+            <i class="fas fa-clock"></i> Pomodoro
           </button>
         </div>
         

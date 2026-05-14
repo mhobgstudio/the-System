@@ -4555,8 +4555,10 @@ function initializeQuotes() {
         <div class="favorite-quote-item" data-quoteid="${q.id}" style="animation-delay:${idx * 0.05}s">
           <div class="favorite-quote-text">${escapeHtml(q.text)}</div>
           <div class="favorite-quote-author">${escapeHtml(q.author || '')}</div>
-          <div class="favorite-quote-category" data-category="${escapeHtml(q.category || '')}">${escapeHtml(q.category || '')}</div>
-          <button class="favorite-quote-remove" data-quoteid="${q.id}"><i class="fas fa-times"></i></button>
+          <div class="favorite-quote-meta">
+            <div class="favorite-quote-category" data-category="${escapeHtml(q.category || '')}">${escapeHtml(q.category || '')}</div>
+            <button class="favorite-quote-remove" data-quoteid="${q.id}"><i class="fas fa-times"></i></button>
+          </div>
         </div>
       `).join('');
     }
