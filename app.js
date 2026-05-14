@@ -2539,16 +2539,14 @@ document.addEventListener('click', (e) => {
 
 function openQuestModal() {
   const modal = document.getElementById('quest-modal');
-  const overlay = document.getElementById('modal-overlay');
-  if (modal) modal.classList.add('show');
-  if (overlay) overlay.classList.add('show');
+  if (modal) modal.style.display = 'flex';
+  document.getElementById('modal-overlay')?.classList.add('show');
 }
 
 function closeQuestModal() {
   const modal = document.getElementById('quest-modal');
-  const overlay = document.getElementById('modal-overlay');
-  if (modal) modal.classList.remove('show');
-  if (overlay) overlay.classList.remove('show');
+  if (modal) modal.style.display = 'none';
+  document.getElementById('modal-overlay')?.classList.remove('show');
 }
 
 function saveQuestFromModal() {
@@ -2560,6 +2558,7 @@ function saveQuestFromModal() {
   const stat = document.querySelector('#quest-modal .edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
   const dueDate = document.getElementById('quest-modal-due').value || null;
   const comment = document.getElementById('quest-modal-comment').value.trim() || '';
+  const isPinned = document.querySelector('#quest-modal .pin-comment')?.checked || !!comment;
 
   const newQuest = {
     title,
@@ -2568,7 +2567,7 @@ function saveQuestFromModal() {
     stat,
     category,
     comment,
-    isPinned: !!comment,
+    isPinned,
     dueDate,
     status: 'inbox',
     createdAt: new Date()
@@ -2584,6 +2583,8 @@ function saveQuestFromModal() {
     document.querySelector('#quest-modal .edit-diff-group .tag-button[data-difficulty="Medium"]')?.classList.add('selected');
     document.querySelector('#quest-modal .edit-stat-group .tag-button[data-stat="discipline"]')?.classList.add('selected');
     document.getElementById('quest-modal-xp').value = '2';
+    const pinCheck = document.querySelector('#quest-modal .pin-comment');
+    if (pinCheck) pinCheck.checked = false;
     renderQuests();
     showNotification('Quest created!', 'success');
   }).catch(e => {
@@ -4119,7 +4120,9 @@ document.getElementById("modal-overlay").addEventListener("click", () => {
   closeQuestModal();
 });
 
-document.getElementById('quest-modal-close').addEventListener('click', closeQuestModal);
+document.getElementById('quest-modal').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeQuestModal();
+});
 
 // Close modal with Escape key
 document.addEventListener("keydown", (e) => {

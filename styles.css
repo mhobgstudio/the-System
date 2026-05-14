@@ -5569,48 +5569,28 @@ select:focus {
   transform: rotate(90deg);
 }
 
-/* Quest modal content */
-.quest-modal-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.quest-modal-content .edit-meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+/* Quest modal overlay - edit panel style popup */
+.quest-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
   align-items: center;
+  justify-content: center;
+  background: transparent;
 }
 
-.quest-modal-content .edit-footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
+.quest-modal-overlay .quest-edit-panel {
+  position: relative;
+  z-index: 2001;
+  animation: modalPopIn 0.25s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-.quest-modal-content .edit-date-group,
-.quest-modal-content .edit-comment-group {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.quest-modal-content .edit-comment-group {
-  flex: 1;
-}
-
-.quest-modal-content .edit-comment-group input {
-  flex: 1;
-  min-width: 120px;
-}
-
-.quest-modal-content .edit-date-group label,
-.quest-modal-content .edit-xp-group label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+@keyframes modalPopIn {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Enhanced Modal Buttons */

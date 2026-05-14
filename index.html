@@ -432,51 +432,68 @@
     <div class="modal-overlay" id="modal-overlay"></div>
 
     <!-- Quest Creation Modal -->
-    <div class="settings-modal" id="quest-modal">
-      <span class="modal-close" id="quest-modal-close">&times;</span>
-      <h2>New Quest</h2>
-      <div class="modal-content quest-modal-content">
-        <input type="text" id="quest-modal-title" class="quest-input" placeholder="Quest title">
-        <div class="edit-meta-row">
-          <div class="edit-category-group">
-            <button type="button" class="tag-button glow-button selected" data-category="Work">Work</button>
-            <button type="button" class="tag-button glow-button" data-category="Health">Health</button>
-            <button type="button" class="tag-button glow-button" data-category="Learning">Learning</button>
-            <button type="button" class="tag-button glow-button" data-category="Personal">Personal</button>
-            <button type="button" class="tag-button glow-button" data-category="Cultivation">Cultivation</button>
+    <div class="quest-modal-overlay" id="quest-modal" style="display:none;">
+      <div class="quest quest-edit-panel" style="max-width:560px;width:90%;margin:auto;">
+        <div class="edit-panel-content" onclick="event.stopPropagation()">
+          <div class="edit-title-row">
+            <input type="text" id="quest-modal-title" class="quest-input edit-title-input" value="" placeholder="Quest title">
+            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); toggleSuggestions(this)" title="Suggestions">
+              <i class="fas fa-lightbulb"></i>
+            </button>
           </div>
-        </div>
-        <div class="edit-meta-row">
-          <div class="edit-diff-group">
-            <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Easy">Easy</button>
-            <button type="button" class="tag-button tag-sm glow-button selected" data-difficulty="Medium">Medium</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Hard">Hard</button>
+          
+          <div class="edit-meta-row">
+            <div class="edit-category-group">
+              <button type="button" class="tag-button glow-button selected" data-category="Work">Work</button>
+              <button type="button" class="tag-button glow-button" data-category="Health">Health</button>
+              <button type="button" class="tag-button glow-button" data-category="Learning">Learning</button>
+              <button type="button" class="tag-button glow-button" data-category="Personal">Personal</button>
+              <button type="button" class="tag-button glow-button" data-category="Cultivation">Cultivation</button>
+            </div>
           </div>
-          <div class="edit-xp-group">
-            <label>XP</label>
-            <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
+
+          <div class="edit-meta-row">
+            <div class="edit-diff-group">
+              <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Easy">Easy</button>
+              <button type="button" class="tag-button tag-sm glow-button selected" data-difficulty="Medium">Medium</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Hard">Hard</button>
+            </div>
+            <div class="edit-xp-group">
+              <label>XP</label>
+              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
+            </div>
+            <div class="edit-stat-group">
+              <button type="button" class="tag-button tag-sm glow-button selected" data-stat="discipline">discipline</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-stat="strength">strength</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-stat="agility">agility</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-stat="intelligence">intelligence</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-stat="stamina">stamina</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-stat="willpower">willpower</button>
+            </div>
           </div>
-          <div class="edit-stat-group">
-            <button type="button" class="tag-button tag-sm glow-button selected" data-stat="discipline">discipline</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-stat="strength">strength</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-stat="agility">agility</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-stat="intelligence">intelligence</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-stat="stamina">stamina</button>
-            <button type="button" class="tag-button tag-sm glow-button" data-stat="willpower">willpower</button>
+
+          <div id="quest-suggestion-popup" class="suggestion-popup" style="display:none;">
+            <div class="popup-header">Suggested Quests<button onclick="this.closest('.suggestion-popup').style.display='none'">&times;</button></div>
+            <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
-        </div>
-        <div class="edit-footer-row">
-          <div class="edit-date-group">
-            <label>Due</label>
-            <input type="date" id="quest-modal-due" class="quest-input">
+
+          <div class="edit-footer-row">
+            <div class="edit-date-group">
+              <label>Due</label>
+              <input type="date" id="quest-modal-due" class="quest-input">
+            </div>
+            <div class="edit-comment-group">
+              <input type="text" id="quest-modal-comment" class="quest-input" placeholder="Comment...">
+              <label class="pin-checkbox">
+                <input type="checkbox" class="pin-comment">
+                <i class="fas fa-thumbtack"></i>
+              </label>
+            </div>
+            <div class="action-buttons">
+              <button type="button" class="save-quest glow-button" onclick="saveQuestFromModal()">Save</button>
+              <button type="button" class="cancel-quest glow-button" onclick="closeQuestModal()">Cancel</button>
+            </div>
           </div>
-          <div class="edit-comment-group">
-            <input type="text" id="quest-modal-comment" class="quest-input" placeholder="Comment...">
-          </div>
-        </div>
-        <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem;">
-          <button class="save-quest glow-button" onclick="saveQuestFromModal()">Save</button>
-          <button class="cancel-quest glow-button" onclick="closeQuestModal()">Cancel</button>
         </div>
       </div>
     </div>
