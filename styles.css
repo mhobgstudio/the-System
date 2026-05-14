@@ -2153,21 +2153,22 @@ button:hover {
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
   color: white;
-  padding: 6px 14px;
+  padding: 8px 18px;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 2px 10px rgba(74, 144, 226, 0.35);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  flex-shrink: 0;
 }
 
 .add-quest-btn-header:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
 }
 
 .quest-toolbar {
