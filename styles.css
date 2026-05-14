@@ -5549,6 +5549,50 @@ select:focus {
   transform: rotate(90deg);
 }
 
+/* Quest modal content */
+.quest-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quest-modal-content .edit-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.quest-modal-content .edit-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.quest-modal-content .edit-date-group,
+.quest-modal-content .edit-comment-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.quest-modal-content .edit-comment-group {
+  flex: 1;
+}
+
+.quest-modal-content .edit-comment-group input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.quest-modal-content .edit-date-group label,
+.quest-modal-content .edit-xp-group label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
 /* Enhanced Modal Buttons */
 .settings-modal button,
 .load-modal button {

@@ -2530,36 +2530,66 @@ const questsElem = document.getElementById("quests");
 const levelUpBtn = document.getElementById("level-up-btn");
 const addQuestBtn = document.getElementById("add-quest-btn");
 
-// Open an edit panel to create a new quest when Add Quest button is clicked
+// Open quest creation modal when Add New Quest is clicked
 document.addEventListener('click', (e) => {
-  if (e.target.closest('#add-quest-btn, #add-quest-btn-2')) {
-    openAddQuestPanel();
+  if (e.target.closest('#add-quest-btn')) {
+    openQuestModal();
   }
 });
 
-function openAddQuestPanel() {
-  // Close existing edit panel
-  const existingPanel = document.querySelector('.quest-edit-panel');
-  if (existingPanel) existingPanel.remove();
+function openQuestModal() {
+  const modal = document.getElementById('quest-modal');
+  const overlay = document.getElementById('modal-overlay');
+  if (modal) modal.classList.add('show');
+  if (overlay) overlay.classList.add('show');
+}
 
-  // Create a placeholder quest element and open the standard edit panel for it
-  const newQuestElem = document.createElement('div');
-  newQuestElem.className = 'quest quest-enter';
-  appendQuestWithAnimation(questsElem, newQuestElem);
+function closeQuestModal() {
+  const modal = document.getElementById('quest-modal');
+  const overlay = document.getElementById('modal-overlay');
+  if (modal) modal.classList.remove('show');
+  if (overlay) overlay.classList.remove('show');
+}
 
-  const newQuestObj = {
-    id: 'new',
-    title: '',
-    difficulty: 'Medium',
-    xp: 2,
-    stat: 'discipline',
+function saveQuestFromModal() {
+  const title = document.getElementById('quest-modal-title').value.trim();
+  if (!title) { showNotification('Enter a quest title', 'error'); return; }
+  const category = document.querySelector('#quest-modal .edit-category-group .tag-button.selected')?.dataset.category || 'Personal';
+  const difficulty = document.querySelector('#quest-modal .edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
+  const xp = parseInt(document.getElementById('quest-modal-xp').value) || 2;
+  const stat = document.querySelector('#quest-modal .edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
+  const dueDate = document.getElementById('quest-modal-due').value || null;
+  const comment = document.getElementById('quest-modal-comment').value.trim() || '';
+
+  const newQuest = {
+    title,
+    difficulty,
+    xp,
+    stat,
+    category,
+    comment,
+    isPinned: !!comment,
+    dueDate,
     status: 'inbox',
-    comment: '',
-    isPinned: true
+    createdAt: new Date()
   };
 
-  // Reuse the existing edit panel renderer to get the full dynamic UI
-  openQuestEditPanel(newQuestObj, newQuestElem);
+  db.quests.add(newQuest).then(() => {
+    closeQuestModal();
+    document.getElementById('quest-modal-title').value = '';
+    document.getElementById('quest-modal-comment').value = '';
+    document.getElementById('quest-modal-due').value = '';
+    document.querySelectorAll('#quest-modal .tag-button.selected').forEach(b => b.classList.remove('selected'));
+    document.querySelector('#quest-modal .edit-category-group .tag-button[data-category="Work"]')?.classList.add('selected');
+    document.querySelector('#quest-modal .edit-diff-group .tag-button[data-difficulty="Medium"]')?.classList.add('selected');
+    document.querySelector('#quest-modal .edit-stat-group .tag-button[data-stat="discipline"]')?.classList.add('selected');
+    document.getElementById('quest-modal-xp').value = '2';
+    renderQuests();
+    showNotification('Quest created!', 'success');
+  }).catch(e => {
+    console.error('Error saving quest:', e);
+    showNotification('Failed to save quest', 'error');
+  });
 }
 const usernameDisplay = document.getElementById("username-display");
 const xpRequiredElem = document.getElementById("xp-required");
@@ -4086,12 +4116,16 @@ modalClose.addEventListener("click", () => {
 // Close modal when clicking overlay
 document.getElementById("modal-overlay").addEventListener("click", () => {
   closeSettingsModal();
+  closeQuestModal();
 });
+
+document.getElementById('quest-modal-close').addEventListener('click', closeQuestModal);
 
 // Close modal with Escape key
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeSettingsModal();
+    closeQuestModal();
   }
 });
 
