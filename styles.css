@@ -1509,6 +1509,12 @@ button:hover {
   transform: scale(1.05);
 }
 
+.suggest-btn.active {
+  background: rgba(255, 209, 102, 0.25);
+  border-color: var(--accent-tertiary);
+  box-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
+}
+
 .edit-meta-row {
   display: flex;
   align-items: center;

@@ -3307,7 +3307,7 @@ function openQuestEditPanel(quest, questElemToEdit) {
       <div class="edit-panel-content" onclick="event.stopPropagation()">
           <div class="edit-title-row">
             <input type="text" class="quest-input edit-title-input" value="${quest.title || ''}" placeholder="Quest title">
-            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); onSuggestClick(this)" title="Suggestions">
+            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); toggleSuggestions(this)" title="Suggestions">
               <i class="fas fa-lightbulb"></i>
             </button>
           </div>
@@ -3399,12 +3399,20 @@ function setupEditPanelListeners(questElem) {
   setupToggleGroup('.edit-stat-group > .tag-button');
 }
 
-function onSuggestClick(btn) {
+function toggleSuggestions(btn) {
+  const popup = document.getElementById('quest-suggestion-popup');
+  if (!popup) return;
+  if (popup.style.display === 'block') {
+    popup.style.display = 'none';
+    btn.classList.remove('active');
+    return;
+  }
   const questElem = btn.closest('.quest-edit-panel');
   const stat = questElem.querySelector('.edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
   const difficulty = questElem.querySelector('.edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
   updateSuggestionsWithClickable(stat, difficulty, questElem);
-  openSuggestionPopup();
+  popup.style.display = 'block';
+  btn.classList.add('active');
 }
 
 function applySuggestion(suggestion, questElem) {
