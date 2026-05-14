@@ -473,7 +473,7 @@
           </div>
 
           <div id="quest-suggestion-popup" class="suggestion-popup" style="display:none;">
-            <div class="popup-header">Suggested Quests<button onclick="this.closest('.suggestion-popup').style.display='none'">&times;</button></div>
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
             <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
 
@@ -490,7 +490,7 @@
               </label>
             </div>
             <div class="action-buttons">
-              <button type="button" class="save-quest glow-button" onclick="saveQuestFromModal()">Save</button>
+              <button type="button" class="save-quest glow-button" onclick="saveQuestFromModal()">Add</button>
               <button type="button" class="cancel-quest glow-button" onclick="closeQuestModal()">Cancel</button>
             </div>
           </div>
