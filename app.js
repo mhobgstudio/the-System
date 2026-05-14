@@ -2537,6 +2537,10 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Wire up toggle listeners for the quest modal once
+const questModalPanel = document.querySelector('#quest-modal .quest-edit-panel');
+if (questModalPanel) setupEditPanelListeners(questModalPanel);
+
 function openQuestModal() {
   const modal = document.getElementById('quest-modal');
   if (modal) modal.style.display = 'flex';
