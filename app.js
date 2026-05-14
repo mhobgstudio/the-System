@@ -2531,7 +2531,13 @@ const levelUpBtn = document.getElementById("level-up-btn");
 const addQuestBtn = document.getElementById("add-quest-btn");
 
 // Open an edit panel to create a new quest when Add Quest button is clicked
-addQuestBtn.addEventListener('click', () => {
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#add-quest-btn, #add-quest-btn-2')) {
+    openAddQuestPanel();
+  }
+});
+
+function openAddQuestPanel() {
   // Close existing edit panel
   const existingPanel = document.querySelector('.quest-edit-panel');
   if (existingPanel) existingPanel.remove();
@@ -2554,7 +2560,7 @@ addQuestBtn.addEventListener('click', () => {
 
   // Reuse the existing edit panel renderer to get the full dynamic UI
   openQuestEditPanel(newQuestObj, newQuestElem);
-});
+}
 const usernameDisplay = document.getElementById("username-display");
 const xpRequiredElem = document.getElementById("xp-required");
 
