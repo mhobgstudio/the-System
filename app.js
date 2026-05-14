@@ -10,6 +10,15 @@ const questToQuoteCategory = {
   power: "power"
 };
 
+function linkify(text) {
+  if (!text) return '';
+  const parts = text.split(/(https?:\/\/[^\s<]+)/g);
+  return parts.map((part, i) => {
+    if (i % 2) return `<a href="${part}" target="_blank" rel="noopener noreferrer">${part}</a>`;
+    return escapeHtml(part);
+  }).join('');
+}
+
 function escapeHtml(text) {
   if (!text) return '';
   const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
@@ -3033,7 +3042,7 @@ function createQuestElement(quest, animate = true) {
         <span class="quest-category category-${(quest.category || 'personal').toLowerCase()}">${ quest.category || 'personal' }</span>
         ${countdownHTML}
       </div>
-      ${ quest.comment ? `<div class="pinned-comment">${quest.comment}</div>` : '' }
+      ${ quest.comment ? `<div class="pinned-comment">${linkify(quest.comment)}</div>` : '' }
     </div>
   `;
 

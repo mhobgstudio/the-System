@@ -6046,6 +6046,16 @@ select:focus {
   line-height: 1.4;
 }
 
+.pinned-comment a {
+  color: #64b5f6;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.pinned-comment a:hover {
+  color: #90caf9;
+}
+
 /* Status-specific colors */
 .status-inbox {
   background: var(--accent-primary);
