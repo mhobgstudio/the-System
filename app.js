@@ -1,3 +1,15 @@
+let activeQuoteCategory = null;
+
+const questToQuoteCategory = {
+  work: "discipline",
+  health: "perseverance",
+  learning: "wisdom",
+  personal: "growth",
+  faith: "faith",
+  discipline: "discipline",
+  power: "power"
+};
+
 function escapeHtml(text) {
   if (!text) return '';
   const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
@@ -2237,6 +2249,206 @@ const achievementDefinitions = [
     icon: "fa-solid fa-circle-check",
     category: "quests",
     condition: (stats) => stats.categoriesCompleted && stats.categoriesCompleted.length >= 4
+  },
+  {
+    id: 11,
+    title: "Quest Enthusiast",
+    description: "Complete 25 quests",
+    icon: "fa-solid fa-list",
+    category: "quests",
+    condition: (stats) => stats.completedQuests >= 25
+  },
+  {
+    id: 12,
+    title: "Quest Legend",
+    description: "Complete 100 quests",
+    icon: "fa-solid fa-crown",
+    category: "quests",
+    condition: (stats) => stats.completedQuests >= 100
+  },
+  {
+    id: 13,
+    title: "Quest Fanatic",
+    description: "Complete 250 quests",
+    icon: "fa-solid fa-trophy",
+    category: "quests",
+    condition: (stats) => stats.completedQuests >= 250
+  },
+  {
+    id: 14,
+    title: "Completionist",
+    description: "Complete quests in all 6 categories",
+    icon: "fa-solid fa-check-double",
+    category: "quests",
+    condition: (stats) => stats.categoriesCompleted && stats.categoriesCompleted.length >= 6
+  },
+  {
+    id: 15,
+    title: "Awakening",
+    description: "Reach level 5",
+    icon: "fa-solid fa-star",
+    category: "level",
+    condition: (stats) => stats.level >= 5
+  },
+  {
+    id: 16,
+    title: "Ascendant",
+    description: "Reach level 25",
+    icon: "fa-solid fa-arrow-up",
+    category: "level",
+    condition: (stats) => stats.level >= 25
+  },
+  {
+    id: 17,
+    title: "Transcendent",
+    description: "Reach level 50",
+    icon: "fa-solid fa-crown",
+    category: "level",
+    condition: (stats) => stats.level >= 50
+  },
+  {
+    id: 18,
+    title: "Godlike",
+    description: "Reach level 100",
+    icon: "fa-solid fa-star",
+    category: "level",
+    condition: (stats) => stats.level >= 100
+  },
+  {
+    id: 19,
+    title: "Well-Rounded",
+    description: "Get all stats to level 10",
+    icon: "fa-solid fa-scale-balanced",
+    category: "stats",
+    condition: (stats) => Object.keys(statsElems).every(stat => stats[stat] >= 10)
+  },
+  {
+    id: 20,
+    title: "Elite",
+    description: "Get any stat to level 25",
+    icon: "fa-solid fa-bolt",
+    category: "stats",
+    condition: (stats) => Object.keys(statsElems).some(stat => stats[stat] >= 25)
+  },
+  {
+    id: 21,
+    title: "Peak Performance",
+    description: "Get any stat to level 50",
+    icon: "fa-solid fa-star",
+    category: "stats",
+    condition: (stats) => Object.keys(statsElems).some(stat => stats[stat] >= 50)
+  },
+  {
+    id: 22,
+    title: "Resilient",
+    description: "Maintain a 14-day streak",
+    icon: "fa-solid fa-calendar-check",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 14
+  },
+  {
+    id: 23,
+    title: "Legendary Streak",
+    description: "Maintain a 100-day streak",
+    icon: "fa-solid fa-fire",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 100
+  },
+  {
+    id: 24,
+    title: "Immortal Will",
+    description: "Maintain a 365-day streak",
+    icon: "fa-regular fa-snowflake",
+    category: "streak",
+    condition: (stats) => stats.currentStreak >= 365
+  },
+  {
+    id: 25,
+    title: "Focused",
+    description: "Complete 1 pomodoro session",
+    icon: "fa-solid fa-clock",
+    category: "pomodoro",
+    condition: (stats) => stats.pomodoroCompleted >= 1
+  },
+  {
+    id: 26,
+    title: "Pomodoro Pro",
+    description: "Complete 25 pomodoro sessions",
+    icon: "fa-solid fa-clock",
+    category: "pomodoro",
+    condition: (stats) => stats.pomodoroCompleted >= 25
+  },
+  {
+    id: 27,
+    title: "Time Lord",
+    description: "Complete 100 pomodoro sessions",
+    icon: "fa-solid fa-clock",
+    category: "pomodoro",
+    condition: (stats) => stats.pomodoroCompleted >= 100
+  },
+  {
+    id: 28,
+    title: "Rising Star",
+    description: "Earn 1,000 total XP from quests",
+    icon: "fa-solid fa-star",
+    category: "quests",
+    condition: (stats) => stats.totalXpEarned >= 1000
+  },
+  {
+    id: 29,
+    title: "XP Collector",
+    description: "Earn 10,000 total XP from quests",
+    icon: "fa-solid fa-star",
+    category: "quests",
+    condition: (stats) => stats.totalXpEarned >= 10000
+  },
+  {
+    id: 30,
+    title: "XP Hoarder",
+    description: "Earn 100,000 total XP from quests",
+    icon: "fa-solid fa-star",
+    category: "quests",
+    condition: (stats) => stats.totalXpEarned >= 100000
+  },
+  {
+    id: 31,
+    title: "Hard Worker",
+    description: "Complete 1 Hard quest",
+    icon: "fa-solid fa-hammer",
+    category: "quests",
+    condition: (stats) => stats.hardQuestsCompleted >= 1
+  },
+  {
+    id: 32,
+    title: "Hardcore",
+    description: "Complete 50 Hard quests",
+    icon: "fa-solid fa-hammer",
+    category: "quests",
+    condition: (stats) => stats.hardQuestsCompleted >= 50
+  },
+  {
+    id: 33,
+    title: "Easy Does It",
+    description: "Complete 100 Easy quests",
+    icon: "fa-solid fa-feather",
+    category: "quests",
+    condition: (stats) => stats.easyQuestsCompleted >= 100
+  },
+  {
+    id: 34,
+    title: "Diverse Training",
+    description: "Complete quests for all 6 stats",
+    icon: "fa-solid fa-dumbbell",
+    category: "quests",
+    condition: (stats) => stats.statsCompleted && stats.statsCompleted.length >= 6
+  },
+  {
+    id: 35,
+    title: "Balanced Effort",
+    description: "Complete at least 1 quest of each difficulty",
+    icon: "fa-solid fa-scale-balanced",
+    category: "quests",
+    condition: (stats) => (stats.easyQuestsCompleted >= 1 && stats.mediumQuestsCompleted >= 1 && stats.hardQuestsCompleted >= 1)
   }
 ];
 
@@ -2455,7 +2667,6 @@ async function updateStreakDisplay() {
 
 // Quest filter references
 const questSearchInput = document.getElementById("quest-search");
-const searchBtn = document.getElementById("search-btn");
 const categoryFilter = document.getElementById("category-filter");
 const difficultyFilter = document.getElementById("difficulty-filter");
 const statFilter = document.getElementById("stat-filter");
@@ -2634,7 +2845,12 @@ async function initializeGame() {
       completedQuests: 0,
       categoriesCompleted: [],
       pomodoroCompleted: 0,
-      lastStreakCheck: null
+      lastStreakCheck: null,
+      totalXpEarned: 0,
+      hardQuestsCompleted: 0,
+      mediumQuestsCompleted: 0,
+      easyQuestsCompleted: 0,
+      statsCompleted: []
     });
   } else {
     // Update existing player stats with new fields if they're missing
@@ -2646,6 +2862,13 @@ async function initializeGame() {
       stats.completedQuests = 0;
       stats.categoriesCompleted = [];
       stats.pomodoroCompleted = 0;
+    }
+    if (stats.totalXpEarned === undefined) {
+      stats.totalXpEarned = 0;
+      stats.hardQuestsCompleted = 0;
+      stats.mediumQuestsCompleted = 0;
+      stats.easyQuestsCompleted = 0;
+      stats.statsCompleted = [];
       await db.playerStats.put(stats);
     }
   }
@@ -2709,6 +2932,9 @@ async function initializeGame() {
   
   // Initialize stats properly
   await initializeStats();
+  
+  // Initialize due date reminders
+  initializeDueDateReminders();
   } catch (error) {
     console.error("Error during game initialization:", error);
     showErrorOverlay("Game Initialization Error: " + (error.message || error));
@@ -2967,7 +3193,6 @@ function updateSuggestions(stat, difficulty, container) {
 // Initialize quest filters (search, category, difficulty, stat, sort)
 function initializeQuestFilters(){
   try {
-    if (searchBtn) searchBtn.addEventListener('click', filterQuests);
     if (questSearchInput) {
       questSearchInput.addEventListener('input', () => {
         filterQuests();
@@ -3088,56 +3313,59 @@ function openQuestEditPanel(quest, questElemToEdit) {
   const dueDate = quest.dueDate ? new Date(quest.dueDate).toISOString().split('T')[0] : '';
   questElem.innerHTML = `
       <div class="edit-panel-content" onclick="event.stopPropagation()">
-          <input type="text" class="quest-input" value="${quest.title || ''}" placeholder="Quest title">
-          
-          <div class="panel-section">
-            <label>Category</label>
-            <div class="category-tags">
-                ${['Work', 'Health', 'Learning', 'Personal', 'Cultivation'].map(cat => 
-                  `<button type="button" class="tag-button glow-button ${cat.toLowerCase() === (quest.category || '').toLowerCase() ? 'selected' : ''}" 
-                           data-category="${cat}">${cat}</button>`).join('')}
-            </div>
+          <div class="edit-title-row">
+            <input type="text" class="quest-input edit-title-input" value="${quest.title || ''}" placeholder="Quest title">
+            <button type="button" class="suggest-btn" onclick="event.stopPropagation(); openSuggestionPopup()" title="Suggestions">
+              <i class="fas fa-lightbulb"></i>
+            </button>
           </div>
           
-          <div class="panel-section">
-            <label>Difficulty & XP</label>
-            <div class="difficulty-tags">
-                ${['Easy', 'Medium', 'Hard'].map(diff => 
-                  `<button type="button" class="tag-button glow-button ${diff === quest.difficulty ? 'selected' : ''}" 
-                           data-difficulty="${diff}">${diff}</button>`).join('')}
-            </div>
-            <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="10" placeholder="XP">
-          </div>
-          
-          <div class="panel-section">
-            <label>Focus Stat</label>
-            <div class="stat-tags">
-                ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
-                    .map(stat => `<button type="button" class="tag-button glow-button ${stat === quest.stat ? 'selected' : ''}" 
-                                        data-stat="${stat}">${stat}</button>`).join('')}
+          <div class="edit-meta-row">
+            <div class="edit-category-group">
+              ${['Work', 'Health', 'Learning', 'Personal', 'Cultivation'].map(cat => 
+                `<button type="button" class="tag-button glow-button ${cat.toLowerCase() === (quest.category || '').toLowerCase() ? 'selected' : ''}" 
+                         data-category="${cat}">${cat}</button>`).join('')}
             </div>
           </div>
+
+          <div class="edit-meta-row">
+            <div class="edit-diff-group">
+              ${['Easy', 'Medium', 'Hard'].map(diff => 
+                `<button type="button" class="tag-button tag-sm glow-button ${diff === quest.difficulty ? 'selected' : ''}" 
+                         data-difficulty="${diff}">${diff}</button>`).join('')}
+            </div>
+            <div class="edit-xp-group">
+              <label>XP</label>
+              <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="10">
+            </div>
+            <div class="edit-stat-group">
+              ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
+                  .map(stat => `<button type="button" class="tag-button tag-sm glow-button ${stat === quest.stat ? 'selected' : ''}" 
+                                      data-stat="${stat}">${stat}</button>`).join('')}
+            </div>
+          </div>
+
           <div id="quest-suggestion-popup" class="suggestion-popup" style="display: none;">
             <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
             <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
 
-          <div class="panel-section">
-            <label>Due Date</label>
-            <input type="date" id="due-date-input" class="quest-input" value="${dueDate}">
-          </div>
-          
-          <div class="comment-section">
-              <textarea class="quest-input" placeholder="Add a comment...">${quest.comment || ''}</textarea>
+          <div class="edit-footer-row">
+            <div class="edit-date-group">
+              <label>Due</label>
+              <input type="date" id="due-date-input" class="quest-input" value="${dueDate}">
+            </div>
+            <div class="edit-comment-group">
+              <input type="text" class="quest-input" placeholder="Comment..." value="${quest.comment || ''}">
               <label class="pin-checkbox">
                   <input type="checkbox" ${quest.isPinned ? 'checked' : ''} class="pin-comment">
-                  Pin Comment
+                  <i class="fas fa-thumbtack"></i>
               </label>
-          </div>
-          
-          <div class="action-buttons">
+            </div>
+            <div class="action-buttons">
               <button type="button" class="save-quest glow-button" onclick="saveQuestEdit(this)">Save</button>
               <button type="button" class="cancel-quest glow-button" onclick="cancelQuestEdit(this.closest('.quest-edit-panel'))">Cancel</button>
+            </div>
           </div>
       </div>
   `;
@@ -3147,29 +3375,25 @@ function openQuestEditPanel(quest, questElemToEdit) {
 }
 
 function setupEditPanelListeners(questElem) {
-  // Generic toggle helper for button groups
   const setupToggleGroup = (selector) => {
     questElem.querySelectorAll(selector).forEach(button => {
       button.addEventListener('click', function(e) {
         e.stopPropagation();
-        // Remove 'selected' from all siblings in this group
         this.parentElement.querySelectorAll(selector).forEach(sib => sib.classList.remove('selected'));
-        // Add 'selected' to clicked button
         this.classList.add('selected');
 
-        // Trigger updates if this is a difficulty or stat change
-        if (selector === '.stat-tags .tag-button' || selector === '.difficulty-tags .tag-button' || selector === '.category-tags .tag-button') {
-          const selectedStat = questElem.querySelector('.stat-tags .tag-button.selected')?.dataset.stat;
-          const selectedDifficulty = questElem.querySelector('.difficulty-tags .tag-button.selected')?.dataset.difficulty;
-          const selectedCategory = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
+        const isStat = this.closest('.edit-stat-group');
+        const isDiff = this.closest('.edit-diff-group');
+        if (isDiff || isStat || this.closest('.edit-category-group')) {
+          const selectedStat = questElem.querySelector('.edit-stat-group .tag-button.selected')?.dataset.stat;
+          const selectedDifficulty = questElem.querySelector('.edit-diff-group .tag-button.selected')?.dataset.difficulty;
           
           if (selectedStat && selectedDifficulty) {
             updateSuggestionsWithClickable(selectedStat, selectedDifficulty, questElem);
           }
           
-          // Update XP based on difficulty
           const xpInput = questElem.querySelector('.xp-input');
-          if (xpInput) {
+          if (xpInput && selectedDifficulty) {
             if (selectedDifficulty === 'Easy') xpInput.value = 5;
             else if (selectedDifficulty === 'Medium') xpInput.value = 8;
             else if (selectedDifficulty === 'Hard') xpInput.value = 10;
@@ -3179,9 +3403,9 @@ function setupEditPanelListeners(questElem) {
     });
   };
 
-  setupToggleGroup('.category-tags .tag-button');
-  setupToggleGroup('.difficulty-tags .tag-button');
-  setupToggleGroup('.stat-tags .tag-button');
+  setupToggleGroup('.edit-category-group > .tag-button');
+  setupToggleGroup('.edit-diff-group > .tag-button');
+  setupToggleGroup('.edit-stat-group > .tag-button');
 }
 
 function applySuggestion(suggestion, questElem) {
@@ -3193,7 +3417,7 @@ function applySuggestion(suggestion, questElem) {
 }
 
 function updateSuggestionsWithClickable(stat, difficulty, questElem) {
-  const category = questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category;
+  const category = questElem.querySelector('.edit-category-group .tag-button.selected')?.dataset.category;
   const suggestions = generateSuggestedQuests(stat, difficulty, category);
   const suggestionContainer = questElem.querySelector('#quest-suggestions');
   
@@ -3204,7 +3428,6 @@ function updateSuggestionsWithClickable(stat, difficulty, questElem) {
       </div>
     `).join('');
     
-    // Open the popup once suggestions are generated
     openSuggestionPopup();
   }
 }
@@ -3305,6 +3528,8 @@ async function completeQuest(xp, stat, questElem) {
     // Get the quest ID to update in database
     const questId = questElem ? parseInt(questElem.dataset.questId) : null;
     const questCategory = questElem ? questElem.dataset.category : null;
+    const questDifficulty = questElem ? questElem.dataset.difficulty : null;
+    const questStat = questElem ? questElem.dataset.stat : null;
     
     // Update quest in database
     if (questId) {
@@ -3332,6 +3557,26 @@ async function completeQuest(xp, stat, questElem) {
         }
         if (!stats.categoriesCompleted.includes(questCategory)) {
           stats.categoriesCompleted.push(questCategory);
+        }
+      }
+      
+      // Track total XP earned
+      stats.totalXpEarned = (stats.totalXpEarned || 0) + xp;
+      
+      // Track difficulty completions
+      if (questDifficulty === 'Hard') {
+        stats.hardQuestsCompleted = (stats.hardQuestsCompleted || 0) + 1;
+      } else if (questDifficulty === 'Medium') {
+        stats.mediumQuestsCompleted = (stats.mediumQuestsCompleted || 0) + 1;
+      } else if (questDifficulty === 'Easy') {
+        stats.easyQuestsCompleted = (stats.easyQuestsCompleted || 0) + 1;
+      }
+      
+      // Track stat completions
+      if (questStat) {
+        if (!stats.statsCompleted) stats.statsCompleted = [];
+        if (!stats.statsCompleted.includes(questStat)) {
+          stats.statsCompleted.push(questStat);
         }
       }
       
@@ -3408,8 +3653,8 @@ async function completeQuest(xp, stat, questElem) {
       progressText.textContent = `${currentStats[stat]}/${MAX_STAT}${increaseText}`;
     }
 
-    // Display a quest completion quote
-    displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
+    // Display a quest completion quote linked to quest category
+    displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE, questCategory);
     
     // Update quest count
     updateQuestCount();
@@ -3418,7 +3663,7 @@ async function completeQuest(xp, stat, questElem) {
     await refreshAllStatDisplays();
     
     // Update achievement progress
-    updateAchievementProgress();
+    renderAchievements();
     
     // Force a final refresh
     setTimeout(() => {
@@ -4321,7 +4566,10 @@ function initializeQuotes() {
     if (newBtn) newBtn.addEventListener('click', () => {
       newBtn.classList.add('spinning');
       setTimeout(() => newBtn.classList.remove('spinning'), 500);
-      render(motivationalQuotesSystem.getRandomQuote());
+      const q = activeQuoteCategory
+        ? motivationalQuotesSystem.getQuoteByCategory(activeQuoteCategory)
+        : motivationalQuotesSystem.getRandomQuote();
+      render(q);
     });
     if (favBtn) favBtn.addEventListener('click', async () => {
       if (!currentQuote) return;
@@ -4354,10 +4602,17 @@ function initializeQuotes() {
 
     document.querySelectorAll('.category-button').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         const cat = btn.dataset.category;
-        render(motivationalQuotesSystem.getQuoteByCategory(cat));
+        if (activeQuoteCategory === cat) {
+          activeQuoteCategory = null;
+          btn.classList.remove('active');
+          render(motivationalQuotesSystem.getRandomQuote());
+        } else {
+          document.querySelectorAll('.category-button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeQuoteCategory = cat;
+          render(motivationalQuotesSystem.getQuoteByCategory(cat));
+        }
       });
     });
 
@@ -4377,9 +4632,15 @@ function initializeQuotes() {
   }
 }
 
-function displayQuoteByContext(context) {
+function displayQuoteByContext(context, questCategory) {
   try {
-    const q = motivationalQuotesSystem.getQuoteByContext(context);
+    let cat = activeQuoteCategory;
+    if (!cat && questCategory) {
+      cat = questToQuoteCategory[questCategory.toLowerCase()] || null;
+    }
+    const q = cat
+      ? motivationalQuotesSystem.getQuoteByCategory(cat)
+      : motivationalQuotesSystem.getQuoteByContext(context);
     if (!q) return;
     const quoteText = document.getElementById('quote-text');
     const quoteAuthor = document.getElementById('quote-author');
@@ -5599,6 +5860,51 @@ function computeAchievementProgress(def, stats) {
       const c = (stats.categoriesCompleted && stats.categoriesCompleted.length) || 0;
       return { text: `${c}/4 categories`, condition: 'Complete 1 quest in each category' };
     }
+    case 11: return { text: `${stats.completedQuests || 0}/25 quests completed`, condition: 'Complete 25 quests' };
+    case 12: return { text: `${stats.completedQuests || 0}/100 quests completed`, condition: 'Complete 100 quests' };
+    case 13: return { text: `${stats.completedQuests || 0}/250 quests completed`, condition: 'Complete 250 quests' };
+    case 14: {
+      const c = (stats.categoriesCompleted && stats.categoriesCompleted.length) || 0;
+      return { text: `${c}/6 categories`, condition: 'Complete 1 quest in each category' };
+    }
+    case 15: return { text: `Level ${stats.level || 0}/5`, condition: 'Reach level 5' };
+    case 16: return { text: `Level ${stats.level || 0}/25`, condition: 'Reach level 25' };
+    case 17: return { text: `Level ${stats.level || 0}/50`, condition: 'Reach level 50' };
+    case 18: return { text: `Level ${stats.level || 0}/100`, condition: 'Reach level 100' };
+    case 19: {
+      const m = Math.min(stats.strength || 0, stats.agility || 0, stats.intelligence || 0, stats.stamina || 0, stats.willpower || 0, stats.discipline || 0);
+      return { text: `All stats \u2265 ${m}/10`, condition: 'Get all stats to 10' };
+    }
+    case 20: {
+      const m = Math.max(stats.strength || 0, stats.agility || 0, stats.intelligence || 0, stats.stamina || 0, stats.willpower || 0, stats.discipline || 0);
+      return { text: `Highest stat ${m}/25`, condition: 'Get any stat to 25' };
+    }
+    case 21: {
+      const m = Math.max(stats.strength || 0, stats.agility || 0, stats.intelligence || 0, stats.stamina || 0, stats.willpower || 0, stats.discipline || 0);
+      return { text: `Highest stat ${m}/50`, condition: 'Get any stat to 50' };
+    }
+    case 22: return { text: `Streak: ${stats.currentStreak || 0}/14 days`, condition: 'Maintain a 14-day streak' };
+    case 23: return { text: `Streak: ${stats.currentStreak || 0}/100 days`, condition: 'Maintain a 100-day streak' };
+    case 24: return { text: `Streak: ${stats.currentStreak || 0}/365 days`, condition: 'Maintain a 365-day streak' };
+    case 25: return { text: `${stats.pomodoroCompleted || 0}/1 session`, condition: 'Complete 1 pomodoro session' };
+    case 26: return { text: `${stats.pomodoroCompleted || 0}/25 sessions`, condition: 'Complete 25 pomodoro sessions' };
+    case 27: return { text: `${stats.pomodoroCompleted || 0}/100 sessions`, condition: 'Complete 100 pomodoro sessions' };
+    case 28: return { text: `${(stats.totalXpEarned || 0).toLocaleString()}/1,000 XP`, condition: 'Earn 1,000 XP from quests' };
+    case 29: return { text: `${(stats.totalXpEarned || 0).toLocaleString()}/10,000 XP`, condition: 'Earn 10,000 XP from quests' };
+    case 30: return { text: `${(stats.totalXpEarned || 0).toLocaleString()}/100,000 XP`, condition: 'Earn 100,000 XP from quests' };
+    case 31: return { text: `${stats.hardQuestsCompleted || 0}/1 Hard quest`, condition: 'Complete 1 Hard quest' };
+    case 32: return { text: `${stats.hardQuestsCompleted || 0}/50 Hard quests`, condition: 'Complete 50 Hard quests' };
+    case 33: return { text: `${stats.easyQuestsCompleted || 0}/100 Easy quests`, condition: 'Complete 100 Easy quests' };
+    case 34: {
+      const c = (stats.statsCompleted && stats.statsCompleted.length) || 0;
+      return { text: `${c}/6 stats`, condition: 'Complete quests for all 6 stats' };
+    }
+    case 35: {
+      const e = stats.easyQuestsCompleted || 0;
+      const m = stats.mediumQuestsCompleted || 0;
+      const h = stats.hardQuestsCompleted || 0;
+      return { text: `E:${e} M:${m} H:${h}`, condition: 'Complete 1 quest of each difficulty' };
+    }
     default: return {};
   }
 }
@@ -5620,6 +5926,121 @@ async function checkAchievements(){
     }
     renderAchievements();
   }catch(e){console.error('checkAchievements error',e);} 
+}
+
+// ===== Due Date Reminder System =====
+let reminderQueue = [];
+let isReminderShowing = false;
+
+async function checkDueDateReminders() {
+  try {
+    const quests = await db.quests.toArray();
+    const now = new Date();
+    const reminders = [];
+
+    for (const quest of quests) {
+      if (!quest.dueDate || quest.status === 'completed') continue;
+
+      const dueDate = new Date(quest.dueDate + 'T23:59:59Z');
+      const diffTime = dueDate.getTime() - now.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays <= 3 && diffDays >= 0) {
+        reminders.push({ quest, diffDays, urgency: diffDays <= 0 ? 'urgent' : diffDays === 1 ? 'due-soon' : 'upcoming' });
+      } else if (diffDays < 0) {
+        reminders.push({ quest, diffDays, urgency: 'urgent' });
+      }
+    }
+
+    reminders.sort((a, b) => a.diffDays - b.diffDays);
+
+    if (reminders.length > 0) {
+      reminderQueue = reminders;
+      showNextReminder();
+    }
+  } catch (e) {
+    console.error('Error checking due date reminders:', e);
+  }
+}
+
+function showNextReminder() {
+  if (isReminderShowing || reminderQueue.length === 0) return;
+  const reminder = reminderQueue.shift();
+  showDueDateReminder(reminder);
+}
+
+function showDueDateReminder(reminder) {
+  isReminderShowing = true;
+  const el = document.getElementById('due-date-reminder');
+  if (!el) return;
+
+  const icon = el.querySelector('.due-date-reminder-icon i');
+  const iconWrap = el.querySelector('.due-date-reminder-icon');
+  const title = el.querySelector('.due-date-reminder-title');
+  const msg = document.getElementById('due-date-message');
+  const count = document.getElementById('due-date-count');
+  const progress = document.getElementById('due-date-progress');
+
+  icon.className = 'fas';
+  iconWrap.className = 'due-date-reminder-icon';
+  title.className = 'due-date-reminder-title';
+  count.className = 'due-date-reminder-count';
+  progress.className = 'due-date-reminder-progress';
+
+  const diffDays = reminder.diffDays;
+
+  if (diffDays < 0) {
+    icon.className = 'fas fa-exclamation-triangle';
+    iconWrap.classList.add('urgent');
+    title.textContent = 'Quest Overdue!';
+    title.classList.add('urgent');
+    msg.textContent = reminder.quest.title;
+    count.textContent = `${Math.abs(diffDays)}d`;
+    count.classList.add('urgent');
+    progress.classList.add('urgent');
+  } else if (diffDays === 0) {
+    icon.className = 'fas fa-hourglass-end';
+    iconWrap.classList.add('urgent');
+    title.textContent = 'Due Today!';
+    title.classList.add('urgent');
+    msg.textContent = reminder.quest.title;
+    count.textContent = 'Now';
+    count.classList.add('urgent');
+    progress.classList.add('urgent');
+  } else if (diffDays === 1) {
+    icon.className = 'fas fa-clock';
+    iconWrap.classList.add('due-soon');
+    title.textContent = 'Due Tomorrow';
+    title.classList.add('due-soon');
+    msg.textContent = reminder.quest.title;
+    count.textContent = '1d';
+    count.classList.add('due-soon');
+    progress.classList.add('due-soon');
+  } else {
+    icon.className = 'fas fa-hourglass-half';
+    iconWrap.classList.add('due-soon');
+    title.textContent = `${diffDays} Days Left`;
+    title.classList.add('due-soon');
+    msg.textContent = reminder.quest.title;
+    count.textContent = `${diffDays}d`;
+    count.classList.add('due-soon');
+    progress.classList.add('due-soon');
+  }
+
+  el.classList.remove('hide');
+  el.classList.add('show');
+
+  setTimeout(() => {
+    el.classList.remove('show');
+    el.classList.add('hide');
+    isReminderShowing = false;
+    setTimeout(() => showNextReminder(), 400);
+  }, 6000);
+}
+
+function initializeDueDateReminders() {
+  setTimeout(checkDueDateReminders, 2000);
+  setInterval(checkDueDateReminders, 300000);
 }
 
 // Re-initialize small features
