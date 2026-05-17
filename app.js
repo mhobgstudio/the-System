@@ -4572,26 +4572,42 @@ async function loadDefaultQuestsIntoCurrent() {
 // Initialize Quotes and Spider Chart UI
 let currentQuote = null;
 
-let ttsVoices = [];
-function loadTtsVoices() {
-  ttsVoices = window.speechSynthesis?.getVoices() || [];
-}
-if (window.speechSynthesis) {
-  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
-  loadTtsVoices();
+function speakText(text) {
+  if (!text || !window.speechSynthesis) {
+    console.warn('TTS not available');
+    return;
+  }
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.pitch = 0.3;
+    u.rate = 0.55;
+    u.volume = 1;
+
+    const voices = window.speechSynthesis.getVoices();
+    console.log('Available voices:', voices.length);
+    const deep = voices.find(v => /deep|male|david|james|daniel|mark|paul|samantha/i.test(v.name));
+    if (deep) { u.voice = deep; console.log('Using voice:', deep.name); }
+    else console.log('No preferred voice found, using default');
+
+    u.onerror = e => console.error('TTS error:', e.error);
+    u.onend = () => console.log('TTS done');
+
+    window.speechSynthesis.speak(u);
+    console.log('TTS speaking:', text.slice(0, 40));
+  } catch (e) {
+    console.error('TTS failed:', e);
+  }
 }
 
-function speakText(text) {
-  if (!text || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US';
-  u.pitch = 0.3;
-  u.rate = 0.55;
-  u.volume = 1;
-  const deep = ttsVoices.find(v => /deep|male|david|james|daniel/i.test(v.name));
-  if (deep) u.voice = deep;
-  window.speechSynthesis.speak(u);
+// Keep speech synthesis alive to avoid Chrome bug where it gets stuck
+if (window.speechSynthesis) {
+  setInterval(() => {
+    if (!window.speechSynthesis.speaking) return;
+    window.speechSynthesis.pause();
+    window.speechSynthesis.resume();
+  }, 10000);
 }
 
 function initializeQuotes() {
