@@ -3055,6 +3055,7 @@ function createQuestElement(quest, animate = true) {
   questElem.innerHTML = `
     <div class="quest-content">
       <div class="quest-header">
+        <input type="checkbox" class="quest-select" data-quest-id="${quest.id}">
         <span class="quest-status status-${quest.status || 'inbox'}"></span>
         <span class="quest-check" onclick="event.stopPropagation(); completeQuest(${quest.xp}, '${quest.stat}', this.closest('.quest'))">
           <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -3085,6 +3086,7 @@ function createQuestElement(quest, animate = true) {
     // Don't trigger edit if clicking checkbox or if already in edit mode
     if (
       e.target.closest(".quest-check") ||
+      e.target.closest(".quest-select") ||
       questElem.classList.contains("quest-edit-panel")
     ) {
       e.stopPropagation();
@@ -3490,7 +3492,145 @@ function cancelQuestEdit(questElem) {
         // Restore original content for existing quest
         questElem.className = 'quest';
         questElem.innerHTML = questElem.dataset.originalContent;
+  }
+}
+
+let selectedQuests = new Set();
+
+document.getElementById('quests')?.addEventListener('change', (e) => {
+  const cb = e.target.closest('.quest-select');
+  if (!cb) return;
+  const id = parseInt(cb.dataset.questId);
+  if (cb.checked) {
+    selectedQuests.add(id);
+    cb.closest('.quest')?.classList.add('selected');
+  } else {
+    selectedQuests.delete(id);
+    cb.closest('.quest')?.classList.remove('selected');
+  }
+  updateBatchBar();
+});
+
+function updateBatchBar() {
+  const bar = document.getElementById('batch-bar');
+  const count = document.getElementById('batch-count');
+  if (!bar || !count) return;
+  const shown = new Set();
+  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-select').forEach(cb => {
+    if (cb.checked) shown.add(parseInt(cb.dataset.questId));
+  });
+  selectedQuests = shown;
+  if (selectedQuests.size > 0) {
+    bar.style.display = 'flex';
+    count.textContent = selectedQuests.size;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+function selectAllQuests() {
+  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-select').forEach(cb => {
+    cb.checked = true;
+    cb.closest('.quest')?.classList.add('selected');
+  });
+  updateBatchBar();
+}
+
+function deselectAllQuests() {
+  document.querySelectorAll('.quest-select').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.quest')?.classList.remove('selected');
+  });
+  selectedQuests.clear();
+  updateBatchBar();
+}
+
+async function completeSelectedQuests() {
+  const ids = [...selectedQuests];
+  if (ids.length === 0) return;
+  if (!sounds || !sounds.complete) {} else sounds.complete.play();
+  const container = document.getElementById('quests');
+  let totalXp = 0;
+  let lastStat = null;
+  for (const id of ids) {
+    const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
+    if (!el) continue;
+    const quest = await db.quests.get(id);
+    if (!quest || quest.status === 'completed') continue;
+    const xp = parseInt(el.dataset.xp) || 0;
+    const stat = el.dataset.stat;
+    const category = el.dataset.category;
+    const difficulty = el.dataset.difficulty;
+    totalXp += xp;
+    lastStat = stat;
+    quest.status = 'completed';
+    quest.completedAt = new Date();
+    await db.quests.put(quest);
+    const playerStats = await db.playerStats.toArray();
+    if (playerStats.length > 0) {
+      const s = playerStats[0];
+      s.completedQuests = (s.completedQuests || 0) + 1;
+      if (category) {
+        if (!s.categoriesCompleted) s.categoriesCompleted = [];
+        if (!s.categoriesCompleted.includes(category)) s.categoriesCompleted.push(category);
+      }
+      s.totalXpEarned = (s.totalXpEarned || 0) + xp;
+      if (difficulty === 'Hard') s.hardQuestsCompleted = (s.hardQuestsCompleted || 0) + 1;
+      else if (difficulty === 'Medium') s.mediumQuestsCompleted = (s.mediumQuestsCompleted || 0) + 1;
+      else if (difficulty === 'Easy') s.easyQuestsCompleted = (s.easyQuestsCompleted || 0) + 1;
+      if (stat) {
+        if (!s.statsCompleted) s.statsCompleted = [];
+        if (!s.statsCompleted.includes(stat)) s.statsCompleted.push(stat);
+      }
+      if (stat) await increaseStat(stat);
+      await db.playerStats.put(s);
     }
+    el.style.opacity = 0;
+    setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
+  }
+  if (totalXp > 0) {
+    currentXP += totalXp;
+    updateXP();
+    const playerStats = await db.playerStats.toArray();
+    if (playerStats.length > 0) {
+      const s = playerStats[0];
+      s.xp = currentXP;
+      const prevLevel = s.level;
+      await db.playerStats.put(s);
+      checkAchievements();
+      const newLevel = s.level;
+      if (newLevel > prevLevel) {
+        setTimeout(() => {
+          showLevelUpOverlay(newLevel);
+          if (sounds && sounds.levelUp) sounds.levelUp.play();
+        }, 500);
+      }
+      if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
+    }
+    showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
+  }
+  selectedQuests.clear();
+  updateBatchBar();
+  updateQuestCount();
+  await refreshAllStatDisplays();
+  renderAchievements();
+}
+
+async function deleteSelectedQuests() {
+  const ids = [...selectedQuests];
+  if (ids.length === 0) return;
+  if (!confirm(`Delete ${ids.length} selected quest${ids.length > 1 ? 's' : ''}? This cannot be undone.`)) return;
+  const container = document.getElementById('quests');
+  for (const id of ids) {
+    await db.quests.delete(id);
+    const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
+    if (el) { el.remove(); }
+  }
+  selectedQuests.clear();
+  updateBatchBar();
+  updateQuestsEmptyState();
+  updateQuestCount();
+  showNotification(`Deleted ${ids.length} quest${ids.length > 1 ? 's' : ''}.`, 'info');
 }
 
 async function saveQuestEdit(buttonElement) {

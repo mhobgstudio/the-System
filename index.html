@@ -312,6 +312,15 @@
             </div>
           </div>
         </div>
+        <div class="batch-bar" id="batch-bar" style="display:none;">
+          <span class="batch-count"><span id="batch-count">0</span> selected</span>
+          <div class="batch-actions">
+            <button onclick="selectAllQuests()" class="batch-btn" title="Select all visible"><i class="fas fa-check-double"></i> All</button>
+            <button onclick="completeSelectedQuests()" class="batch-btn batch-complete"><i class="fas fa-check-circle"></i> Complete</button>
+            <button onclick="deleteSelectedQuests()" class="batch-btn batch-delete"><i class="fas fa-trash"></i> Delete</button>
+            <button onclick="deselectAllQuests()" class="batch-btn"><i class="fas fa-times"></i> Clear</button>
+          </div>
+        </div>
       </div>
 
 

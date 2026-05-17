@@ -2343,6 +2343,73 @@ button:hover {
   background: rgba(74, 144, 226, 0.08);
 }
 
+.quest-select {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.quest.selected {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 12px rgba(74, 144, 226, 0.25);
+}
+
+.batch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-top: 8px;
+  background: rgba(74, 144, 226, 0.1);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: var(--border-radius-md);
+  animation: fadeIn 0.2s ease;
+}
+
+.batch-count {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.batch-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.batch-btn {
+  padding: 5px 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.batch-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+
+.batch-complete:hover {
+  border-color: #4caf50;
+  color: #4caf50;
+  background: rgba(76,175,80,0.1);
+}
+
+.batch-delete:hover {
+  border-color: #f44336;
+  color: #f44336;
+  background: rgba(244,67,54,0.1);
+}
+
 /* Enhanced Achievements */
 .achievements-container {
   background: rgba(40, 40, 50, 0.4);
