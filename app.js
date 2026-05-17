@@ -4566,8 +4566,13 @@ async function loadDefaultQuestsIntoCurrent() {
 let currentQuote = null;
 
 let ttsRetried = false;
-function speakText(text) {
-  if (!text || !window.speechSynthesis) return;
+async function speakText(text) {
+  if (!text) return;
+  if (window.speakWithKokoro) {
+    const ok = await window.speakWithKokoro(text);
+    if (ok) return;
+  }
+  if (!window.speechSynthesis) return;
   const voices = window.speechSynthesis.getVoices();
   if (voices.length === 0) {
     if (!ttsRetried) {
