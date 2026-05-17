@@ -2739,28 +2739,21 @@ const timerModeButtons = document.querySelectorAll(".timer-mode");
 const achievementsGrid = document.getElementById("achievements-grid");
 const achievementCountElem = document.getElementById("achievement-count");
 
+function makeSound(src) {
+  try {
+    return new Howl({ src, preload: false, onloaderror: () => {} });
+  } catch (e) {
+    return { play: () => {} };
+  }
+}
 const sounds = {
-  complete: new Howl({
-    src: ["sounds/complete.mp3"],
-  }),
-  levelUp: new Howl({
-    src: ["sounds/level-up.mp3"],
-  }),
-  achievement: new Howl({
-    src: ["sounds/achievement.mp3"], 
-  }),
-  streakUp: new Howl({
-    src: ["sounds/streak.mp3"],
-  }),
-  timerComplete: new Howl({
-    src: ["sounds/timer-complete.mp3"],
-  }),
-  favorite: new Howl({
-    src: ["sounds/favorite.mp3"],
-  }),
-  itIsTime: new Howl({
-    src: ["it_is_time.mp3"],
-  })
+  complete: makeSound(["sounds/complete.mp3"]),
+  levelUp: makeSound(["sounds/level-up.mp3"]),
+  achievement: makeSound(["sounds/achievement.mp3"]),
+  streakUp: makeSound(["sounds/streak.mp3"]),
+  timerComplete: makeSound(["sounds/timer-complete.mp3"]),
+  favorite: makeSound(["sounds/favorite.mp3"]),
+  itIsTime: makeSound(["it_is_time.mp3"])
 };
 
 function calculateXPForNextLevel(level) {
@@ -4572,42 +4565,38 @@ async function loadDefaultQuestsIntoCurrent() {
 // Initialize Quotes and Spider Chart UI
 let currentQuote = null;
 
+let ttsRetried = false;
 function speakText(text) {
-  if (!text || !window.speechSynthesis) {
-    console.warn('TTS not available');
+  if (!text || !window.speechSynthesis) return;
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    if (!ttsRetried) {
+      ttsRetried = true;
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.onvoiceschanged = null;
+        speakText(text);
+      };
+    }
     return;
   }
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';
-    u.pitch = 0.3;
-    u.rate = 0.55;
+    u.pitch = 0.5;
+    u.rate = 0.7;
     u.volume = 1;
+    u.onerror = () => {};
 
-    const voices = window.speechSynthesis.getVoices();
-    console.log('Available voices:', voices.length);
-    const deep = voices.find(v => /deep|male|david|james|daniel|mark|paul|samantha/i.test(v.name));
-    if (deep) { u.voice = deep; console.log('Using voice:', deep.name); }
-    else console.log('No preferred voice found, using default');
-
-    u.onerror = e => console.error('TTS error:', e.error);
-    u.onend = () => console.log('TTS done');
-
+    const priority = ['demonic', 'mr.serious', 'half.life', 'male1', 'male', 'deep', 'david', 'james', 'daniel', 'mark', 'paul'];
+    let best = null, bestIdx = Infinity;
+    for (const v of voices) {
+      const idx = priority.findIndex(p => new RegExp(p, 'i').test(v.name));
+      if (idx !== -1 && idx < bestIdx) { best = v; bestIdx = idx; }
+    }
+    if (best) u.voice = best;
     window.speechSynthesis.speak(u);
-    console.log('TTS speaking:', text.slice(0, 40));
-  } catch (e) {
-    console.error('TTS failed:', e);
-  }
-}
-
-// Keep speech synthesis alive to avoid Chrome bug where it gets stuck
-if (window.speechSynthesis) {
-  setInterval(() => {
-    if (!window.speechSynthesis.speaking) return;
-    window.speechSynthesis.pause();
-    window.speechSynthesis.resume();
-  }, 10000);
+  } catch (e) {}
 }
 
 function initializeQuotes() {
