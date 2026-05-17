@@ -2,23 +2,14 @@ import { KokoroTTS } from 'kokoro-js';
 
 let tts = null;
 let loadPromise = null;
-let loadingNotified = false;
 
 async function getTTS() {
   if (tts) return tts;
   if (loadPromise) return loadPromise;
-  loadPromise = (async () => {
-    if (!loadingNotified) {
-      loadingNotified = true;
-      const el = document.getElementById('quote-text');
-      if (el) el.textContent = '⏳ Loading voice model...';
-    }
-    tts = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
-      dtype: 'q8',
-      device: 'wasm',
-    });
-    return tts;
-  })();
+  loadPromise = KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+    dtype: 'q8',
+    device: 'wasm',
+  }).then(m => (tts = m));
   return loadPromise;
 }
 

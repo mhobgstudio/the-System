@@ -4565,43 +4565,8 @@ async function loadDefaultQuestsIntoCurrent() {
 // Initialize Quotes and Spider Chart UI
 let currentQuote = null;
 
-let ttsRetried = false;
-async function speakText(text) {
-  if (!text) return;
-  if (window.speakWithKokoro) {
-    const ok = await window.speakWithKokoro(text);
-    if (ok) return;
-  }
-  if (!window.speechSynthesis) return;
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length === 0) {
-    if (!ttsRetried) {
-      ttsRetried = true;
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.onvoiceschanged = null;
-        speakText(text);
-      };
-    }
-    return;
-  }
-  try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
-    u.pitch = 0.5;
-    u.rate = 0.7;
-    u.volume = 1;
-    u.onerror = () => {};
-
-    const priority = ['demonic', 'mr.serious', 'half.life', 'male1', 'male', 'deep', 'david', 'james', 'daniel', 'mark', 'paul'];
-    let best = null, bestIdx = Infinity;
-    for (const v of voices) {
-      const idx = priority.findIndex(p => new RegExp(p, 'i').test(v.name));
-      if (idx !== -1 && idx < bestIdx) { best = v; bestIdx = idx; }
-    }
-    if (best) u.voice = best;
-    window.speechSynthesis.speak(u);
-  } catch (e) {}
+function speakText(text) {
+  if (text && window.speakWithKokoro) window.speakWithKokoro(text);
 }
 
 function initializeQuotes() {
