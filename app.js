@@ -4571,6 +4571,29 @@ async function loadDefaultQuestsIntoCurrent() {
 
 // Initialize Quotes and Spider Chart UI
 let currentQuote = null;
+
+let ttsVoices = [];
+function loadTtsVoices() {
+  ttsVoices = window.speechSynthesis?.getVoices() || [];
+}
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = loadTtsVoices;
+  loadTtsVoices();
+}
+
+function speakText(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.pitch = 0.3;
+  u.rate = 0.55;
+  u.volume = 1;
+  const deep = ttsVoices.find(v => /deep|male|david|james|daniel/i.test(v.name));
+  if (deep) u.voice = deep;
+  window.speechSynthesis.speak(u);
+}
+
 function initializeQuotes() {
   try {
     const quoteText = document.getElementById('quote-text');
@@ -4592,6 +4615,7 @@ function initializeQuotes() {
           favBtn.classList.toggle('favorited', !!f);
         }).catch(() => favBtn.classList.remove('favorited'));
       }
+      speakText(q.text);
     }
 
     async function renderFavorites(){
