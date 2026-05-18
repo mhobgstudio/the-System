@@ -32,6 +32,7 @@ window.speakWithKokoro = async function speakWithKokoro(text) {
     const audio = await model.generate(text, { voice: 'am_michael' });
 
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') await ctx.resume();
     const raw = audio.data || audio.audio;
     const sr = audio.sampling_rate || audio.sample_rate;
 

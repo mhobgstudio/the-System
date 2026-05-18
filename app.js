@@ -2746,6 +2746,17 @@ function makeSound(src) {
     return { play: () => {} };
   }
 }
+let audioUnlocked = false;
+
+function unlockAudioOnce() {
+  if (audioUnlocked) return;
+  const silent = new Howl({ src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA'], volume: 0 });
+  silent.play();
+  audioUnlocked = true;
+}
+
+document.addEventListener('click', unlockAudioOnce, { once: true });
+
 const sounds = {
   complete: makeSound(["sounds/complete.mp3"]),
   levelUp: makeSound(["sounds/level-up.mp3"]),
@@ -2924,11 +2935,14 @@ async function initializeGame() {
     if (emptyState) emptyState.style.display = 'flex';
   } else {
     if (emptyState) emptyState.style.display = 'none';
+    const frag = document.createDocumentFragment();
     quests.forEach((quest, i) => {
       const questElement = createQuestElement(quest);
       questElement.style.animationDelay = `${i * 0.05}s`;
-      appendQuestWithAnimation(questsContainer, questElement);
+      frag.appendChild(questElement);
     });
+    questsContainer.appendChild(frag);
+    updateQuestsEmptyState();
   }
 
   // Initialize currentStats for progress bars
@@ -2989,10 +3003,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeGame();
 });
 
-async function checkDailyReset() {
+async function scheduleDailyReset() {
   const now = new Date();
-  isStreakMessageShown = false; // Reset the flag every day
-  if (now.getHours() === 0 && now.getMinutes() === 0) {
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
+  const msTillMidnight = tomorrow.getTime() - now.getTime();
+
+  setTimeout(async () => {
+    isStreakMessageShown = false;
     const unfinishedQuests = document.querySelectorAll(".quest").length;
     if (unfinishedQuests > 0) {
       const playerStats = await db.playerStats.toArray();
@@ -3000,23 +3019,25 @@ async function checkDailyReset() {
       stats.willpower = Math.max(0, stats.willpower - unfinishedQuests);
       await db.playerStats.put(stats);
       updateStats();
-      showNotification(
-        `Lost ${unfinishedQuests} willpower due to unfinished quests.`
-      );
+      showNotification(`Lost ${unfinishedQuests} willpower due to unfinished quests.`);
     }
     generateDailyQuests(await db.quests.toArray());
-  }
+    scheduleDailyReset(); // schedule next midnight
+  }, msTillMidnight);
 }
 
-setInterval(checkDailyReset, 60000); // Check every minute
+scheduleDailyReset();
 
 async function generateDailyQuests(quests) {
   questsElem.innerHTML = "";
   const dailyQuests = getRandomQuests(quests, 31);
+  const frag = document.createDocumentFragment();
   dailyQuests.forEach((quest) => {
     const questElem = createQuestElement(quest);
-    appendQuestWithAnimation(questsElem, questElem);
+    frag.appendChild(questElem);
   });
+  questsElem.appendChild(frag);
+  updateQuestsEmptyState();
 }
 
 function createQuestElement(quest, animate = true) {
@@ -3038,7 +3059,7 @@ function createQuestElement(quest, animate = true) {
 
   let countdownHTML = '';
   if (quest.dueDate) {
-    const dueDate = new Date(quest.dueDate + 'T23:59:59Z');
+    const dueDate = quest.dueDate.includes('T') ? new Date(quest.dueDate) : new Date(quest.dueDate + 'T23:59:59Z');
     const today = new Date();
     const diffTime = dueDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -3055,8 +3076,7 @@ function createQuestElement(quest, animate = true) {
   questElem.innerHTML = `
     <div class="quest-content">
       <div class="quest-header">
-        <input type="checkbox" class="quest-select" data-quest-id="${quest.id}">
-        <span class="quest-status status-${quest.status || 'inbox'}"></span>
+        <span class="quest-status status-${quest.status || 'inbox'} quest-selector" data-quest-id="${quest.id}"></span>
         <span class="quest-check" onclick="event.stopPropagation(); completeQuest(${quest.xp}, '${quest.stat}', this.closest('.quest'))">
           <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z" fill="#4a90e2"></path>
@@ -3083,10 +3103,10 @@ function createQuestElement(quest, animate = true) {
 
   // Add click event listener with proper event handling
   questElem.addEventListener("click", (e) => {
-    // Don't trigger edit if clicking checkbox or if already in edit mode
+    // Don't trigger edit if clicking controls or if already in edit mode
     if (
       e.target.closest(".quest-check") ||
-      e.target.closest(".quest-select") ||
+      e.target.closest(".quest-status") ||
       questElem.classList.contains("quest-edit-panel")
     ) {
       e.stopPropagation();
@@ -3222,13 +3242,16 @@ function updateSuggestions(stat, difficulty, container) {
 function initializeQuestFilters(){
   try {
     if (questSearchInput) {
+      let searchTimeout;
       questSearchInput.addEventListener('input', () => {
-        filterQuests();
-        // Show/hide clear button
-        const clearBtn = document.getElementById('clear-search-btn');
-        if (clearBtn) {
-          clearBtn.style.display = questSearchInput.value ? 'block' : 'none';
-        }
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          filterQuests();
+          const clearBtn = document.getElementById('clear-search-btn');
+          if (clearBtn) {
+            clearBtn.style.display = questSearchInput.value ? 'block' : 'none';
+          }
+        }, 150);
       });
     }
     if (categoryFilter) categoryFilter.addEventListener('change', filterQuests);
@@ -3275,21 +3298,29 @@ function filterQuests(){
     const difficulty = difficultyFilter ? difficultyFilter.value : 'all';
     const stat = statFilter ? statFilter.value : 'all';
 
-    const questNodes = Array.from(questsElem.children || []);
-    let visible = questNodes.filter(node => {
-      if (!node.dataset) return false;
+    const questNodes = questsElem.children;
+    const visible = [];
+    const visibleSet = new Set();
+    for (let i = 0; i < questNodes.length; i++) {
+      const node = questNodes[i];
+      if (!node.dataset) continue;
       const title = (node.dataset.title || '').toLowerCase();
-      if (q && !title.includes(q)) return false;
-      if (category !== 'all' && node.dataset.category !== category) return false;
-      if (difficulty !== 'all' && node.dataset.difficulty !== difficulty) return false;
-      if (stat !== 'all' && node.dataset.stat !== stat) return false;
-      return true;
-    });
+      const match = !(q && !title.includes(q)) &&
+        (category === 'all' || node.dataset.category === category) &&
+        (difficulty === 'all' || node.dataset.difficulty === difficulty) &&
+        (stat === 'all' || node.dataset.stat === stat);
+      if (match) {
+        visible.push(node);
+        visibleSet.add(node);
+      }
+    }
 
-    // hide/show
-    questNodes.forEach(n => n.style.display = visible.includes(n) ? '' : 'none');
+    // hide/show using Set for O(1) lookup
+    for (let i = 0; i < questNodes.length; i++) {
+      questNodes[i].style.display = visibleSet.has(questNodes[i]) ? '' : 'none';
+    }
 
-    // sort visible nodes if needed
+    // sort and batch reorder visible nodes
     if (currentSortBy && visible.length > 1) {
       visible.sort((a,b) => {
         if (currentSortBy === 'title') return (a.dataset.title||'').localeCompare(b.dataset.title||'');
@@ -3299,8 +3330,9 @@ function filterQuests(){
         if (currentSortBy === 'stat') return (a.dataset.stat||'').localeCompare(b.dataset.stat||'');
         return 0;
       });
-      // re-append in order
-      visible.forEach(n => questsElem.appendChild(n));
+      const frag = document.createDocumentFragment();
+      visible.forEach(n => frag.appendChild(n));
+      questsElem.appendChild(frag);
     }
 
     updateQuestCount();
@@ -3497,16 +3529,18 @@ function cancelQuestEdit(questElem) {
 
 let selectedQuests = new Set();
 
-document.getElementById('quests')?.addEventListener('change', (e) => {
-  const cb = e.target.closest('.quest-select');
-  if (!cb) return;
-  const id = parseInt(cb.dataset.questId);
-  if (cb.checked) {
-    selectedQuests.add(id);
-    cb.closest('.quest')?.classList.add('selected');
-  } else {
+document.getElementById('quests')?.addEventListener('click', (e) => {
+  const dot = e.target.closest('.quest-status.quest-selector');
+  if (!dot) return;
+  const id = parseInt(dot.dataset.questId);
+  if (selectedQuests.has(id)) {
     selectedQuests.delete(id);
-    cb.closest('.quest')?.classList.remove('selected');
+    dot.classList.remove('selected');
+    dot.closest('.quest')?.classList.remove('selected');
+  } else {
+    selectedQuests.add(id);
+    dot.classList.add('selected');
+    dot.closest('.quest')?.classList.add('selected');
   }
   updateBatchBar();
 });
@@ -3516,8 +3550,8 @@ function updateBatchBar() {
   const count = document.getElementById('batch-count');
   if (!bar || !count) return;
   const shown = new Set();
-  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-select').forEach(cb => {
-    if (cb.checked) shown.add(parseInt(cb.dataset.questId));
+  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector.selected').forEach(dot => {
+    shown.add(parseInt(dot.dataset.questId));
   });
   selectedQuests = shown;
   if (selectedQuests.size > 0) {
@@ -3529,17 +3563,17 @@ function updateBatchBar() {
 }
 
 function selectAllQuests() {
-  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-select').forEach(cb => {
-    cb.checked = true;
-    cb.closest('.quest')?.classList.add('selected');
+  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector').forEach(dot => {
+    dot.classList.add('selected');
+    dot.closest('.quest')?.classList.add('selected');
   });
   updateBatchBar();
 }
 
 function deselectAllQuests() {
-  document.querySelectorAll('.quest-select').forEach(cb => {
-    cb.checked = false;
-    cb.closest('.quest')?.classList.remove('selected');
+  document.querySelectorAll('.quest-status.quest-selector').forEach(dot => {
+    dot.classList.remove('selected');
+    dot.closest('.quest')?.classList.remove('selected');
   });
   selectedQuests.clear();
   updateBatchBar();
@@ -3582,8 +3616,8 @@ async function completeSelectedQuests() {
         if (!s.statsCompleted) s.statsCompleted = [];
         if (!s.statsCompleted.includes(stat)) s.statsCompleted.push(stat);
       }
-      if (stat) await increaseStat(stat);
       await db.playerStats.put(s);
+      if (stat) await increaseStat(stat);
     }
     el.style.opacity = 0;
     setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
@@ -3986,36 +4020,39 @@ function updateXP() {
 
 // Level Up button functionality
 document.getElementById('level-up-btn').addEventListener('click', async () => {
-    // Calculate XP required for the next level
-    const xpRequired = calculateXPForNextLevel(currentLevel);
-    
-    // Check if the player has enough XP to level up
-    if (currentXP >= xpRequired) {
-        // Increase the player's level
+    let levelsGained = 0;
+    while (currentXP >= calculateXPForNextLevel(currentLevel)) {
+        const xpRequired = calculateXPForNextLevel(currentLevel);
         currentLevel++;
-        currentXP -= xpRequired; // Deduct the required XP for leveling up
+        currentXP -= xpRequired;
+        levelsGained++;
+    }
 
-        // Update player stats in the database
-        const playerStats = await db.playerStats.toArray();
-        const stats = playerStats[0];
-        stats.level = currentLevel;
-        stats.xp = currentXP;
-        await db.playerStats.put(stats);
+    if (levelsGained === 0) {
+        showNotification("Not enough XP to level up.");
+        return;
+    }
 
-        // Update UI elements
-        levelElem.textContent = currentLevel;
-        xpElem.textContent = currentXP;
-        xpRequiredElem.textContent = calculateXPForNextLevel(currentLevel);
-        updateXP(); // Re-render XP bar after level up
-        updateCharacterTitle(); // Update character title based on new level
+    const playerStats = await db.playerStats.toArray();
+    const stats = playerStats[0];
+    stats.level = currentLevel;
+    stats.xp = currentXP;
+    await db.playerStats.put(stats);
 
-        // Play level-up sound
-        sounds.levelUp.play();
+    levelElem.textContent = currentLevel;
+    xpElem.textContent = currentXP;
+    xpRequiredElem.textContent = calculateXPForNextLevel(currentLevel);
+    updateXP();
+    updateCharacterTitle();
 
-        // Notify the user
+    sounds.levelUp.play();
+
+    if (levelsGained === 1) {
+        showLevelUpOverlay(currentLevel);
         showNotification("Congratulations! You've leveled up!");
     } else {
-        showNotification("Not enough XP to level up.");
+        showLevelUpOverlay(currentLevel);
+        showNotification(`Multi-level up! Gained ${levelsGained} levels! Now level ${currentLevel}.`);
     }
 });
 
@@ -4408,11 +4445,14 @@ tourGuideBtn.addEventListener("click", startTourGuide);
 async function refreshData() {
   questsElem.innerHTML = ""; // Clear current quests
   const quests = await db.quests.toArray(); // Fetch updated quests
+  const frag = document.createDocumentFragment();
   quests.forEach((quest, i) => {
     const newQuestElem = createQuestElement(quest);
     newQuestElem.style.animationDelay = `${i * 0.05}s`;
-    appendQuestWithAnimation(questsElem, newQuestElem);
+    frag.appendChild(newQuestElem);
   });
+  questsElem.appendChild(frag);
+  updateQuestsEmptyState();
 
   filterQuests(); // Re-apply current filters
   updateQuestCount(); // Update quest count display
@@ -5519,7 +5559,7 @@ function applyView(view) {
     statsEl.classList.remove('view-detailed', 'view-compact', 'view-dashboard');
     statsEl.classList.add(`view-${view}`);
   }
-  localStorage.setItem('preferredView', view);
+  try { localStorage.setItem('preferredView', view); } catch (e) { /* private browsing */ }
   // Dispatch event so other components can react
   document.dispatchEvent(new CustomEvent('viewchange', { detail: { view } }));
 }
@@ -5612,20 +5652,19 @@ function initializeTheme() {
         themeIcon.classList.add('fa-moon');
       }
     }
-    localStorage.setItem('theme', theme); // Save 'dark' or 'light'
+    try { localStorage.setItem('theme', theme); } catch (e) { /* private browsing */ }
   };
 
   // Set initial theme based on localStorage or default to dark
-  let initialTheme = localStorage.getItem('theme');
-  if (!initialTheme) {
-    initialTheme = 'dark'; // Default theme
-  }
+  let initialTheme = 'dark';
+  try { initialTheme = localStorage.getItem('theme') || 'dark'; } catch (e) { /* private browsing */ }
   applyTheme(initialTheme); // Apply initial theme and set icon
 
   // Add event listener for the theme toggle button
   if (themeButton) {
     themeButton.addEventListener('click', () => {
-      const currentTheme = localStorage.getItem('theme');
+      let currentTheme = 'dark';
+      try { currentTheme = localStorage.getItem('theme') || 'dark'; } catch (e) { /* private browsing */ }
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       applyTheme(newTheme);
     });
@@ -5866,15 +5905,6 @@ function initializePomodoro() {
     let endTime = 0;
     let remaining = 25 * 60;
     let modeSeconds = 25 * 60;
-    let audioUnlocked = false;
-
-    function unlockAudio() {
-      if (audioUnlocked) return;
-      // Play and immediately pause a silent sound to unlock audio
-      const silentSound = new Howl({ src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA'], volume: 0 });
-      silentSound.play();
-      audioUnlocked = true;
-    }
 
     function updateDisplay() {
       const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
@@ -5885,7 +5915,7 @@ function initializePomodoro() {
 
     function start() {
       if (interval) return; // already running
-      unlockAudio();
+      unlockAudioOnce();
       endTime = Date.now() + remaining * 1000;
       interval = setInterval(() => {
         remaining = Math.round((endTime - Date.now()) / 1000);
@@ -6134,7 +6164,7 @@ async function checkDueDateReminders() {
     for (const quest of quests) {
       if (!quest.dueDate || quest.status === 'completed') continue;
 
-      const dueDate = new Date(quest.dueDate + 'T23:59:59Z');
+      const dueDate = quest.dueDate.includes('T') ? new Date(quest.dueDate) : new Date(quest.dueDate + 'T23:59:59Z');
       const diffTime = dueDate.getTime() - now.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
