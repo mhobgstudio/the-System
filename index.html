@@ -7,11 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
-    <script type="importmap">
-    {
-      "imports": {
-        "kokoro-js": "https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm"
-      }
+    <script>
+    if (location.protocol !== 'file:') {
+      var _im = document.createElement('script');
+      _im.type = 'importmap';
+      _im.textContent = '{"imports":{"kokoro-js":"https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm"}}';
+      document.head.appendChild(_im);
+      var _ms = document.createElement('script');
+      _ms.type = 'module';
+      _ms.src = 'kokoro-bridge.js';
+      _ms.onerror = function(){ window.speakWithKokoro = null; };
+      document.head.appendChild(_ms);
     }
     </script>
 </head>
@@ -679,7 +685,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
     <script src="app.js"></script>
-    <script type="module" src="kokoro-bridge.js"></script>
     <script>
     (function(){
       function updateStreakTitle() {
