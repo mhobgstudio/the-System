@@ -834,9 +834,6 @@ p {
 
 /* New: Category badge */
 .quest-category {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
   font-size: 0.7rem;
   background-color: rgba(74, 144, 226, 0.2);
   padding: 0.2rem 0.5rem;
