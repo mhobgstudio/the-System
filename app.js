@@ -3670,7 +3670,7 @@ async function completeSelectedQuests() {
   selectedQuests.clear();
   updateBatchBar();
   updateQuestCount();
-  await refreshAllStatDisplays();
+  if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
   renderAchievements();
   } catch (e) {
     console.error('completeSelectedQuests error:', e);
@@ -3901,14 +3901,14 @@ async function completeQuest(xp, stat, questElem) {
     updateQuestCount();
     
     // Refresh all stat displays
-    await refreshAllStatDisplays();
+    if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
     
     // Update achievement progress
     renderAchievements();
     
     // Force a final refresh
     setTimeout(() => {
-      refreshAllStatDisplays();
+      if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
     }, 200);
     showNotification(`Quest "${questTitle}" completed!`, "success"); // Show only success notification after all ops succeed
   } catch (error) {
