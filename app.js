@@ -2112,8 +2112,24 @@ const motivationalQuotesSystem = {
   ],
   
   // Get a random quote
+  _shown: {},
+  
+  _pickUnseen: function(pool, key) {
+    if (!this._shown[key]) this._shown[key] = new Set();
+    const unseen = pool.filter(q => !this._shown[key].has(q.id));
+    if (unseen.length === 0) {
+      this._shown[key] = new Set();
+      const picked = pool[Math.floor(Math.random() * pool.length)];
+      this._shown[key].add(picked.id);
+      return picked;
+    }
+    const picked = unseen[Math.floor(Math.random() * unseen.length)];
+    this._shown[key].add(picked.id);
+    return picked;
+  },
+
   getRandomQuote: function() {
-    return this.quotes[Math.floor(Math.random() * this.quotes.length)];
+    return this._pickUnseen(this.quotes, 'all');
   },
   
   // Get a random quote by context
@@ -2122,7 +2138,7 @@ const motivationalQuotesSystem = {
       quote.contexts.includes(context)
     );
     return contextQuotes.length > 0 
-      ? contextQuotes[Math.floor(Math.random() * contextQuotes.length)]
+      ? this._pickUnseen(contextQuotes, 'ctx:' + context)
       : this.getRandomQuote();
   },
   
@@ -2132,7 +2148,7 @@ const motivationalQuotesSystem = {
       quote.category === category
     );
     return categoryQuotes.length > 0 
-      ? categoryQuotes[Math.floor(Math.random() * categoryQuotes.length)]
+      ? this._pickUnseen(categoryQuotes, 'cat:' + category)
       : this.getRandomQuote();
   },
   
@@ -3104,12 +3120,17 @@ function createQuestElement(quest, animate = true) {
   // Add click event listener with proper event handling
   questElem.addEventListener("click", (e) => {
     // Don't trigger edit if clicking controls or if already in edit mode
-    if (
-      e.target.closest(".quest-check") ||
-      e.target.closest(".quest-status") ||
-      questElem.classList.contains("quest-edit-panel")
-    ) {
+    if (questElem.classList.contains("quest-edit-panel")) {
       e.stopPropagation();
+      return;
+    }
+    if (e.target.closest(".quest-check")) {
+      e.stopPropagation();
+      return;
+    }
+    // .quest-status.quest-selector is handled by delegated listener on #quests —
+    // let the event bubble, but don't open the edit panel
+    if (e.target.closest(".quest-status.quest-selector")) {
       return;
     }
 
@@ -3530,6 +3551,7 @@ function cancelQuestEdit(questElem) {
 let selectedQuests = new Set();
 
 document.getElementById('quests')?.addEventListener('click', (e) => {
+  try {
   const dot = e.target.closest('.quest-status.quest-selector');
   if (!dot) return;
   const id = parseInt(dot.dataset.questId);
@@ -3543,6 +3565,7 @@ document.getElementById('quests')?.addEventListener('click', (e) => {
     dot.closest('.quest')?.classList.add('selected');
   }
   updateBatchBar();
+  } catch (e) { console.error('quest selector error', e); }
 });
 
 function updateBatchBar() {
@@ -3580,8 +3603,9 @@ function deselectAllQuests() {
 }
 
 async function completeSelectedQuests() {
+  try {
   const ids = [...selectedQuests];
-  if (ids.length === 0) return;
+  if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
   if (!sounds || !sounds.complete) {} else sounds.complete.play();
   const container = document.getElementById('quests');
   let totalXp = 0;
@@ -3648,6 +3672,10 @@ async function completeSelectedQuests() {
   updateQuestCount();
   await refreshAllStatDisplays();
   renderAchievements();
+  } catch (e) {
+    console.error('completeSelectedQuests error:', e);
+    showNotification('Error completing quests: ' + e.message, 'error');
+  }
 }
 
 async function deleteSelectedQuests() {
