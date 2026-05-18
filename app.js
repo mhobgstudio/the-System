@@ -3604,7 +3604,9 @@ function deselectAllQuests() {
 
 async function completeSelectedQuests() {
   try {
+  console.log('completeSelectedQuests called');
   const ids = [...selectedQuests];
+  console.log('selected quest ids:', ids);
   if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
   if (!sounds || !sounds.complete) {} else sounds.complete.play();
   const container = document.getElementById('quests');
