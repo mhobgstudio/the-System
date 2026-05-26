@@ -5181,6 +5181,15 @@ select:focus {
   animation: heartPulse 0.4s ease;
 }
 
+.quote-button.muted {
+  background: rgba(244, 67, 54, 0.15);
+  border-color: rgba(244, 67, 54, 0.4);
+}
+
+.quote-button.muted i {
+  color: #f44336;
+}
+
 @keyframes heartPulse {
   0% {
     transform: scale(1);

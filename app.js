@@ -4834,7 +4834,25 @@ function getVoicePref() {
   return localStorage.getItem('voicePref') || 'female';
 }
 
+function getQuoteAudioMuted() {
+  return localStorage.getItem('quoteAudioMuted') === 'true';
+}
+
+function setQuoteAudioMuted(muted) {
+  localStorage.setItem('quoteAudioMuted', muted ? 'true' : 'false');
+}
+
+function syncMuteButton() {
+  const btn = document.getElementById('mute-quote');
+  if (!btn) return;
+  const muted = getQuoteAudioMuted();
+  btn.classList.toggle('muted', muted);
+  const icon = btn.querySelector('i');
+  if (icon) icon.className = muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+}
+
 function speakText(text, quoteId) {
+  if (getQuoteAudioMuted()) return;
   // Try pre-generated audio file first
   if (quoteId) {
     const voice = getVoicePref();
@@ -4929,6 +4947,16 @@ function initializeQuotes() {
       }
       renderFavorites();
     });
+
+    // Mute quote audio toggle
+    const muteBtn = document.getElementById('mute-quote');
+    if (muteBtn) {
+      syncMuteButton();
+      muteBtn.addEventListener('click', () => {
+        setQuoteAudioMuted(!getQuoteAudioMuted());
+        syncMuteButton();
+      });
+    }
 
     // Remove favorite via event delegation
     if (favoritesGrid) {
