@@ -41,7 +41,7 @@ const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
   // EASY - Quick daily spiritual tasks (5 XP)
-  { title: "SACREFICE UR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },   
+  { title: "SACREFICE YOUR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },   
   { title: "Dua Daily", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Quiet Dhikr", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Sleeping Prayer", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
@@ -56,7 +56,7 @@ const rawDefaultQuests = [
   { title: "Be an Observer", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
   { title: "Dont get stuck in a 1hr+ loop", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
   { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
-  { title: "LOCK IN: Be to Allah what fang yuan is to u PLTARM", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
+  { title: "LOCK IN: Be to Allah what fang yuan is to you PLTARM", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
   { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
   { title: "Aura Farming With Allah", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", isPinned: true },
   { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
@@ -68,7 +68,7 @@ const rawDefaultQuests = [
   { title: "English Tafseer 1pg/Quran", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "Liquid Drop concentration", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "There is more to life than your desires", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
-  { title: "people doing what u don't want to do", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
+  { title: "people doing what you don't want to do", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
   { title: "Systematic Review || At least 15 mins", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "Effectiveness Audit", difficulty: "Easy", xp: 500, stat: "discipline", category: "cultivation" },
   { title: "Quran Word Memorization", difficulty: "Easy", xp: 500, stat: "intelligence", category: "cultivation" },
@@ -77,7 +77,7 @@ const rawDefaultQuests = [
   
   
   // MEDIUM - Moderate effort tasks (10 XP Islamic, 8 XP others)
-  { title: "SACREFICE UR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
+  { title: "SACREFICE YOUR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Medium", xp: 2310, stat: "willpower", category: "personal" },
   { title: "Grad school", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
   { title: "Teach Quran", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
@@ -102,7 +102,7 @@ const rawDefaultQuests = [
   { title: "Workout", difficulty: "Medium", xp: 238, stat: "strength", category: "health" },
   
   // HARD - High effort, high reward tasks (15 XP Islamic, 10 XP others)
-  { title: "SACREFICE UR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
+  { title: "SACREFICE YOUR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Real Maths", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Quantum Code", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Thesis Project NoteBookLM", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "work" },
@@ -941,7 +941,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 89,
-      text: "As long as u haven't fallen yet, there is still a chance to turn everything around.",
+      text: "As long as you haven't fallen yet, there is still a chance to turn everything around.",
       author: "Unknown",
       source: "Motivation",
       category: "perseverance",
@@ -950,7 +950,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 90,
-      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Ur Expectations.",
+      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1022,7 +1022,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 98,
-      text: "Don't waste ur potential.",
+      text: "Don't waste your potential.",
       author: "Unknown",
       source: "Personal Growth",
       category: "growth",
@@ -1094,7 +1094,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 106,
-      text: "Challenge ur limits again and again and again.",
+      text: "Challenge your limits again and again and again.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "perseverance",
@@ -1130,7 +1130,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 110,
-      text: "BE PROACTIVE IN UR AFFAIRS.",
+      text: "BE PROACTIVE IN YOUR AFFAIRS.",
       author: "Unknown",
       source: "Personal Development",
       category: "discipline",
@@ -1166,7 +1166,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 114,
-      text: "No matter how ruthless the devil is, u can be more ruthless.",
+      text: "No matter how ruthless the devil is, you can be more ruthless.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "perseverance",
@@ -1238,7 +1238,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 122,
-      text: "He always thought it right to keep improving instead of having fun so that you wouldn't be regretful when u found yourself in trouble yet lacked strength.",
+      text: "He always thought it right to keep improving instead of having fun so that you wouldn't be regretful when you found yourself in trouble yet lacked strength.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "discipline",
@@ -1265,7 +1265,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 125,
-      text: "Everytime u wake up to reality is a new day.",
+      text: "Everytime you wake up to reality is a new day.",
       author: "Unknown",
       source: "Motivation",
       category: "growth",
@@ -1283,7 +1283,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 127,
-      text: "The faster u act on ur dreams the more successful u will be.",
+      text: "The faster you act on your dreams the more successful you will be.",
       author: "Unknown",
       source: "Motivation",
       category: "growth",
@@ -1319,7 +1319,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 131,
-      text: "It is merely another version of ur self that has exceeded ur current limits.",
+      text: "It is merely another version of your self that has exceeded your current limits.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "growth",
@@ -1337,7 +1337,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 133,
-      text: "Increase ur Rank in the sight of ALLAH.",
+      text: "Increase your Rank in the sight of ALLAH.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1409,7 +1409,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 141,
-      text: "No matter who u are, u do not truly know what kind of man u'v become...Until u reach the very end.",
+      text: "No matter who you are, you do not truly know what kind of man u'v become...Until you reach the very end.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "perseverance",
@@ -1418,7 +1418,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 142,
-      text: "Deceiving ur self to believe u hav not been deceived.",
+      text: "Deceiving your self to believe you hav not been deceived.",
       author: "Unknown",
       source: "Life Wisdom",
       category: "wisdom",
@@ -1427,7 +1427,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 143,
-      text: "If u don't Trust ALLAH, then trust ur self experience.",
+      text: "If you don't Trust ALLAH, then trust your self experience.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1472,7 +1472,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 148,
-      text: "Oh young Muslim, those of old sacrificed much for Islam, what have u sacrificed.",
+      text: "Oh young Muslim, those of old sacrificed much for Islam, what have you sacrificed.",
       author: "Unknown",
       source: "Islamic Wisdom",
       category: "faith",
@@ -1490,7 +1490,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 150,
-      text: "Even if this increase wad very little, a little progress every day would accumulate to a terrifying amount after several days.",
+      text: "Even if this increase was very little, a little progress every day would accumulate to a terrifying amount after several days.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "growth",
@@ -1508,7 +1508,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 152,
-      text: "What is ur purpose.",
+      text: "What is your purpose.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1535,7 +1535,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 155,
-      text: "Stop being destracted, the world will chase u when u chase Allah.",
+      text: "Stop being destracted, the world will chase you when you chase Allah.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1544,7 +1544,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 156,
-      text: "When ur Salah is crooked, ur life is crooked.",
+      text: "When your Salah is crooked, your life is crooked.",
       author: "Unknown",
       source: "Islamic Wisdom",
       category: "faith",
@@ -1589,7 +1589,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 161,
-      text: "Before obtaining the greatest strength at the apex, do not plan to slow ur footsteps.",
+      text: "Before obtaining the greatest strength at the apex, do not plan to slow your footsteps.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "discipline",
@@ -1598,7 +1598,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 162,
-      text: "Know that ur words n actions shackle u.",
+      text: "Know that your words n actions shackle u.",
       author: "Unknown",
       source: "Life Wisdom",
       category: "wisdom",
@@ -1625,7 +1625,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 165,
-      text: "If u were not this challenging, how then would u be worthy of my effort.",
+      text: "If you were not this challenging, how then would you be worthy of my effort.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "perseverance",
@@ -1670,7 +1670,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 170,
-      text: "As long as u haven't fallen, there is a chance to turn everything around.",
+      text: "As long as you haven't fallen, there is a chance to turn everything around.",
       author: "Unknown",
       source: "Cultivation Wisdom",
       category: "perseverance",
@@ -1715,7 +1715,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 175,
-      text: "Every time u wake up to reality is a new day.",
+      text: "Every time you wake up to reality is a new day.",
       author: "Unknown",
       source: "Motivation",
       category: "growth",
@@ -1787,7 +1787,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 183,
-      text: "U will stay like this till the end if u do not make the 1st move",
+      text: "U will stay like this till the end if you do not make the 1st move",
       author: "Unknown",
       source: "Motivation",
       category: "perseverance",
@@ -1814,7 +1814,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 186,
-      text: "Allah takes away somethings in other for u to return, if u do not wish 4 it to be taken away...never leave in the first place.",
+      text: "Allah takes away somethings in other for you to return, if you do not wish 4 it to be taken away...never leave in the first place.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -1823,7 +1823,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 187,
-      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Ur Expectations.",
+      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -2093,7 +2093,7 @@ const motivationalQuotesSystem = {
     },
     {
       id: 217,
-      text: "If u don't Trust ur self, then at least TRUST ALLAH.",
+      text: "If you don't Trust your self, then at least TRUST ALLAH.",
       author: "Unknown",
       source: "Faith Reflection",
       category: "faith",
@@ -2623,6 +2623,39 @@ const restartBtn = document.getElementById("restart-btn");
 const resetBtn = document.getElementById("reset-btn");
 const editUsernameBtn = document.getElementById("edit-username-btn");
 const tourGuideBtn = document.getElementById("tour-guide-btn");
+const voiceSelect = document.getElementById("voice-select");
+
+// Sync voice select dropdown from playerStats/localStorage
+async function syncVoiceSelect() {
+  if (!voiceSelect) return;
+  try {
+    const pStats = await db.playerStats.toArray();
+    if (pStats.length > 0 && pStats[0].voicePref) {
+      voiceSelect.value = pStats[0].voicePref;
+      localStorage.setItem('voicePref', pStats[0].voicePref);
+    } else {
+      voiceSelect.value = localStorage.getItem('voicePref') || 'female';
+    }
+  } catch (e) {
+    voiceSelect.value = localStorage.getItem('voicePref') || 'female';
+  }
+}
+
+// Save voice preference when the select changes
+async function onVoiceChange() {
+  if (!voiceSelect) return;
+  const newVoice = voiceSelect.value;
+  localStorage.setItem('voicePref', newVoice);
+  try {
+    const pStats = await db.playerStats.toArray();
+    if (pStats.length > 0) {
+      pStats[0].voicePref = newVoice;
+      await db.playerStats.put(pStats[0]);
+    }
+  } catch (e) {
+    console.warn('Failed to persist voice preference:', e);
+  }
+}
 
 // Settings modal functionality - wrapped in DOMContentLoaded for safety
 function initSettingsHandlers() {
@@ -2631,7 +2664,11 @@ function initSettingsHandlers() {
       settingsModal.classList.add("show");
       document.getElementById("modal-overlay").classList.add("show");
       document.body.style.overflow = "hidden";
+      syncVoiceSelect();
     });
+  }
+  if (voiceSelect) {
+    voiceSelect.addEventListener('change', onVoiceChange);
   }
 }
 
@@ -2766,12 +2803,18 @@ let audioUnlocked = false;
 
 function unlockAudioOnce() {
   if (audioUnlocked) return;
-  const silent = new Howl({ src: ['data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA'], volume: 0 });
-  silent.play();
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    ctx.close();
+  } catch(_) {}
   audioUnlocked = true;
 }
 
-document.addEventListener('click', unlockAudioOnce, { once: true });
+// Unlock on any user gesture
+['click', 'touchstart', 'keydown'].forEach(evt =>
+  document.addEventListener(evt, unlockAudioOnce, { once: true })
+);
 
 const sounds = {
   complete: makeSound(["sounds/complete.mp3"]),
@@ -2911,6 +2954,7 @@ async function initializeGame() {
       consecutiveDays: 0,
       currentStreak: 0,
       longestStreak: 0,
+      voicePref: 'female',
       username: "HeavenlyDev|",
       completedQuests: 0,
       categoriesCompleted: [],
@@ -2939,6 +2983,10 @@ async function initializeGame() {
       stats.mediumQuestsCompleted = 0;
       stats.easyQuestsCompleted = 0;
       stats.statsCompleted = [];
+      await db.playerStats.put(stats);
+    }
+    if (stats.voicePref === undefined) {
+      stats.voicePref = 'female';
       await db.playerStats.put(stats);
     }
   }
@@ -3612,6 +3660,7 @@ async function completeSelectedQuests() {
   const container = document.getElementById('quests');
   let totalXp = 0;
   let lastStat = null;
+  let prevLastActive = null;
   for (const id of ids) {
     const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
     if (!el) continue;
@@ -3629,6 +3678,7 @@ async function completeSelectedQuests() {
     const playerStats = await db.playerStats.toArray();
     if (playerStats.length > 0) {
       const s = playerStats[0];
+      if (prevLastActive === null) prevLastActive = s.lastActive;
       s.completedQuests = (s.completedQuests || 0) + 1;
       if (category) {
         if (!s.categoriesCompleted) s.categoriesCompleted = [];
@@ -3642,6 +3692,8 @@ async function completeSelectedQuests() {
         if (!s.statsCompleted) s.statsCompleted = [];
         if (!s.statsCompleted.includes(stat)) s.statsCompleted.push(stat);
       }
+      s.xp = (s.xp || 0) + xp;
+      currentXP = s.xp;
       await db.playerStats.put(s);
       if (stat) await increaseStat(stat);
     }
@@ -3649,12 +3701,10 @@ async function completeSelectedQuests() {
     setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
   }
   if (totalXp > 0) {
-    currentXP += totalXp;
     updateXP();
     const playerStats = await db.playerStats.toArray();
     if (playerStats.length > 0) {
       const s = playerStats[0];
-      s.xp = currentXP;
       const prevLevel = s.level;
       await db.playerStats.put(s);
       checkAchievements();
@@ -3667,6 +3717,8 @@ async function completeSelectedQuests() {
       }
       if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
     }
+    // Update streak via daily activity check (same as single quest completion)
+    await checkDailyActivity(prevLastActive);
     showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
   }
   selectedQuests.clear();
@@ -4775,7 +4827,41 @@ async function loadDefaultQuestsIntoCurrent() {
 // Initialize Quotes and Spider Chart UI
 let currentQuote = null;
 
-function speakText(text) {
+let currentQuoteAudio = null;
+
+function getVoicePref() {
+  // Read voice preference from localStorage cache or default
+  return localStorage.getItem('voicePref') || 'female';
+}
+
+function speakText(text, quoteId) {
+  // Try pre-generated audio file first
+  if (quoteId) {
+    const voice = getVoicePref();
+    const audioPath = `quotes-audio/${voice}/${quoteId}.mp3`;
+    try {
+      if (currentQuoteAudio) {
+        currentQuoteAudio.pause();
+        currentQuoteAudio = null;
+      }
+      const audio = new Audio(audioPath);
+      audio.volume = 0.8;
+      currentQuoteAudio = audio;
+      unlockAudioOnce();
+      audio.play().catch(function(e) {
+        console.warn('speakText: play blocked (' + e.message + ') fallback TTS for #' + quoteId);
+        if (text && window.speakWithKokoro) window.speakWithKokoro(text);
+      });
+      audio.onerror = function() {
+        console.warn('speakText: load error for ' + audioPath + ', fallback TTS');
+        if (text && window.speakWithKokoro) window.speakWithKokoro(text);
+      };
+      return;
+    } catch (e) {
+      console.warn('speakText: exception (' + e.message + '), fallback TTS');
+    }
+  }
+  // Fallback: Kokoro TTS
   if (text && window.speakWithKokoro) window.speakWithKokoro(text);
 }
 
@@ -4800,7 +4886,7 @@ function initializeQuotes() {
           favBtn.classList.toggle('favorited', !!f);
         }).catch(() => favBtn.classList.remove('favorited'));
       }
-      speakText(q.text);
+      speakText(q.text, q.id);
     }
 
     async function renderFavorites(){
@@ -4923,6 +5009,7 @@ function displayQuoteByContext(context, questCategory) {
       container.classList.add('quote-pop');
       setTimeout(() => container.classList.remove('quote-pop'), 5000);
     }
+    speakText(q.text, q.id);
   } catch (e) {
     console.error('displayQuoteByContext error', e);
   }

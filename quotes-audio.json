@@ -1,0 +1,1528 @@
+[
+  {
+    "id": 1,
+    "text": "Great power comes with great benefits.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 2,
+    "text": "The strong prey on the weak; this is the law of nature.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 3,
+    "text": "In the face of benefits, there are no eternal enemies or friends.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "wisdom"
+  },
+  {
+    "id": 4,
+    "text": "Knowledge is power, and power is everything!",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "wisdom"
+  },
+  {
+    "id": 5,
+    "text": "The strong do as they please, while the weak suffer what they must.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "power"
+  },
+  {
+    "id": 6,
+    "text": "There's no such thing as a free lunch in this world.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "wisdom"
+  },
+  {
+    "id": 7,
+    "text": "Strength is the only truth in this world.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 8,
+    "text": "Only those who are willing to sacrifice can truly gain power.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "discipline"
+  },
+  {
+    "id": 9,
+    "text": "Weakness is a sin.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "power"
+  },
+  {
+    "id": 10,
+    "text": "Power is a means, not an end.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "wisdom"
+  },
+  {
+    "id": 11,
+    "text": "Survival is for the fittest, everything else is an illusion.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 12,
+    "text": "Morality is a tool used by the weak to bind the strong.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "wisdom"
+  },
+  {
+    "id": 13,
+    "text": "In a world of cultivation, only absolute power can guarantee freedom.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "power"
+  },
+  {
+    "id": 14,
+    "text": "The path to greatness is paved with the bones of those who couldn't walk it.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 15,
+    "text": "He who controls resources controls destiny.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "power"
+  },
+  {
+    "id": 16,
+    "text": "Only by controlling everything can one be free of fate.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 17,
+    "text": "Cunning is a weapon more powerful than any blade.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "wisdom"
+  },
+  {
+    "id": 18,
+    "text": "True immortality is achieved through power, not time.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 19,
+    "text": "The weak fall, the strong rise. Such is the way of the world.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "power"
+  },
+  {
+    "id": 20,
+    "text": "Fear is the currency of control.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 21,
+    "text": "Trust is a luxury only fools can afford.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "wisdom"
+  },
+  {
+    "id": 22,
+    "text": "Victory goes to the one who dares to take risks.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "growth"
+  },
+  {
+    "id": 23,
+    "text": "In the end, strength is the only thing that matters.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 24,
+    "text": "A mind without ambition is a body without a soul.",
+    "author": "Leylin Farlier",
+    "source": "Warlock of the Magus World",
+    "category": "growth"
+  },
+  {
+    "id": 25,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 26,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 27,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 28,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 29,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 30,
+    "text": "To rise above all, you must be willing to stand alone.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 31,
+    "text": "A time comes when you need to stop waiting for the man you want to become and start being the man you want to be.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 32,
+    "text": "The longer you wait to do something you should do now, the greater the odds that you will never actually do it.",
+    "author": "Unknown",
+    "source": "The Law of Diminishing Intent",
+    "category": "discipline"
+  },
+  {
+    "id": 33,
+    "text": "You cannot change your destination overnight, but you can change your direction overnight.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 34,
+    "text": "The first step toward change is awareness. The second step is acceptance.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 35,
+    "text": "You cannot win if you do not begin! The people who get ahead in the world are the ones who look for the circumstances they want, and if they can't find them, they make them.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 36,
+    "text": "Your vision will become clear only when you look into your heart. Who looks outside, dreams. Who looks inside, awakens.",
+    "author": "Carl Jung",
+    "source": "Modern Psychology",
+    "category": "wisdom"
+  },
+  {
+    "id": 37,
+    "text": "If you put a small value on yourself, rest assured the world will not raise the price.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 38,
+    "text": "When a man has put a limit on what he will do, he has put a limit on what he can do.",
+    "author": "Unknown",
+    "source": "Personal Development Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 39,
+    "text": "You will never change your life until you change something you do daily.",
+    "author": "John Maxwell",
+    "source": "Today Matters",
+    "category": "discipline"
+  },
+  {
+    "id": 40,
+    "text": "Once you learn to quit it becomes a habit.",
+    "author": "Vince Lombardi",
+    "source": "Leadership Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 41,
+    "text": "Life begins at the end of your comfort zone.",
+    "author": "Neale Donald Walsch",
+    "source": "Conversations with God",
+    "category": "growth"
+  },
+  {
+    "id": 42,
+    "text": "Facing difficulties is inevitable. Learning from them is optional.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 43,
+    "text": "Success in life comes not from holding a good hand, but in playing a poor hand well.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 44,
+    "text": "If you go to work on your goals, your goals will go to work on you. Whatever good things we build end up building us.",
+    "author": "Jim Rohn",
+    "source": "Personal Development",
+    "category": "growth"
+  },
+  {
+    "id": 45,
+    "text": "The secret of your success is found in your daily routine.",
+    "author": "John Maxwell",
+    "source": "Today Matters",
+    "category": "discipline"
+  },
+  {
+    "id": 46,
+    "text": "You only live once. But if you work it right, once is enough.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 47,
+    "text": "If you don't design your own life plan, chances are you'll fall into someone else's plan.",
+    "author": "Jim Rohn",
+    "source": "Personal Development",
+    "category": "wisdom"
+  },
+  {
+    "id": 48,
+    "text": "It's never too late to be what you might have been.",
+    "author": "George Eliot",
+    "source": "Literature",
+    "category": "growth"
+  },
+  {
+    "id": 49,
+    "text": "God's gift to us: potential. Our gift to God: developing it.",
+    "author": "Unknown",
+    "source": "Faith Reflections",
+    "category": "faith"
+  },
+  {
+    "id": 50,
+    "text": "Habit is the daily battleground of character.",
+    "author": "Unknown",
+    "source": "Character Development",
+    "category": "discipline"
+  },
+  {
+    "id": 51,
+    "text": "There is no finish line.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 52,
+    "text": "The potential that exists within us is limitless and largely untapped\u2026 when you think of limits, you create them.",
+    "author": "Unknown",
+    "source": "Personal Growth",
+    "category": "growth"
+  },
+  {
+    "id": 53,
+    "text": "The cure for boredom is curiosity. There is no cure for curiosity.",
+    "author": "Dorothy Parker",
+    "source": "Literature",
+    "category": "wisdom"
+  },
+  {
+    "id": 54,
+    "text": "I am always doing that which I cannot do, in order to learn how to do it.",
+    "author": "Vincent van Gogh",
+    "source": "Art & Creativity",
+    "category": "growth"
+  },
+  {
+    "id": 55,
+    "text": "Man's mind, once stretched by a new idea, never regains its original dimensions.",
+    "author": "Oliver Wendell Holmes Jr.",
+    "source": "Legal Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 56,
+    "text": "The greatest gift you can give to someone is your own personal development.",
+    "author": "Jim Rohn",
+    "source": "Personal Development",
+    "category": "growth"
+  },
+  {
+    "id": 57,
+    "text": "Wisdom is the lost property of the believer.",
+    "author": "Prophet Muhammad (saw)",
+    "source": "Hadith",
+    "category": "faith"
+  },
+  {
+    "id": 58,
+    "text": "Today is the beginning of the rest of your life.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 59,
+    "text": "Opportunity favors those who are prepared.",
+    "author": "Louis Pasteur",
+    "source": "Science",
+    "category": "discipline"
+  },
+  {
+    "id": 60,
+    "text": "Greatness is a choice.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 61,
+    "text": "My mercy prevails over my wrath.",
+    "author": "Allah",
+    "source": "Hadith Qudsi",
+    "category": "faith"
+  },
+  {
+    "id": 62,
+    "text": "I am as My servant thinks I am. I am with him when he makes mention of Me.",
+    "author": "Allah",
+    "source": "Hadith Qudsi",
+    "category": "faith"
+  },
+  {
+    "id": 63,
+    "text": "Spend (on charity), O son of Adam, and I shall spend on you.",
+    "author": "Allah",
+    "source": "Hadith Qudsi",
+    "category": "faith"
+  },
+  {
+    "id": 64,
+    "text": "If My servant likes to meet Me, I like to meet him.",
+    "author": "Allah",
+    "source": "Hadith Qudsi",
+    "category": "faith"
+  },
+  {
+    "id": 65,
+    "text": "I have prepared for My righteous servants what no eye has seen and no ear has heard.",
+    "author": "Allah",
+    "source": "Hadith Qudsi",
+    "category": "faith"
+  },
+  {
+    "id": 66,
+    "text": "We will not change the condition of the people until they change that which is within themselves.",
+    "author": "Allah",
+    "source": "Qur'an 13:11",
+    "category": "faith"
+  },
+  {
+    "id": 67,
+    "text": "Allah has a plan for you, don't worry.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 68,
+    "text": "Prostrate and get closer to Allah, That Is Your Purpose.",
+    "author": "Unknown",
+    "source": "Spiritual Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 69,
+    "text": "When your Salah is straight, your life is straight.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 70,
+    "text": "Whoever is protected from his natural greed\u2014it is they who are successful.",
+    "author": "Allah",
+    "source": "Qur'an 59:9",
+    "category": "faith"
+  },
+  {
+    "id": 71,
+    "text": "If you have gained the love of Allah, what have you truly lost? Nothing.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 72,
+    "text": "I wonder for the one who is certain that there is death, and yet laughs.",
+    "author": "Prophet Dawud",
+    "source": "Zabura (Psalms)",
+    "category": "faith"
+  },
+  {
+    "id": 73,
+    "text": "I wonder for the one who is certain that there is Hellfire and its chastisement, and yet sleeps without fleeing from it.",
+    "author": "Prophet Dawud",
+    "source": "Zabura (Psalms)",
+    "category": "faith"
+  },
+  {
+    "id": 74,
+    "text": "I wonder for the one who is certain that there is Paradise and its pleasure, and yet sleeps without seeking it.",
+    "author": "Prophet Dawud",
+    "source": "Zabura (Psalms)",
+    "category": "faith"
+  },
+  {
+    "id": 75,
+    "text": "I wonder for the one who is certain about this world and its transience, and yet trusts in it implicitly.",
+    "author": "Prophet Dawud",
+    "source": "Zabura (Psalms)",
+    "category": "faith"
+  },
+  {
+    "id": 76,
+    "text": "The Divine Seal Altar's 33 steps. One day, if I am to step onto the peak of martial arts, then let this be the beginning of my journey!",
+    "author": "Lin Ming",
+    "source": "Reverend Insanity",
+    "category": "growth"
+  },
+  {
+    "id": 77,
+    "text": "The road of martial arts means to live a lonely and desolate life... suffering in silence.",
+    "author": "Lin Ming",
+    "source": "Reverend Insanity",
+    "category": "perseverance"
+  },
+  {
+    "id": 78,
+    "text": "I love money, but I'm my own master. I'll never let material things control me!",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "discipline"
+  },
+  {
+    "id": 79,
+    "text": "Chess pieces are pieces because they were meant to be used, they were also meant to be discarded when necessary.",
+    "author": "Fang Yuan",
+    "source": "Reverend Insanity",
+    "category": "wisdom"
+  },
+  {
+    "id": 80,
+    "text": "My goal for all eternity will be to exceed myself! To constantly exceed myself, to continually break through my own barriers!",
+    "author": "Meng Hao",
+    "source": "Reverend Insanity",
+    "category": "growth"
+  },
+  {
+    "id": 81,
+    "text": "Freedom! Independence! No cares or worries! What I want, the Heavens shall NOT lack! What I don't want, had BETTER not exist in the Heavens!",
+    "author": "Meng Hao",
+    "source": "Reverend Insanity",
+    "category": "power"
+  },
+  {
+    "id": 82,
+    "text": "The strong and weak would never be on equal footing; the difference was as wide as heaven and earth.",
+    "author": "Wang Lin",
+    "source": "Renegade Immortal",
+    "category": "power"
+  },
+  {
+    "id": 83,
+    "text": "If you are weak, the other person is strong. If you are strong, the other person is weak.",
+    "author": "Wang Lin",
+    "source": "Renegade Immortal",
+    "category": "wisdom"
+  },
+  {
+    "id": 84,
+    "text": "Strike the iron while it's hot, cultivate when you are still young... even if you don't become emperor, you will find many surprises ahead while traveling at the apex.",
+    "author": "Li Qiye",
+    "source": "Emperor's Domination",
+    "category": "growth"
+  },
+  {
+    "id": 85,
+    "text": "The reason why the strong are strong, is exactly because they are able to endure what normal people aren't able to.",
+    "author": "Jasmine",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 86,
+    "text": "Man, no matter which world they lived in, conquer; conquer the enemy and conquer themselves.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 87,
+    "text": "No matter which world, how could one gain anything without paying a price?",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 88,
+    "text": "Stop being satisfied with such meagre progress.",
+    "author": "Unknown",
+    "source": "Personal Growth",
+    "category": "discipline"
+  },
+  {
+    "id": 89,
+    "text": "As long as you haven't fallen yet, there is still a chance to turn everything around.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 90,
+    "text": "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 91,
+    "text": "MASTER THE ART OF PATIENCE.",
+    "author": "Unknown",
+    "source": "Spiritual Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 92,
+    "text": "ENDURE THE HARDSHIP FOR EASE FOLLOWS.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 93,
+    "text": "Sometimes in life, your situation will KEEP REPEATING ITSELF UNTIL YOU LEARN YOUR LESSON.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 94,
+    "text": "WORK WHILE THEY SLEEP. LEARN WHILE THEY PARTY. SAVE WHILE THEY SPEND. THEN LIVE LIKE THEY DREAM.",
+    "author": "Unknown",
+    "source": "Success Principle",
+    "category": "discipline"
+  },
+  {
+    "id": 95,
+    "text": "When Allah said: 'I test only those I love' I took the pain like it was an honour.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 96,
+    "text": "I WOULD RATHER DIE THAN STOP NOW.",
+    "author": "Unknown",
+    "source": "Determination",
+    "category": "perseverance"
+  },
+  {
+    "id": 97,
+    "text": "The man whom even the devil was afraid of.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 98,
+    "text": "Don't waste your potential.",
+    "author": "Unknown",
+    "source": "Personal Growth",
+    "category": "growth"
+  },
+  {
+    "id": 99,
+    "text": "O Human, you have done enough wrong... Paradise for you? I cannot tell, / Undoubtedly you will dwell in hell.",
+    "author": "Unknown",
+    "source": "Divine Exhortation",
+    "category": "faith"
+  },
+  {
+    "id": 100,
+    "text": "Change your living and make amends / For heaven, on your deeds depends.",
+    "author": "Unknown",
+    "source": "Divine Exhortation",
+    "category": "faith"
+  },
+  {
+    "id": 101,
+    "text": "O child of Adam! your religion is yours, your work is yours, your flesh is yours, and your blood is yours. If your religion becomes bad, your work, flesh, and blood, too, would become bad.",
+    "author": "Allah",
+    "source": "Divine Exhortation - Chapter 14",
+    "category": "faith"
+  },
+  {
+    "id": 102,
+    "text": "O child of Adam! do not be like a lamp which burns itself in order to provide light for people. Remove the love of the world from your heart.",
+    "author": "Allah",
+    "source": "Divine Exhortation - Chapter 14",
+    "category": "faith"
+  },
+  {
+    "id": 103,
+    "text": "The best wisdom is the fear of Allah. The best wealth is contentment. The best preparation (in life) is consciousness of Allah.",
+    "author": "Allah",
+    "source": "Divine Exhortation - Chapter 14",
+    "category": "faith"
+  },
+  {
+    "id": 104,
+    "text": "O child of Adam! obey Me in exact degree as your heart is inclined to the world, and if you will not do that, then remove My love from your heart.",
+    "author": "Allah",
+    "source": "Divine Exhortation - Chapter 30",
+    "category": "faith"
+  },
+  {
+    "id": 105,
+    "text": "O child of Adam! many a time you will stand before Allah while you think of another thing. If you had known the reality of Allah, you would not have concerned yourself with something different from Allah.",
+    "author": "Allah",
+    "source": "Divine Exhortation - Chapter 30",
+    "category": "faith"
+  },
+  {
+    "id": 106,
+    "text": "Challenge your limits again and again and again.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 107,
+    "text": "Pain of Discipline OR Pain of Regret.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 108,
+    "text": "PRIORITIES STRAIGHT.",
+    "author": "Unknown",
+    "source": "Personal Development",
+    "category": "discipline"
+  },
+  {
+    "id": 109,
+    "text": "Stay calm under pressure.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 110,
+    "text": "BE PROACTIVE IN YOUR AFFAIRS.",
+    "author": "Unknown",
+    "source": "Personal Development",
+    "category": "discipline"
+  },
+  {
+    "id": 111,
+    "text": "My soul calls me to evil.",
+    "author": "Prophet Yusuf (AS)",
+    "source": "Qur'an 12:53",
+    "category": "faith"
+  },
+  {
+    "id": 112,
+    "text": "Self-confidence was the most basic requirement of a truly strong expert.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 113,
+    "text": "Knowledge is the Noor of Allah to His Beloved",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 114,
+    "text": "No matter how ruthless the devil is, you can be more ruthless.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 115,
+    "text": "heaven will always leave a path for you, as long as you want to walk, there will always be a road for you to step on!",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 116,
+    "text": "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings comes with calamities.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 117,
+    "text": "His greatest quirk was that, when he made up his mind to concentrate, nothing could distract him.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 118,
+    "text": "Heart filled with resolution from his pursuit of truth. There was no fear of death.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 119,
+    "text": "Hardest choices require strongest wills",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 120,
+    "text": "If Everyone else can do it, then why can't I?",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 121,
+    "text": "She needed rivals and opponents, and she needed pressure that would force her to transform into someone greater than she was before.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 122,
+    "text": "He always thought it right to keep improving instead of having fun so that you wouldn't be regretful when you found yourself in trouble yet lacked strength.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 123,
+    "text": "It was when I achieved everything I ever wanted when I realised what was truly important to me.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 124,
+    "text": "No matter how busy he was, he would always find time for it.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 125,
+    "text": "Everytime you wake up to reality is a new day.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 126,
+    "text": "Freedom while not depending on oneself is merely an illusion.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 127,
+    "text": "The faster you act on your dreams the more successful you will be.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 128,
+    "text": "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 129,
+    "text": "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 130,
+    "text": "Life is only a few hundred years, it is all a great gamble.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 131,
+    "text": "It is merely another version of your self that has exceeded your current limits.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 132,
+    "text": "There was no absolutely desperate situation in this world, there were only people who despair. The answer to resolving problems will always be in our own hands.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 133,
+    "text": "Increase your Rank in the sight of ALLAH.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 134,
+    "text": "Be more ruthless to thyself, verily...all the great ones were ruthless to others n more ruthless to themselves.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 135,
+    "text": "ALLAH tells iblis about those who resist their lower selves that satan will have no authority over them.",
+    "author": "Allah",
+    "source": "Qur'an 16:99",
+    "category": "faith"
+  },
+  {
+    "id": 136,
+    "text": "The physical body is a carrier for the mind and spirit. With a rise in spiritual force, it would naturally require an even more sturdy body to support it!",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 137,
+    "text": "Rather make ALLAH Happy. Satisfied.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 138,
+    "text": "Do people think that they will be left (at ease) only on their saying, 'We believe' and will not be put to any test?",
+    "author": "Allah",
+    "source": "Qur'an 29:2",
+    "category": "faith"
+  },
+  {
+    "id": 139,
+    "text": "The journey was difficult, there Would always be some obstacles preventing people from progressing.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 140,
+    "text": "Monks were people devils did not want to meet at all. They rejected the pleasures of life, their staunch souls not corroded by anything.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 141,
+    "text": "No matter who you are, you do not truly know what kind of man u'v become...Until you reach the very end.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 142,
+    "text": "Deceiving your self to believe you hav not been deceived.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 143,
+    "text": "If you don't Trust ALLAH, then trust your self experience.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 144,
+    "text": "humans possess great wisdom. If they used this wisdom only to fight, they would be letting down this gift from Allah.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 145,
+    "text": "He withstood the loneliness of seclusion.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 146,
+    "text": "The ability of a peerless genius is not something that we ordinary people can ever begin to imagine! But it doesn't come easy.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 147,
+    "text": "ALLAH wanted to see if HIS WORDS carried any weight in Man's heart.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 148,
+    "text": "Oh young Muslim, those of old sacrificed much for Islam, what have you sacrificed.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 149,
+    "text": "Too bad, there were no pills that could cure one's regrets.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 150,
+    "text": "Even if this increase was very little, a little progress every day would accumulate to a terrifying amount after several days.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 151,
+    "text": "His mind had been trained to stay calm no matter what situation he was facing",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 152,
+    "text": "What is your purpose.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 153,
+    "text": "FOCUS ON TODAY",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "discipline"
+  },
+  {
+    "id": 154,
+    "text": "THE TRUTH LIES IN DETACHMENT.",
+    "author": "Unknown",
+    "source": "Spiritual Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 155,
+    "text": "Stop being destracted, the world will chase you when you chase Allah.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 156,
+    "text": "When your Salah is crooked, your life is crooked.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 157,
+    "text": "When a man makes a choice, he should stick to it till the end, even if the results of his choice may seem bad.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 158,
+    "text": "No matter how big of a genius you are, you will only be able to grow under constant competition.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 159,
+    "text": "This is life after all, hard work does not mean results, nor success. But if one does not work hard, they are destined to fail.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 160,
+    "text": "Making mistakes was a normal thing, even the men of old made mistakes in their lives. After making a mistake, realizing the mistake and correcting it was the behavior of an outstanding person!",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 161,
+    "text": "Before obtaining the greatest strength at the apex, do not plan to slow your footsteps.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 162,
+    "text": "Know that your words n actions shackle u.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 163,
+    "text": "Every single person who was cheated, was it because they were stupid? No, it was only because they wanted to believe in it from the depths of their heart.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 164,
+    "text": "People who could confidently say they did their best",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 165,
+    "text": "If you were not this challenging, how then would you be worthy of my effort.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 166,
+    "text": "Heaven does not want us to succeed, thus it sent such a calamity, but I will defy heaven. Competing with men, competing with heaven, this is the fun of life.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 167,
+    "text": "The mentality of the Companions was a hundred times more powerful than mere mortals'. They could withstand tremendous physical pain, they could withstand cultivating in loneliness.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 168,
+    "text": "There is time for everything.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 169,
+    "text": "Opportunities favor those who are prepared.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 170,
+    "text": "As long as you haven't fallen, there is a chance to turn everything around.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 171,
+    "text": "Everything is merely an illusion.",
+    "author": "Unknown",
+    "source": "Spiritual Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 172,
+    "text": "Collective seemingly insignificant choices lead to success.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 173,
+    "text": "No matter how busy he was, he would always find time for it.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 174,
+    "text": "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 175,
+    "text": "Every time you wake up to reality is a new day.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 176,
+    "text": "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings come with calamities.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 177,
+    "text": "People are anxious to improve their circumstances but are unwilling to improve themselves; they therefore remain bound by their own words and actions.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 178,
+    "text": "There is no absolutely desperate situation in this world, there are only people who despair.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 179,
+    "text": "Those who produce rather than consume in their free time",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "discipline"
+  },
+  {
+    "id": 180,
+    "text": "Be so strong even the demons are afraid of u.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 181,
+    "text": "Keep silent and do the right thing at the right time",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 182,
+    "text": "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 183,
+    "text": "U will stay like this till the end if you do not make the 1st move",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 184,
+    "text": "How could a farmer understand the thoughts of a conqueror.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 185,
+    "text": "Only the foolishness of mortals is eternal in the rivers of time!",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 186,
+    "text": "Allah takes away somethings in other for you to return, if you do not wish 4 it to be taken away...never leave in the first place.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 187,
+    "text": "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 188,
+    "text": "A mistake is simply another way of doing things.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 189,
+    "text": "You cannot change your destination overnight, but you can change your direction overnight.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 190,
+    "text": "There are two great days in a person's life: the day you were born and the day you discover why.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 191,
+    "text": "If someone is going down the wrong road, he doesn't need motivation to speed up. He needs to stop.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 192,
+    "text": "If you develop the habits of success, you'll make success a habit.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "discipline"
+  },
+  {
+    "id": 193,
+    "text": "The wise man questions himself, the fool others.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 194,
+    "text": "A bend in the road is not the end of the road unless you fail to make the turn.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 195,
+    "text": "If you plan on being anything less than you are capable of being, you will probably be unhappy all the days of your life.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 196,
+    "text": "To know the road ahead, ask those coming back.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 197,
+    "text": "Everything looks like a failure in the middle.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 198,
+    "text": "If you want to keep giving, you have to keep growing.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "growth"
+  },
+  {
+    "id": 199,
+    "text": "You have to give up to grow up.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 200,
+    "text": "O son of Adam, so long as you call upon Me and ask of Me, I shall forgive you for what you have done.",
+    "author": "Hadith Qudsi",
+    "source": "Sacred Hadith",
+    "category": "faith"
+  },
+  {
+    "id": 201,
+    "text": "Strike the iron while it's hot, cultivate when you are still young.",
+    "author": "Li Qiye",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 202,
+    "text": "The road to the peak is one with battles, to begin with.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 203,
+    "text": "IF YOUR PARENTS COUNT ON YOU, DON'T PLAY THE SAME GAME AS THOSE WHO COUNT ON THEIR PARENTS.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "discipline"
+  },
+  {
+    "id": 204,
+    "text": "Take care of the first half of your deen before seeking the other half.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 205,
+    "text": "You will not achieve virtuous conduct until you give of what you cherish.",
+    "author": "Unknown",
+    "source": "Islamic Wisdom",
+    "category": "faith"
+  },
+  {
+    "id": 206,
+    "text": "THE JOURNEY AWAITS.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 207,
+    "text": "Many geniuses are born but only a few reach their potential.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "growth"
+  },
+  {
+    "id": 208,
+    "text": "I wonder for the one who is pre-occupied by the faults of others while he forgets about his own.",
+    "author": "Unknown",
+    "source": "Excellence Exhortations",
+    "category": "faith"
+  },
+  {
+    "id": 209,
+    "text": "Faith is trusting in advance what will only make sense in reverse.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 210,
+    "text": "Unhappiness is not knowing what we want and killing ourselves to get it.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 211,
+    "text": "Spend (on charity), O son of Adam, and I shall spend on you.",
+    "author": "Hadith Qudsi",
+    "source": "Sacred Hadith",
+    "category": "faith"
+  },
+  {
+    "id": 212,
+    "text": "Like naruto, struggle through the pain.",
+    "author": "Unknown",
+    "source": "Motivation",
+    "category": "perseverance"
+  },
+  {
+    "id": 213,
+    "text": "Don't just go with the flow.",
+    "author": "Unknown",
+    "source": "Life Wisdom",
+    "category": "discipline"
+  },
+  {
+    "id": 214,
+    "text": "Heaven's will is unable to control men completely.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "power"
+  },
+  {
+    "id": 215,
+    "text": "The sweet scent of a woman is the grave of a hero!",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "wisdom"
+  },
+  {
+    "id": 216,
+    "text": "Remember your wish to travel throughout all the realms.",
+    "author": "Unknown",
+    "source": "Cultivation Wisdom",
+    "category": "perseverance"
+  },
+  {
+    "id": 217,
+    "text": "If you don't Trust your self, then at least TRUST ALLAH.",
+    "author": "Unknown",
+    "source": "Faith Reflection",
+    "category": "faith"
+  },
+  {
+    "id": 218,
+    "text": "On the Day [some] faces will turn white and [some] faces will turn black.",
+    "author": "Qur'an 3:106",
+    "source": "Holy Quran",
+    "category": "faith"
+  }
+]
