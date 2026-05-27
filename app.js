@@ -25,8 +25,10 @@ function escapeHtml(text) {
   return text.toString().replace(/[&<>"']/g, c => map[c]);
 }
 
-const db = new Dexie("SoloLevelingDB");
-db.version(8).stores({
+let db;
+try {
+  db = new Dexie("SoloLevelingDB");
+  db.version(8).stores({
   playerStats:
     "++id, level, xp, strength, agility, intelligence, stamina, willpower, discipline, lastActive, consecutiveDays, currentStreak, longestStreak, username, lastStreakCheck",
   quests: "++id, title, difficulty, xp, stat, status, category, createdAt, completedAt, dueDate",
@@ -36,6 +38,17 @@ db.version(8).stores({
   statHistory: "++id, date, strength, agility, intelligence, stamina, willpower, discipline",
   deletedQuests: '++id,compositeKey'
 });
+} catch(e) {
+  console.warn('IndexedDB unavailable, using in-memory fallback:', e);
+  // Minimal fallback so app does not crash on Safari private browsing
+  db = { playerStats: { toArray: async () => [], put: async () => {} },
+         quests: { toArray: async () => [], put: async () => {}, bulkAdd: async () => {}, where: () => ({ equals: () => ({ toArray: async () => [], delete: async () => {}, first: async () => null, modify: async () => {} }), anyOf: () => ({ toArray: async () => [], delete: async () => {}, modify: async () => {} }), and: () => ({ toArray: async () => [], first: async () => null }) }) },
+         savedGames: { toArray: async () => [], add: async () => {}, put: async () => {}, orderBy: () => ({ last: () => ({ toArray: async () => [], first: async () => null }) }) },
+         achievements: { toArray: async () => [], put: async () => {}, filter: () => ({ toArray: async () => [] }) },
+         favoriteQuotes: { toArray: async () => [], add: async () => {}, put: async () => {}, where: () => ({ equals: () => ({ toArray: async () => [], delete: async () => {}, first: async () => null, modify: async () => {} }) }) },
+         statHistory: { toArray: async () => [], add: async () => {}, put: async () => {} },
+         deletedQuests: { toArray: async () => [], add: async () => {}, put: async () => {}, where: () => ({ equals: () => ({ toArray: async () => [], delete: async () => {}, first: async () => null }) }) } };
+}
 
 const MAX_STAT = 10000;
 
@@ -2645,7 +2658,7 @@ async function syncVoiceSelect() {
 async function onVoiceChange() {
   if (!voiceSelect) return;
   const newVoice = voiceSelect.value;
-  localStorage.setItem('voicePref', newVoice);
+  try { localStorage.setItem('voicePref', newVoice); } catch(_) {}
   try {
     const pStats = await db.playerStats.toArray();
     if (pStats.length > 0) {
@@ -3656,7 +3669,7 @@ async function completeSelectedQuests() {
   const ids = [...selectedQuests];
   console.log('selected quest ids:', ids);
   if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
-  if (!sounds || !sounds.complete) {} else sounds.complete.play();
+  if (sounds && sounds.complete) sounds.complete.play();
   const container = document.getElementById('quests');
   let totalXp = 0;
   let lastStat = null;
@@ -3717,6 +3730,7 @@ async function completeSelectedQuests() {
         pStats[0].xp = currentXP;
         await db.playerStats.put(pStats[0]);
       }
+      if (typeof levelElem !== 'undefined' && levelElem) levelElem.textContent = currentLevel;
       updateXP();
       updateCharacterTitle();
       setTimeout(() => {
@@ -4854,15 +4868,18 @@ let currentQuoteAudio = null;
 
 function getVoicePref() {
   // Read voice preference from localStorage cache or default
-  return localStorage.getItem('voicePref') || 'female';
+  try { return localStorage.getItem('voicePref') || 'female'; }
+  catch(_) { return 'female'; }
 }
 
 function getQuoteAudioMuted() {
-  return localStorage.getItem('quoteAudioMuted') === 'true';
+  try { return localStorage.getItem('quoteAudioMuted') === 'true'; }
+  catch(_) { return false; }
 }
 
 function setQuoteAudioMuted(muted) {
-  localStorage.setItem('quoteAudioMuted', muted ? 'true' : 'false');
+  try { localStorage.setItem('quoteAudioMuted', muted ? 'true' : 'false'); }
+  catch(_) {}
 }
 
 function syncMuteButton() {
