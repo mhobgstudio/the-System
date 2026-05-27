@@ -3702,21 +3702,30 @@ async function completeSelectedQuests() {
   }
   if (totalXp > 0) {
     updateXP();
-    const playerStats = await db.playerStats.toArray();
-    if (playerStats.length > 0) {
-      const s = playerStats[0];
-      const prevLevel = s.level;
-      await db.playerStats.put(s);
-      checkAchievements();
-      const newLevel = s.level;
-      if (newLevel > prevLevel) {
-        setTimeout(() => {
-          showLevelUpOverlay(newLevel);
-          if (sounds && sounds.levelUp) sounds.levelUp.play();
-        }, 500);
-      }
-      if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
+    // Auto-process level-ups (same logic as level-up button)
+    let levelsGained = 0;
+    while (currentXP >= calculateXPForNextLevel(currentLevel)) {
+      const xpRequired = calculateXPForNextLevel(currentLevel);
+      currentLevel++;
+      currentXP -= xpRequired;
+      levelsGained++;
     }
+    if (levelsGained > 0) {
+      const pStats = await db.playerStats.toArray();
+      if (pStats.length > 0) {
+        pStats[0].level = currentLevel;
+        pStats[0].xp = currentXP;
+        await db.playerStats.put(pStats[0]);
+      }
+      updateXP();
+      updateCharacterTitle();
+      setTimeout(() => {
+        showLevelUpOverlay(currentLevel);
+        if (sounds && sounds.levelUp) sounds.levelUp.play();
+      }, 500);
+    }
+    checkAchievements();
+    if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
     // Update streak via daily activity check (same as single quest completion)
     await checkDailyActivity(prevLastActive);
     showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
@@ -3838,7 +3847,6 @@ async function completeQuest(xp, stat, questElem) {
 
     // Update player stats
     const playerStats = await db.playerStats.toArray();
-    const previousLevel = playerStats.length > 0 ? playerStats[0].level : 0;
     if (playerStats.length > 0) {
       const stats = playerStats[0];
       
@@ -3897,11 +3905,26 @@ async function completeQuest(xp, stat, questElem) {
     // Update UI for XP
     updateXP(); // This will use the now-correct global currentXP
 
-    // Check for level up
-    const newLevel = playerStats.length > 0 ? playerStats[0].level : 0;
-    if (newLevel > previousLevel) {
+    // Auto-process level-ups
+    let levelsGained = 0;
+    while (currentXP >= calculateXPForNextLevel(currentLevel)) {
+      const xpRequired = calculateXPForNextLevel(currentLevel);
+      currentLevel++;
+      currentXP -= xpRequired;
+      levelsGained++;
+    }
+    if (levelsGained > 0) {
+      const pStats = await db.playerStats.toArray();
+      if (pStats.length > 0) {
+        pStats[0].level = currentLevel;
+        pStats[0].xp = currentXP;
+        await db.playerStats.put(pStats[0]);
+      }
+      levelElem.textContent = currentLevel;
+      updateXP();
+      updateCharacterTitle();
       setTimeout(() => {
-        showLevelUpOverlay(newLevel);
+        showLevelUpOverlay(currentLevel);
         if (sounds && sounds.levelUp) sounds.levelUp.play();
       }, 500);
     }
