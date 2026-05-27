@@ -3153,7 +3153,7 @@ function createQuestElement(quest, animate = true) {
   questElem.innerHTML = `
     <div class="quest-content">
       <div class="quest-header">
-        <span class="quest-status status-${quest.status || 'inbox'} quest-selector" data-quest-id="${quest.id}"></span>
+        <span class="quest-status status-${quest.status || 'inbox'} quest-selector" data-quest-id="${quest.id}" onclick="event.stopPropagation(); toggleQuestSelect(${quest.id},this)"></span>
         <span class="quest-check" onclick="event.stopPropagation(); completeQuest(${quest.xp}, '${quest.stat}', this.closest('.quest'))">
           <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z" fill="#4a90e2"></path>
@@ -3189,8 +3189,7 @@ function createQuestElement(quest, animate = true) {
       e.stopPropagation();
       return;
     }
-    // .quest-status.quest-selector is handled by delegated listener on #quests —
-    // let the event bubble, but don't open the edit panel
+    // .quest-status.quest-selector has inline onclick with stopPropagation
     if (e.target.closest(".quest-status.quest-selector")) {
       return;
     }
@@ -3611,23 +3610,18 @@ function cancelQuestEdit(questElem) {
 
 let selectedQuests = new Set();
 
-document.getElementById('quests')?.addEventListener('click', (e) => {
-  try {
-  const dot = e.target.closest('.quest-status.quest-selector');
-  if (!dot) return;
-  const id = parseInt(dot.dataset.questId);
+function toggleQuestSelect(id, el) {
   if (selectedQuests.has(id)) {
     selectedQuests.delete(id);
-    dot.classList.remove('selected');
-    dot.closest('.quest')?.classList.remove('selected');
+    el.classList.remove('selected');
+    el.closest('.quest')?.classList.remove('selected');
   } else {
     selectedQuests.add(id);
-    dot.classList.add('selected');
-    dot.closest('.quest')?.classList.add('selected');
+    el.classList.add('selected');
+    el.closest('.quest')?.classList.add('selected');
   }
   updateBatchBar();
-  } catch (e) { console.error('quest selector error', e); }
-});
+}
 
 function updateBatchBar() {
   const bar = document.getElementById('batch-bar');
