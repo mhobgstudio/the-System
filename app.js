@@ -3659,89 +3659,92 @@ function deselectAllQuests() {
 
 async function completeSelectedQuests() {
   try {
-  showNotification('Completing...', 'info');
-  const ids = [...selectedQuests];
-  if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
-  if (sounds && sounds.complete) sounds.complete.play();
-  const container = document.getElementById('quests');
-  let totalXp = 0;
-  let lastStat = null;
-  let prevLastActive = null;
-  for (const id of ids) {
-    const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
-    if (!el) continue;
-    const quest = await db.quests.get(id);
-    if (!quest || quest.status === 'completed') continue;
-    const xp = parseInt(el.dataset.xp) || 0;
-    const stat = el.dataset.stat;
-    const category = el.dataset.category;
-    const difficulty = el.dataset.difficulty;
-    totalXp += xp;
-    lastStat = stat;
-    quest.status = 'completed';
-    quest.completedAt = new Date();
-    await db.quests.put(quest);
-    const playerStats = await db.playerStats.toArray();
-    if (playerStats.length > 0) {
-      const s = playerStats[0];
-      if (prevLastActive === null) prevLastActive = s.lastActive;
-      s.completedQuests = (s.completedQuests || 0) + 1;
-      if (category) {
-        if (!s.categoriesCompleted) s.categoriesCompleted = [];
-        if (!s.categoriesCompleted.includes(category)) s.categoriesCompleted.push(category);
+    showNotification('Completing...', 'info');
+    const dots = document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector.selected');
+    const ids = [];
+    dots.forEach(d => {
+      const qid = parseInt(d.dataset.questId);
+      if (!isNaN(qid)) ids.push(qid);
+    });
+    if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
+    if (sounds && sounds.complete) sounds.complete.play();
+    const container = document.getElementById('quests');
+    let totalXp = 0;
+    let lastStat = null;
+    let prevLastActive = null;
+    for (const id of ids) {
+      const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
+      if (!el) continue;
+      const quest = await db.quests.get(id);
+      if (!quest || quest.status === 'completed') continue;
+      const xp = parseInt(el.dataset.xp) || 0;
+      const stat = el.dataset.stat;
+      const category = el.dataset.category;
+      const difficulty = el.dataset.difficulty;
+      totalXp += xp;
+      lastStat = stat;
+      quest.status = 'completed';
+      quest.completedAt = new Date();
+      await db.quests.put(quest);
+      const playerStats = await db.playerStats.toArray();
+      if (playerStats.length > 0) {
+        const s = playerStats[0];
+        if (prevLastActive === null) prevLastActive = s.lastActive;
+        s.completedQuests = (s.completedQuests || 0) + 1;
+        if (category) {
+          if (!s.categoriesCompleted) s.categoriesCompleted = [];
+          if (!s.categoriesCompleted.includes(category)) s.categoriesCompleted.push(category);
+        }
+        s.totalXpEarned = (s.totalXpEarned || 0) + xp;
+        if (difficulty === 'Hard') s.hardQuestsCompleted = (s.hardQuestsCompleted || 0) + 1;
+        else if (difficulty === 'Medium') s.mediumQuestsCompleted = (s.mediumQuestsCompleted || 0) + 1;
+        else if (difficulty === 'Easy') s.easyQuestsCompleted = (s.easyQuestsCompleted || 0) + 1;
+        if (stat) {
+          if (!s.statsCompleted) s.statsCompleted = [];
+          if (!s.statsCompleted.includes(stat)) s.statsCompleted.push(stat);
+        }
+        s.xp = (s.xp || 0) + xp;
+        currentXP = s.xp;
+        await db.playerStats.put(s);
+        if (stat) await increaseStat(stat);
       }
-      s.totalXpEarned = (s.totalXpEarned || 0) + xp;
-      if (difficulty === 'Hard') s.hardQuestsCompleted = (s.hardQuestsCompleted || 0) + 1;
-      else if (difficulty === 'Medium') s.mediumQuestsCompleted = (s.mediumQuestsCompleted || 0) + 1;
-      else if (difficulty === 'Easy') s.easyQuestsCompleted = (s.easyQuestsCompleted || 0) + 1;
-      if (stat) {
-        if (!s.statsCompleted) s.statsCompleted = [];
-        if (!s.statsCompleted.includes(stat)) s.statsCompleted.push(stat);
-      }
-      s.xp = (s.xp || 0) + xp;
-      currentXP = s.xp;
-      await db.playerStats.put(s);
-      if (stat) await increaseStat(stat);
+      el.style.opacity = 0;
+      setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
     }
-    el.style.opacity = 0;
-    setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
-  }
-  if (totalXp > 0) {
-    updateXP();
-    // Auto-process level-ups (same logic as level-up button)
-    let levelsGained = 0;
-    while (currentXP >= calculateXPForNextLevel(currentLevel)) {
-      const xpRequired = calculateXPForNextLevel(currentLevel);
-      currentLevel++;
-      currentXP -= xpRequired;
-      levelsGained++;
-    }
-    if (levelsGained > 0) {
-      const pStats = await db.playerStats.toArray();
-      if (pStats.length > 0) {
-        pStats[0].level = currentLevel;
-        pStats[0].xp = currentXP;
-        await db.playerStats.put(pStats[0]);
-      }
-      if (typeof levelElem !== 'undefined' && levelElem) levelElem.textContent = currentLevel;
+    if (totalXp > 0) {
       updateXP();
-      updateCharacterTitle();
-      setTimeout(() => {
-        showLevelUpOverlay(currentLevel);
-        if (sounds && sounds.levelUp) sounds.levelUp.play();
-      }, 500);
+      let levelsGained = 0;
+      while (currentXP >= calculateXPForNextLevel(currentLevel)) {
+        const xpRequired = calculateXPForNextLevel(currentLevel);
+        currentLevel++;
+        currentXP -= xpRequired;
+        levelsGained++;
+      }
+      if (levelsGained > 0) {
+        const pStats = await db.playerStats.toArray();
+        if (pStats.length > 0) {
+          pStats[0].level = currentLevel;
+          pStats[0].xp = currentXP;
+          await db.playerStats.put(pStats[0]);
+        }
+        if (typeof levelElem !== 'undefined' && levelElem) levelElem.textContent = currentLevel;
+        updateXP();
+        updateCharacterTitle();
+        setTimeout(() => {
+          showLevelUpOverlay(currentLevel);
+          if (sounds && sounds.levelUp) sounds.levelUp.play();
+        }, 500);
+      }
+      checkAchievements();
+      if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
+      await checkDailyActivity(prevLastActive);
+      showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
     }
-    checkAchievements();
-    if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
-    // Update streak via daily activity check (same as single quest completion)
-    await checkDailyActivity(prevLastActive);
-    showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
-  }
-  selectedQuests.clear();
-  updateBatchBar();
-  updateQuestCount();
-  if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
-  renderAchievements();
+    selectedQuests.clear();
+    updateBatchBar();
+    updateQuestCount();
+    if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
+    renderAchievements();
   } catch (e) {
     console.error('completeSelectedQuests error:', e);
     showNotification('Error completing quests: ' + e.message, 'error');
