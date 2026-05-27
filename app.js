@@ -3713,35 +3713,36 @@ async function completeSelectedQuests() {
       el.style.opacity = 0;
       setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
     }
-    if (totalXp > 0) {
-      updateXP();
-      let levelsGained = 0;
-      while (currentXP >= calculateXPForNextLevel(currentLevel)) {
-        const xpRequired = calculateXPForNextLevel(currentLevel);
-        currentLevel++;
-        currentXP -= xpRequired;
-        levelsGained++;
-      }
-      if (levelsGained > 0) {
-        const pStats = await db.playerStats.toArray();
-        if (pStats.length > 0) {
-          pStats[0].level = currentLevel;
-          pStats[0].xp = currentXP;
-          await db.playerStats.put(pStats[0]);
-        }
-        if (typeof levelElem !== 'undefined' && levelElem) levelElem.textContent = currentLevel;
+    if (completedCount > 0) {
+      if (totalXp > 0) {
         updateXP();
-        updateCharacterTitle();
-        setTimeout(() => {
-          showLevelUpOverlay(currentLevel);
-          if (sounds && sounds.levelUp) sounds.levelUp.play();
-        }, 500);
+        let levelsGained = 0;
+        while (currentXP >= calculateXPForNextLevel(currentLevel)) {
+          const xpRequired = calculateXPForNextLevel(currentLevel);
+          currentLevel++;
+          currentXP -= xpRequired;
+          levelsGained++;
+        }
+        if (levelsGained > 0) {
+          const pStats = await db.playerStats.toArray();
+          if (pStats.length > 0) {
+            pStats[0].level = currentLevel;
+            pStats[0].xp = currentXP;
+            await db.playerStats.put(pStats[0]);
+          }
+          if (typeof levelElem !== 'undefined' && levelElem) levelElem.textContent = currentLevel;
+          updateXP();
+          updateCharacterTitle();
+          setTimeout(() => {
+            showLevelUpOverlay(currentLevel);
+            if (sounds && sounds.levelUp) sounds.levelUp.play();
+          }, 500);
+        }
+        await checkDailyActivity(prevLastActive);
       }
       checkAchievements();
       if (lastStat) displayQuoteByContext(motivationalQuotesSystem.contexts.QUEST_COMPLETE);
-      await checkDailyActivity(prevLastActive);
-    }
-    if (completedCount > 0) {
+      if (totalXp > 0) showXPToast(totalXp, lastStat);
       showNotification(`Completed ${completedCount} quest${completedCount > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
     }
     selectedQuests.clear();
