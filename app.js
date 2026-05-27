@@ -4953,7 +4953,12 @@ function initializeQuotes() {
     if (muteBtn) {
       syncMuteButton();
       muteBtn.addEventListener('click', () => {
-        setQuoteAudioMuted(!getQuoteAudioMuted());
+        const nowMuted = !getQuoteAudioMuted();
+        setQuoteAudioMuted(nowMuted);
+        if (nowMuted && currentQuoteAudio) {
+          currentQuoteAudio.pause();
+          currentQuoteAudio = null;
+        }
         syncMuteButton();
       });
     }
