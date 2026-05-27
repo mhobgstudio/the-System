@@ -3659,34 +3659,45 @@ function deselectAllQuests() {
 
 async function completeSelectedQuests() {
   try {
+    alert('1: function called');
     showNotification('Completing...', 'info');
     const dots = document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector.selected');
+    alert('2: dots found: ' + dots.length);
     const ids = [];
     dots.forEach(d => {
       const qid = parseInt(d.dataset.questId);
+      alert('3: parsed id: ' + qid + ' from data-quest-id: ' + d.dataset.questId);
       if (!isNaN(qid)) ids.push(qid);
     });
+    alert('4: final ids: ' + JSON.stringify(ids));
     if (ids.length === 0) { showNotification('No quests selected', 'warning'); return; }
     if (sounds && sounds.complete) sounds.complete.play();
     const container = document.getElementById('quests');
+    alert('5: container: ' + (container ? 'found' : 'NULL'));
     let totalXp = 0;
     let lastStat = null;
     let prevLastActive = null;
     for (const id of ids) {
+      alert('6: processing id: ' + id);
       const el = container?.querySelector(`.quest[data-quest-id="${id}"]`);
+      alert('7: element for ' + id + ': ' + (el ? 'found' : 'NULL'));
       if (!el) continue;
       const quest = await db.quests.get(id);
+      alert('8: quest from db: ' + (quest ? quest.title : 'NOT FOUND'));
       if (!quest || quest.status === 'completed') continue;
       const xp = parseInt(el.dataset.xp) || 0;
       const stat = el.dataset.stat;
       const category = el.dataset.category;
       const difficulty = el.dataset.difficulty;
+      alert('9: xp=' + xp + ' stat=' + stat + ' category=' + category + ' difficulty=' + difficulty);
       totalXp += xp;
       lastStat = stat;
       quest.status = 'completed';
       quest.completedAt = new Date();
       await db.quests.put(quest);
+      alert('10: quest saved as completed');
       const playerStats = await db.playerStats.toArray();
+      alert('11: playerStats length: ' + playerStats.length);
       if (playerStats.length > 0) {
         const s = playerStats[0];
         if (prevLastActive === null) prevLastActive = s.lastActive;
@@ -3709,8 +3720,10 @@ async function completeSelectedQuests() {
         if (stat) await increaseStat(stat);
       }
       el.style.opacity = 0;
+      alert('12: element faded out');
       setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
     }
+    alert('13: loop done, totalXp=' + totalXp);
     if (totalXp > 0) {
       updateXP();
       let levelsGained = 0;
@@ -3740,12 +3753,15 @@ async function completeSelectedQuests() {
       await checkDailyActivity(prevLastActive);
       showNotification(`Completed ${ids.length} quest${ids.length > 1 ? 's' : ''}! +${totalXp} XP`, 'success');
     }
+    alert('14: cleanup phase');
     selectedQuests.clear();
     updateBatchBar();
     updateQuestCount();
     if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
     renderAchievements();
+    alert('15: DONE');
   } catch (e) {
+    alert('ERROR: ' + e.message);
     console.error('completeSelectedQuests error:', e);
     showNotification('Error completing quests: ' + e.message, 'error');
   }
