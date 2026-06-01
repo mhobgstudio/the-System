@@ -2121,6 +2121,1527 @@ const motivationalQuotesSystem = {
       category: "faith",
       contexts: ["daily"],
       favorite: false
+    },
+    {
+      id: 219,
+      text: "The key to the good life, as far as Socrates understood it, was wisdom. As you become wiser, you become a better person. Wisdom is not so much about knowledge — what you think, but rather about how you think.",
+      author: "Steven Gambardella",
+      source: "5 Philosophy Quotes to Actually Make You Think (2024)",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 220,
+      text: "I know that I know nothing.",
+      author: "Socrates",
+      source: "Plato's Apology",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 221,
+      text: "If we possess our 'why' of life we can put up with almost any 'how'.",
+      author: "Friedrich Nietzsche",
+      source: "Twilight of the Idols",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 222,
+      text: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+      author: "Albert Einstein",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 223,
+      text: "The opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference.",
+      author: "Elie Wiesel",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 224,
+      text: "The unexamined life is not worth living.",
+      author: "Socrates",
+      source: "Plato's Apology",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 225,
+      text: "Simplicity, patience, compassion. These three are your greatest treasures.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 226,
+      text: "Without deviation from the norm, progress is not possible.",
+      author: "Frank Zappa",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 227,
+      text: "Do not fear to be eccentric in opinion, for every opinion now accepted was once eccentric.",
+      author: "Bertrand Russell",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 228,
+      text: "Knowing others is intelligence. Knowing yourself is true wisdom. Mastering others is strength. Mastering yourself is true power.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 229,
+      text: "The only true wisdom is in knowing you know nothing.",
+      author: "Socrates",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 230,
+      text: "Turn your wounds into wisdom.",
+      author: "Oprah Winfrey",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 231,
+      text: "The function of wisdom is to discriminate between good and evil.",
+      author: "Marcus Tullius Cicero",
+      source: "De Officiis",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 232,
+      text: "By three methods we may learn wisdom: First, by reflection, which is noblest; Second, by imitation, which is easiest; and third by experience, which is the bitterest.",
+      author: "Confucius",
+      source: "Analects",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 233,
+      text: "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
+      author: "Aristotle",
+      source: "Metaphysics",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 234,
+      text: "Wisdom begins in wonder.",
+      author: "Socrates",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 235,
+      text: "The fool thinks himself to be wise, but the wise man knows himself to be a fool.",
+      author: "William Shakespeare",
+      source: "As You Like It",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 236,
+      text: "Knowledge speaks, but wisdom listens.",
+      author: "Jimi Hendrix",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 237,
+      text: "The wise man speaks because he has something to say; the fool speaks because he has to say something.",
+      author: "Plato",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 238,
+      text: "Not all those who wander are lost.",
+      author: "J.R.R. Tolkien",
+      source: "The Lord of the Rings",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 239,
+      text: "A man's worth is no greater than the worth of his ambitions.",
+      author: "Marcus Aurelius",
+      source: "Meditations",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 240,
+      text: "The happiness of your life depends upon the quality of your thoughts.",
+      author: "Marcus Aurelius",
+      source: "Meditations",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 241,
+      text: "Waste no more time arguing what a good man should be. Be one.",
+      author: "Marcus Aurelius",
+      source: "Meditations",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 242,
+      text: "Life is not a problem to be solved, but a reality to be experienced.",
+      author: "Søren Kierkegaard",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 243,
+      text: "He who has a why to live for can bear almost any how.",
+      author: "Friedrich Nietzsche",
+      source: "—",
+      category: "wisdom",
+      contexts: ["daily"],
+      favorite: false
+    },
+    {
+      id: 244,
+      text: "Becoming is better than being.",
+      author: "Carol Dweck",
+      source: "Mindset: The New Psychology of Success",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 245,
+      text: "The view you adopt for yourself profoundly affects the way you lead your life.",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 246,
+      text: "In a growth mindset, challenges are exciting rather than threatening. So rather than thinking, 'Oh, I'm going to reveal my weaknesses,' you say, 'Wow, here's a chance to grow.'",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 247,
+      text: "The passion for stretching yourself and sticking to it, even when it's not going well, is the hallmark of the growth mindset.",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 248,
+      text: "No matter what your ability is, effort is what ignites that ability and turns it into accomplishment.",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 249,
+      text: "Why waste time proving over and over how great you are, when you could be getting better?",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 250,
+      text: "Picture your brain forming new connections as you meet the challenge and learn. Keep on going.",
+      author: "Carol Dweck",
+      source: "Mindset",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 251,
+      text: "I have not failed. I've just found 10,000 ways that won't work.",
+      author: "Thomas Edison",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 252,
+      text: "It's not that I'm so smart, it's just that I stay with problems longer.",
+      author: "Albert Einstein",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 253,
+      text: "Success is not an accident. It is hard work, perseverance, learning, studying, sacrifice, and most of all, love of what you are doing.",
+      author: "Pelé",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 254,
+      text: "Education is the most powerful weapon which you can use to change the world.",
+      author: "Nelson Mandela",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 255,
+      text: "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+      author: "Colin Powell",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 256,
+      text: "Your time is limited, don't waste it living someone else's life.",
+      author: "Steve Jobs",
+      source: "Stanford Commencement (2005)",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 257,
+      text: "In the middle of every difficulty lies opportunity.",
+      author: "Albert Einstein",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 258,
+      text: "Don't watch the clock; do what it does. Keep going.",
+      author: "Sam Levenson",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 259,
+      text: "The only thing that overcomes hard luck is hard work.",
+      author: "Harry Golden",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 260,
+      text: "If you believe it will work out, you'll see opportunities. If you believe it won't, you will see obstacles.",
+      author: "Wayne Dyer",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 261,
+      text: "You are never too old to set another goal or to dream a new dream.",
+      author: "C.S. Lewis",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 262,
+      text: "The best way to predict the future is to create it.",
+      author: "Peter Drucker",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 263,
+      text: "Your life does not get better by chance, it gets better by change.",
+      author: "Jim Rohn",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 264,
+      text: "Whether you think you can or think you can't, you're right.",
+      author: "Henry Ford",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 265,
+      text: "The mind is not a vessel to be filled, but a fire to be kindled.",
+      author: "Plutarch",
+      source: "On Listening",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 266,
+      text: "Change your thoughts and you change your world.",
+      author: "Norman Vincent Peale",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 267,
+      text: "You don't have to be great to start, but you have to start to be great.",
+      author: "Zig Ziglar",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 268,
+      text: "Your attitude, not your aptitude, will determine your altitude.",
+      author: "Zig Ziglar",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 269,
+      text: "Do the best you can until you know better. Then when you know better, do better.",
+      author: "Maya Angelou",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 270,
+      text: "True nobility is being superior to your former self.",
+      author: "Ernest Hemingway",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 271,
+      text: "Growth must be chosen again and again; fear must be overcome again and again.",
+      author: "Abraham Maslow",
+      source: "Toward a Psychology of Being",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 272,
+      text: "If there is no struggle, there is no progress.",
+      author: "Frederick Douglass",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 273,
+      text: "Anyone can start from now and make a brand new ending.",
+      author: "Carl Bard",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 274,
+      text: "Be not afraid of growing slowly; be afraid only of standing still.",
+      author: "Chinese Proverb",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 275,
+      text: "The expert in anything was once a beginner.",
+      author: "Helen Hayes",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 276,
+      text: "We can't become what we need to be by remaining what we are.",
+      author: "Oprah Winfrey",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 277,
+      text: "It does not matter how slowly you go as long as you do not stop.",
+      author: "Confucius",
+      source: "Analects",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 278,
+      text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+      author: "Nelson Mandela",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 279,
+      text: "Continuous improvement is better than delayed perfection.",
+      author: "Mark Twain",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 280,
+      text: "Little strokes fell great oaks.",
+      author: "Benjamin Franklin",
+      source: "Poor Richard's Almanack",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 281,
+      text: "All growth is a leap in the dark, a spontaneous, unpremeditated act without benefit of experience.",
+      author: "Henry Miller",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 282,
+      text: "One can choose to go back toward safety or forward toward growth. Growth must be chosen again and again; fear must be overcome again and again.",
+      author: "Abraham Maslow",
+      source: "—",
+      category: "growth",
+      contexts: ["daily", "questComplete"],
+      favorite: false
+    },
+    {
+      id: 283,
+      text: "Courage doesn't always roar. Sometimes courage is the quiet voice at the end of the day saying 'I will try again tomorrow.'",
+      author: "Mary Anne Radmacher",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 284,
+      text: "Fall seven times and stand up eight.",
+      author: "Japanese Proverb",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 285,
+      text: "It does not matter how slowly you go as long as you do not stop.",
+      author: "Confucius",
+      source: "Analects",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 286,
+      text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+      author: "Winston Churchill",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 287,
+      text: "Never, never, never give up.",
+      author: "Winston Churchill",
+      source: "Address at Harrow School (1941)",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 288,
+      text: "If you're going through hell, keep going.",
+      author: "Winston Churchill",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 289,
+      text: "Our greatest glory is not in never falling, but in rising every time we fall.",
+      author: "Confucius",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 290,
+      text: "Many of life's failures are people who did not realize how close they were to success when they gave up.",
+      author: "Thomas Edison",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 291,
+      text: "Courage is not having the strength to go on; it is going on when you don't have the strength.",
+      author: "Theodore Roosevelt",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 292,
+      text: "It always seems impossible until it's done.",
+      author: "Nelson Mandela",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 293,
+      text: "Energy and persistence conquer all things.",
+      author: "Benjamin Franklin",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 294,
+      text: "The path to success is to take massive, determined action.",
+      author: "Tony Robbins",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 295,
+      text: "You may encounter many defeats, but you must not be defeated.",
+      author: "Maya Angelou",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 296,
+      text: "Success is how high you bounce when you hit bottom.",
+      author: "George S. Patton",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 297,
+      text: "Out of difficulties grow miracles.",
+      author: "Jean de La Bruyère",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 298,
+      text: "The human spirit is stronger than anything that can happen to it.",
+      author: "C.C. Scott",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 299,
+      text: "Tough times never last, but tough people do.",
+      author: "Robert H. Schuller",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 300,
+      text: "When you come to the end of your rope, tie a knot and hang on.",
+      author: "Franklin D. Roosevelt",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 301,
+      text: "Storms make trees take deeper roots.",
+      author: "D. O. Flynn",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 302,
+      text: "A river cuts through rock not because of its power, but because of its persistence.",
+      author: "James Watkins",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 303,
+      text: "No pressure, no diamonds.",
+      author: "Thomas Carlyle",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 304,
+      text: "Perseverance, secret of all triumphs.",
+      author: "Victor Hugo",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 305,
+      text: "The best way out is always through.",
+      author: "Robert Frost",
+      source: "\"A Servant to Servants\"",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 306,
+      text: "I am not afraid of storms, for I am learning how to sail my ship.",
+      author: "Louisa May Alcott",
+      source: "Little Women",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 307,
+      text: "He conquers who endures.",
+      author: "Persius",
+      source: "Satires",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 308,
+      text: "Victory belongs to the most persevering.",
+      author: "Napoleon Bonaparte",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 309,
+      text: "The difference between the impossible and the possible lies in a person's determination.",
+      author: "Tommy Lasorda",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 310,
+      text: "Permanence, perseverance and persistence in spite of all obstacles, discouragements and impossibilities: It is this, that in all things distinguishes the strong soul from the weak.",
+      author: "Thomas Carlyle",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 311,
+      text: "I am not a product of my circumstances. I am a product of my decisions.",
+      author: "Stephen R. Covey",
+      source: "The 7 Habits of Highly Effective People",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 312,
+      text: "Grit is living life like it's a marathon, not a sprint.",
+      author: "Angela Duckworth",
+      source: "Grit: The Power of Passion and Perseverance",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 313,
+      text: "Persistence is the twin sister of excellence. One is a matter of quality; the other, a matter of time.",
+      author: "Marabel Morgan",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 314,
+      text: "To succeed, work hard, never give up and above all, cherish a magnificent obsession.",
+      author: "Walt Disney",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 315,
+      text: "I am a slow walker, but I never walk back.",
+      author: "Abraham Lincoln",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 316,
+      text: "You never know how strong you are until being strong is your only choice.",
+      author: "Bob Marley",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 317,
+      text: "Rock bottom became the solid foundation on which I rebuilt my life.",
+      author: "J.K. Rowling",
+      source: "Harvard Commencement (2008)",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 318,
+      text: "The brick walls are there for a reason. They're not there to keep us out. The brick walls are there to give us a chance to show how badly we want something.",
+      author: "Randy Pausch",
+      source: "The Last Lecture",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 319,
+      text: "You can't cross the sea merely by standing and staring at the water.",
+      author: "Rabindranath Tagore",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 320,
+      text: "The gem cannot be polished without friction, nor man perfected without trials.",
+      author: "Confucius",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 321,
+      text: "Perseverance is not a long race; it is many short races one after the other.",
+      author: "Walter Elliott",
+      source: "—",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 322,
+      text: "The oak fought the wind and broke, the willow bent when it must and survived.",
+      author: "Robert Jordan",
+      source: "The Fires of Heaven",
+      category: "perseverance",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 323,
+      text: "He who conquers himself is the mightiest warrior.",
+      author: "Confucius",
+      source: "Analects",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 324,
+      text: "Self-control is strength. Right thought is mastery. Calmness is power.",
+      author: "James Allen",
+      source: "As a Man Thinketh",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 325,
+      text: "The first and best victory is to conquer self.",
+      author: "Plato",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 326,
+      text: "Discipline is the bridge between goals and accomplishment.",
+      author: "Jim Rohn",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 327,
+      text: "Mastering others is strength; mastering yourself is true power.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 328,
+      text: "Without self-discipline, success is impossible, period.",
+      author: "Lou Holtz",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 329,
+      text: "Discipline is choosing between what you want now and what you want most.",
+      author: "Abraham Lincoln",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 330,
+      text: "Small disciplines repeated with consistency every day lead to great achievements gained slowly over time.",
+      author: "John C. Maxwell",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 331,
+      text: "The more disciplined you become, the easier life gets.",
+      author: "Steve Pavlina",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 332,
+      text: "Self-discipline is the magic power that makes you virtually unstoppable.",
+      author: "Dan Kennedy",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 333,
+      text: "Discipline equals freedom.",
+      author: "Jocko Willink",
+      source: "Extreme Ownership",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 334,
+      text: "No man is fit to command another that cannot command himself.",
+      author: "William Penn",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 335,
+      text: "The discipline of desire is the backbone of character.",
+      author: "Will Durant",
+      source: "The Story of Philosophy",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 336,
+      text: "Freedom is not procured by a full enjoyment of what is desired, but by controlling the desire.",
+      author: "Epictetus",
+      source: "Discourses",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 337,
+      text: "He who reigns within himself, and rules passions, desires, and fears, is more than a king.",
+      author: "John Milton",
+      source: "Paradise Regained",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 338,
+      text: "He who overcomes others is strong, but he who overcomes himself is mightier still.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 339,
+      text: "Self-control is at the root of all virtues. Let a man yield to his impulses and passions, and from that moment he gives up his moral freedom.",
+      author: "Orison Swett Marden",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 340,
+      text: "There never has been, and cannot be, a good life without self-control.",
+      author: "Leo Tolstoy",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 341,
+      text: "The greatest power of ruling consists in the exercise of self-control.",
+      author: "Seneca",
+      source: "On Clemency",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 342,
+      text: "He that would govern others, first should be the master of himself.",
+      author: "Philip Massinger",
+      source: "The Bondman",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 343,
+      text: "If you master self-control, you can master anything.",
+      author: "Maxime Lagacé",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 344,
+      text: "Rule your mind, which, if it is not your servant, is your master.",
+      author: "Horace",
+      source: "Epistles",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 345,
+      text: "You have power over your mind — not outside events. Realize this, and you will find strength.",
+      author: "Marcus Aurelius",
+      source: "Meditations",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 346,
+      text: "The ability to subordinate an impulse to a value is the essence of the proactive person.",
+      author: "Stephen R. Covey",
+      source: "The 7 Habits of Highly Effective People",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 347,
+      text: "Seek freedom and become captive of your desires. Seek discipline and find your liberty.",
+      author: "Frank Herbert",
+      source: "Dune",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 348,
+      text: "I am, indeed, a king, because I know how to rule myself.",
+      author: "Pietro Aretino",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 349,
+      text: "The first and greatest victory is to conquer yourself; to be conquered by yourself is of all things most shameful and vile.",
+      author: "Plato",
+      source: "Laws",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 350,
+      text: "Not being able to govern events, I govern myself.",
+      author: "Michel de Montaigne",
+      source: "Essays",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 351,
+      text: "Ultimately, the only power to which man should aspire is that which he exercises over himself.",
+      author: "Elie Wiesel",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 352,
+      text: "By constant self-discipline and self-control you can develop greatness of character.",
+      author: "Grenville Kleiser",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 353,
+      text: "If you don't control what you think, you cannot control what you do.",
+      author: "Napoleon Hill",
+      source: "Think and Grow Rich",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 354,
+      text: "To enjoy freedom we have to control ourselves.",
+      author: "Virginia Woolf",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 355,
+      text: "The best fighter is never angry.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 356,
+      text: "Self-discipline without talent can often achieve astounding results, whereas talent without self-discipline inevitably dooms itself to failure.",
+      author: "Sydney Harris",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 357,
+      text: "First say to yourself what you would be; and then do what you have to do.",
+      author: "Epictetus",
+      source: "Discourses",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 358,
+      text: "Don't explain your philosophy. Embody it.",
+      author: "Epictetus",
+      source: "Enchiridion",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 359,
+      text: "Your ability to discipline yourself to set clear goals and then to work toward them every day will do more to guarantee your success than any other single factor.",
+      author: "Brian Tracy",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 360,
+      text: "No man is free who is not master of himself.",
+      author: "Epictetus",
+      source: "Discourses",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 361,
+      text: "The successful warrior is the average man, with laser-like focus.",
+      author: "Bruce Lee",
+      source: "—",
+      category: "discipline",
+      contexts: ["daily", "streakMilestone"],
+      favorite: false
+    },
+    {
+      id: 362,
+      text: "Knowing others is intelligence. Knowing yourself is true wisdom. Mastering others is strength. Mastering yourself is true power.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 363,
+      text: "Power is of two kinds. One is obtained by the fear of punishment and the other by acts of love. Power based on love is a thousand times more effective than the one derived from fear of punishment.",
+      author: "Mahatma Gandhi",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 364,
+      text: "Nearly all men can stand adversity, but if you want to test a man's character, give him power.",
+      author: "Abraham Lincoln",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 365,
+      text: "The greater the power, the more dangerous the abuse.",
+      author: "Edmund Burke",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 366,
+      text: "Power tends to corrupt, and absolute power corrupts absolutely. Great men are almost always bad men.",
+      author: "Lord Acton",
+      source: "Letter to Bishop Mandell Creighton (1887)",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 367,
+      text: "What a man can be, he must be. This need we call self-actualization.",
+      author: "Abraham Maslow",
+      source: "Toward a Psychology of Being",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 368,
+      text: "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
+      author: "Epictetus",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 369,
+      text: "The world is a dangerous place to live, not because of the people who are evil, but because of the people who don't do anything about it.",
+      author: "Albert Einstein",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 370,
+      text: "Mastering others requires strength. Mastering yourself requires true power.",
+      author: "Lao Tzu",
+      source: "Tao Te Ching",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 371,
+      text: "What does not kill me makes me stronger.",
+      author: "Friedrich Nietzsche",
+      source: "Twilight of the Idols",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 372,
+      text: "He who has a strong enough why can bear almost any how.",
+      author: "Friedrich Nietzsche",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 373,
+      text: "You have power over your mind — not outside events. Realize this, and you will find strength.",
+      author: "Marcus Aurelius",
+      source: "Meditations",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 374,
+      text: "The measure of a man is what he does with power.",
+      author: "Plato",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 375,
+      text: "One who condones evils is just as guilty as the one who commits them.",
+      author: "Martin Luther King Jr.",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 376,
+      text: "In any moment of decision, the best thing you can do is the right thing, the next best thing is the wrong thing, and the worst thing you can do is nothing.",
+      author: "Theodore Roosevelt",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 377,
+      text: "The ultimate measure of a man is not where he stands in moments of comfort and convenience, but where he stands at times of challenge and controversy.",
+      author: "Martin Luther King Jr.",
+      source: "Strength to Love",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 378,
+      text: "I cannot always control what goes on outside. But I can always control what goes on inside.",
+      author: "Wayne Dyer",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 379,
+      text: "The secret of power is not might, but the ability to adapt oneself to the forces of nature and use them.",
+      author: "Miyamoto Musashi",
+      source: "The Book of Five Rings",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 380,
+      text: "True power is not about domination over others, but about mastery over oneself.",
+      author: "Miyamoto Musashi",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 381,
+      text: "Knowledge will give you power, but character respect.",
+      author: "Bruce Lee",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 382,
+      text: "Power is not revealed by striking hard or often, but by striking true.",
+      author: "Miyamoto Musashi",
+      source: "The Book of Five Rings",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 383,
+      text: "If you want to find the real power in life, help others. If you want to find the real power in work, master your craft.",
+      author: "Robert Greene",
+      source: "The Laws of Human Nature",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 384,
+      text: "Weakness is a choice. Strength is earned.",
+      author: "David Goggins",
+      source: "Can't Hurt Me",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 385,
+      text: "The most powerful person in the room is not the one shouting. It's the one who doesn't need to.",
+      author: "Unknown",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 386,
+      text: "Power without compassion is tyranny. Compassion without power is weakness.",
+      author: "Robert Greene",
+      source: "The 48 Laws of Power",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
+    },
+    {
+      id: 387,
+      text: "You must be shapeless, formless, like water. When you pour water in a cup, it becomes the cup. Water can flow or it can crash. Be water, my friend.",
+      author: "Bruce Lee",
+      source: "—",
+      category: "power",
+      contexts: ["daily", "levelUp"],
+      favorite: false
     }
   ],
   
