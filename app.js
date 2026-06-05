@@ -7411,18 +7411,27 @@ function initializeViewToggle(){
     }
   }
 
+  function isExternalModuleError(msg) {
+    if (!msg) return true;
+    // Skip errors from external CDN-loaded modules (phonemizer, etc.) — we can't fix those
+    if (msg.includes('cdn.jsdelivr.net') || msg.includes('unpkg.com') || msg.includes('cdnjs.cloudflare.com')) return true;
+    // Skip module evaluation errors with no meaningful trace
+    if (msg === 'undefined' || msg === 'null' || msg === '') return true;
+    return false;
+  }
+
   window.addEventListener('error', function(e){
     try {
       const msg = (e.error && e.error.stack) ? e.error.stack : (e.message || String(e));
       console.error('Captured error', msg);
-      showErrorOverlay(msg);
+      if (!isExternalModuleError(msg)) showErrorOverlay(msg);
     } catch (err) {}
   });
   window.addEventListener('unhandledrejection', function(e){
     try {
       const msg = (e.reason && e.reason.stack) ? e.reason.stack : String(e.reason);
       console.error('Unhandled rejection', msg);
-      showErrorOverlay(msg);
+      if (!isExternalModuleError(msg)) showErrorOverlay(msg);
     } catch (err) {}
   });
 })();
