@@ -4519,6 +4519,8 @@ async function initializeGame() {
   }
 
   // Load all quests from the database
+  // Clear any existing quest elements first (preserve empty-state element)
+  questsElem.querySelectorAll('.quest').forEach(el => el.remove());
   const quests = await db.quests.toArray();
   const questsContainer = document.getElementById('quests');
   const emptyState = document.getElementById('quests-empty');
@@ -6255,7 +6257,8 @@ tourGuideBtn.addEventListener("click", startTourGuide);
 
 // Function to refresh data
 async function refreshData() {
-  questsElem.innerHTML = ""; // Clear current quests
+  // Remove only quest elements, preserve the empty-state element
+  questsElem.querySelectorAll('.quest').forEach(el => el.remove());
   const quests = await db.quests.toArray(); // Fetch updated quests
   const frag = document.createDocumentFragment();
   quests.forEach((quest, i) => {
