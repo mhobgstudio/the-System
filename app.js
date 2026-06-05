@@ -1,3 +1,52 @@
+// --- Google Auth State ---
+// Replace this with your Google OAuth 2.0 Web Client ID
+// Get one at https://console.cloud.google.com/apis/credentials
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const AUTH_STORAGE_KEY = 'sl_auth';
+
+let currentUser = null;
+(function() {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.sub) currentUser = parsed;
+    }
+  } catch(e) { /* ignore */ }
+})();
+
+// Play entry sound on first load or reload
+(function() {
+  var audio = new Audio('it_is_time.mp3');
+  audio.volume = 1.0;
+  var playPromise = audio.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(function() {
+      // Browser blocked autoplay - play on first click/touch
+      document.addEventListener('click', function playOnFirst() {
+        audio.play().catch(function(){});
+        document.removeEventListener('click', playOnFirst);
+      }, { once: true });
+    });
+  }
+})();
+
+function getDbName() {
+  return currentUser && currentUser.sub
+    ? 'SoloLevelingDB_' + currentUser.sub
+    : 'SoloLevelingDB';
+}
+
+function saveAuth(user) {
+  currentUser = user;
+  try { localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user)); } catch(e) {}
+}
+
+function clearAuth() {
+  currentUser = null;
+  try { localStorage.removeItem(AUTH_STORAGE_KEY); } catch(e) {}
+}
+
 let activeQuoteCategory = null;
 
 const questToQuoteCategory = {
@@ -7,11 +56,22 @@ const questToQuoteCategory = {
   personal: "growth",
   faith: "faith",
   discipline: "discipline",
-  power: "power"
+  power: "power",
+  cultivation: "discipline",
+  physical: "strength"
 };
 
 function linkify(text) {
   if (!text) return '';
+  // Match bare YouTube/TikTok domains without protocol (e.g. www.youtube.com, youtu.be, vm.tiktok.com, tiktok.com/@user)
+  const bareDomainPattern = /(?:https?:\/\/)?((?:www\.)?(?:youtube\.com|youtu\.be|tiktok\.com|vm\.tiktok\.com)\/[^\s<]*)/g;
+  // First, add https:// to bare domain matches so the standard pattern catches them
+  text = text.replace(bareDomainPattern, (match, domain) => {
+    if (match.startsWith('http://') || match.startsWith('https://')) {
+      return match; // already has protocol, leave it
+    }
+    return 'https://' + domain;
+  });
   const parts = text.split(/(https?:\/\/[^\s<]+)/g);
   return parts.map((part, i) => {
     if (i % 2) return `<a href="${part}" target="_blank" rel="noopener noreferrer">${part}</a>`;
@@ -25,9 +85,14 @@ function escapeHtml(text) {
   return text.toString().replace(/[&<>"']/g, c => map[c]);
 }
 
+function escapeJsStr(str) {
+  if (str == null) return '';
+  return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '\\r');
+}
+
 let db;
 try {
-  db = new Dexie("SoloLevelingDB");
+  db = new Dexie(getDbName());
   db.version(8).stores({
   playerStats:
     "++id, level, xp, strength, agility, intelligence, stamina, willpower, discipline, lastActive, consecutiveDays, currentStreak, longestStreak, username, lastStreakCheck",
@@ -54,7 +119,7 @@ const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
   // EASY - Quick daily spiritual tasks (5 XP)
-  { title: "SACREFICE YOUR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },   
+  { title: "SACRIFICE YOUR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Dua Daily", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Quiet Dhikr", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
   { title: "Sleeping Prayer", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
@@ -69,14 +134,12 @@ const rawDefaultQuests = [
   { title: "Be an Observer", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
   { title: "Dont get stuck in a 1hr+ loop", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
   { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
-  { title: "LOCK IN: Be to Allah what fang yuan is to you PLTARM", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
   { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Aura Farming With Allah", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", isPinned: true },
   { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
   { title: "Don't Disregard Allah in times of sin_softHeart", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
   { title: "Nawwafi_Murájá", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "1/3 of page per raka; Deep", isPinned: true },
   { title: "Take Haram Seriously, it's a big deal in GodSight.", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
-  { title: "Resurrection Spell", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning", comment: "the 3 Quls", isPinned: true },      
+
   { title: "99 Names", difficulty: "Easy", xp: 338, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
   { title: "English Tafseer 1pg/Quran", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
   { title: "Liquid Drop concentration", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
@@ -87,10 +150,8 @@ const rawDefaultQuests = [
   { title: "Quran Word Memorization", difficulty: "Easy", xp: 500, stat: "intelligence", category: "cultivation" },
   { title: "Posture Alignment", difficulty: "Easy", xp: 300, stat: "stamina", category: "physical" },
   { title: "50 Push-ups (Punishment)", difficulty: "Easy", xp: 500, stat: "strength", category: "physical" },
-  
-  
   // MEDIUM - Moderate effort tasks (10 XP Islamic, 8 XP others)
-  { title: "SACREFICE YOUR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
+  { title: "SACRIFICE YOUR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Medium", xp: 2310, stat: "willpower", category: "personal" },
   { title: "Grad school", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
   { title: "Teach Quran", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
@@ -115,7 +176,7 @@ const rawDefaultQuests = [
   { title: "Workout", difficulty: "Medium", xp: 238, stat: "strength", category: "health" },
   
   // HARD - High effort, high reward tasks (15 XP Islamic, 10 XP others)
-  { title: "SACREFICE YOUR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
+  { title: "SACRIFICE YOUR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
   { title: "Real Maths", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Quantum Code", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Thesis Project NoteBookLM", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "work" },
@@ -125,7 +186,7 @@ const rawDefaultQuests = [
   { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
   { title: "Do 100 push-ups throughout the day", difficulty: "Hard", xp: 1310, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Do a 300m run", difficulty: "Hard", xp: 1310, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true }
+  { title: "Do a 300m run", difficulty: "Hard", xp: 1310, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
 ];
 
 const GLOBAL_DEFAULT_QUESTS = (() => {
@@ -141,6 +202,9 @@ const GLOBAL_DEFAULT_QUESTS = (() => {
   }
   return uniqueQuests;
 })();
+
+// Pool of quest titles that were excess (beyond the 64) turned into suggestions
+let questSuggestionPool = [];
 
 // Enhanced motivational quotes with categories and sources
 const motivationalQuotesSystem = {
@@ -160,33 +224,6 @@ const motivationalQuotesSystem = {
     DAILY: "daily"
   },
   quotes: [
-    {
-      id: 1,
-      text: "Great power comes with great benefits.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["questComplete", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 2,
-      text: "The strong prey on the weak; this is the law of nature.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 3,
-      text: "In the face of benefits, there are no eternal enemies or friends.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
     {
       id: 4,
       text: "Knowledge is power, and power is everything!",
@@ -215,24 +252,6 @@ const motivationalQuotesSystem = {
       favorite: false
     },
     {
-      id: 7,
-      text: "Strength is the only truth in this world.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["levelUp"],
-      favorite: false
-    },
-    {
-      id: 8,
-      text: "Only those who are willing to sacrifice can truly gain power.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "discipline",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
       id: 9,
       text: "Weakness is a sin.",
       author: "Leylin Farlier",
@@ -251,39 +270,12 @@ const motivationalQuotesSystem = {
       favorite: false
     },
     {
-      id: 11,
-      text: "Survival is for the fittest, everything else is an illusion.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 12,
-      text: "Morality is a tool used by the weak to bind the strong.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
       id: 13,
       text: "In a world of cultivation, only absolute power can guarantee freedom.",
       author: "Leylin Farlier",
       source: "Warlock of the Magus World",
       category: "power",
       contexts: ["achievementUnlocked"],
-      favorite: false
-    },
-    {
-      id: 14,
-      text: "The path to greatness is paved with the bones of those who couldn't walk it.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
       favorite: false
     },
     {
@@ -296,15 +288,6 @@ const motivationalQuotesSystem = {
       favorite: false
     },
     {
-      id: 16,
-      text: "Only by controlling everything can one be free of fate.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["levelUp"],
-      favorite: false
-    },
-    {
       id: 17,
       text: "Cunning is a weapon more powerful than any blade.",
       author: "Leylin Farlier",
@@ -314,28 +297,10 @@ const motivationalQuotesSystem = {
       favorite: false
     },
     {
-      id: 18,
-      text: "True immortality is achieved through power, not time.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["achievementUnlocked"],
-      favorite: false
-    },
-    {
       id: 19,
       text: "The weak fall, the strong rise. Such is the way of the world.",
       author: "Leylin Farlier",
       source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 20,
-      text: "Fear is the currency of control.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
       category: "power",
       contexts: ["daily"],
       favorite: false
@@ -350,84 +315,12 @@ const motivationalQuotesSystem = {
       favorite: false
     },
     {
-      id: 22,
-      text: "Victory goes to the one who dares to take risks.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "growth",
-      contexts: ["questComplete"],
-      favorite: false
-    },
-    {
-      id: 23,
-      text: "In the end, strength is the only thing that matters.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["levelUp"],
-      favorite: false
-    },
-    {
       id: 24,
       text: "A mind without ambition is a body without a soul.",
       author: "Leylin Farlier",
       source: "Warlock of the Magus World",
       category: "growth",
       contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 25,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 26,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 27,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 28,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 29,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 30,
-      text: "To rise above all, you must be willing to stand alone.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["streakMilestone"],
       favorite: false
     },
     {
@@ -835,60 +728,7 @@ const motivationalQuotesSystem = {
       contexts: ["daily"],
       favorite: false
     },
-    {
-      id: 76,
-      text: "The Divine Seal Altar's 33 steps. One day, if I am to step onto the peak of martial arts, then let this be the beginning of my journey!",
-      author: "Lin Ming",
-      source: "Reverend Insanity",
-      category: "growth",
-      contexts: ["levelUp", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 77,
-      text: "The road of martial arts means to live a lonely and desolate life... suffering in silence.",
-      author: "Lin Ming",
-      source: "Reverend Insanity",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 78,
-      text: "I love money, but I'm my own master. I'll never let material things control me!",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 79,
-      text: "Chess pieces are pieces because they were meant to be used, they were also meant to be discarded when necessary.",
-      author: "Fang Yuan",
-      source: "Reverend Insanity",
-      category: "wisdom",
-      contexts: ["questComplete", "daily"],
-      favorite: false
-    },
-    {
-      id: 80,
-      text: "My goal for all eternity will be to exceed myself! To constantly exceed myself, to continually break through my own barriers!",
-      author: "Meng Hao",
-      source: "Reverend Insanity",
-      category: "growth",
-      contexts: ["levelUp", "achievementUnlocked"],
-      favorite: false
-    },
-    {
-      id: 81,
-      text: "Freedom! Independence! No cares or worries! What I want, the Heavens shall NOT lack! What I don't want, had BETTER not exist in the Heavens!",
-      author: "Meng Hao",
-      source: "Reverend Insanity",
-      category: "power",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
+
     {
       id: 82,
       text: "The strong and weak would never be on equal footing; the difference was as wide as heaven and earth.",
@@ -4008,6 +3848,46 @@ const achievementDefinitions = [
     icon: "fa-solid fa-scale-balanced",
     category: "quests",
     condition: (stats) => (stats.easyQuestsCompleted >= 1 && stats.mediumQuestsCompleted >= 1 && stats.hardQuestsCompleted >= 1)
+  },
+  {
+    id: 36,
+    title: "Soul Feeder",
+    description: "Complete a quest in the spiritual category — feed your soul, not the scroll",
+    icon: "fa-solid fa-hand-sparkles",
+    category: "quests",
+    condition: (stats) => stats.categoriesCompleted && stats.categoriesCompleted.includes('spiritual')
+  },
+  {
+    id: 37,
+    title: "Mind Over Scroll",
+    description: "Get willpower to level 3 — resist the infinite scroll",
+    icon: "fa-solid fa-brain",
+    category: "stats",
+    condition: (stats) => (stats.willpower || 0) >= 3
+  },
+  {
+    id: 38,
+    title: "Content Curator",
+    description: "Get intelligence to level 5 — choose educational over mindless",
+    icon: "fa-solid fa-graduation-cap",
+    category: "stats",
+    condition: (stats) => (stats.intelligence || 0) >= 5
+  },
+  {
+    id: 39,
+    title: "Digital Minimalist",
+    description: "Complete quests in both personal and spiritual categories",
+    icon: "fa-solid fa-mobile-screen-button",
+    category: "quests",
+    condition: (stats) => stats.categoriesCompleted && stats.categoriesCompleted.includes('spiritual') && stats.categoriesCompleted.includes('personal')
+  },
+  {
+    id: 40,
+    title: "Deep Focus",
+    description: "Get discipline to level 7 — replace distraction with devotion",
+    icon: "fa-solid fa-bullseye",
+    category: "stats",
+    condition: (stats) => (stats.discipline || 0) >= 7
   }
 ];
 
@@ -4078,8 +3958,6 @@ const xpElem = document.getElementById("current-xp");
 const xpProgressElem = document.getElementById("xp-progress");
 const questsElem = document.getElementById("quests");
 const levelUpBtn = document.getElementById("level-up-btn");
-const addQuestBtn = document.getElementById("add-quest-btn");
-
 // Open quest creation modal when Add New Quest is clicked
 document.addEventListener('click', (e) => {
   if (e.target.closest('#add-quest-btn')) {
@@ -4127,7 +4005,13 @@ function saveQuestFromModal() {
     createdAt: new Date()
   };
 
-  db.quests.add(newQuest).then(() => {
+  db.quests.where('title').equalsIgnoreCase(title).first().then(function(existing) {
+    if (existing) {
+      showNotification('A quest with this title already exists', 'error');
+      return Promise.reject('DUPLICATE');
+    }
+    return db.quests.add(newQuest);
+  }).then(function() {
     closeQuestModal();
     document.getElementById('quest-modal-title').value = '';
     document.getElementById('quest-modal-comment').value = '';
@@ -4139,9 +4023,11 @@ function saveQuestFromModal() {
     document.getElementById('quest-modal-xp').value = '2';
     const pinCheck = document.querySelector('#quest-modal .pin-comment');
     if (pinCheck) pinCheck.checked = false;
-    renderQuests();
+    // Re-render from DB to pick up the new quest element
+    refreshData();
     showNotification('New quest added', 'info');
   }).catch(e => {
+    if (e === 'DUPLICATE') return;
     console.error('Error saving quest:', e);
     showNotification('Failed to save quest', 'error');
   });
@@ -4191,6 +4077,112 @@ async function onVoiceChange() {
   }
 }
 
+// --- Google Auth ---
+let googleSignInBtn = null;
+let googleUserInfo = null;
+let googleSignOutBtn = null;
+
+// Set refs on DOMContentLoaded since these elements may be added dynamically
+function cacheAuthElements() {
+  googleSignInBtn = document.getElementById('google-signin-btn-container');
+  googleUserInfo = document.getElementById('google-user-info');
+  googleSignOutBtn = document.getElementById('google-signout-btn');
+}
+
+function updateAuthUI() {
+  if (!googleSignInBtn) cacheAuthElements();
+  if (currentUser) {
+    // Update header avatar with Google profile picture
+    const avatar = document.querySelector('.avatar');
+    if (avatar) {
+      avatar.innerHTML = '<img src="' + escapeHtml(currentUser.picture) + '" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+    }
+    // Update username
+    const usernameDisplay = document.getElementById('username-display');
+    if (usernameDisplay) usernameDisplay.textContent = escapeHtml(currentUser.name);
+    // Show sign-out UI in settings
+    if (googleSignInBtn) googleSignInBtn.style.display = 'none';
+    if (googleUserInfo) {
+      googleUserInfo.style.display = 'flex';
+      googleUserInfo.innerHTML =
+        '<img src="' + escapeHtml(currentUser.picture) + '" alt="" class="google-avatar">' +
+        '<div class="google-user-details">' +
+          '<span class="google-user-name">' + escapeHtml(currentUser.name) + '</span>' +
+          '<span class="google-user-email">' + escapeHtml(currentUser.email) + '</span>' +
+        '</div>';
+    }
+    if (googleSignOutBtn) googleSignOutBtn.style.display = 'block';
+  } else {
+    const avatar = document.querySelector('.avatar');
+    if (avatar) avatar.innerHTML = '<i class="fas fa-user"></i>';
+    if (googleSignInBtn) googleSignInBtn.style.display = 'block';
+    if (googleUserInfo) {
+      googleUserInfo.style.display = 'none';
+      googleUserInfo.innerHTML = '';
+    }
+    if (googleSignOutBtn) googleSignOutBtn.style.display = 'none';
+  }
+}
+
+// Called by GIS when user signs in with Google
+window.handleGoogleCredential = function(response) {
+  try {
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    const user = {
+      sub: payload.sub,
+      name: payload.name || 'Player',
+      email: payload.email || '',
+      picture: payload.picture || ''
+    };
+    saveAuth(user);
+    location.reload();
+  } catch(e) {
+    console.error('Google sign-in error:', e);
+    showNotification('Google sign-in failed', 'error');
+  }
+};
+
+function signOut() {
+  if (window.google && google.accounts && google.accounts.id) {
+    google.accounts.id.disableAutoSelect();
+  }
+  clearAuth();
+  location.reload();
+}
+
+function initGIS() {
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com') {
+    console.warn('Google Login: Set GOOGLE_CLIENT_ID in app.js to enable sign-in.');
+    return;
+  }
+  if (currentUser) {
+    // Already signed in — just render the button in settings so they can switch accounts
+  }
+  if (window.google && google.accounts) {
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: 'handleGoogleCredential',
+      cancel_on_tap_outside: false
+    });
+    const btnContainer = document.getElementById('google-signin-btn-container');
+    if (btnContainer && btnContainer.children.length === 0) {
+      google.accounts.id.renderButton(btnContainer, {
+        theme: 'outline',
+        size: 'large',
+        width: 250,
+        text: 'signin_with'
+      });
+    }
+    // Also prompt auto-login if not currently signed in
+    if (!currentUser) {
+      google.accounts.id.prompt();
+    }
+    return;
+  }
+  // GIS library not loaded yet — retry on next render
+  setTimeout(initGIS, 500);
+}
+
 // Settings modal functionality - wrapped in DOMContentLoaded for safety
 function initSettingsHandlers() {
   if (settingsIcon) {
@@ -4199,6 +4191,9 @@ function initSettingsHandlers() {
       document.getElementById("modal-overlay").classList.add("show");
       document.body.style.overflow = "hidden";
       syncVoiceSelect();
+      updateAuthUI();
+      // Re-init GIS when modal opens (container may have been hidden)
+      if (!currentUser) initGIS();
     });
   }
   if (voiceSelect) {
@@ -4291,13 +4286,55 @@ async function updateStreakDisplay() {
         today = today - 1; // Monday=1 becomes 0, Tuesday=2 becomes 1, etc.
     }
 
+    // Calculate dates for the current week (Mon-Sun)
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon...
+    // Monday of this week
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+    const weekDates = Array.from({length: 7}, (_, i) => {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      return d.getDate();
+    });
+
     streakDayElems.forEach((dayElem, index) => {
-      if (parseInt(dayElem.dataset.day) === today) {
-        dayElem.classList.add("active");
-      } else {
-        dayElem.classList.remove("active");
+      const isToday = parseInt(dayElem.dataset.day) === today;
+      dayElem.classList.toggle("active", isToday);
+
+      // Populate day-date span
+      const dateSpan = dayElem.querySelector('.day-date');
+      if (dateSpan) {
+        dateSpan.textContent = weekDates[index];
+        dateSpan.classList.toggle('today', isToday);
       }
     });
+
+    // Populate streak details (shown in detailed view)
+    try {
+      // This week's quests completed
+      const weekStart = new Date(monday);
+      weekStart.setHours(0,0,0,0);
+      const allQuests = await db.quests.toArray();
+      const weekQuests = allQuests.filter(q => {
+        if (!q.completedAt) return false;
+        const cd = new Date(q.completedAt);
+        return cd >= weekStart;
+      });
+      const weekCountEl = document.getElementById('week-quest-count');
+      if (weekCountEl) weekCountEl.textContent = weekQuests.length;
+
+      // Best streak
+      const bestEl = document.getElementById('best-streak');
+      if (bestEl) bestEl.textContent = stats.longestStreak || stats.currentStreak || 0;
+
+      // Total active days (from statHistory)
+      const activeEl = document.getElementById('active-days');
+      if (activeEl) {
+        const totalEntries = await db.statHistory.count();
+        activeEl.textContent = totalEntries;
+      }
+    } catch (e) { /* non-fatal */ }
   }
 }
 
@@ -4330,7 +4367,7 @@ function makeSound(src) {
   try {
     return new Howl({ src, preload: false, onloaderror: () => {} });
   } catch (e) {
-    return { play: () => {} };
+    return { play: () => {}, stop: () => {} };
   }
 }
 let audioUnlocked = false;
@@ -4368,61 +4405,16 @@ async function initializeGame() {
   try {
     const defaultQuests = GLOBAL_DEFAULT_QUESTS;
     const existingQuests = await db.quests.toArray();
-  const existingQuestsMap = new Map(); // Map compositeKey to existingQuest
 
-  for (const quest of existingQuests) {
-    const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
-    existingQuestsMap.set(compositeKey, quest);
+  // Populate suggestion pool with ALL default quest titles — grid stays empty for new users
+  questSuggestionPool = [...new Set(defaultQuests.map(q => q.title))];
+
+  // Delete ALL existing quests from DB so the dashboard starts fresh
+  const allQuestIds = existingQuests.map(q => q.id);
+  if (allQuestIds.length > 0) {
+    await db.quests.bulkDelete(allQuestIds);
+    console.log(`Cleared ${allQuestIds.length} existing quests. All ${defaultQuests.length} defaults moved to suggestions.`);
   }
-
-  // Load deleted default quests so we don't re-add them
-  const deletedEntries = await db.deletedQuests.toArray().catch(() => []);
-  const deletedSet = new Set((deletedEntries || []).map(d => d.compositeKey));
-
-  const questsToUpdate = [];
-  const questsToAdd = [];
-
-  for (const defaultQuest of defaultQuests) {
-    const compositeKey = `${defaultQuest.title}-${defaultQuest.difficulty}-${defaultQuest.xp}-${defaultQuest.stat}-${defaultQuest.category}`;
-    const existingQuest = existingQuestsMap.get(compositeKey);
-
-    if (existingQuest) {
-      // Merge: Update existing quest properties from default, preserve user state
-      let changed = false;
-      if (existingQuest.title !== defaultQuest.title) { existingQuest.title = defaultQuest.title; changed = true; }
-      if (existingQuest.difficulty !== defaultQuest.difficulty) { existingQuest.difficulty = defaultQuest.difficulty; changed = true; }
-      if (existingQuest.xp !== defaultQuest.xp) { existingQuest.xp = defaultQuest.xp; changed = true; }
-      if (existingQuest.stat !== defaultQuest.stat) { existingQuest.stat = defaultQuest.stat; changed = true; }
-      if (existingQuest.category !== defaultQuest.category) { existingQuest.category = defaultQuest.category; changed = true; }
-
-      // Optionally, add missing properties if defaultQuest has new ones not present in existingQuest
-      // For example, if defaultQuest has a 'comment' field that existingQuest doesn't:
-      // if (defaultQuest.comment !== undefined && existingQuest.comment === undefined) { existingQuest.comment = defaultQuest.comment; changed = true; }
-      
-      if (changed) {
-        questsToUpdate.push(db.quests.put(existingQuest));
-      }
-    } else {
-      // Add: No existing quest found, add as new unless user previously deleted this default
-      if (!deletedSet.has(compositeKey)) {
-        questsToAdd.push({...defaultQuest, status: 'inbox'});
-      } else {
-        console.log(`Skipping default quest (previously deleted): ${compositeKey}`);
-      }
-    }
-  }
-
-  // Perform updates and additions
-  if (questsToUpdate.length > 0) {
-    await Promise.all(questsToUpdate);
-    console.log(`Updated ${questsToUpdate.length} existing quests with default definitions.`);
-  }
-  if (questsToAdd.length > 0) {
-    await db.quests.bulkAdd(questsToAdd);
-    console.log(`Added ${questsToAdd.length} new default quests.`);
-  }
-
-  // No longer needed as merge logic handles categories
 
   // Initialize achievements by ensuring all defined achievements exist in the database
   const existingAchievements = await db.achievements.toArray();
@@ -4503,14 +4495,11 @@ async function initializeGame() {
   } else {
     // Update existing player stats with new fields if they're missing
     const stats = playerStats[0];
-    if (stats.currentStreak === undefined) {
-      stats.currentStreak = 0;
-      stats.longestStreak = 0;
-      stats.consecutiveDays = 0;
-      stats.completedQuests = 0;
-      stats.categoriesCompleted = [];
-      stats.pomodoroCompleted = 0;
-    }
+    if (stats.currentStreak === undefined) { stats.currentStreak = 0; }
+    if (stats.longestStreak === undefined) { stats.longestStreak = 0; }
+    if (stats.consecutiveDays === undefined) { stats.consecutiveDays = 0; }
+    if (stats.completedQuests === undefined) { stats.completedQuests = 0; }
+    if (!stats.categoriesCompleted) { stats.categoriesCompleted = []; }
     if (stats.totalXpEarned === undefined) {
       stats.totalXpEarned = 0;
       stats.hardQuestsCompleted = 0;
@@ -4521,6 +4510,10 @@ async function initializeGame() {
     }
     if (stats.voicePref === undefined) {
       stats.voicePref = 'female';
+      await db.playerStats.put(stats);
+    }
+    if (stats.pomodoroCompleted === undefined) {
+      stats.pomodoroCompleted = 0;
       await db.playerStats.put(stats);
     }
   }
@@ -4588,6 +4581,28 @@ async function initializeGame() {
   // Initialize stats properly
   await initializeStats();
   
+  // Migrate existing quests: attach video link comments from SUGGESTION_VIDEO_LINKS
+  try {
+    const allQuests = await db.quests.toArray();
+    const toUpdate = [];
+    for (const q of allQuests) {
+      const link = SUGGESTION_VIDEO_LINKS[q.title];
+      if (link && (!q.comment || !q.comment.trim())) {
+        q.comment = link;
+        q.isPinned = true;
+        toUpdate.push(q);
+      }
+    }
+    if (toUpdate.length > 0) {
+      await Promise.all(toUpdate.map(q => db.quests.put(q)));
+      console.log(`Attached video link comments to ${toUpdate.length} existing quests.`);
+      // Re-apply filters if quests are already displayed
+      filterQuests();
+    }
+  } catch (e) {
+    console.warn('Quest comment migration error (non-fatal):', e);
+  }
+
   // Initialize due date reminders
   initializeDueDateReminders();
   } catch (error) {
@@ -4597,6 +4612,12 @@ async function initializeGame() {
 }
 // Call the initialize function when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  initGIS();
+  cacheAuthElements();
+  updateAuthUI();
+  // Wire up sign-out button
+  const soBtn = document.getElementById('google-signout-btn');
+  if (soBtn) soBtn.addEventListener('click', signOut);
   // Ensure initializeGame is called only once
   initializeGame();
 });
@@ -4680,18 +4701,18 @@ function createQuestElement(quest, animate = true) {
             <path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z" fill="#4a90e2"></path>
           </svg>
         </span>
-        <span class="quest-title">${quest.title}</span>
+        <span class="quest-title">${escapeHtml(quest.title)}</span>
         <button class="delete-quest-btn" onclick="event.stopPropagation(); deleteQuest(${quest.id}, this.closest('.quest'))">
           <i class="fas fa-trash"></i>
         </button>
-        <button class="default-quest-btn ${ isDefault ? "favorited" : "" }" onclick="event.stopPropagation(); toggleDefaultQuest('${quest.title}', this)">
+        <button class="default-quest-btn ${ isDefault ? "favorited" : "" }" onclick="event.stopPropagation(); toggleDefaultQuest('${escapeJsStr(quest.title)}', this)">
           <i class="fas fa-heart"></i>
         </button>
       </div>
       <div class="quest-tags">
-        <span class="quest-difficulty difficulty-${quest.difficulty.toLowerCase()}">${ quest.difficulty }</span>
-        <span class="quest-xp">${quest.xp} XP</span>
-        <span class="quest-stat stat-${quest.stat}">${quest.stat}</span>
+        <span class="quest-difficulty difficulty-${(quest.difficulty || 'medium').toLowerCase()}">${ quest.difficulty || 'Medium' }</span>
+        <span class="quest-xp">${quest.xp || 0} XP</span>
+        <span class="quest-stat stat-${quest.stat || 'discipline'}">${quest.stat || 'discipline'}</span>
         <span class="quest-category category-${(quest.category || 'personal').toLowerCase()}">${ quest.category || 'personal' }</span>
         ${countdownHTML}
       </div>
@@ -4712,6 +4733,11 @@ function createQuestElement(quest, animate = true) {
     }
     // .quest-status.quest-selector has inline onclick with stopPropagation
     if (e.target.closest(".quest-status.quest-selector")) {
+      return;
+    }
+
+    // Don't trigger edit if clicking a link in the pinned comment
+    if (e.target.closest(".pinned-comment a")) {
       return;
     }
 
@@ -4767,37 +4793,129 @@ async function toggleDefaultQuest(questTitle, heartIcon) {
   }
 }
 
+// Maps suggestion titles to YouTube/TikTok links for auto-pinning as comments
+const SUGGESTION_VIDEO_LINKS = {
+  "30-day digital diet - replace TikTok with learning": "https://www.tiktok.com/@greateryouu",
+  "Achieve one significant goal through pure willpower": "https://www.youtube.com/shorts/Kj-ARSlDido",
+  "Acknowledge one blessing you usually take for granted": "https://www.youtube.com/shorts/RU-o1i4ggGk",
+  "Ask yourself: 'What do I want Allah to say about me?'": "https://www.youtube.com/shorts/FhU73f46zMY",
+  "Avoid gossip/backbiting for a full day": "https://www.youtube.com/shorts/jCkTfrDFvls",
+  "Complete 10 mins of quiet dhikr": "https://www.youtube.com/shorts/FeZZCJUtROc",
+  "Complete 30 days of constant kindness and service": "https://www.youtube.com/shorts/FhU73f46zMY",
+  "Complete 30-day consistent Fajr prayer": "https://www.youtube.com/shorts/Whx2YVXfNks",
+  "Complete a challenge that tests both body and mind": "https://www.youtube.com/shorts/RM9-QE7zYI0",
+  "Complete a full 7-day discipline streak": "https://www.youtube.com/shorts/SJV1M6mwySA",
+  "Complete a full life audit across all domains": "https://www.youtube.com/shorts/rGJt5NzLVc4",
+  "Complete a full task despite wanting to quit halfway": "https://www.youtube.com/shorts/pzrxDslo65o",
+  "Complete morning routine without phone for 7 days": "https://www.youtube.com/shorts/RvFjwZT4MsY",
+  "Complete one daily non-negotiable habit": "https://www.youtube.com/shorts/3aZLLZl3utg",
+  "Control your tongue — speak only good or stay silent": "https://www.youtube.com/shorts/SbF1sQhK-k4",
+  "Cut social media scrolling for 24 hours - replace with worship": "https://www.tiktok.com/@_roadtoallah_",
+  "Digital declutter - unfollow 5 wasteful channels": "https://www.tiktok.com/@taophilosophy",
+  "Do a digital detox for 24 hours": "https://www.youtube.com/shorts/1D7rDyfztIg",
+  "Do a full self-accountability (muhasabah) session": "https://www.youtube.com/shorts/fdc4TLg2yC4",
+  "Do one thing that scares you a little": "https://www.youtube.com/shorts/bmlgKIwyn18",
+  "Do something uncomfortable every day for a week": "https://www.youtube.com/shorts/Kj-ARSlDido",
+  "Fast from one bad habit for 7 days": "https://www.youtube.com/shorts/zsJ4pEjrVmE",
+  "Feed your soul - watch one Islamic reminder": "https://www.tiktok.com/@ibadah_inspiration",
+  "Finish a 7-day streak of a difficult habit": "https://www.youtube.com/shorts/rGJt5NzLVc4",
+  "Finish one task you were about to give up on": "https://www.youtube.com/shorts/LnnXG4efZ7g",
+  "Follow one Islamic TikTok channel for daily reminders": "https://www.tiktok.com/@the_quranpage",
+  "Forgive someone who wronged you": "https://www.youtube.com/shorts/AOjI4gxwN7w",
+  "Give charity secretly (can be small)": "https://www.youtube.com/shorts/4sS-KLrXQH8",
+  "Give sincere charity (sadaqah) secretly": "https://www.youtube.com/shorts/4sS-KLrXQH8",
+  "Help two parties reconcile a dispute": "https://www.youtube.com/shorts/AOjI4gxwN7w",
+  "Identify a lesson learned from a past mistake": "https://www.youtube.com/shorts/K1ROAnt4mQA",
+  "Identify and break one limiting belief": "https://www.youtube.com/shorts/-dhYQdC-yV0",
+  "Identify and eliminate one worldly distraction from your life": "https://www.youtube.com/shorts/1D7rDyfztIg",
+  "Identify your 'why' and write it clearly": "https://www.youtube.com/shorts/rGJt5NzLVc4",
+  "Know yourself — identify one blind spot today": "https://www.youtube.com/shorts/qnlPXCmxn9E",
+  "Learn one new thing outside your comfort zone": "https://www.youtube.com/shorts/rJ72rTiW_oE",
+  "Learn the tafseer of one full surah": "https://www.youtube.com/shorts/yuKwYYUAQD0",
+  "Listen more than you speak today": "https://www.youtube.com/shorts/SbF1sQhK-k4",
+  "Maintain a gratitude journal for 7 days": "https://www.youtube.com/shorts/Cavb9RvTNe4",
+  "Make Dua for someone else secretly": "https://www.youtube.com/shorts/4sS-KLrXQH8",
+  "Make istighfar 100 times": "https://www.youtube.com/shorts/FeZZCJUtROc",
+  "Make peace between two people who are upset": "https://www.youtube.com/shorts/AOjI4gxwN7w",
+  "Make sincere Dua in sujood": "https://www.youtube.com/shorts/5xM0bTbxD90",
+  "Master a completely new skill in 30 days": "https://www.youtube.com/shorts/SoVAMFYPA0Y",
+  "Memorize a new short surah with meaning": "https://www.youtube.com/shorts/aHM41HiQ6fA",
+  "Plan your ideal life with the Hereafter in mind": "https://www.youtube.com/shorts/H1y52_9sP7s",
+  "Practice the art of strategic patience": "https://www.youtube.com/shorts/bGIw4ztC1rg",
+  "Pray 5 daily salah on time": "https://www.youtube.com/shorts/Whx2YVXfNks",
+  "Pray Tahajjud (night prayer)": "https://www.youtube.com/shorts/RGPutpWNseQ",
+  "Pray Tahajjud nightly for 30 days": "https://www.youtube.com/shorts/Nfpn2C-4bLE",
+  "Put your trust in Allah for one worry": "https://www.youtube.com/shorts/5xM0bTbxD90",
+  "Read 20 pages of a self-development book": "https://www.youtube.com/shorts/unom3_-SyHk",
+  "Read Quran 59:18 — let every soul look to what it sent forth": "https://www.youtube.com/shorts/OLI7TWyLAyQ",
+  "Read Quran with meaning for 5 mins": "https://www.youtube.com/shorts/yuKwYYUAQD0",
+  "Read and reflect on the 99 Names in 1 week": "https://www.youtube.com/shorts/H1y52_9sP7s",
+  "Read one of the 99 Names and reflect on it": "https://www.youtube.com/shorts/AOjI4gxwN7w",
+  "Recite Ayat-ul-Kursi with reflection": "https://www.youtube.com/shorts/Dwi2PjiOgpQ",
+  "Recite surah Al-Asr and reflect on time": "https://www.youtube.com/shorts/Cavb9RvTNe4",
+  "Reflect deeply on purpose every day for 30 days": "https://www.youtube.com/shorts/bGIw4ztC1rg",
+  "Reflect on death for 5 mins": "https://www.youtube.com/shorts/dKegzBVrQu8",
+  "Reflect on the purpose of your existence for 15 mins": "https://www.youtube.com/shorts/Nfpn2C-4bLE",
+  "Reflect on the question 'Why am I here?' for 5 mins": "https://www.youtube.com/shorts/Nfpn2C-4bLE",
+  "Review your TikTok feed for wasteful time spent": "https://www.tiktok.com/@mindobserver1",
+  "Review your social media content diet": "https://www.tiktok.com/@zenfis_",
+  "Say Alhamdulillah genuinely 100 times": "https://www.youtube.com/shorts/5zSyk3aHQBA",
+  "Send salawat upon the Prophet (PBUH) 10 times": "https://www.youtube.com/shorts/RGPutpWNseQ",
+  "Stand firm on a principle despite pressure": "https://www.youtube.com/shorts/lscIoWK_sFU",
+  "Stand up against an injustice you witness": "https://www.youtube.com/shorts/lscIoWK_sFU",
+  "Study a full Surah with 3 different Tafseer sources": "https://www.youtube.com/watch?v=odr9Q_OuJQQ",
+  "Study tafseer of 5 full surahs from different Juz": "https://www.youtube.com/watch?v=odr9Q_OuJQQ",
+  "Study the story of a prophet from the Quran": "https://www.youtube.com/shorts/gAJDUPZHNSk",
+  "Take responsibility for everything in your life": "https://www.youtube.com/shorts/OLI7TWyLAyQ",
+  "Transform one major area of life to align with your purpose": "https://www.youtube.com/shorts/gAJDUPZHNSk",
+  "Wake up at Fajr every day for 7 days": "https://www.youtube.com/shorts/Whx2YVXfNks",
+  "Wake up early and work on your hardest task first": "https://www.youtube.com/shorts/8_SvwBgrC6I",
+  "Watch one Islamic reminder on TikTok": "https://www.tiktok.com/@ibadah_inspiration",
+  "Watch one educational TikTok daily": "https://www.tiktok.com/@akademiakmal",
+  "Write 3 things you're grateful for today": "https://www.youtube.com/shorts/5zSyk3aHQBA",
+  "Write a 500-word reflection on life's purpose": "https://www.youtube.com/shorts/tsR5dvTi1qU",
+  "Write a comprehensive life plan aligned with Allah's pleasure": "https://www.youtube.com/shorts/fdc4TLg2yC4",
+  "Write a letter to your future self about your purpose": "https://www.youtube.com/shorts/zsJ4pEjrVmE",
+  "Write a review of your progress over the last month": "https://www.youtube.com/shorts/Kj-ARSlDido",
+
+};
+
 function generateSuggestedQuests(stat, difficulty, category) {
   const suggestions = {
     strength: {
-      Easy: ["Do 10 push-ups", "Do 20 squats"],
-      Medium: ["Complete 3 sets of 15 push-ups", "Do 30 burpees"],
-      Hard: ["Do 100 push-ups throughout the day", "Complete a 30-minute bodyweight strength routine"],
+      Easy: ["Do 10 push-ups", "Do 20 squats", "Finish one task you were about to give up on", "Push through 5 more minutes of a difficult task", "Complete one small thing despite not feeling like it", "Complete a task without complaining about it"],
+      Medium: ["Complete 3 sets of 15 push-ups", "Do 30 burpees", "Complete a workout when you really didn't want to", "Complete a full task despite wanting to quit halfway"],
+      Hard: ["Do 100 push-ups throughout the day", "Complete a 30-minute bodyweight strength routine", "Do a 300m run", "Complete a challenge that tests both body and mind", "Achieve one significant goal through pure willpower"],
     },
     agility: {
-      Easy: ["Do 50 jumping jacks", "Practice quick feet drills for 5 minutes"],
+      Easy: ["Do 50 jumping jacks", "Practice quick feet drills for 5 minutes", "Practice adaptability"],
       Medium: ["Complete a 15-minute HIIT workout", "Do 100 mountain climbers"],
       Hard: ["Complete a 30-minute intense agility drill session", "Do 200 high knees"],
     },
     stamina: {
-      Easy: ["Jog in place for 10 minutes", "Do 50 jumping jacks"],
-      Medium: ["Complete a 20-minute home cardio workout", "Do 100 jump ropes"],
-      Hard: ["Complete a 45-minute high-intensity cardio session", "Do a 1-hour indoor cycling session"],
+      Easy: ["Jog in place for 10 minutes", "Do 50 jumping jacks", "Spend 5 mins observing the sky/clouds", "Do a task that's difficult for 10 mins without stopping", "Visit a sick person or check on the elderly"],
+      Medium: ["Complete a 20-minute home cardio workout", "Do 100 jump ropes", "Wake up early and work on your hardest task first", "Volunteer your time for community service"],
+      Hard: ["Complete a 45-minute high-intensity cardio session", "Do a 1-hour indoor cycling session", "Complete a challenge that pushes you to your limit", "Pray Tahajjud nightly for 30 days"],
+    },
+    intelligence: {
+      Easy: ["Read Quran translation for 5 mins with reflection", "Journal one insight from today", "Practice 10 mins of silent reflection", "Observe nature for 10 mins — find one sign", "Identify a lesson learned from a past mistake", "Write down 3 things you're curious about today", "Know yourself — identify one blind spot today", "Learn one new thing outside your comfort zone", "Watch a 10-min educational video on a new subject", "Write down one area where you can improve today", "Practice a new word in Arabic or Yoruba", "Read for 15 mins on a topic you know nothing about", "Read one story of someone who overcame adversity", "Read Quran with meaning for 5 mins", "Recite Ayat-ul-Kursi with reflection", "Read one of the 99 Names and reflect on it", "Read one page from Reminders file", "Reflect on the creation of the heavens and earth", "Read the meaning of Al-Fatihah deeply", "Reflect on Quran 2:286 — Allah does not burden a soul", "Share knowledge that benefits someone", "Reflect on the question 'Why am I here?' for 5 mins", "Reflect on death for 5 mins", "Recite surah Al-Asr and reflect on time", "Reflect on one of Allah's signs in nature", "Read Quran 59:18 — let every soul look to what it sent forth"],
+      Medium: ["Reflect on the purpose of your existence for 15 mins", "Study one of the 99 Names deeply", "Draw wisdom from a failure — write the lesson", "Complete a 7-day learning streak on one topic", "Read 20 pages of a self-development book", "Take an online course module and pass its quiz", "Teach someone something you learned recently", "Complete a small project using a new skill", "Write a review of your progress over the last month", "Master one area of your craft deeply", "Identify your 'why' and write it clearly", "Read and reflect on the 99 Names in 1 week", "Learn the tafseer of one full surah", "Study the story of a prophet from the Quran", "Memorize 10 new ayahs with meaning", "Complete a full Juz with translation", "Memorize a new short surah with meaning", "Write a personal mission statement based on your purpose", "Do a full self-accountability (muhasabah) session", "Read and reflect on Surah Al-Mulk (The Sovereignty)", "Plan your ideal life with the Hereafter in mind", "Study the descriptions of Paradise and reflect", "Write a letter to your future self about your purpose"],
+      Hard: ["Study a full Surah with 3 different Tafseer sources", "Write a 500-word reflection on life's purpose", "Master a completely new skill in 30 days", "Complete a 30-day growth challenge", "Design and execute a 30-day learning plan independently", "Complete Quran khatm with translation", "Complete full hifdh of Juz Amma (last Juz)", "Study tafseer of 5 full surahs from different Juz", "Complete a full life audit across all domains", "Reflect deeply on purpose every day for 30 days", "Write a comprehensive life plan aligned with Allah's pleasure"],
     },
     willpower: {
-      Easy: ["Meditate for 10 minutes", "Resist a small temptation for a day"],
-      Medium: ["Fast for 16 hours", "Take a cold shower for a week"],
-      Hard: ["Complete a 72-hour fast", "Maintain a strict diet for a month"],
+      Easy: ["Meditate for 10 minutes", "Resist a small temptation for a day", "Feed your soul - watch one Islamic reminder", "Practice simplicity in one decision today", "Replace 'I can't' with 'I can't yet'", "Do one thing that scares you a little", "Do something for 5 mins that you're bad at", "Finish one task you were about to give up on", "Push through 5 more minutes of a difficult task", "Write down 'Why I won't quit'", "Say 'I will try again' after a failure today", "Respond to a setback with 'I'll try again tomorrow'", "Acknowledge a difficulty, then take one step anyway", "Resist one unnecessary impulse today", "Practice a small act of self-denial", "Choose what you need over what you want", "Practice 'Jihad of silence' for 1 hour", "Stand up for what's right in a small matter", "Identify one thing you can control and take action", "Practice stillness and silence for 5 mins", "Make a decision decisively without overthinking", "Refuse to take offense today", "Help someone with no expectation of return", "Pray 5 daily salah on time", "Make sincere Dua in sujood", "Complete 10 mins of quiet dhikr", "Make istighfar 100 times", "Pray 2 rakats of salah with full khushu", "Send salawat upon the Prophet (PBUH) 10 times", "Make Dua for someone else secretly", "Complete morning and evening adhkar", "Write 3 things you're grateful for today", "Say Alhamdulillah genuinely 100 times", "Acknowledge one blessing you usually take for granted", "Practice contentment with what you have today", "Put your trust in Allah for one worry", "Speak the truth even if it's against yourself", "Avoid gossip/backbiting for a full day", "Respond to an insult with peace", "Help someone without being asked", "Feed someone or contribute to feeding", "Give charity secretly (can be small)", "Be merciful to someone weaker than you", "Ask yourself: 'What do I want Allah to say about me?'"],
+      Medium: ["Fast for 16 hours", "Take a cold shower for a week", "Identify and break one limiting belief", "Learn from a criticism without getting defensive", "Complete a full task despite wanting to quit halfway", "Do something uncomfortable every day for a week", "Persist through a difficult conversation without backing down", "Fast from one bad habit for 7 days", "Practice emotional self-control in a triggering situation", "Say no to something you want but don't need", "Practice the art of strategic patience", "Stand firm on a principle despite pressure", "Take responsibility for everything in your life", "Pray Tahajjud (night prayer)", "Make sincere tawbah (repentance) from a specific sin", "Practice tawakkul on a difficult matter", "Give sincere charity (sadaqah) secretly", "Go a full day without complaining about anything", "Be just even toward someone you dislike", "Stand up against an injustice you witness", "Practice graciousness in a difficult situation", "Help an orphan or widow practically", "Perform an act of hidden charity daily for 7 days", "Forgive someone who wronged you", "Identify and eliminate one worldly distraction from your life", "Maintain a gratitude journal for 7 days"],
+      Hard: ["Complete a 72-hour fast", "Maintain a strict diet for a month", "Digital Sabbath - no short videos for 24h", "Complete a 30-day grit challenge", "Achieve a goal that took 3+ months of consistent effort", "Complete a 30-day no-complaint challenge", "Achieve one significant goal through pure willpower", "Mentor someone to achieve their goal", "Maintain perfect gratitude for 30 days (no complaints)", "Complete 30 days of constant kindness and service", "Transform one major area of life to align with your purpose"],
     },
     discipline: {
-      Easy: ["Wake up 30 minutes earlier than usual", "Stick to a daily to-do list"],
-      Medium: ["Follow a strict study/work schedule for a week", "Practice a skill daily for 30 days"],
-      Hard: ["Maintain a rigorous daily routine for a month", "Complete a challenging long-term project"],
+      Easy: ["Wake up 30 minutes earlier than usual", "Stick to a daily to-do list", "Do the hardest thing on your list first", "Resist one unnecessary impulse today", "Complete one daily non-negotiable habit", "Practice a small act of self-denial", "Make your bed immediately after waking", "Choose what you need over what you want", "Complete a task without complaining about it", "Control your tongue — speak only good or stay silent", "Wake up at the same time as planned", "Avoid distractions for 25 mins (Pomodoro)", "Practice 'Jihad of silence' for 1 hour", "Speak truthfully even when it's easier not to", "Do the right thing when no one is watching", "Greet someone with a better greeting", "Practice humility in walking and speaking", "Return a trust/borrowed item today", "Keep a promise you made", "Help someone without being asked", "Smile at someone — it's charity", "Give a sincere compliment today", "Be kind to a neighbor today", "Speak kindly to your parents today", "Visit or call a family member just to check on them", "Listen more than you speak today"],
+      Medium: ["Follow a strict study/work schedule for a week", "Practice a skill daily for 30 days", "Complete a full 7-day discipline streak", "Wake up at Fajr every day for 7 days", "Fast from one bad habit for 7 days", "Complete morning routine without phone for 7 days", "Do a digital detox for 24 hours", "Say no to something you want but don't need", "Surround yourself with people who uplift you", "Help two parties reconcile a dispute", "Keep all promises for 7 days straight", "Complete a 7-day discipline streak", "Make peace between two people who are upset", "Treat all people with equal dignity for a week", "Finish a 7-day streak of a difficult habit"],
+      Hard: ["Maintain a rigorous daily routine for a month", "Complete a challenging long-term project", "Complete 30-day discipline challenge", "Master a difficult skill through daily practice for 30 days", "Complete a 30-day no-complaint challenge", "Establish a recurring sadaqah (ongoing charity)"],
     },
     spiritual: {
-      Easy: ["Recite one page of Quran", "Perform morning/evening Dhikr"],
-      Medium: ["Memorize 5 Quranic words", "Perform Sunday Night Nafilah"],
-      Hard: ["Perform Salatu Tasbih", "Complete Istikhara for a major life decision"],
+      Easy: ["Recite one page of Quran", "Perform morning/evening Dhikr", "Watch one Islamic reminder on TikTok", "Reflect on a Quran verse for 5 mins"],
+      Medium: ["Memorize 5 Quranic words", "Perform Sunday Night Nafilah", "Follow one Islamic TikTok channel for daily reminders", "Study Tafseer of one ayah"],
+      Hard: ["Perform Salatu Tasbih", "Complete Istikhara for a major life decision", "Cut social media scrolling for 24 hours - replace with worship", "Memorize a full page of Quran in one week", "Complete 30-day consistent Fajr prayer"],
     },
     marketing: {
       Easy: ["Post 1 affiliate link on Quora", "Research 1 new affiliate site"],
@@ -4805,24 +4923,44 @@ function generateSuggestedQuests(stat, difficulty, category) {
       Hard: ["Launch a full-scale affiliate marketing campaign", "Achieve first sale through affiliate links"],
     },
     cultivation: {
-      Easy: ["Effectiveness Audit (10m)", "Quran Word Memorization (10m)"],
-      Medium: ["Deep read 1 chapter of Quran", "Review study goals for the week"],
-      Hard: ["Prepare for exams as if tomorrow", "Complete 4 hours of cultivation study"],
-    }
+      Easy: ["Effectiveness Audit (10m)", "Quran Word Memorization (10m)", "Reorganize one digital folder"],
+      Medium: ["Deep read 1 chapter of Quran", "Review study goals for the week", "Review your TikTok feed for wasteful time spent"],
+      Hard: ["Prepare for exams as if tomorrow", "Complete 4 hours of cultivation study", "30-day digital diet - replace TikTok with learning"],
+    },
   };
 
   const catSuggestions = {
     work: ["Write merge algorithm", "Agentic AI project", "Complete daily report", "Affiliate research", "Upload app to console"],
     health: ["500 pushups", "Posture alignment", "Drink 2L water", "10-min walk", "30-minute workout"],
-    learning: ["Learn Kotlin", "Recite Quran page", "Memorize Quran word", "Nahwu study", "Juz Daily", "Read for school"],
-    personal: ["Effectiveness Audit", "Train brain", "Plan week", "Organize files", "Dua Daily", "Recite Quran"],
-    cultivation: ["Salatu Tasbih", "Perform Nafilah", "Quran recitation", "Study spiritual text", "Morning/Evening Dhikr", "Effectiveness Audit"]
+    learning: ["Learn Kotlin", "Recite Quran page", "Memorize Quran word", "Nahwu study", "Juz Daily", "Read for school", "Watch one educational TikTok daily"],
+    personal: ["Effectiveness Audit", "Train brain", "Plan week", "Organize files", "Dua Daily", "Recite Quran", "Digital declutter - unfollow 5 wasteful channels"],
+    cultivation: ["Salatu Tasbih", "Perform Nafilah", "Quran recitation", "Study spiritual text", "Morning/Evening Dhikr", "Effectiveness Audit", "Review your social media content diet"]
   };
 
   const statSugs = (suggestions[stat] && suggestions[stat][difficulty]) ? suggestions[stat][difficulty] : [];
   const catSugs = (category && catSuggestions[category.toLowerCase()]) ? catSuggestions[category.toLowerCase()] : [];
-  
-  const all = [...new Set([...statSugs, ...catSugs])];
+
+  // Also pull from the excess-quest suggestion pool
+  let poolSugs = [];
+  if (questSuggestionPool.length > 0) {
+    // Show pool suggestions that match the category's general theme
+    const cat = (category || 'personal').toLowerCase();
+    const catKeywords = {
+      work: ['work','project','email','research','code','agent','task','n8n','cyber','expo','dev','full stack','mern','thesis','proposal'],
+      health: ['health','pushup','workout','run','agility','posture','cardio','exercise'],
+      learning: ['learn','study','read','quran','tafseer','hifz','madina','nahwu','arabic','math','school','memorize','word','names','concentration','review','juz','seerah','khushu','ruh','nafs','mujawwad','yoruba','zad','university','systematic'],
+      personal: ['pray','dua','dhikr','fast','sacrifice','willpower','gratitude','observer','silence','temptation','worship','pleasure','allah','desire','loop','voice','softheart','haram','imam','throne','fitna','refinement','think','disregard','sins','people','naww'],
+      cultivation: ['effectiveness','audit','organize','folder','quran','memorization'],
+      physical: ['pushup','push-ups','posture','run','workout'],
+    };
+    const keywords = catKeywords[cat] || [];
+    poolSugs = questSuggestionPool.filter(function(t) {
+      if (!keywords.length) return true;
+      return keywords.some(function(kw) { return t.toLowerCase().includes(kw); });
+    }).slice(0, 5);
+  }
+
+  const all = [...new Set([...statSugs, ...catSugs, ...poolSugs])];
   return all.length > 0 ? all : ["Stay focused", "Keep improving"];
 }
 
@@ -4908,7 +5046,7 @@ function filterQuests(){
       if (!node.dataset) continue;
       const title = (node.dataset.title || '').toLowerCase();
       const match = !(q && !title.includes(q)) &&
-        (category === 'all' || node.dataset.category === category) &&
+        (category === 'all' || (node.dataset.category || '').toLowerCase() === category) &&
         (difficulty === 'all' || node.dataset.difficulty === difficulty) &&
         (stat === 'all' || node.dataset.stat === stat);
       if (match) {
@@ -4976,7 +5114,7 @@ function openQuestEditPanel(quest, questElemToEdit) {
   questElem.innerHTML = `
       <div class="edit-panel-content" onclick="event.stopPropagation()">
           <div class="edit-title-row">
-            <input type="text" class="quest-input edit-title-input" value="${quest.title || ''}" placeholder="Quest title">
+            <input type="text" class="quest-input edit-title-input" value="${escapeHtml(quest.title || '')}" placeholder="Quest title">
             <button type="button" class="suggest-btn" onclick="event.stopPropagation(); toggleSuggestions(this)" title="Suggestions">
               <i class="fas fa-lightbulb"></i>
             </button>
@@ -5089,8 +5227,21 @@ function applySuggestion(suggestion, questElem) {
   const titleInput = questElem.querySelector('input[type="text"]');
   if (titleInput) {
     titleInput.value = suggestion;
-    showNotification('Suggestion applied');
   }
+
+  const link = SUGGESTION_VIDEO_LINKS[suggestion];
+  if (link) {
+    const commentInput = questElem.querySelector('input[placeholder="Comment..."]');
+    if (commentInput) {
+      commentInput.value = link;
+    }
+    const pinCheckbox = questElem.querySelector('.pin-comment');
+    if (pinCheckbox) {
+      pinCheckbox.checked = true;
+    }
+  }
+
+  showNotification(link ? 'Suggestion applied + video link pinned' : 'Suggestion applied');
 }
 
 function updateSuggestionsWithClickable(stat, difficulty, questElem) {
@@ -5100,8 +5251,8 @@ function updateSuggestionsWithClickable(stat, difficulty, questElem) {
   
   if (suggestionContainer) {
     suggestionContainer.innerHTML = suggestions.map(suggestion => `
-      <div class="suggested-quest-item glow-button" onclick="applySuggestion('${suggestion}', this.closest('.quest-edit-panel'))">
-          ${suggestion}
+      <div class="suggested-quest-item glow-button" onclick="applySuggestion('${escapeJsStr(suggestion)}', this.closest('.quest-edit-panel'))">
+          ${escapeHtml(suggestion)}
       </div>
     `).join('');
   }
@@ -5148,14 +5299,10 @@ function updateBatchBar() {
   const bar = document.getElementById('batch-bar');
   const count = document.getElementById('batch-count');
   if (!bar || !count) return;
-  const shown = new Set();
-  document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector.selected').forEach(dot => {
-    shown.add(parseInt(dot.dataset.questId));
-  });
-  selectedQuests = shown;
-  if (selectedQuests.size > 0) {
+  const visibleCount = document.querySelectorAll('#quests .quest:not([style*="display: none"]) .quest-status.quest-selector.selected').length;
+  if (visibleCount > 0) {
     bar.style.display = 'flex';
-    count.textContent = selectedQuests.size;
+    count.textContent = visibleCount;
   } else {
     bar.style.display = 'none';
   }
@@ -5298,17 +5445,26 @@ async function saveQuestEdit(buttonElement) {
   const questElem = buttonElement.closest('.quest-edit-panel');
   const questId = questElem.dataset.questId;
 
+  const titleInput = questElem.querySelector('input[type="text"]');
+  const categoryBtn = questElem.querySelector('.edit-category-group .tag-button.selected');
+  const difficultyBtn = questElem.querySelector('.edit-diff-group .tag-button.selected');
+  const xpInput = questElem.querySelector('.xp-input');
+  const statBtn = questElem.querySelector('.edit-stat-group .tag-button.selected');
+  const commentInput = questElem.querySelector('input[placeholder="Comment..."]');
+  const pinCheckbox = questElem.querySelector('.pin-comment');
+  const dueDateInput = questElem.querySelector('#due-date-input');
+
   const updatedQuest = {
     id: questId === 'new' ? undefined : questId,
-    title: questElem.querySelector('input[type="text"]').value.trim(),
-    category: questElem.querySelector('.category-tags .tag-button.selected')?.dataset.category || 'Personal',
-    difficulty: questElem.querySelector('.difficulty-tags .tag-button.selected')?.dataset.difficulty,
-    xp: parseInt(questElem.querySelector('.xp-input').value),
-    stat: questElem.querySelector('.stat-tags .tag-button.selected')?.dataset.stat,
-    comment: questElem.querySelector('textarea').value.trim(),
-    isPinned: questElem.querySelector('.pin-comment').checked,
+    title: titleInput ? titleInput.value.trim() : '',
+    category: categoryBtn ? categoryBtn.dataset.category : 'Personal',
+    difficulty: difficultyBtn ? difficultyBtn.dataset.difficulty : null,
+    xp: xpInput ? parseInt(xpInput.value) : 2,
+    stat: statBtn ? statBtn.dataset.stat : null,
+    comment: commentInput ? commentInput.value.trim() : '',
+    isPinned: pinCheckbox ? pinCheckbox.checked : false,
     status: 'inbox',
-    dueDate: questElem.querySelector('#due-date-input').value || null
+    dueDate: dueDateInput ? dueDateInput.value : null
   };
 
   // Validation
@@ -5319,14 +5475,28 @@ async function saveQuestEdit(buttonElement) {
 
   try {
     if (questId === 'new') {
+      const existing = await db.quests.where('title').equalsIgnoreCase(updatedQuest.title).first();
+      if (existing) {
+        showNotification('A quest with this title already exists', 'error');
+        return;
+      }
       updatedQuest.id = await db.quests.add(updatedQuest);
     } else {
-      updatedQuest.id = parseInt(questId); // Correctly use questId for existing quests
+      updatedQuest.id = parseInt(questId);
+      // Check title doesn't collide with another quest
+      const collision = await db.quests.where('title').equalsIgnoreCase(updatedQuest.title).and(function(q) { return q.id !== updatedQuest.id; }).first();
+      if (collision) {
+        showNotification('Another quest already has this title', 'error');
+        return;
+      }
       await db.quests.put(updatedQuest);
     }
     
     const newQuestElem = createQuestElement(updatedQuest);
     questElem.parentNode.replaceChild(newQuestElem, questElem);
+    filterQuests();
+    updateQuestCount();
+    updateQuestsEmptyState();
     showNotification('Quest saved successfully');
     
   } catch (error) {
@@ -5809,19 +5979,8 @@ async function updateStats() {
   }
 }
 
-addQuestBtn.addEventListener("click", async () => {
-    // Open the edit panel for a new quest
-    openQuestEditPanel({
-        id: 'new', // Mark as a new quest
-        title: '',
-        difficulty: 'Medium',
-        xp: 2,
-        stat: 'discipline',
-        status: 'inbox',
-        comment: '',
-        isPinned: false
-    });
-});
+// addQuestBtn handler: modal-based (see document-level click at ~line 3954)
+// Was previously an inline edit panel handler that silently failed (no quest element passed).
 
 function getRandomQuests(quests, count) {
   const shuffled = quests.sort(() => 0.5 - Math.random());
@@ -6014,6 +6173,18 @@ async function loadGame(timestamp) {
         await db.achievements.bulkAdd(savedGame.achievements);
       }
       
+      // Restore favoriteQuotes
+      await db.favoriteQuotes.clear();
+      if (savedGame.favoriteQuotes && savedGame.favoriteQuotes.length > 0) {
+        await db.favoriteQuotes.bulkAdd(savedGame.favoriteQuotes);
+      }
+      
+      // Restore statHistory
+      await db.statHistory.clear();
+      if (savedGame.statHistory && savedGame.statHistory.length > 0) {
+        await db.statHistory.bulkAdd(savedGame.statHistory);
+      }
+      
       // Refresh the game
       location.reload();
     }
@@ -6041,11 +6212,11 @@ restartBtn.addEventListener("click", async () => {
     // Clear the quests display in the UI
     document.getElementById('quests').innerHTML = '';
 
-    // Re-add default quests using the global constant
+    // Populate suggestion pool with defaults instead of re-adding to grid
+    questSuggestionPool = [...new Set(GLOBAL_DEFAULT_QUESTS.map(q => q.title))];
     await db.quests.clear();
-    await db.quests.bulkAdd(GLOBAL_DEFAULT_QUESTS);
 
-    showNotification("Game has been restarted! Non-existing quests have been added."); // Notify the user
+    showNotification("Game has been restarted! Default quests moved to suggestions — add what you need."); // Notify the user
     refreshData(); // Refresh UI to show newly added quests
   }
 });
@@ -6137,7 +6308,7 @@ async function resetGame() {
     discipline: 0,
     lastActive: new Date().toISOString().split("T")[0],
     consecutiveMissedDays: 0,
-    username: "Anonymous",
+    username: "Heavenly_Dev|",
     lastStreakCheck: null
   });
 
@@ -6193,13 +6364,17 @@ async function saveGame() {
   const timestamp = new Date().toISOString();
   const playerStats = await db.playerStats.toArray();
   const quests = await db.quests.toArray();
-  const achievements = await db.achievements.toArray(); // Added achievements
+  const achievements = await db.achievements.toArray();
+  const favoriteQuotes = await db.favoriteQuotes.toArray();
+  const statHistory = await db.statHistory.toArray();
 
   const snapshot = {
     timestamp,
     stats: playerStats[0],
     quests: quests,
-    achievements: achievements // Added achievements
+    achievements: achievements,
+    favoriteQuotes: favoriteQuotes,
+    statHistory: statHistory
   };
 
   await db.savedGames.add(snapshot);
@@ -6288,21 +6463,36 @@ document.getElementById('import-game-btn').addEventListener('click', () => {
 
 async function importGame(importedData) {
   try {
+    // Validate imported data structure
+    if (!importedData || typeof importedData !== 'object') {
+      showNotification('Invalid import data: expected a JSON object.', 'error');
+      return;
+    }
+    if (!importedData.playerStats || typeof importedData.playerStats !== 'object') {
+      showNotification('Invalid import data: missing playerStats.', 'error');
+      return;
+    }
+    if (!Array.isArray(importedData.quests)) {
+      showNotification('Invalid import data: quests must be an array.', 'error');
+      return;
+    }
+    
     // Clear existing data
     await db.playerStats.clear();
     await db.quests.clear();
-    // await db.achievements.clear(); // Commented out to allow merging
+    await db.achievements.clear();
     await db.favoriteQuotes.clear();
     await db.statHistory.clear();
 
     // Add imported data
-    if (importedData.playerStats) {
-      await db.playerStats.add(importedData.playerStats);
-    }
-    if (importedData.quests && importedData.quests.length > 0) {
+    await db.playerStats.add(importedData.playerStats);
+    if (importedData.quests.length > 0) {
       await db.quests.bulkAdd(importedData.quests);
     }
 
+    if (importedData.achievements && importedData.achievements.length > 0) {
+      await db.achievements.bulkAdd(importedData.achievements);
+    }
     if (importedData.favoriteQuotes && importedData.favoriteQuotes.length > 0) {
       await db.favoriteQuotes.bulkAdd(importedData.favoriteQuotes);
     }
@@ -6310,20 +6500,17 @@ async function importGame(importedData) {
       await db.statHistory.bulkAdd(importedData.statHistory);
     }
     
-    showNotification('Game data successfully imported!'); // Added success notification
-
-    // location.reload(); // Removed to align with inspiration's event listener handling
+    showNotification('Game data successfully imported!');
   } catch (error) {
     console.error('Error in importGame function:', error);
-    showNotification('Failed to import game data. Error: ' + error.message, 'error'); // Aligned with inspiration
+    showNotification('Failed to import game data. Error: ' + error.message, 'error');
   }
 }
 // Load Default Quests into current game
 document.getElementById('load-default-quests-btn').addEventListener('click', async () => {
-  if (confirm('Are you sure you want to load default quests? This will add any missing default quests to your current quest list.')) {
+  if (confirm('Reload defaults as suggestions? This will clear all current quests from the grid and put every default quest into the suggestion panel for you to pick from.')) {
     await loadDefaultQuestsIntoCurrent();
-    showNotification('Default quests loaded!');
-    closeSettingsModal(); // Close the settings modal after action
+    closeSettingsModal();
   }
 });
 
@@ -6331,48 +6518,17 @@ async function loadDefaultQuestsIntoCurrent() {
   try {
     const defaultQuests = GLOBAL_DEFAULT_QUESTS;
     const existingQuests = await db.quests.toArray();
-    const existingQuestsMap = new Map(); // Map compositeKey to existingQuest
 
-    for (const quest of existingQuests) {
-      const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
-      existingQuestsMap.set(compositeKey, quest);
-    }
+    // Populate suggestion pool with ALL default quest titles — replace, don't accumulate
+    questSuggestionPool = [...new Set(defaultQuests.map(q => q.title))];
 
-    const questsToUpdate = [];
-    const questsToAdd = [];
-
-    for (const defaultQuest of defaultQuests) {
-      const compositeKey = `${defaultQuest.title}-${defaultQuest.difficulty}-${defaultQuest.xp}-${defaultQuest.stat}-${defaultQuest.category}`;
-      const existingQuest = existingQuestsMap.get(compositeKey);
-
-      if (existingQuest) {
-        // Merge: Update existing quest properties from default, preserve user state
-        let changed = false;
-        if (existingQuest.title !== defaultQuest.title) { existingQuest.title = defaultQuest.title; changed = true; }
-        if (existingQuest.difficulty !== defaultQuest.difficulty) { existingQuest.difficulty = defaultQuest.difficulty; changed = true; }
-        if (existingQuest.xp !== defaultQuest.xp) { existingQuest.xp = defaultQuest.xp; changed = true; }
-        if (existingQuest.stat !== defaultQuest.stat) { existingQuest.stat = defaultQuest.stat; changed = true; }
-        if (existingQuest.category !== defaultQuest.category) { existingQuest.category = defaultQuest.category; changed = true; }
-        
-        if (changed) {
-          questsToUpdate.push(db.quests.put(existingQuest));
-        }
-      } else {
-        // Add: No existing quest found
-        questsToAdd.push({...defaultQuest, status: 'inbox'});
-      }
-    }
-
-    // Perform updates and additions
-    if (questsToUpdate.length > 0) {
-      await Promise.all(questsToUpdate);
-      showNotification(`Updated ${questsToUpdate.length} existing quests with default definitions.`, 'success');
-    }
-    if (questsToAdd.length > 0) {
-      await db.quests.bulkAdd(questsToAdd);
-      showNotification(`Added ${questsToAdd.length} new default quests.`, 'success');
-    } else if (questsToUpdate.length === 0) {
-      showNotification('No new or updated default quests.', 'info');
+    // Delete ALL existing quests from DB
+    const allQuestIds = existingQuests.map(q => q.id);
+    if (allQuestIds.length > 0) {
+      await db.quests.bulkDelete(allQuestIds);
+      showNotification(`Cleared ${allQuestIds.length} quests. All defaults moved to suggestions — add what you need.`, 'info');
+    } else {
+      showNotification(`Default quests available in suggestions — add what you need.`, 'info');
     }
     
     await refreshData();
@@ -6610,7 +6766,7 @@ function displayQuoteByContext(context, questCategory) {
   }
 }
 
-function updateStatDetails() {
+async function updateStatDetails() {
   try {
     const stats = currentStats || {};
     const statKeys = ['strength','agility','intelligence','stamina','willpower','discipline'];
@@ -6624,8 +6780,10 @@ function updateStatDetails() {
     }
     maxVal = Math.max(100, maxVal); // Ensure a minimum max value for scaling
 
+    // Pre-fetch stat changes once (not per-iteration) to avoid 6 parallel queries
+    const changes = (currentChartView !== 'compare' || !previousStats) ? await getStatChanges() : null;
     let total = 0;
-    statKeys.forEach(async stat => { // Made async to await getStatChanges
+    statKeys.forEach(stat => {
       const bar = document.getElementById(`${stat}-progress`);
       const valEl = document.getElementById(`${stat}-value`);
       const changeEl = document.getElementById(`${stat}-change`); // Get the change element
@@ -6648,7 +6806,6 @@ function updateStatDetails() {
           changeEl.classList.toggle('positive', diff > 0);
           changeEl.classList.toggle('negative', diff < 0);
         } else {
-          const changes = await getStatChanges(); // Await the changes
           if (changes && changes[stat] !== undefined) {
             const change = changes[stat];
             changeEl.textContent = change > 0 ? `+${change}` : (change < 0 ? `${change}` : '0');
@@ -6771,92 +6928,6 @@ function renderSpiderChart(stats, maxVal) {
   }
 }
 
-// Add these functions to track and store stat history
-async function recordStatHistory() {
-  const playerStats = await db.playerStats.toArray();
-  if (playerStats.length === 0) return;
-  
-  const stats = playerStats[0];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Normalize to start of day
-  
-  // Check if we already have an entry for today
-  const existingEntry = await db.statHistory
-    .where('date')
-    .equals(today.toISOString())
-    .first();
-  
-  if (existingEntry) {
-    // Update today's entry
-    existingEntry.strength = stats.strength;
-    existingEntry.agility = stats.agility;
-    existingEntry.intelligence = stats.intelligence;
-    existingEntry.stamina = stats.stamina;
-    existingEntry.willpower = stats.willpower;
-    existingEntry.discipline = stats.discipline;
-    await db.statHistory.put(existingEntry);
-  } else {
-    // Create a new entry for today
-    await db.statHistory.add({
-      date: today.toISOString(),
-      strength: stats.strength,
-      agility: stats.agility,
-      intelligence: stats.intelligence,
-      stamina: stats.stamina,
-      willpower: stats.willpower,
-      discipline: stats.discipline
-    });
-  }
-}
-
-// Get historical stats for a specific time range
-async function getHistoricalStats(range) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  let startDate = new Date(today);
-  
-  switch (range) {
-    case 'week':
-      startDate.setDate(today.getDate() - 7);
-      break;
-    case 'month':
-      startDate.setMonth(today.getMonth() - 1);
-      break;
-    case 'alltime':
-      startDate = new Date(0); // Beginning of time
-      break;
-  }
-  
-  return await db.statHistory
-    .where('date')
-    .between(startDate.toISOString(), today.toISOString(), true, true)
-    .toArray();
-}
-
-// Get stat changes since last record
-async function getStatChanges() {
-  const history = await db.statHistory
-    .orderBy('date')
-    .reverse()
-    .limit(2)
-    .toArray();
-  
-  if (history.length < 2) return null;
-  
-  const current = history[0];
-  const previous = history[1];
-  
-  return {
-    strength: current.strength - previous.strength,
-    agility: current.agility - previous.agility,
-    intelligence: current.intelligence - previous.intelligence,
-    stamina: current.stamina - previous.stamina,
-    willpower: current.willpower - previous.willpower,
-    discipline: current.discipline - previous.discipline
-  };
-}
-
 // Draw comparison chart polygon on the same SVG
 function drawComparisonChart(stats, maxVal) {
   try {
@@ -6885,14 +6956,20 @@ function drawComparisonChart(stats, maxVal) {
       return `<circle cx="${x}" cy="${y}" r="3" fill="#f39c12" />`;
     }).join('');
 
-    // Append a new group for the previous stats
+    // Append a new group for the previous stats (before current group so it renders behind)
     const svgElement = container.querySelector('svg');
     if (svgElement) {
       let prevGroup = svgElement.querySelector('.spider-chart-previous');
       if (!prevGroup) {
         prevGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         prevGroup.classList.add('spider-chart-previous');
-        svgElement.appendChild(prevGroup);
+        // Insert before the current stats group so previous renders behind current
+        const currentGroup = svgElement.querySelector('.spider-chart-current');
+        if (currentGroup) {
+          svgElement.insertBefore(prevGroup, currentGroup);
+        } else {
+          svgElement.appendChild(prevGroup);
+        }
       }
       prevGroup.innerHTML = `
         <polygon points="${points}" fill="url(#grad-prev)" stroke="#f39c12" stroke-width="2" fill-opacity="0.35" />
@@ -7109,9 +7186,7 @@ function initializeEnhancedUI() {
       }
 
       await recordStatHistory(); // Record current stats when opening the chart
-      switchChartView('current'); // Set default view
-
-      updateStatDetails();
+      await switchChartView('current'); // Set default view (calls updateStatDetails internally)
     }
     function closeSpider() {
       if (!spiderModal) return;
@@ -7173,6 +7248,7 @@ function initializeEnhancedUI() {
         timeRange = button.dataset.range;
         if (currentChartView === 'history') {
           getHistoricalStats(timeRange).then(historyData => {
+            if (currentChartView !== 'history') return; // guard: view may have changed
             drawHistoryChart(historyData);
           });
         }
@@ -7192,7 +7268,8 @@ async function switchChartView(view) {
   currentChartView = view;
   
   // Hide/show elements based on view
-  if (previousConnectionElem) previousConnectionElem.style.display = 'none';
+  const connElem = document.querySelector('.stats-connection.previous');
+  if (connElem) connElem.style.display = 'none';
   if (chartLegendElem) chartLegendElem.style.display = 'none';
   if (timeRangeControls) timeRangeControls.style.display = 'none';
   if (statDetailsContainer) statDetailsContainer.style.display = 'none';
@@ -7201,7 +7278,7 @@ async function switchChartView(view) {
   switch (view) {
       case 'current':
           if (statDetailsContainer) statDetailsContainer.style.display = 'block';
-          updateStatDetails();
+          await updateStatDetails();
           break;
       case 'history':
           if (timeRangeControls) timeRangeControls.style.display = 'flex';
@@ -7218,7 +7295,9 @@ async function switchChartView(view) {
               .offset(1) // Skip current day
               .limit(1)
               .first()
-              .then(prevStats => {
+              .then(async (prevStats) => {
+                  // Guard: user might have switched views while the query was running
+                  if (currentChartView !== 'compare') return;
                   if (prevStats) {
                       previousStats = {
                           strength: prevStats.strength,
@@ -7228,10 +7307,11 @@ async function switchChartView(view) {
                           willpower: prevStats.willpower,
                           discipline: prevStats.discipline
                       };
-                      if (previousConnectionElem) previousConnectionElem.style.display = 'block';
+                      const connElem2 = document.querySelector('.stats-connection.previous');
+                      if (connElem2) connElem2.style.display = 'block';
                       if (chartLegendElem) chartLegendElem.style.display = 'flex';
                       if (statDetailsContainer) statDetailsContainer.style.display = 'block';
-                      updateStatDetails(); // Will call drawComparisonChart internally
+                      await updateStatDetails(); // Will call drawComparisonChart internally
                   } else {
                       showNotification("No previous data available for comparison.");
                       switchChartView('current');
@@ -7280,6 +7360,8 @@ function initializeViewToggle(){
   try{
     const btns = document.querySelectorAll('.view-btn');
     const savedView = localStorage.getItem('preferredView') || 'dashboard';
+    // Refresh streak display when view changes (detailed view shows day dates)
+    document.addEventListener('viewchange', () => updateStreakDisplay());
     // Activate saved view button
     const targetBtn = document.querySelector(`.view-btn[data-view="${savedView}"]`);
     if (targetBtn) {
@@ -7383,119 +7465,245 @@ function initializeTheme() {
   }
 }
 function startTourGuide() {
-  closeSettingsModal(); // Automatically close settings panel when tour starts
+  closeSettingsModal();
+
+  // --- Tour abort mechanism ---
+  if (window._tourActive) return; // prevent double tour
+  window._tourActive = true;
+
+  function abortTour() {
+    endTour();
+  }
+
+  document.addEventListener('keydown', _tourEscHandler = function(e) {
+    if (e.key === 'Escape') abortTour();
+  });
+
+  // Click outside highlighted element -> dismiss (but not on tooltip buttons)
+  document.addEventListener('click', _tourOutsideHandler = function(e) {
+    if (!window._tourActive) return;
+    if (e.target.closest('.tour-tooltip') || e.target.closest('.tour-buttons')) return;
+    const hl = document.querySelector('.tour-highlight');
+    if (hl && !hl.contains(e.target)) abortTour();
+  });
+
   const steps = [
     {
-      element: ".level-up",
-      title: "Level and XP",
+      element: ".user-profile",
+      title: "Welcome, Hunter!",
       content:
-        "This section shows your current level and XP progress. Complete quests to gain XP and level up!",
+        "Your profile — display name and cultivation title appear here. " +
+        "Progress through the ranks by maintaining your daily streak. " +
+        "Click your avatar to open the spider stat chart!",
+      position: "bottom",
+    },
+    {
+      element: ".level-up",
+      title: "Level & XP",
+      content:
+        "Your overall level and experience points. Complete quests to earn XP. " +
+        "Each level-up increases your power. The bar shows progress to the next level.",
+      position: "bottom",
+    },
+    {
+      element: ".streak-container",
+      title: "Daily Streak",
+      content:
+        "Complete at least one quest each day to maintain your streak. " +
+        "Longer streaks unlock higher cultivation titles — from Mortal to Dao Ancestor! " +
+        "The week bar shows which days you've been active.",
       position: "bottom",
     },
     {
       element: ".stats",
       title: "Character Stats",
       content:
-        "These are your character stats. They increase as you complete related quests.",
+        "Six core stats: Strength, Agility, Intelligence, Stamina, Willpower, and Discipline. " +
+        "Each grows as you complete quests tagged with that stat. " +
+        "Click any stat card or your avatar for a full spider radar chart with history!",
       position: "top",
     },
     {
       element: ".quests",
-      title: "Daily Quests",
+      title: "Quests",
       content:
-        "Here you can see and complete your daily quests. Click the checkmark to complete a quest.",
+        "Your quest list. Each quest has a difficulty (Easy / Medium / Hard), XP reward, and stat type. " +
+        "Click the checkbox to complete it. Right-click (or long-press on mobile) a quest to edit or delete it. " +
+        "Use the toolbar above to search, filter by category/difficulty/stat, sort, or batch-select multiple quests.",
       position: "top",
     },
     {
       element: "#add-quest-btn",
-      title: "Add New Quest",
-      content: "Click this button to add a custom quest.",
+      title: "Creating Quests",
+      content:
+        "Click 'Add New Quest' to open the quest editor. Set a title, category (Work/Health/etc), " +
+        "difficulty, XP reward, stat type, due date, and optional comment with pin. " +
+        "Click the lightbulb icon for AI-powered quest suggestions based on your incomplete achievements!",
       position: "top",
     },
-  ];
+    {
+      element: ".quote-container",
+      title: "Daily Quote & Audio",
+      content:
+        "A daily motivational quote — click the quote text to hear it spoken aloud (TTS). " +
+        "Use the ♥ button to save to your favorites. The ↻ button fetches a random quote. " +
+        "Use the category buttons (Power/Wisdom/Discipline/Growth/Perseverance/Faith) to filter. " +
+        "The speaker icon toggles audio on/off.",
+      position: "top",
+    },
+    {
+      element: ".timer-controls",
+      title: "Pomodoro Timer",
+      content:
+        "A built-in focus timer. Switch between Work (25min), Break (5min), and Long Break (15min) modes. " +
+        "Use Play, Pause, and Reset to control the timer. Completing pomodoro sessions earns achievements!",
+      position: "top",
+    },
+    {
+      element: ".achievements-container",
+      title: "Achievements",
+      content:
+        "35 achievements across categories: Quests, Streaks, Stats, Leveling, and Pomodoro. " +
+        "Filter by All/Unlocked/Locked status or by category tab. " +
+        "Completing achievements is tracked and displayed as progress!",
+      position: "top",
+    },
+    {
+      element: ".favorites-container",
+      title: "Favorite Quotes",
+      content:
+        "Your saved favorite quotes live here. Click the Hide/Show toggle to collapse or expand the list. " +
+        "Save a quote by clicking the ♥ button on any daily quote.",
+      position: "top",
+    },
+    {
+      element: "#settings-icon",
+      title: "Settings & Data",
+      content:
+        "Open settings to: choose Male/Female quote voice, edit your display name, " +
+        "save/load game states (multiple slots), export/import game data as JSON, " +
+        "load default quests, save custom defaults, remove duplicate quests, " +
+        "or sign in with Google for cloud-backed progress across devices!",
+      position: "right",
+    },
+    {
+      element: ".view-toggle",
+      title: "View Modes",
+      content:
+        "Switch between Dashboard, Detailed, and Compact view modes. " +
+        "Each changes how your stats, quests, streak bar, and pomodoro timer are displayed — " +
+        "try them all! The theme toggle (moon/sun icon at the top) switches between Dark and Light mode.",
+      position: "right",
+    },
+  ].filter(s => {
+    if (!document.querySelector(s.element)) {
+      console.warn(`Tour: skipping "${s.title}" — element "${s.element}" not found`);
+      return false;
+    }
+    return true;
+  });
+
+  if (steps.length === 0) {
+    window._tourActive = false;
+    return;
+  }
 
   let currentStep = 0;
 
-  // Handler for random clicks to advance tour
-  const bodyClickHandler = (e) => {
-    // Only advance if click target is not a tour button
-    if (e.target.closest('.tour-buttons button')) {
-      return;
-    }
-    nextStep();
-  };
-
   function showStep(step) {
-    // Before showing new step, clean up previous
     hideStep();
 
     const element = document.querySelector(step.element);
-    if (!element) {
-        console.warn(`Tour guide element not found: ${step.element}`);
-        return; // Skip this step if element is missing
-    }
-    element.classList.add("tour-highlight");
-    element.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Scroll to element
+    if (!element) { nextStep(); return; }
 
-    const tooltip = document.createElement("div");
-    tooltip.className = `tour-tooltip ${step.position}`;
-    tooltip.innerHTML = `
-    <h3>${step.title}</h3>
-    <p>${step.content}</p>
-    <div class="tour-buttons">
-      ${ 
-        currentStep > 0
-          ? '<button class="tour-prev">Previous</button>'
-          : ""
-      }
-      ${ 
-        currentStep < steps.length - 1
-          ? '<button class="tour-next">Next</button>'
-          : '<button class="tour-end">End Tour</button>'
-      }
-    </div>
-  `;
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    document.body.appendChild(tooltip);
+    setTimeout(() => {
+      if (!window._tourActive) return;
+      element.classList.add("tour-highlight");
 
-    positionTooltip(element, tooltip, step.position);
+      const tooltip = document.createElement("div");
+      tooltip.className = `tour-tooltip ${step.position}`;
+      const isLast = currentStep >= steps.length - 1;
+      // Build dot indicators (clickable)
+      const dotsHtml = steps.map((_, i) =>
+        `<span class="tour-dot${i === currentStep ? ' active' : ''}" data-step="${i}"></span>`
+      ).join('');
+      tooltip.innerHTML = `
+        <button class="tour-dismiss" title="Dismiss tour" aria-label="End tour">✕</button>
+        <h3>${escapeHtml(step.title)}</h3>
+        <p>${escapeHtml(step.content)}</p>
+        <div class="tour-buttons">
+          <button class="tour-end-silent">End Tour</button>
+          <span style="flex:1"></span>
+          ${currentStep > 0 ? '<button class="tour-prev">← Back</button>' : ''}
+          ${!isLast
+            ? '<button class="tour-next">Next →</button>'
+            : '<button class="tour-end">Finish</button>'}
+        </div>
+        <div class="tour-pagination">
+          <span class="tour-step-indicator">${currentStep + 1} / ${steps.length}</span>
+          <div class="tour-dots">${dotsHtml}</div>
+        </div>
+      `;
 
-    const prevBtn = tooltip.querySelector(".tour-prev");
-    const nextBtn = tooltip.querySelector(".tour-next");
-    const endBtn = tooltip.querySelector(".tour-end");
+      document.body.appendChild(tooltip);
+      positionTooltip(element, tooltip, step.position);
 
-    if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); previousStep(); });
-    if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); nextStep(); });
-    if (endBtn) endBtn.addEventListener("click", (e) => { e.stopPropagation(); endTour(); });
+      tooltip.querySelector(".tour-dismiss")?.addEventListener("click", (e) => { e.stopPropagation(); abortTour(); });
+      tooltip.querySelector(".tour-end-silent")?.addEventListener("click", (e) => { e.stopPropagation(); abortTour(); });
+      tooltip.querySelector(".tour-prev")?.addEventListener("click", (e) => { e.stopPropagation(); previousStep(); });
+      tooltip.querySelector(".tour-next")?.addEventListener("click", (e) => { e.stopPropagation(); nextStep(); });
+      tooltip.querySelector(".tour-end")?.addEventListener("click", (e) => { e.stopPropagation(); abortTour(); });
+      // Clickable dot pagination
+      tooltip.querySelectorAll(".tour-dot").forEach(dot => {
+        dot.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const idx = parseInt(dot.dataset.step);
+          if (!isNaN(idx) && idx >= 0 && idx < steps.length) goToStep(idx);
+        });
+      });
+    }, 350);
   }
 
   function positionTooltip(element, tooltip, position) {
     const elementRect = element.getBoundingClientRect();
     const tooltipRect = tooltip.getBoundingClientRect();
-
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
     let top, left;
+    const gap = 16;
 
     switch (position) {
       case "top":
-        top = elementRect.top - tooltipRect.height - 20;
-        left =
-          elementRect.left + (elementRect.width - tooltipRect.width) / 2;
+        top = elementRect.top - tooltipRect.height - gap;
+        left = elementRect.left + (elementRect.width - tooltipRect.width) / 2;
         break;
       case "bottom":
-        top = elementRect.bottom + 20;
-        left =
-          elementRect.left + (elementRect.width - tooltipRect.width) / 2;
+        top = elementRect.bottom + gap;
+        left = elementRect.left + (elementRect.width - tooltipRect.width) / 2;
         break;
       case "left":
-        top =
-          elementRect.top + (elementRect.height - tooltipRect.height) / 2;
-        left = elementRect.left - tooltipRect.width - 20;
+        top = elementRect.top + (elementRect.height - tooltipRect.height) / 2;
+        left = elementRect.left - tooltipRect.width - gap;
         break;
       case "right":
-        top =
-          elementRect.top + (elementRect.height - tooltipRect.height) / 2;
-        left = elementRect.right + 20;
+        top = elementRect.top + (elementRect.height - tooltipRect.height) / 2;
+        left = elementRect.right + gap;
         break;
+    }
+
+    // Clamp inside viewport with opposite-side fallback
+    const pad = 10;
+    if (left < pad) left = pad;
+    if (top < pad) top = pad;
+    if (left + tooltipRect.width > viewportW - pad) {
+      left = viewportW - tooltipRect.width - pad;
+    }
+    if (top + tooltipRect.height > viewportH - pad) {
+      if (position === "bottom") top = elementRect.top - tooltipRect.height - gap;
+      else if (position === "top") top = elementRect.bottom + gap;
+      else top = viewportH - tooltipRect.height - pad;
     }
 
     tooltip.style.top = `${top + window.scrollY}px`;
@@ -7503,45 +7711,39 @@ function startTourGuide() {
   }
 
   function hideStep() {
-    const highlightedElements = document.querySelectorAll(".tour-highlight");
-    highlightedElements.forEach(el => el.classList.remove("tour-highlight"));
-
-    const tooltips = document.querySelectorAll(".tour-tooltip");
-    tooltips.forEach(tooltip => {
-      if (tooltip && tooltip.parentNode) {
-        tooltip.remove();
-      }
-    });
+    document.querySelectorAll(".tour-highlight").forEach(el => el.classList.remove("tour-highlight"));
+    document.querySelectorAll(".tour-tooltip").forEach(t => { if (t && t.parentNode) t.remove(); });
   }
 
   function nextStep() {
-    currentStep++; // Advance currentStep before showing next step
-    if (currentStep < steps.length) {
-      showStep(steps[currentStep]);
-    } else {
-      endTour();
-    }
+    currentStep++;
+    if (currentStep < steps.length) showStep(steps[currentStep]);
+    else abortTour();
   }
 
   function previousStep() {
-    currentStep--; // Decrement currentStep before showing previous step
-    if (currentStep >= 0) {
-      showStep(steps[currentStep]);
-    } else {
-      currentStep = 0; // Prevent going below first step
-      showStep(steps[currentStep]);
-    }
+    currentStep = Math.max(0, currentStep - 1);
+    showStep(steps[currentStep]);
+  }
+
+  function goToStep(index) {
+    if (index < 0 || index >= steps.length) return;
+    currentStep = index;
+    showStep(steps[currentStep]);
   }
 
   function endTour() {
+    // Remove all tour state
+    window._tourActive = false;
     hideStep();
-    currentStep = 0; // Reset for next time
-    document.body.removeEventListener('click', bodyClickHandler); // Remove global click listener
-    document.getElementById("modal-overlay").classList.remove("show"); // Hide the overlay
+    currentStep = 0;
+    document.getElementById("modal-overlay")?.classList.remove("show");
+    // Clean up global listeners
+    if (window._tourEscHandler) { document.removeEventListener('keydown', window._tourEscHandler); window._tourEscHandler = null; }
+    if (window._tourOutsideHandler) { document.removeEventListener('click', window._tourOutsideHandler); window._tourOutsideHandler = null; }
   }
 
-  // Start the tour by calling showStep for the first time
-  document.body.addEventListener('click', bodyClickHandler); // Attach global click listener
+  // Start
   showStep(steps[currentStep]);
 }
 
@@ -7615,8 +7817,10 @@ function initializePomodoro() {
   try {
     let interval = null;
     let endTime = 0;
-    let remaining = 25 * 60;
-    let modeSeconds = 25 * 60;
+    // Read initial mode from DOM (if a .timer-mode has .active, use its data-time)
+    const activeMode = document.querySelector('.timer-mode.active');
+    let modeSeconds = (activeMode ? Number(activeMode.dataset.time) : 25) * 60;
+    let remaining = modeSeconds;
 
     function updateDisplay() {
       const mins = Math.floor(remaining / 60).toString().padStart(2, '0');
@@ -7627,6 +7831,7 @@ function initializePomodoro() {
 
     function start() {
       if (interval) return; // already running
+      if (remaining <= 0) return; // already completed, must switch mode or reset
       unlockAudioOnce();
       endTime = Date.now() + remaining * 1000;
       interval = setInterval(() => {
@@ -7840,6 +8045,17 @@ function computeAchievementProgress(def, stats) {
       const h = stats.hardQuestsCompleted || 0;
       return { text: `E:${e} M:${m} H:${h}`, condition: 'Complete 1 quest of each difficulty' };
     }
+    case 36: {
+      const c = (stats.categoriesCompleted && stats.categoriesCompleted.length) || 0;
+      return { text: `${c} categories explored`, condition: 'Complete 1 spiritual quest' };
+    }
+    case 37: return { text: `Willpower: ${stats.willpower || 0}/3`, condition: 'Get willpower to level 3' };
+    case 38: return { text: `Intelligence: ${stats.intelligence || 0}/5`, condition: 'Get intelligence to level 5' };
+    case 39: {
+      const c = (stats.categoriesCompleted && stats.categoriesCompleted.length) || 0;
+      return { text: `${c} categories explored`, condition: 'Complete spiritual + personal quests' };
+    }
+    case 40: return { text: `Discipline: ${stats.discipline || 0}/7`, condition: 'Get discipline to level 7' };
     default: return {};
   }
 }
@@ -7978,16 +8194,16 @@ function initializeDueDateReminders() {
   setInterval(checkDueDateReminders, 300000);
 }
 
-// Re-initialize small features
-initializePomodoro();
-
 // Export Game Functionality
 // Save Default Quests to File
-document.getElementById('save-default-quests-btn').addEventListener('click', async () => {
-  if (confirm('Are you sure you want to save the current default quests to file? This will overwrite the existing defaults.')) {
-    await saveDefaultQuestsToFile();
-  }
-});
+var saveDefaultsBtn = document.getElementById('save-default-quests-btn');
+if (saveDefaultsBtn) {
+  saveDefaultsBtn.addEventListener('click', async () => {
+    if (confirm('Are you sure you want to save the current default quests to file? This will overwrite the existing defaults.')) {
+      await saveDefaultQuestsToFile();
+    }
+  });
+}
 
 async function saveDefaultQuestsToFile() {
   try {

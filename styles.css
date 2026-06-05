@@ -689,16 +689,6 @@ p {
   }
 }
 
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary), 0 0 15px var(--accent-primary);
-  }
-
-  to {
-    text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
-  }
-}
-
 /* Updated Components with Theme Support */
 
 .stats {
@@ -1080,18 +1070,6 @@ button:hover {
   background-color: #f44336;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 .settings-icon {
   position: fixed;
   bottom: 20px;
@@ -1215,6 +1193,88 @@ button:hover {
   transform: translateY(0);
 }
 
+/* Auth Section in Settings */
+.settings-section {
+  padding: 12px 20px;
+  margin: 8px 0;
+  background: rgba(74, 144, 226, 0.08);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(74, 144, 226, 0.15);
+}
+
+.auth-section h3 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.auth-section h3 i {
+  color: var(--accent-primary);
+}
+
+#google-signin-btn-container {
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  align-items: center;
+}
+
+.google-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(74, 144, 226, 0.1);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 8px;
+}
+
+.google-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-primary);
+  object-fit: cover;
+}
+
+.google-user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.google-user-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.google-user-email {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.settings-modal button.danger-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  margin-top: 0;
+}
+
+.settings-modal button.danger-btn:hover {
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.settings-divider {
+  border: none;
+  border-top: 1px solid rgba(74, 144, 226, 0.15);
+  margin: 16px 0;
+}
+
 /* Modal Overlay */
 .modal-overlay {
   display: none;
@@ -1336,16 +1396,6 @@ button:hover {
   background-color: #5eddd4;
 }
 
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary), 0 0 15px var(--accent-primary);
-  }
-
-  to {
-    text-shadow: 0 0 10px var(--accent-primary), 0 0 20px var(--accent-primary), 0 0 30px var(--accent-primary);
-  }
-}
-
 .tour-highlight {
   position: relative;
   z-index: 9999;
@@ -1354,14 +1404,18 @@ button:hover {
 
 .tour-tooltip {
   position: absolute;
-  transform: translate(-50%, -100%);
-  background-color: rgba(74, 144, 226, 0.9);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  background: rgba(20, 22, 35, 0.96);
+  border: 1px solid var(--accent-primary);
+  color: var(--text-primary);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(74, 144, 226, 0.15);
   z-index: 10000;
-  max-width: 300px;
+  max-width: 340px;
+  min-width: 220px;
+  backdrop-filter: blur(12px);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .tour-tooltip::after {
@@ -1400,23 +1454,136 @@ button:hover {
   transform: translateY(-50%);
 }
 
-.tour-buttons {
-  margin-top: 10px;
-  text-align: right;
+.tour-tooltip h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: var(--accent-primary);
+  text-align: left;
+  text-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
 }
 
-.tour-buttons button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  background-color: #ffffff;
-  color: var(--accent-primary);
-  border: none;
-  border-radius: 3px;
+.tour-tooltip p {
+  margin: 0 0 4px 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.tour-tooltip .tour-step-indicator {
+  font-size: 0.75rem;
+  color: var(--text-tertiary, rgba(255,255,255,0.35));
+  white-space: nowrap;
+}
+
+/* Pagination dots */
+.tour-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.tour-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.25s ease;
+  display: inline-block;
   cursor: pointer;
 }
 
+.tour-dot.active {
+  background: var(--accent-primary);
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.6);
+  width: 8px;
+  height: 8px;
+}
+
+.tour-dismiss {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-secondary, #999);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.15s ease;
+  z-index: 1;
+}
+
+.tour-dismiss:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tour-buttons {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.tour-buttons button {
+  padding: 6px 14px;
+  background: var(--accent-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
 .tour-buttons button:hover {
-  background-color: #e0e0e0;
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.tour-buttons button.tour-prev {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+.tour-buttons button.tour-prev:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.tour-buttons button.tour-end {
+  background: rgba(231, 76, 60, 0.8);
+}
+
+.tour-buttons button.tour-end:hover {
+  background: rgba(231, 76, 60, 1);
+}
+
+/* Pagination area below buttons: step counter + dots */
+.tour-pagination {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.tour-buttons .tour-end-silent {
+  background: none;
+  color: var(--text-secondary, #888);
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.tour-buttons .tour-end-silent:hover {
+  color: var(--text-primary, #ccc);
+  filter: none;
+  transform: none;
 }
 
 .check-icon {
@@ -1456,7 +1623,7 @@ button:hover {
 .glow-button {
   border: 2px solid rgba(78, 205, 196, 0.5);
   box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
-  animation: glow 1.5s ease-in-out infinite alternate;
+  animation: glowShadow 1.5s ease-in-out infinite alternate;
   transition: all 0.3s ease;
 }
 
@@ -1466,7 +1633,7 @@ button:hover {
   box-shadow: 0 0 15px rgba(6, 214, 160, 0.8);
 }
 
-@keyframes glow {
+@keyframes glowShadow {
   from {
     box-shadow: 0 0 5px rgba(78, 205, 196, 0.5);
   }
@@ -2098,11 +2265,14 @@ button:hover {
   border: 1px solid rgba(255, 152, 0, 0.3);
   border-radius: 50%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   color: var(--text-secondary);
   transition: all 0.3s ease;
+  position: relative;
+  line-height: 1.1;
 }
 
 .streak-day.active {
@@ -2110,6 +2280,60 @@ button:hover {
   color: white;
   border-color: #ff9800;
   box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+}
+
+.day-date {
+  display: none; /* hidden by default */
+  font-size: 0.6rem;
+  font-weight: 400;
+  opacity: 0.7;
+  line-height: 1;
+}
+
+.day-date.today {
+  font-weight: 700;
+  opacity: 1;
+}
+
+.container.detailed-view .streak-day {
+  width: 42px;
+  height: 42px;
+}
+
+.container.detailed-view .day-date {
+  display: block; /* show in detailed view */
+}
+
+/* Streak details row — hidden by default, shown only in detailed view */
+.streak-details {
+  display: none;
+  margin-top: 1rem;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+}
+
+.container.detailed-view .streak-details {
+  display: flex;
+}
+
+.streak-detail-item {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #aaa);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.streak-detail-item i {
+  color: var(--accent-primary, #4a90e2);
+  font-size: 0.75rem;
+}
+
+.streak-detail-item strong {
+  color: var(--text-primary, #eee);
+  font-weight: 700;
 }
 
 /* Quest Controls Styles */
@@ -3551,17 +3775,6 @@ button:hover {
   position: relative;
 }
 
-/* Add keyframes for element transitions */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes scaleIn {
   from {
     transform: scale(0);
@@ -4329,11 +4542,11 @@ body {
 
 /* Stat increase animation - applied to progress fill */
 .stat-progress-fill.stat-increase {
-  animation: statPulse 0.8s ease-out;
+  animation: statPulseBrightness 0.8s ease-out;
   background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), #69f0ae) !important;
 }
 
-@keyframes statPulse {
+@keyframes statPulseBrightness {
   0% {
     filter: brightness(1);
     transform: scaleY(1);
@@ -4370,28 +4583,12 @@ body {
   animation: fadeUp 1.2s ease-out forwards;
 }
 
-@keyframes fadeUp {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  70% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-}
-
 /* Make progress bar container have overflow visible for the +1 indicator */
 .stat-progress-bar {
   overflow: visible !important;
 }
 
-@keyframes statPulse {
+@keyframes statPulseRing {
   0% {
     box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.7);
   }
@@ -4896,7 +5093,7 @@ body {
 }
 
 /* Loading animations */
-@keyframes pulse {
+@keyframes pulseOpacity {
 
   0%,
   100% {
@@ -4909,7 +5106,7 @@ body {
 }
 
 .loading {
-  animation: pulse 1.5s ease-in-out infinite;
+  animation: pulseOpacity 1.5s ease-in-out infinite;
 }
 
 /* Smooth transitions for all interactive elements */

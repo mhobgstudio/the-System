@@ -1,26 +1,5 @@
 [
   {
-    "id": 1,
-    "text": "Great power comes with great benefits.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
-    "id": 2,
-    "text": "The strong prey on the weak; this is the law of nature.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
-    "id": 3,
-    "text": "In the face of benefits, there are no eternal enemies or friends.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "wisdom"
-  },
-  {
     "id": 4,
     "text": "Knowledge is power, and power is everything!",
     "author": "Leylin Farlier",
@@ -42,20 +21,6 @@
     "category": "wisdom"
   },
   {
-    "id": 7,
-    "text": "Strength is the only truth in this world.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
-    "id": 8,
-    "text": "Only those who are willing to sacrifice can truly gain power.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "discipline"
-  },
-  {
     "id": 9,
     "text": "Weakness is a sin.",
     "author": "Leylin Farlier",
@@ -70,20 +35,6 @@
     "category": "wisdom"
   },
   {
-    "id": 11,
-    "text": "Survival is for the fittest, everything else is an illusion.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
-    "id": 12,
-    "text": "Morality is a tool used by the weak to bind the strong.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "wisdom"
-  },
-  {
     "id": 13,
     "text": "In a world of cultivation, only absolute power can guarantee freedom.",
     "author": "Leylin Farlier",
@@ -91,24 +42,10 @@
     "category": "power"
   },
   {
-    "id": 14,
-    "text": "The path to greatness is paved with the bones of those who couldn't walk it.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
     "id": 15,
     "text": "He who controls resources controls destiny.",
     "author": "Leylin Farlier",
     "source": "Warlock of the Magus World",
-    "category": "power"
-  },
-  {
-    "id": 16,
-    "text": "Only by controlling everything can one be free of fate.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
     "category": "power"
   },
   {
@@ -119,24 +56,10 @@
     "category": "wisdom"
   },
   {
-    "id": 18,
-    "text": "True immortality is achieved through power, not time.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
     "id": 19,
     "text": "The weak fall, the strong rise. Such is the way of the world.",
     "author": "Leylin Farlier",
     "source": "Warlock of the Magus World",
-    "category": "power"
-  },
-  {
-    "id": 20,
-    "text": "Fear is the currency of control.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
     "category": "power"
   },
   {
@@ -147,67 +70,11 @@
     "category": "wisdom"
   },
   {
-    "id": 22,
-    "text": "Victory goes to the one who dares to take risks.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "growth"
-  },
-  {
-    "id": 23,
-    "text": "In the end, strength is the only thing that matters.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "power"
-  },
-  {
     "id": 24,
     "text": "A mind without ambition is a body without a soul.",
     "author": "Leylin Farlier",
     "source": "Warlock of the Magus World",
     "category": "growth"
-  },
-  {
-    "id": 25,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
-    "id": 26,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
-    "id": 27,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
-    "id": 28,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
-    "id": 29,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
-  },
-  {
-    "id": 30,
-    "text": "To rise above all, you must be willing to stand alone.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "perseverance"
   },
   {
     "id": 31,
@@ -537,20 +404,6 @@
     "author": "Lin Ming",
     "source": "Reverend Insanity",
     "category": "perseverance"
-  },
-  {
-    "id": 78,
-    "text": "I love money, but I'm my own master. I'll never let material things control me!",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "discipline"
-  },
-  {
-    "id": 79,
-    "text": "Chess pieces are pieces because they were meant to be used, they were also meant to be discarded when necessary.",
-    "author": "Fang Yuan",
-    "source": "Reverend Insanity",
-    "category": "wisdom"
   },
   {
     "id": 80,

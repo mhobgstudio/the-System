@@ -1,6 +1,5 @@
-<html>
+<html lang="en">
   <head>
-    <base href="" />
     <title>Solo Leveling: Your Path to Power</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,6 +19,8 @@
       document.head.appendChild(_ms);
     }
     </script>
+    <!-- Google Identity Services for sign-in -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
   <body class="theme-dark">
@@ -79,7 +80,7 @@
             </div>
           </div>
           <h2>
-            Welcome, <span id="username-display" class="glow">Anonymous</span>
+            Welcome, <span id="username-display" class="glow">Heavenly_Dev|</span>
           </h2>
           <div id="character-title" class="glow"></div>
         </div>
@@ -115,13 +116,18 @@
           <span id="streak-title" class="glow"></span>
         </div>
         <div class="streak-bar">
-          <div class="streak-day" data-day="0">M</div>
-          <div class="streak-day" data-day="1">T</div>
-          <div class="streak-day" data-day="2">W</div>
-          <div class="streak-day" data-day="3">T</div>
-          <div class="streak-day" data-day="4">F</div>
-          <div class="streak-day" data-day="5">S</div>
-          <div class="streak-day" data-day="6">S</div>
+          <div class="streak-day" data-day="0">M<span class="day-date"></span></div>
+          <div class="streak-day" data-day="1">T<span class="day-date"></span></div>
+          <div class="streak-day" data-day="2">W<span class="day-date"></span></div>
+          <div class="streak-day" data-day="3">T<span class="day-date"></span></div>
+          <div class="streak-day" data-day="4">F<span class="day-date"></span></div>
+          <div class="streak-day" data-day="5">S<span class="day-date"></span></div>
+          <div class="streak-day" data-day="6">S<span class="day-date"></span></div>
+        </div>
+        <div class="streak-details">
+          <span class="streak-detail-item"><i class="fas fa-tasks"></i> This Week: <strong id="week-quest-count">0</strong> completed</span>
+          <span class="streak-detail-item"><i class="fas fa-trophy"></i> Best: <strong id="best-streak">0</strong> days</span>
+          <span class="streak-detail-item"><i class="fas fa-calendar-check"></i> Active: <strong id="active-days">0</strong>d</span>
         </div>
       </div>
 
@@ -451,7 +457,7 @@
       </div>
     </div>
 
-    <div class="settings-icon" id="settings-icon">⚙️</div>
+    <button class="settings-icon" id="settings-icon" aria-label="Open settings" title="Settings">⚙️</button>
 
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modal-overlay"></div>
@@ -524,10 +530,19 @@
     </div>
 
     <div class="settings-modal" id="settings-modal">
-      <span class="modal-close" id="modal-close">&times;</span>
+      <button class="modal-close" id="modal-close" aria-label="Close settings">&times;</button>
       <h2>Settings</h2>
       <div class="modal-content">
 
+        <div class="settings-section auth-section" id="auth-section">
+          <h3><i class="fas fa-cloud"></i> Cloud Save</h3>
+          <div id="google-signin-btn-container"></div>
+          <div id="google-user-info" class="google-user-info" style="display:none;"></div>
+          <button id="google-signout-btn" class="danger-btn" style="display:none;">
+            <i class="fas fa-sign-out-alt"></i> Sign Out
+          </button>
+        </div>
+        <hr class="settings-divider">
         <button id="edit-username-btn">
           <i class="fas fa-user-edit"></i> Edit Username
         </button>
@@ -752,9 +767,11 @@
       const spiderChartModal = document.getElementById('spider-chart-modal');
       const spiderChartModalClose = document.getElementById('spider-chart-modal-close');
       
-      spiderChartModalClose.addEventListener('click', () => {
-        spiderChartModal.style.display = 'none';
-      });
+      if (spiderChartModalClose && spiderChartModal) {
+        spiderChartModalClose.addEventListener('click', () => {
+          spiderChartModal.style.display = 'none';
+        });
+      }
     })();
     </script>
 </body>
