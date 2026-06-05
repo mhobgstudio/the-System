@@ -7200,6 +7200,60 @@ function initializeEnhancedUI() {
       document.body.style.overflow = '';
     }
 
+    async function switchChartView(view) {
+      currentChartView = view;
+
+      // Hide/show elements based on view
+      const connElem = document.querySelector('.stats-connection.previous');
+      if (connElem) connElem.style.display = 'none';
+      if (chartLegendElem) chartLegendElem.style.display = 'none';
+      if (timeRangeControls) timeRangeControls.style.display = 'none';
+      if (statDetailsContainer) statDetailsContainer.style.display = 'none';
+      if (historyChartContainer) historyChartContainer.style.display = 'none';
+
+      switch (view) {
+          case 'current':
+              if (statDetailsContainer) statDetailsContainer.style.display = 'block';
+              await updateStatDetails();
+              break;
+          case 'history':
+              if (timeRangeControls) timeRangeControls.style.display = 'flex';
+              if (historyChartContainer) historyChartContainer.style.display = 'block';
+              const historyData = await getHistoricalStats(timeRange);
+              drawHistoryChart(historyData);
+              break;
+          case 'compare':
+              db.statHistory
+                  .orderBy('date')
+                  .reverse()
+                  .offset(1)
+                  .limit(1)
+                  .first()
+                  .then(async (prevStats) => {
+                      if (currentChartView !== 'compare') return;
+                      if (prevStats) {
+                          previousStats = {
+                              strength: prevStats.strength,
+                              agility: prevStats.agility,
+                              intelligence: prevStats.intelligence,
+                              stamina: prevStats.stamina,
+                              willpower: prevStats.willpower,
+                              discipline: prevStats.discipline
+                          };
+                          const connElem2 = document.querySelector('.stats-connection.previous');
+                          if (connElem2) connElem2.style.display = 'block';
+                          if (chartLegendElem) chartLegendElem.style.display = 'flex';
+                          if (statDetailsContainer) statDetailsContainer.style.display = 'block';
+                          await updateStatDetails();
+                      } else {
+                          showNotification("No previous data available for comparison.");
+                          switchChartView('current');
+                      }
+                  });
+              break;
+      }
+    }
+
     // Primary click targets
     if (avatar) avatar.addEventListener('click', openSpider);
     if (characterTitleStats) characterTitleStats.addEventListener('click', openSpider);
@@ -7265,64 +7319,6 @@ function initializeEnhancedUI() {
 
   } catch (e) {
     console.error('initializeEnhancedUI error', e);
-  }
-}
-
-// Function to switch between chart views
-async function switchChartView(view) {
-  currentChartView = view;
-  
-  // Hide/show elements based on view
-  const connElem = document.querySelector('.stats-connection.previous');
-  if (connElem) connElem.style.display = 'none';
-  if (chartLegendElem) chartLegendElem.style.display = 'none';
-  if (timeRangeControls) timeRangeControls.style.display = 'none';
-  if (statDetailsContainer) statDetailsContainer.style.display = 'none';
-  if (historyChartContainer) historyChartContainer.style.display = 'none';
-
-  switch (view) {
-      case 'current':
-          if (statDetailsContainer) statDetailsContainer.style.display = 'block';
-          await updateStatDetails();
-          break;
-      case 'history':
-          if (timeRangeControls) timeRangeControls.style.display = 'flex';
-          if (historyChartContainer) historyChartContainer.style.display = 'block';
-          // Load and display history data
-          const historyData = await getHistoricalStats(timeRange);
-          drawHistoryChart(historyData);
-          break;
-      case 'compare':
-          // Get previous stats for comparison
-          db.statHistory
-              .orderBy('date')
-              .reverse()
-              .offset(1) // Skip current day
-              .limit(1)
-              .first()
-              .then(async (prevStats) => {
-                  // Guard: user might have switched views while the query was running
-                  if (currentChartView !== 'compare') return;
-                  if (prevStats) {
-                      previousStats = {
-                          strength: prevStats.strength,
-                          agility: prevStats.agility,
-                          intelligence: prevStats.intelligence,
-                          stamina: prevStats.stamina,
-                          willpower: prevStats.willpower,
-                          discipline: prevStats.discipline
-                      };
-                      const connElem2 = document.querySelector('.stats-connection.previous');
-                      if (connElem2) connElem2.style.display = 'block';
-                      if (chartLegendElem) chartLegendElem.style.display = 'flex';
-                      if (statDetailsContainer) statDetailsContainer.style.display = 'block';
-                      await updateStatDetails(); // Will call drawComparisonChart internally
-                  } else {
-                      showNotification("No previous data available for comparison.");
-                      switchChartView('current');
-                  }
-              });
-          break;
   }
 }
 
