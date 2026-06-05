@@ -4764,8 +4764,9 @@ function updateQuestsEmptyState() {
   const container = document.getElementById('quests');
   const empty = document.getElementById('quests-empty');
   if (!container || !empty) return;
-  const hasQuests = container.querySelector('.quest:not(.quest-edit-panel)');
-  empty.style.display = hasQuests ? 'none' : 'flex';
+  const hasVisibleQuests = Array.from(container.querySelectorAll('.quest:not(.quest-edit-panel)'))
+    .some(n => n.style.display !== 'none');
+  empty.style.display = hasVisibleQuests ? 'none' : 'flex';
 }
 
 function appendQuestWithAnimation(container, questElem, delay = 0) {
@@ -5078,6 +5079,7 @@ function filterQuests(){
     }
 
     updateQuestCount();
+    updateQuestsEmptyState();
   } catch (e){
     console.error('filterQuests error', e);
   }
