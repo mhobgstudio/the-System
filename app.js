@@ -695,7 +695,7 @@ const motivationalQuotesSystem = {
     {
       id: 72,
       text: "I wonder for the one who is certain that there is death, and yet laughs.",
-      author: "Prophet Dawud",
+      author: "Prophet Dawud (David)",
       source: "Zabura (Psalms)",
       category: "faith",
       contexts: ["daily"],
@@ -704,7 +704,7 @@ const motivationalQuotesSystem = {
     {
       id: 73,
       text: "I wonder for the one who is certain that there is Hellfire and its chastisement, and yet sleeps without fleeing from it.",
-      author: "Prophet Dawud",
+      author: "Prophet Dawud (David)",
       source: "Zabura (Psalms)",
       category: "faith",
       contexts: ["daily"],
@@ -713,7 +713,7 @@ const motivationalQuotesSystem = {
     {
       id: 74,
       text: "I wonder for the one who is certain that there is Paradise and its pleasure, and yet sleeps without seeking it.",
-      author: "Prophet Dawud",
+      author: "Prophet Dawud (David)",
       source: "Zabura (Psalms)",
       category: "faith",
       contexts: ["daily"],
@@ -722,7 +722,7 @@ const motivationalQuotesSystem = {
     {
       id: 75,
       text: "I wonder for the one who is certain about this world and its transience, and yet trusts in it implicitly.",
-      author: "Prophet Dawud",
+      author: "Prophet Dawud (David)",
       source: "Zabura (Psalms)",
       category: "faith",
       contexts: ["daily"],
