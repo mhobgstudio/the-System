@@ -3973,12 +3973,29 @@ function openQuestModal() {
   const modal = document.getElementById('quest-modal');
   if (modal) modal.style.display = 'flex';
   document.getElementById('modal-overlay')?.classList.add('show');
+
+  // Show suggestion popup by default — user can toggle it off
+  const popup = document.getElementById('quest-suggestion-popup');
+  const suggestBtn = modal?.querySelector('.suggest-btn');
+  if (popup && modal) {
+    const stat = modal.querySelector('.edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
+    const difficulty = modal.querySelector('.edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
+    updateSuggestionsWithClickable(stat, difficulty, modal);
+    popup.style.display = 'block';
+    if (suggestBtn) suggestBtn.classList.add('active');
+  }
 }
 
 function closeQuestModal() {
   const modal = document.getElementById('quest-modal');
   if (modal) modal.style.display = 'none';
   document.getElementById('modal-overlay')?.classList.remove('show');
+
+  // Reset suggestion popup state for next open
+  const popup = document.getElementById('quest-suggestion-popup');
+  if (popup) popup.style.display = 'none';
+  const suggestBtn = modal?.querySelector('.suggest-btn');
+  if (suggestBtn) suggestBtn.classList.remove('active');
 }
 
 function saveQuestFromModal() {
