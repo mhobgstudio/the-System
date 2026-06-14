@@ -6513,7 +6513,7 @@ async function importGame(importedData) {
 }
 // Load Default Quests into current game
 document.getElementById('load-default-quests-btn').addEventListener('click', async () => {
-  if (confirm('Reload defaults as suggestions? This will clear all current quests from the grid and put every default quest into the suggestion panel for you to pick from.')) {
+  if (confirm('Load all default quests? This will clear current quests and add every default quest to your board.')) {
     await loadDefaultQuestsIntoCurrent();
     closeSettingsModal();
   }
@@ -6522,22 +6522,24 @@ document.getElementById('load-default-quests-btn').addEventListener('click', asy
 async function loadDefaultQuestsIntoCurrent() {
   try {
     const defaultQuests = GLOBAL_DEFAULT_QUESTS;
-    const existingQuests = await db.quests.toArray();
-
-    // Populate suggestion pool with ALL default quest titles — replace, don't accumulate
-    questSuggestionPool = [...new Set(defaultQuests.map(q => q.title))];
 
     // Delete ALL existing quests from DB
-    const allQuestIds = existingQuests.map(q => q.id);
-    if (allQuestIds.length > 0) {
-      await db.quests.bulkDelete(allQuestIds);
-      showNotification(`Cleared ${allQuestIds.length} quests. All defaults moved to suggestions — add what you need.`, 'info');
-    } else {
-      showNotification(`Default quests available in suggestions — add what you need.`, 'info');
-    }
-    
+    await db.quests.clear();
+
+    // Add all default quests directly to the board
+    const questsToAdd = defaultQuests.map((q, i) => ({
+      ...q,
+      id: i + 1,
+      completed: false,
+      createdAt: new Date().toISOString()
+    }));
+    await db.quests.bulkAdd(questsToAdd);
+
+    // Clear suggestion pool since defaults are now on the board
+    questSuggestionPool = [];
+
+    showNotification(`Loaded ${questsToAdd.length} default quests onto your board.`, 'info');
     await refreshData();
-    closeSettingsModal();
   } catch (error) {
     console.error('Error loading default quests:', error);
     showNotification('Failed to load default quests.', 'error');
