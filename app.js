@@ -118,75 +118,244 @@ try {
 const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
-  // EASY - Quick daily spiritual tasks (5 XP)
-  { title: "SACRIFICE YOUR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal" },
-  { title: "Dua Daily", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "Quiet Dhikr", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "Sleeping Prayer", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "Pray b4 Sleep then Quran Buffs", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "Please ask for help from Allah in each sujuud", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "think of imam abroad, Allah's is better", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "After all, you asked to be close to the throne", difficulty: "Easy", xp: 335, stat: "willpower", category: "personal" },
-  { title: "Email", difficulty: "Easy", xp: 333, stat: "discipline", category: "work" },
-  { title: "watch teleGratitude", difficulty: "Easy", xp: 333, stat: "discipline", category: "personal" },        
-  { title: "All Actions As Worship", difficulty: "Easy", xp: 33333, stat: "discipline", category: "personal" },   
-  { title: "HealthCheck", difficulty: "Easy", xp: 333, stat: "stamina", category: "health" },
-  { title: "Be an Observer", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Dont get stuck in a 1hr+ loop", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", comment: "code, short videos", isPinned: true },
-  { title: "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal" },
-  { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
-  { title: "Selective fast (Jihad of silence): be like salah", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "Be on the me app, ask Allah for help for your soul", isPinned: true },
-  { title: "Don't Disregard Allah in times of sin_softHeart", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
-  { title: "Nawwafi_Murájá", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "1/3 of page per raka; Deep", isPinned: true },
-  { title: "Take Haram Seriously, it's a big deal in GodSight.", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal" },
+  // ═══════════════════════════════════════════════════════════
+  // ETERNAL QUEST — sacrifice (persists across all difficulties)
+  // ═══════════════════════════════════════════════════════════
+  { title: "Sacrifice Ur Desires", difficulty: "Easy", xp: 500, stat: "willpower", category: "spiritual",
+    description: "Renounce a desire for Allah's sake", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "core", "daily"] },
+  { title: "Sacrifice Ur Desires", difficulty: "Medium", xp: 1200, stat: "willpower", category: "spiritual",
+    description: "Give up something you enjoy for Allah", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "core", "daily"] },
+  { title: "Sacrifice Ur Desires", difficulty: "Hard", xp: 3000, stat: "willpower", category: "spiritual",
+    description: "Abandon a major comfort or habit for Allah", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "core", "daily"] },
 
-  { title: "99 Names", difficulty: "Easy", xp: 338, stat: "discipline", category: "learning", comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing", isPinned: true },
-  { title: "English Tafseer 1pg/Quran", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
-  { title: "Liquid Drop concentration", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
-  { title: "There is more to life than your desires", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
-  { title: "people doing what you don't want to do", difficulty: "Easy", xp: 338, stat: "discipline", category: "personal" },
-  { title: "Systematic Review || At least 15 mins", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning" },
-  { title: "Effectiveness Audit", difficulty: "Easy", xp: 500, stat: "discipline", category: "cultivation" },
-  { title: "Quran Word Memorization", difficulty: "Easy", xp: 500, stat: "intelligence", category: "cultivation" },
-  { title: "Posture Alignment", difficulty: "Easy", xp: 300, stat: "stamina", category: "physical" },
-  { title: "50 Push-ups (Punishment)", difficulty: "Easy", xp: 500, stat: "strength", category: "physical" },
-  // MEDIUM - Moderate effort tasks (10 XP Islamic, 8 XP others)
-  { title: "SACRIFICE YOUR DESIRES", difficulty: "Medium", xp: 99999999, stat: "willpower", category: "personal" },
-  { title: "Give up something for Allah -Fitna is Refinement", difficulty: "Medium", xp: 2310, stat: "willpower", category: "personal" },
-  { title: "Grad school", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Teach Quran", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Nahwu", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Agentic Ai", difficulty: "Medium", xp: 238, stat: "discipline", category: "work" },
-  { title: "Word4word Quran", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Madina series", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Juz Daily - get 1pg/min of each juz pg", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "EBOOK", isPinned: true },
-  { title: "extras Research", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work", comment: "https://floor796.com/", isPinned: true },
-  { title: "Project", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work" },
-  { title: "n8n tasks", difficulty: "Medium", xp: 238, stat: "discipline", category: "work" },
-  { title: "Seerah / Khushu of the Ruh and Nafs", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Revise students Quran with AudioBook || At least 1 page", difficulty: "Medium", xp: 238, stat: "discipline", category: "learning" },
-  { title: "Money Research || At least 1 Idea", difficulty: "Medium", xp: 238, stat: "intelligence", category: "personal" },
-  { title: "MUJAWWAD .5P", difficulty: "Medium", xp: 238, stat: "discipline", category: "personal" },
-  { title: "MultiTask => Brain =< Sleep", difficulty: "Medium", xp: 238, stat: "stamina", category: "health", comment: "shorts", isPinned: true },
-  { title: "CyberExpo_Dev", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work" },
-  { title: "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", comment: "https://floor796.com/", isPinned: true },
-  { title: "Hifz revision", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Yoruba perfection", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
-  { title: "Zad University", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work", comment: "GAME: 2048", isPinned: true },
-  { title: "Workout", difficulty: "Medium", xp: 238, stat: "strength", category: "health" },
-  
-  // HARD - High effort, high reward tasks (15 XP Islamic, 10 XP others)
-  { title: "SACRIFICE YOUR DESIRES", difficulty: "Hard", xp: 99999999, stat: "willpower", category: "personal" },
-  { title: "Real Maths", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
-  { title: "Quantum Code", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
-  { title: "Thesis Project NoteBookLM", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "work" },
-  { title: "Complete 5 sets of 25 push-ups", difficulty: "Hard", xp: 1310, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Complete a 30-minute intense agility drill session", difficulty: "Hard", xp: 1310, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Maintain a rigorous daily workout routine for a month", difficulty: "Hard", xp: 1310, stat: "strength", category: "personal", comment: "GAME: Tele", isPinned: true },
-  { title: "MERN FULL STACK || At least 15mins", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
-  { title: "MPhil Proposal Research work || At least 1 Slide", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "learning" },
-  { title: "Do 100 push-ups throughout the day", difficulty: "Hard", xp: 1310, stat: "strength", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
-  { title: "Do a 300m run", difficulty: "Hard", xp: 1310, stat: "agility", category: "personal", comment: "EBOOK/PLAYLIST", isPinned: true },
+  // ═══════════════════════════════════════════════════════════
+  // SPIRITUAL — merged daily adhkar/worship quests
+  // ═══════════════════════════════════════════════════════════
+  { title: "Daily Adhkar & Dua", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Complete morning/evening adhkar, make dua, do quiet dhikr", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"], subtasks: ["Dua", "Dhikr", "Sleeping prayer", "Pray before sleep"] },
+  { title: "Seek Help in Every Sujood", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Ask Allah for help during each sujood in salah", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"] },
+  { title: "Remember: Allah's Reward is Greater", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Reflect on the Hereafter vs worldly distractions (imam abroad)", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Remember: You Asked to Be Close to Allah", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Reflect on your goal of closeness to the throne", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "All Actions as Worship", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
+    description: "Intention every action as ibadah — work, eating, resting", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Always Choose Allah's Pleasure", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "When faced with haram vs halal, choose Allah every time", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily"] },
+  { title: "Aura Farming With Allah", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Build spiritual presence — be conscious of Allah in every moment", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Silence Fast (Jihad of Silence)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Practice voluntary silence — guard tongue like salah guard", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily"] },
+  { title: "Don't Forget Allah in Times of Sin", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Maintain soft heart — turn to Allah even when sinning", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Night Prayer (Tahajjud)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Wake for 1/3 page per raka — deep nawafil", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily"] },
+  { title: "Take Haram Seriously", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Remember: haram is a big deal in Allah's sight", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Lock In: Devotion Like Fang Yuan", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Be to Allah what fang yuan is to power — relentless devotion", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Control the Inner Voices", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Don't let nafs/whispers control you — stay disciplined", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+  { title: "Be an Observer", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Step back and observe your thoughts — don't get stuck in loops", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily", "mindset", "anti-loop"] },
+  { title: "Don't Waste 1hr+ in Loops", difficulty: "Easy", xp: 300, stat: "willpower", category: "personal",
+    description: "Don't get stuck in code loops, short videos, or mindless browsing", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["productivity", "daily", "anti-loop"], comment: "code, short videos" },
+
+  // ═══════════════════════════════════════════════════════════
+  // QURAN — merged study/memorization/recitation cluster
+  // ═══════════════════════════════════════════════════════════
+  { title: "Quran Reading (1pg min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
+    description: "Read at least 1 page of Quran with reflection", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "daily"] },
+  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 250, stat: "intelligence", category: "spiritual",
+    description: "Recite the 3 Quls (Surahs 112-114) for protection", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "quran", "daily"] },
+  { title: "99 Names Memorization", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+    description: "Memorize/recite names of Allah — track progress", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "memorization", "daily"],
+    comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing" },
+  { title: "Quran Memorization (Hifz)", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
+    description: "Memorize new ayahs or revise previously memorized portions", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "memorization", "daily"] },
+  { title: "Mujawwad Recitation (0.5pg)", difficulty: "Medium", xp: 700, stat: "discipline", category: "spiritual",
+    description: "Recite half a page with proper Tajweed and melodious voice", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "daily"] },
+  { title: "English Tafseer (1pg)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Read 1 page of English tafseer to understand Quran deeper", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "learning", "daily"] },
+  { title: "Word-for-Word Quran Study", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
+    description: "Study Quran word by word — understand Arabic meaning", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "arabic", "daily"] },
+  { title: "Madina Arabic Series", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Continue Madina Arabic textbook — build Quranic comprehension", repeatable: true, frequency: "daily",
+    tags: ["islamic", "arabic", "learning", "daily"] },
+  { title: "Teach Quran to Students", difficulty: "Medium", xp: 800, stat: "discipline", category: "spiritual",
+    description: "Revise students' Quran — at least 1 page with AudioBook", repeatable: true, frequency: "daily",
+    tags: ["islamic", "teaching", "daily"], comment: "Use AudioBook for review" },
+
+  // ═══════════════════════════════════════════════════════════
+  // FITNESS — merged push-ups/agility/workout
+  // ═══════════════════════════════════════════════════════════
+  { title: "Body Maintenance", difficulty: "Easy", xp: 200, stat: "stamina", category: "fitness",
+    description: "Health check + posture alignment + hydration", repeatable: true, frequency: "daily",
+    tags: ["health", "daily"], subtasks: ["Posture check", "Drink water", "Stretch"] },
+  { title: "Push-up Progression", difficulty: "Easy", xp: 350, stat: "strength", category: "fitness",
+    description: "50 push-ups (punishment/conditioning)", repeatable: true, frequency: "daily",
+    tags: ["exercise", "daily"] },
+  { title: "Push-up Progression", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
+    description: "5 sets of 25 push-ups throughout the day", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["exercise", "daily"] },
+  { title: "Push-up Progression", difficulty: "Hard", xp: 1500, stat: "strength", category: "fitness",
+    description: "100 push-ups throughout the day", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["exercise", "daily"] },
+  { title: "Agility Training", difficulty: "Hard", xp: 1500, stat: "agility", category: "fitness",
+    description: "30-min intense agility drill OR 300m run", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["exercise", "daily"] },
+  { title: "Daily Workout", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
+    description: "Complete a full workout session", repeatable: true, frequency: "daily",
+    tags: ["exercise", "daily"] },
+  { title: "Monthly Workout Streak", difficulty: "Hard", xp: 3000, stat: "strength", category: "fitness",
+    description: "Maintain a rigorous daily workout routine for a full month", repeatable: false, frequency: "once",
+    tags: ["exercise", "milestone"], isPinned: true },
+
+  // ═══════════════════════════════════════════════════════════
+  // WORK — merged vague work tasks
+  // ═══════════════════════════════════════════════════════════
+  { title: "Email & Comms", difficulty: "Easy", xp: 200, stat: "discipline", category: "work",
+    description: "Clear inbox, respond to messages", repeatable: true, frequency: "daily",
+    tags: ["work", "daily"] },
+  { title: "Automation Tasks (n8n)", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
+    description: "Work on n8n automation flows", repeatable: true, frequency: "daily",
+    tags: ["work", "automation", "daily"] },
+  { title: "Agentic AI Research", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
+    description: "Study/build agentic AI systems", repeatable: true, frequency: "daily",
+    tags: ["work", "ai", "daily"] },
+  { title: "CyberExpo Development", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
+    description: "Work on CyberExpo project", repeatable: true, frequency: "daily",
+    tags: ["work", "development", "daily"] },
+  { title: "Zad University", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
+    description: "Continue Zad University coursework (game: 2048)", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["work", "education", "daily"] },
+  { title: "Deep Work Block (1hr+)", difficulty: "Hard", xp: 1500, stat: "discipline", category: "work",
+    description: "Complete a focused deep work session on a priority project", repeatable: true, frequency: "daily",
+    tags: ["work", "productivity", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // LEARNING — academic/research/language
+  // ═══════════════════════════════════════════════════════════
+  { title: "Academic Research", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
+    description: "Grad school / MPhil proposal / thesis work — at least 1 slide/page", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["academic", "research", "daily"], comment: "EBOOK/PLAYLIST" },
+  { title: "Juz Daily Scan", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
+    description: "Get 1pg/min overview of each juz page", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "quran", "learning", "daily"], comment: "EBOOK" },
+  { title: "Arabic Language (Pimsleur)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Pimsleur Arabic — at least 1 line / 10min video", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["language", "arabic", "daily"] },
+  { title: "Nahwu (Arabic Grammar)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Study Arabic grammar rules", repeatable: true, frequency: "daily",
+    tags: ["language", "arabic", "daily"] },
+  { title: "Yoruba Language Practice", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Practice Yoruba language skills", repeatable: true, frequency: "daily",
+    tags: ["language", "yoruba", "daily"] },
+  { title: "Seerah & Spiritual Knowledge", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Study Seerah / Khushu of the Ruh and Nafs", repeatable: true, frequency: "daily",
+    tags: ["islamic", "learning", "daily"] },
+  { title: "Money & Finance Research", difficulty: "Medium", xp: 500, stat: "intelligence", category: "learning",
+    description: "Research at least 1 money/investment idea", repeatable: true, frequency: "daily",
+    tags: ["finance", "learning", "daily"] },
+  { title: "Systematic Review (15min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
+    description: "At least 15 minutes of systematic review on any topic", repeatable: true, frequency: "daily",
+    tags: ["learning", "daily"] },
+  { title: "Effectiveness Audit", difficulty: "Easy", xp: 300, stat: "discipline", category: "personal",
+    description: "Review what worked today and what didn't", repeatable: true, frequency: "daily",
+    tags: ["reflection", "daily"] },
+  { title: "Liquid Drop Concentration", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
+    description: "Focus meditation — train concentration like a liquid drop", repeatable: true, frequency: "daily",
+    tags: ["focus", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // TECH/PROJECTS — merged from scattered work tasks
+  // ═══════════════════════════════════════════════════════════
+  { title: "MERN Full Stack Practice", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
+    description: "At least 15min of MERN stack coding practice", repeatable: true, frequency: "daily",
+    tags: ["tech", "coding", "daily"] },
+  { title: "Quantum Code / Real Maths", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
+    description: "Deep work on advanced math or quantum computing", repeatable: true, frequency: "daily",
+    tags: ["tech", "math", "daily"] },
+  { title: "Thesis Project (NoteBookLM)", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "work",
+    description: "Advance thesis project using NoteBookLM", repeatable: true, frequency: "daily",
+    tags: ["academic", "project", "daily"] },
+  { title: "Extras Research", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
+    description: "Explore extra research topics (floor796, etc.)", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["research", "daily"], comment: "https://floor796.com/" },
+
+  // ═══════════════════════════════════════════════════════════
+  // PERSONAL — mindset/habits (non-spiritual)
+  // ═══════════════════════════════════════════════════════════
+  { title: "Gratitude Log", difficulty: "Easy", xp: 200, stat: "discipline", category: "personal",
+    description: "Watch TeleGratitude or write 3 things you're grateful for", repeatable: true, frequency: "daily",
+    tags: ["gratitude", "daily"] },
+  { title: "Digital Detox (1hr)", difficulty: "Easy", xp: 300, stat: "willpower", category: "personal",
+    description: "Spend 1 hour away from screens/phone", repeatable: true, frequency: "daily",
+    tags: ["digital-detox", "daily"] },
+  { title: "Balance: Screen Time vs Sleep", difficulty: "Easy", xp: 300, stat: "stamina", category: "health",
+    description: "Ensure screen time doesn't cut into sleep", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["health", "sleep", "daily"] },
+  { title: "Daily Journal", difficulty: "Easy", xp: 200, stat: "discipline", category: "personal",
+    description: "Write a brief journal entry about your day", repeatable: true, frequency: "daily",
+    tags: ["reflection", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // HEALTH — merged from health + physical
+  // ═══════════════════════════════════════════════════════════
+  { title: "Sleep 7+ Hours", difficulty: "Easy", xp: 250, stat: "stamina", category: "health",
+    description: "Get at least 7 hours of quality sleep", repeatable: true, frequency: "daily",
+    tags: ["health", "sleep", "daily"] },
+  { title: "Drink 2L Water", difficulty: "Easy", xp: 150, stat: "stamina", category: "health",
+    description: "Hydrate properly — drink at least 2 liters of water", repeatable: true, frequency: "daily",
+    tags: ["health", "daily"] },
+  { title: "Fast Monday/Thursday", difficulty: "Easy", xp: 400, stat: "willpower", category: "spiritual",
+    description: "Voluntary sunnah fast on Monday or Thursday", repeatable: true, frequency: "weekly",
+    tags: ["islamic", "health", "weekly"] },
+  { title: "Walk 10k Steps", difficulty: "Medium", xp: 500, stat: "stamina", category: "fitness",
+    description: "Achieve 10,000 steps in a day", repeatable: true, frequency: "daily",
+    tags: ["exercise", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // SPIRITUAL CULTIVATION — merged from cultivation category
+  // ═══════════════════════════════════════════════════════════
+  { title: "Istighfar 100x", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+    description: "Seek forgiveness 100 times daily (Astaghfirullah)", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"] },
+  { title: "Salawat 100x", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+    description: "Send blessings upon the Prophet 100 times daily", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"] },
+  { title: "Give Sadaqah", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
+    description: "Give charity — even a smile counts as sadaqah", repeatable: true, frequency: "weekly",
+    tags: ["islamic", "charity", "weekly"] },
+  { title: "Make Tawbah (Sincere Repentance)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Make sincere repentance — turn back to Allah with fresh resolve", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"] }
 ];
 
 const GLOBAL_DEFAULT_QUESTS = (() => {
@@ -4418,8 +4587,139 @@ function calculateXPForNextLevel(level) {
   return Math.floor(10 * Math.pow(1.5, level));
 }
 
+// MIGRATION: Remove old default quests that were merged/renamed
+// Uses composite key matching (title-difficulty-xp-stat-category)
+// to safely remove only old defaults without touching new ones
+// ═══════════════════════════════════════════════════════════
+
+async function removeLegacyDefaultQuests() {
+  try {
+    const existingQuests = await db.quests.toArray();
+    const toRemove = [];
+
+    // Build set of legacy composite keys (title-difficulty-xp-stat-category)
+    // These are the OLD default values that differ from new ones
+    const legacyKeys = new Set([
+      // Old SACREFICE UR DESIRES (typo + 99999999 XP)
+      "SACREFICE UR DESIRES-Easy-99999999-willpower-personal",
+      "SACREFICE UR DESIRES-Medium-99999999-willpower-personal",
+      "SACREFICE UR DESIRES-Hard-99999999-willpower-personal",
+      // Old spiritual cluster (335 XP, personal category)
+      "Dua Daily-Easy-335-willpower-personal",
+      "Quiet Dhikr-Easy-335-willpower-personal",
+      "Sleeping Prayer-Easy-335-willpower-personal",
+      "Pray b4 Sleep then Quran Buffs-Easy-335-willpower-personal",
+      "Please ask for help from Allah in each sujuud-Easy-335-willpower-personal",
+      "think of imam abroad, Allah's is better-Easy-335-willpower-personal",
+      "After all, you asked to be close to the throne-Easy-335-willpower-personal",
+      "All Actions As Worship-Easy-33333-discipline-personal",
+      "Aura Farming With Allah-Easy-3310-willpower-personal",
+      "Selective fast (Jihad of silence): be like salah-Easy-3310-willpower-personal",
+      "Don't Disregard Allah in times of sin_softHeart-Easy-3310-willpower-personal",
+      "Nawwafi_Murájá-Easy-3310-willpower-personal",
+      "Take Haram Seriously, it's a big deal in GodSight.-Easy-3310-willpower-personal",
+      "LOCK IN: Be to Allah what fang yuan is to u PLTARM-Easy-3315-willpower-personal",
+      "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME-Easy-3315-willpower-personal",
+      "Always Choose the Pleasure of Allah-Easy-3315-willpower-personal",
+      "Be an Observer-Easy-3315-willpower-personal",
+      "Dont get stuck in a 1hr+ loop-Easy-3315-willpower-personal",
+      // Old Quran cluster (338 XP, learning category)
+      "Resurrection Spell-Easy-338-intelligence-learning",
+      "99 Names-Easy-338-discipline-learning",
+      "English Tafseer 1pg/Quran-Easy-338-intelligence-learning",
+      "Quran Word Memorization-Easy-500-intelligence-cultivation",
+      "Word4word Quran-Medium-238-intelligence-learning",
+      "Madina series-Medium-238-intelligence-learning",
+      "Hifz revision-Medium-238-intelligence-learning",
+      "MUJAWWAD .5P-Medium-238-discipline-personal",
+      "Teach Quran-Medium-238-intelligence-learning",
+      "Juz Daily - get 1pg/min of each juz pg-Medium-238-intelligence-learning",
+      "Revise students Quran with AudioBook || At least 1 page-Medium-238-discipline-learning",
+      "Systematic Review || At least 15 mins-Easy-338-intelligence-learning",
+      "Liquid Drop concentration-Easy-338-intelligence-learning",
+      // Old fitness cluster
+      "50 Push-ups (Punishment)-Easy-500-strength-physical",
+      "Complete 5 sets of 25 push-ups-Hard-1310-strength-personal",
+      "Do 100 push-ups throughout the day-Hard-1310-strength-personal",
+      "Complete a 30-minute intense agility drill session-Hard-1310-agility-personal",
+      "Do a 300m run-Hard-1310-agility-personal",
+      "Maintain a rigorous daily workout routine for a month-Hard-1310-strength-personal",
+      "Workout-Medium-238-strength-health",
+      "Posture Alignment-Easy-300-stamina-physical",
+      // Old work cluster
+      "Email-Easy-333-discipline-work",
+      "n8n tasks-Medium-238-discipline-work",
+      "Agentic Ai-Medium-238-discipline-work",
+      "CyberExpo_Dev-Medium-238-intelligence-work",
+      "Zad University-Medium-238-intelligence-work",
+      "Project-Medium-238-intelligence-work",
+      // Old learning cluster
+      "Grad school-Medium-238-intelligence-learning",
+      "Nahwu-Medium-238-intelligence-learning",
+      "Pimsleur Arabic || At least 1 Line || 10mins/1 vid-Medium-238-intelligence-learning",
+      "Yoruba perfection-Medium-238-intelligence-learning",
+      "Seerah / Khushu of the Ruh and Nafs-Medium-238-intelligence-learning",
+      "MERN FULL STACK || At least 15mins-Hard-1310-intelligence-learning",
+      "MPhil Proposal Research work || At least 1 Slide-Hard-1310-intelligence-learning",
+      "Real Maths-Hard-1310-intelligence-learning",
+      "Quantum Code-Hard-1310-intelligence-learning",
+      "Thesis Project NoteBookLM-Hard-1310-intelligence-work",
+      "extras Research-Medium-238-intelligence-work",
+      // Old personal/health
+      "HealthCheck-Easy-333-stamina-health",
+      "watch teleGratitude-Easy-333-discipline-personal",
+      "MultiTask => Brain =< Sleep-Medium-238-stamina-health",
+      "Money Research || At least 1 Idea-Medium-238-intelligence-personal",
+      "There is more to life than your desires-Easy-338-discipline-personal",
+      "people doing what u don't want to do-Easy-338-discipline-personal",
+      // Old cultivation
+      "Effectiveness Audit-Easy-500-discipline-cultivation",
+      "Seerah / Khushu of the Ruh and Nafs-Medium-238-intelligence-learning",
+    ]);
+
+    for (const quest of existingQuests) {
+      const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
+      if (legacyKeys.has(compositeKey)) {
+        toRemove.push(quest.id);
+      }
+    }
+
+    if (toRemove.length > 0) {
+      await db.quests.bulkDelete(toRemove);
+      console.log(`Migration: removed ${toRemove.length} legacy default quests`);
+
+      // Record in deletedQuests so they don't get re-added
+      for (const quest of existingQuests) {
+        if (toRemove.includes(quest.id)) {
+          const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
+          const existing = await db.deletedQuests.where('compositeKey').equals(compositeKey).first().catch(() => null);
+          if (!existing) {
+            await db.deletedQuests.add({ compositeKey }).catch(() => {});
+          }
+        }
+      }
+    }
+
+    return toRemove.length;
+  } catch (error) {
+    console.error('Error removing legacy defaults:', error);
+    return 0;
+  }
+}
+
+// Mark all new defaults so we can distinguish user-created quests
+function markNewDefaults() {
+  for (const quest of rawDefaultQuests) {
+    quest.isDefault = true;
+  }
+}
+markNewDefaults();
+
 async function initializeGame() {
   try {
+    // Migration: remove old merged defaults before loading new ones
+    await removeLegacyDefaultQuests();
+
     const defaultQuests = GLOBAL_DEFAULT_QUESTS;
     const existingQuests = await db.quests.toArray();
 
@@ -5550,10 +5850,11 @@ async function completeQuest(xp, stat, questElem) {
     // Play sound effect
     if (sounds && sounds.complete && typeof sounds.complete.play === 'function') sounds.complete.play();
 
-    // Remove the quest from DOM smoothly
+    // Hide quest from DOM (keep reference for undo)
     if (questElem) {
-      questElem.style.opacity = 0;
-      setTimeout(() => { if (questElem && questElem.parentNode) { questElem.remove(); updateQuestsEmptyState(); } }, 300);
+      questElem.style.opacity = '0';
+      questElem.style.transform = 'translateX(20px)';
+      questElem.style.transition = 'all 0.3s ease';
     }
 
     // Get the quest ID to update in database
@@ -5566,8 +5867,22 @@ async function completeQuest(xp, stat, questElem) {
     if (questId) {
       const quest = await db.quests.get(questId);
       if (quest) {
-        quest.status = 'completed';
-        quest.completedAt = new Date();
+        // Check if repeatable — apply frequency-based XP modifier
+        if (quest.repeatable && quest.frequency) {
+          const freqMultipliers = { daily: 0.33, weekly: 0.66, monthly: 1.0, once: 1.0 };
+          xp = Math.floor(xp * (freqMultipliers[quest.frequency] || 1.0));
+        }
+
+        if (quest.repeatable) {
+          // Repeatable: reset to inbox for next use
+          quest.status = 'inbox';
+          quest.completedAt = null;
+          quest.lastCompletedAt = new Date();
+        } else {
+          // One-time: mark as completed permanently
+          quest.status = 'completed';
+          quest.completedAt = new Date();
+        }
         await db.quests.put(quest);
       }
     }
@@ -5714,10 +6029,24 @@ async function completeQuest(xp, stat, questElem) {
     setTimeout(() => {
       if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
     }, 200);
-    showNotification(`Quest "${questTitle}" completed!`, "success"); // Show only success notification after all ops succeed
+
+    // Show undo toast (5-second window to revert)
+    const undoFn = async () => {
+      if (questId) {
+        const q = await db.quests.get(questId);
+        if (q) { q.status = 'inbox'; q.completedAt = null; await db.quests.put(q); }
+      }
+      if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; }
+      currentXP = Math.max(0, currentXP - xp);
+      const stats = (await db.playerStats.toArray())[0];
+      if (stats) { stats.xp = currentXP; await db.playerStats.put(stats); }
+      if (typeof updateXP === 'function') updateXP();
+      showNotification(`Quest "${questTitle}" restored.`, "info");
+    };
+    showUndoToast(questTitle, undoFn);
   } catch (error) {
     console.error('Error completing quest:', error);
-    // showNotification('Failed to complete quest', 'error'); // Removed to avoid duplicate/conflicting notifications
+    if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; }
   }
 }
 async function deleteQuest(questId, questElem) {
@@ -6086,6 +6415,41 @@ function showLevelUpOverlay(level) {
     overlay.classList.add('show');
     setTimeout(() => overlay.classList.remove('show'), 3000);
   }
+}
+
+// ═══════════════════════════════════════════════════════════
+// UNDO SYSTEM — 5-second undo window on quest completion
+// ═══════════════════════════════════════════════════════════
+let pendingUndo = null;
+
+function showUndoToast(questTitle, undoFn) {
+  if (pendingUndo) { clearTimeout(pendingUndo.timer); removeUndoToast(); }
+  const toast = document.createElement('div');
+  toast.id = 'undo-toast';
+  toast.className = 'undo-toast show';
+  toast.innerHTML = `<span>✓ Completed: <strong>${escapeHtml(questTitle)}</strong></span><button id="undo-btn">Undo</button>`;
+  document.body.appendChild(toast);
+  toast.querySelector('#undo-btn').addEventListener('click', () => { undoFn(); removeUndoToast(); });
+  pendingUndo = { timer: setTimeout(() => { removeUndoToast(); pendingUndo = null; }, 5000), toast };
+}
+
+function removeUndoToast() {
+  const toast = document.getElementById('undo-toast');
+  if (toast) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// ACHIEVEMENT UNLOCK OVERLAY
+// ═══════════════════════════════════════════════════════════
+function showAchievementUnlock(achievement) {
+  if (sounds && sounds.achievement && typeof sounds.achievement.play === 'function') try{ sounds.achievement.play(); }catch(e){}
+  const overlay = document.createElement('div');
+  overlay.className = 'achievement-unlock-overlay';
+  overlay.innerHTML = `<div class="achievement-unlock-card"><div class="achievement-unlock-icon">${achievement.icon || '🏆'}</div><div class="achievement-unlock-label">ACHIEVEMENT UNLOCKED</div><div class="achievement-unlock-title">${escapeHtml(achievement.title)}</div><div class="achievement-unlock-desc">${escapeHtml(achievement.description)}</div></div>`;
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => overlay.classList.add('show'));
+  setTimeout(() => { overlay.classList.remove('show'); setTimeout(() => overlay.remove(), 500); }, 4000);
+  overlay.addEventListener('click', () => { overlay.classList.remove('show'); setTimeout(() => overlay.remove(), 500); });
 }
 
 async function editUsername() {
@@ -8099,9 +8463,7 @@ async function checkAchievements(){
       const meets = def.condition ? def.condition(stats) : false;
       if (meets && existing && !existing.unlocked){
         existing.unlocked = true; existing.unlockedAt = new Date(); await db.achievements.put(existing);
-        // play sound and notify
-        if (sounds && sounds.achievement && typeof sounds.achievement.play === 'function') try{ sounds.achievement.play(); }catch(e){}
-        showNotification(`Achievement unlocked: ${existing.title}`);
+        showAchievementUnlock(existing);
       }
     }
     renderAchievements();
@@ -8240,5 +8602,67 @@ async function saveDefaultQuestsToFile() {
   } catch (error) {
     console.error('Error saving default quests:', error);
     showNotification('Failed to save default quests.', 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// DAILY RESET — fires once when date changes
+// ═══════════════════════════════════════════════════════════
+async function checkDailyReset() {
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const lastReset = localStorage.getItem('lastDailyReset');
+  if (lastReset !== today) {
+    localStorage.setItem('lastDailyReset', today);
+    const unfinishedQuests = document.querySelectorAll(".quest:not(.quest-edit-panel)").length;
+    if (unfinishedQuests > 0) {
+      const playerStats = await db.playerStats.toArray();
+      if (playerStats.length > 0) {
+        const stats = playerStats[0];
+        const penalty = Math.min(unfinishedQuests, 10);
+        stats.willpower = Math.max(0, stats.willpower - penalty);
+        await db.playerStats.put(stats);
+        if (typeof updateStats === 'function') updateStats();
+        showNotification(`Lost ${penalty} willpower due to ${unfinishedQuests} unfinished quests.`, "warning");
+      }
+    }
+    if (typeof refreshData === 'function') refreshData();
+  }
+}
+setInterval(checkDailyReset, 30000);
+
+// ═══════════════════════════════════════════════════════════
+// PENALTY ZONE
+// ═══════════════════════════════════════════════════════════
+async function enterPenaltyZone() {
+  if (document.getElementById("penalty-zone")) return;
+  const elem = document.createElement("div");
+  elem.id = "penalty-zone";
+  elem.innerHTML = `<h2>⚠️ Penalty Zone</h2><p>You've broken your streak. Complete these to restore:</p><ul id="penalty-quests"></ul>`;
+  document.querySelector(".container").prepend(elem);
+  const quests = [
+    { title: "50 push-ups", xp: 5, stat: "strength" },
+    { title: "Read 2 chapters", xp: 5, stat: "intelligence" },
+    { title: "30-min workout", xp: 5, stat: "stamina" },
+  ];
+  const list = document.getElementById("penalty-quests");
+  quests.forEach(q => {
+    const li = document.createElement("li");
+    li.className = "penalty-quest-item";
+    li.innerHTML = `<span>${escapeHtml(q.title)} (${q.xp} XP)</span><button onclick="completePenaltyQuest(this, ${q.xp}, '${q.stat}')">Complete</button>`;
+    list.appendChild(li);
+  });
+}
+
+async function completePenaltyQuest(btn, xp, stat) {
+  await completeQuest(xp, stat);
+  const item = btn.closest('li');
+  if (item) item.remove();
+  const list = document.getElementById("penalty-quests");
+  if (list && list.children.length === 0) {
+    const zone = document.getElementById("penalty-zone");
+    if (zone) { zone.style.opacity = '0'; setTimeout(() => zone.remove(), 300); }
+    showNotification("Penalty zone cleared!", "success");
+    if (typeof refreshData === 'function') refreshData();
   }
 }
