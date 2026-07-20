@@ -118,33 +118,19 @@ try {
 const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
-  // ═══════════════════════════════════════════════════════════
-  // ETERNAL QUEST — sacrifice (persists across all difficulties)
-  // ═══════════════════════════════════════════════════════════
-  { title: "Sacrifice Ur Desires", difficulty: "Easy", xp: 500, stat: "willpower", category: "spiritual",
-    description: "Renounce a desire for Allah's sake", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "core", "daily"] },
-  { title: "Sacrifice Ur Desires", difficulty: "Medium", xp: 1200, stat: "willpower", category: "spiritual",
-    description: "Give up something you enjoy for Allah", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "core", "daily"] },
-  { title: "Sacrifice Ur Desires", difficulty: "Hard", xp: 3000, stat: "willpower", category: "spiritual",
-    description: "Abandon a major comfort or habit for Allah", repeatable: true, frequency: "daily", isPinned: true,
+  // ═══════ SACRIFICE (merged from ×3 difficulties) ═══════
+  { title: "Sacrifice Ur Desires", difficulty: "Easy", xp: 3000, stat: "willpower", category: "spiritual",
+    description: "Renounce a desire, give up a luxury, or abandon a comfort for Allah's sake",
+    repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "core", "daily"] },
 
-  // ═══════════════════════════════════════════════════════════
-  // SPIRITUAL — merged daily adhkar/worship quests
-  // ═══════════════════════════════════════════════════════════
+  // ═══════ SPIRITUAL — core daily practices ═══════
   { title: "Daily Adhkar & Dua", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
     description: "Complete morning/evening adhkar, make dua, do quiet dhikr", repeatable: true, frequency: "daily",
     tags: ["islamic", "daily"], subtasks: ["Dua", "Dhikr", "Sleeping prayer", "Pray before sleep"] },
-  { title: "Seek Help in Every Sujood", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Ask Allah for help during each sujood in salah", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"] },
-  { title: "Remember: Allah's Reward is Greater", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Reflect on the Hereafter vs worldly distractions (imam abroad)", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Remember: You Asked to Be Close to Allah", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Reflect on your goal of closeness to the throne", repeatable: true, frequency: "daily",
+  { title: "Heart Reminders: Sujood & Hereafter", difficulty: "Easy", xp: 900, stat: "willpower", category: "spiritual",
+    description: "Ask Allah in sujuud + reflect on the Hereafter over this world + remember your closeness goal",
+    repeatable: true, frequency: "daily",
     tags: ["islamic", "daily", "mindset"] },
   { title: "All Actions as Worship", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
     description: "Intention every action as ibadah — work, eating, resting", repeatable: true, frequency: "daily",
@@ -158,31 +144,23 @@ const rawDefaultQuests = [
   { title: "Silence Fast (Jihad of Silence)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
     description: "Practice voluntary silence — guard tongue like salah guard", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "daily"] },
-  { title: "Don't Forget Allah in Times of Sin", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Maintain soft heart — turn to Allah even when sinning", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
   { title: "Night Prayer (Tahajjud)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
     description: "Wake for 1/3 page per raka — deep nawafil", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "daily"] },
-  { title: "Take Haram Seriously", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Remember: haram is a big deal in Allah's sight", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Lock In: Devotion Like Fang Yuan", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Be to Allah what fang yuan is to power — relentless devotion", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Control the Inner Voices", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Don't let nafs/whispers control you — stay disciplined", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Be an Observer", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Step back and observe your thoughts — don't get stuck in loops", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily", "mindset", "anti-loop"] },
-  { title: "Don't Waste 1hr+ in Loops", difficulty: "Easy", xp: 300, stat: "willpower", category: "personal",
-    description: "Don't get stuck in code loops, short videos, or mindless browsing", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["productivity", "daily", "anti-loop"], comment: "code, short videos" },
 
-  // ═══════════════════════════════════════════════════════════
-  // QURAN — merged study/memorization/recitation cluster
-  // ═══════════════════════════════════════════════════════════
+  // ═══════ NAFS (merged from: Don't Forget Allah, Take Haram Seriously, Lock In, Control Voices) ═══════
+  { title: "Control Nafs: Resist Haram & Whispers", difficulty: "Easy", xp: 1400, stat: "willpower", category: "spiritual",
+    description: "Don't forget Allah in sin + remember haram's weight + relentless devotion + silence the whispers",
+    repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily", "mindset"] },
+
+  // ═══════ OBSERVER (merged from: Be Observer + Don't Waste 1hr+ Loops) ═══════
+  { title: "Be an Observer - Avoid 1hr+ Loops", difficulty: "Easy", xp: 600, stat: "willpower", category: "spiritual",
+    description: "Step back, observe thoughts — don't get stuck in code loops, short videos, or mindless browsing",
+    repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily", "mindset", "anti-loop"], comment: "code, short videos" },
+
+  // ═══════ QURAN ═══════
   { title: "Quran Reading (1pg min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
     description: "Read at least 1 page of Quran with reflection", repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "daily"] },
@@ -212,20 +190,9 @@ const rawDefaultQuests = [
     description: "Revise students' Quran — at least 1 page with AudioBook", repeatable: true, frequency: "daily",
     tags: ["islamic", "teaching", "daily"], comment: "Use AudioBook for review" },
 
-  // ═══════════════════════════════════════════════════════════
-  // FITNESS — merged push-ups/agility/workout
-  // ═══════════════════════════════════════════════════════════
-  { title: "Body Maintenance", difficulty: "Easy", xp: 200, stat: "stamina", category: "fitness",
-    description: "Health check + posture alignment + hydration", repeatable: true, frequency: "daily",
-    tags: ["health", "daily"], subtasks: ["Posture check", "Drink water", "Stretch"] },
-  { title: "Push-up Progression", difficulty: "Easy", xp: 350, stat: "strength", category: "fitness",
-    description: "50 push-ups (punishment/conditioning)", repeatable: true, frequency: "daily",
-    tags: ["exercise", "daily"] },
-  { title: "Push-up Progression", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
-    description: "5 sets of 25 push-ups throughout the day", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["exercise", "daily"] },
-  { title: "Push-up Progression", difficulty: "Hard", xp: 1500, stat: "strength", category: "fitness",
-    description: "100 push-ups throughout the day", repeatable: true, frequency: "daily", isPinned: true,
+  // ═══════ FITNESS ═══════
+  { title: "Push-up Progression", difficulty: "Medium", xp: 1500, stat: "strength", category: "fitness",
+    description: "50–100 push-ups throughout the day (punishment/conditioning)", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["exercise", "daily"] },
   { title: "Agility Training", difficulty: "Hard", xp: 1500, stat: "agility", category: "fitness",
     description: "30-min intense agility drill OR 300m run", repeatable: true, frequency: "daily", isPinned: true,
@@ -237,9 +204,7 @@ const rawDefaultQuests = [
     description: "Maintain a rigorous daily workout routine for a full month", repeatable: false, frequency: "once",
     tags: ["exercise", "milestone"], isPinned: true },
 
-  // ═══════════════════════════════════════════════════════════
-  // WORK — merged vague work tasks
-  // ═══════════════════════════════════════════════════════════
+  // ═══════ WORK ═══════
   { title: "Email & Comms", difficulty: "Easy", xp: 200, stat: "discipline", category: "work",
     description: "Clear inbox, respond to messages", repeatable: true, frequency: "daily",
     tags: ["work", "daily"] },
@@ -259,9 +224,7 @@ const rawDefaultQuests = [
     description: "Complete a focused deep work session on a priority project", repeatable: true, frequency: "daily",
     tags: ["work", "productivity", "daily"] },
 
-  // ═══════════════════════════════════════════════════════════
-  // LEARNING — academic/research/language
-  // ═══════════════════════════════════════════════════════════
+  // ═══════ LEARNING ═══════
   { title: "Academic Research", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
     description: "Grad school / MPhil proposal / thesis work — at least 1 slide/page", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["academic", "research", "daily"], comment: "EBOOK/PLAYLIST" },
@@ -283,19 +246,14 @@ const rawDefaultQuests = [
   { title: "Money & Finance Research", difficulty: "Medium", xp: 500, stat: "intelligence", category: "learning",
     description: "Research at least 1 money/investment idea", repeatable: true, frequency: "daily",
     tags: ["finance", "learning", "daily"] },
-  { title: "Systematic Review (15min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
-    description: "At least 15 minutes of systematic review on any topic", repeatable: true, frequency: "daily",
-    tags: ["learning", "daily"] },
-  { title: "Effectiveness Audit", difficulty: "Easy", xp: 300, stat: "discipline", category: "personal",
-    description: "Review what worked today and what didn't", repeatable: true, frequency: "daily",
-    tags: ["reflection", "daily"] },
-  { title: "Liquid Drop Concentration", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
-    description: "Focus meditation — train concentration like a liquid drop", repeatable: true, frequency: "daily",
-    tags: ["focus", "daily"] },
 
-  // ═══════════════════════════════════════════════════════════
-  // TECH/PROJECTS — merged from scattered work tasks
-  // ═══════════════════════════════════════════════════════════
+  // ═══════ FOCUS & REVIEW (merged from: Systematic Review, Effectiveness Audit, Liquid Drop) ═══════
+  { title: "Focus & Systematic Review (15min+)", difficulty: "Easy", xp: 850, stat: "intelligence", category: "learning",
+    description: "Systematic review + effectiveness audit + liquid drop concentration practice",
+    repeatable: true, frequency: "daily",
+    tags: ["focus", "learning", "daily"] },
+
+  // ═══════ TECH/PROJECTS ═══════
   { title: "MERN Full Stack Practice", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
     description: "At least 15min of MERN stack coding practice", repeatable: true, frequency: "daily",
     tags: ["tech", "coding", "daily"] },
@@ -309,31 +267,23 @@ const rawDefaultQuests = [
     description: "Explore extra research topics (floor796, etc.)", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["research", "daily"], comment: "https://floor796.com/" },
 
-  // ═══════════════════════════════════════════════════════════
-  // PERSONAL — mindset/habits (non-spiritual)
-  // ═══════════════════════════════════════════════════════════
-  { title: "Gratitude Log", difficulty: "Easy", xp: 200, stat: "discipline", category: "personal",
-    description: "Watch TeleGratitude or write 3 things you're grateful for", repeatable: true, frequency: "daily",
-    tags: ["gratitude", "daily"] },
+  // ═══════ PERSONAL ═══════
+  { title: "Journal & Gratitude", difficulty: "Easy", xp: 400, stat: "discipline", category: "personal",
+    description: "Write journal entry + log 3 things you're grateful for (or TeleGratitude)",
+    repeatable: true, frequency: "daily",
+    tags: ["reflection", "gratitude", "daily"] },
   { title: "Digital Detox (1hr)", difficulty: "Easy", xp: 300, stat: "willpower", category: "personal",
     description: "Spend 1 hour away from screens/phone", repeatable: true, frequency: "daily",
     tags: ["digital-detox", "daily"] },
   { title: "Balance: Screen Time vs Sleep", difficulty: "Easy", xp: 300, stat: "stamina", category: "health",
     description: "Ensure screen time doesn't cut into sleep", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["health", "sleep", "daily"] },
-  { title: "Daily Journal", difficulty: "Easy", xp: 200, stat: "discipline", category: "personal",
-    description: "Write a brief journal entry about your day", repeatable: true, frequency: "daily",
-    tags: ["reflection", "daily"] },
 
-  // ═══════════════════════════════════════════════════════════
-  // HEALTH — merged from health + physical
-  // ═══════════════════════════════════════════════════════════
-  { title: "Sleep 7+ Hours", difficulty: "Easy", xp: 250, stat: "stamina", category: "health",
-    description: "Get at least 7 hours of quality sleep", repeatable: true, frequency: "daily",
-    tags: ["health", "sleep", "daily"] },
-  { title: "Drink 2L Water", difficulty: "Easy", xp: 150, stat: "stamina", category: "health",
-    description: "Hydrate properly — drink at least 2 liters of water", repeatable: true, frequency: "daily",
-    tags: ["health", "daily"] },
+  // ═══════ DAILY HEALTH ESSENTIALS (merged from: Sleep 7+ Hours, Drink 2L Water, Body Maintenance) ═══════
+  { title: "Daily Health Essentials", difficulty: "Easy", xp: 600, stat: "stamina", category: "health",
+    description: "7+ hrs sleep + 2L water + health check/posture/hydration",
+    repeatable: true, frequency: "daily",
+    tags: ["health", "daily"], subtasks: ["Sleep 7h+", "Drink 2L water", "Posture check", "Stretch"] },
   { title: "Fast Monday/Thursday", difficulty: "Easy", xp: 400, stat: "willpower", category: "spiritual",
     description: "Voluntary sunnah fast on Monday or Thursday", repeatable: true, frequency: "weekly",
     tags: ["islamic", "health", "weekly"] },
@@ -341,21 +291,15 @@ const rawDefaultQuests = [
     description: "Achieve 10,000 steps in a day", repeatable: true, frequency: "daily",
     tags: ["exercise", "daily"] },
 
-  // ═══════════════════════════════════════════════════════════
-  // SPIRITUAL CULTIVATION — merged from cultivation category
-  // ═══════════════════════════════════════════════════════════
-  { title: "Istighfar 100x", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
-    description: "Seek forgiveness 100 times daily (Astaghfirullah)", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"] },
-  { title: "Salawat 100x", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
-    description: "Send blessings upon the Prophet 100 times daily", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"] },
+  // ═══════ SPIRITUAL CULTIVATION ═══════
+  { title: "Daily Spiritual Remembrance (Istighfar + Salawat + Tawbah)", difficulty: "Easy", xp: 950, stat: "discipline", category: "spiritual",
+    description: "Astaghfirullah 100x + Salawat 100x + Make sincere Tawbah",
+    repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"],
+    subtasks: ["Istighfar 100x", "Salawat 100x", "Make Tawbah"] },
   { title: "Give Sadaqah", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
     description: "Give charity — even a smile counts as sadaqah", repeatable: true, frequency: "weekly",
-    tags: ["islamic", "charity", "weekly"] },
-  { title: "Make Tawbah (Sincere Repentance)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Make sincere repentance — turn back to Allah with fresh resolve", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"] }
+    tags: ["islamic", "charity", "weekly"] }
 ];
 
 const GLOBAL_DEFAULT_QUESTS = (() => {
@@ -6337,48 +6281,7 @@ function getRandomQuests(quests, count) {
   return shuffled.slice(0, count);
 }
 
-async function enterPenaltyZone() {
-  const penaltyZoneElem = document.createElement("div");
-  penaltyZoneElem.id = "penalty-zone";
-  penaltyZoneElem.innerHTML = `
-  <h2>Penalty Zone</h2>
-  <p>You've missed 3 consecutive days. Complete these extra challenges to return to regular quests:</p>
-  <ul id="penalty-quests"></ul>
-`;
-  document.querySelector(".container").appendChild(penaltyZoneElem);
-
-  const penaltyQuests = [
-    { title: "50 push-ups", xp: 5, stat: "strength" },
-    { title: "Read 2 chapters of a book", xp: 5, stat: "intelligence" },
-    { title: "30-minute intense workout", xp: 5, stat: "stamina" },
-  ];
-
-  const penaltyQuestsElem = document.getElementById("penalty-quests");
-  penaltyQuests.forEach((quest) => {
-    const questElem = document.createElement("li");
-    questElem.innerHTML = `
-    ${quest.title} (${quest.xp} XP)
-    <button onclick="completePenaltyQuest(${quest.xp}, '${quest.stat}')">Complete</button>
-  `;
-    penaltyQuestsElem.appendChild(questElem);
-  });
-}
-
-async function completePenaltyQuest(xp, stat) {
-  await completeQuest(xp, stat);
-  const penaltyQuestsElem = document.getElementById("penalty-quests");
-  if (penaltyQuestsElem.children.length === 1) {
-    exitPenaltyZone();
-  } else {
-    penaltyQuestsElem.removeChild(penaltyQuestsElem.firstChild);
-  }
-}
-
-function exitPenaltyZone() {
-  const penaltyZoneElem = document.getElementById("penalty-zone");
-  penaltyZoneElem.remove();
-  generateDailyQuests();
-}
+// Old penalty zone removed — replaced by new version at end of file
 
 function showNotification(message, type = "info") {
   const notification = document.createElement("div");
@@ -6656,51 +6559,7 @@ async function refreshData() {
   updateQuestCount(); // Update quest count display
 }
 
-// Function to update the UI with player stats
-function updateStatsDisplay(stats) {
-  statsElems["strength"].textContent = stats.strength;
-  statsElems["agility"].textContent = stats.agility;
-  statsElems["intelligence"].textContent = stats.intelligence;
-  statsElems["stamina"].textContent = stats.stamina;
-  statsElems["willpower"].textContent = stats.willpower;
-  statsElems["discipline"].textContent = stats.discipline;
-}
-
-// Updated restartGame function to add all tasks as new quests
-async function restartGame() {
-  await initializeGame(); // You might keep your existing initialization logic
-  const quests = await db.quests.toArray(); // Fetch all quests from the database
-
-  quests.forEach((quest, i) => {
-    const newQuestElem = createQuestElement(quest);
-    newQuestElem.style.animationDelay = `${i * 0.05}s`;
-    appendQuestWithAnimation(questsElem, newQuestElem);
-  });
-}
-
-// New resetGame function to remove all stats and quests
-async function resetGame() {
-  await db.delete(); // Deletes the entire database
-  await db.open(); // Reopen the database
-  // Re-initialize the player stats
-  await db.playerStats.add({
-    level: 0,
-    xp: 0,
-    strength: 0,
-    agility: 0,
-    intelligence: 0,
-    stamina: 0,
-    willpower: 0,
-    discipline: 0,
-    lastActive: new Date().toISOString().split("T")[0],
-    consecutiveMissedDays: 0,
-    username: "Heavenly_Dev|",
-    lastStreakCheck: null
-  });
-
-  // Optionally clear the displayed quests from the UI
-  questsElem.innerHTML = ""; // Clear current quests
-}
+// Dead functions removed: updateStatsDisplay, restartGame, resetGame
 
 // Clear All Game Data Function
 async function clearAllGameData() {
@@ -8585,25 +8444,7 @@ function initializeDueDateReminders() {
   setInterval(checkDueDateReminders, 300000);
 }
 
-// Export Game Functionality
-// Save Default Quests to File
-var saveDefaultsBtn = document.getElementById('save-default-quests-btn');
-if (saveDefaultsBtn) {
-  saveDefaultsBtn.addEventListener('click', async () => {
-    if (confirm('Are you sure you want to save the current default quests to file? This will overwrite the existing defaults.')) {
-      await saveDefaultQuestsToFile();
-    }
-  });
-}
-
-async function saveDefaultQuestsToFile() {
-  try {
-    showNotification("This feature is not fully implemented yet.", "info");
-  } catch (error) {
-    console.error('Error saving default quests:', error);
-    showNotification('Failed to save default quests.', 'error');
-  }
-}
+// saveDefaultQuestsToFile stub removed — not implemented
 
 // ═══════════════════════════════════════════════════════════
 // DAILY RESET — fires once when date changes
