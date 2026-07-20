@@ -6987,6 +6987,60 @@ select:focus {
 .penalty-quest-item button:hover { background: rgba(231, 76, 60, 0.3); }
 
 /* ═══════════════════════════════════════════════════════════ */
+/* QUEST FIELD STYLES (description, frequency, tags, subtasks)*/
+/* ═══════════════════════════════════════════════════════════ */
+.quest-description {
+  color: var(--text-secondary, #aaa);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin: 0.3rem 0 0.4rem 2.2rem;
+  opacity: 0.85;
+}
+.quest-frequency {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary, #aaa);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.freq-daily { background: rgba(74, 144, 226, 0.15); color: #4a90e2; border-color: rgba(74, 144, 226, 0.3); }
+.freq-weekly { background: rgba(155, 89, 182, 0.15); color: #9b59b6; border-color: rgba(155, 89, 182, 0.3); }
+.freq-monthly { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border-color: rgba(241, 196, 15, 0.3); }
+.freq-once { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border-color: rgba(46, 204, 113, 0.3); }
+.quest-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0.3rem 0 0 2.2rem;
+}
+.quest-tag {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary, #aaa);
+  opacity: 0.7;
+}
+.quest-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.3rem 0 0 2.2rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+.quest-subtask {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #aaa);
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════ */
 /* NEW CATEGORY COLORS                                       */
 /* ═══════════════════════════════════════════════════════════ */
 .category-spiritual { background: rgba(241, 196, 15, 0.15); color: #f1c40f; }

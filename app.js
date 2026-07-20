@@ -4955,6 +4955,12 @@ function createQuestElement(quest, animate = true) {
     }
   }
 
+  // Build new quest field elements
+  const freqBadge = quest.frequency ? `<span class="quest-frequency freq-${quest.frequency}">${quest.frequency}</span>` : '';
+  const descHTML = quest.description ? `<div class="quest-description">${escapeHtml(quest.description)}</div>` : '';
+  const tagsHTML = (quest.tags && quest.tags.length > 0) ? `<div class="quest-tag-list">${quest.tags.map(t => `<span class="quest-tag">${t}</span>`).join('')}</div>` : '';
+  const subtasksHTML = (quest.subtasks && quest.subtasks.length > 0) ? `<div class="quest-subtasks">${quest.subtasks.map(s => `<span class="quest-subtask">• ${escapeHtml(s)}</span>`).join('')}</div>` : '';
+
   questElem.innerHTML = `
     <div class="quest-content">
       <div class="quest-header">
@@ -4972,13 +4978,17 @@ function createQuestElement(quest, animate = true) {
           <i class="fas fa-heart"></i>
         </button>
       </div>
+      ${descHTML}
       <div class="quest-tags">
         <span class="quest-difficulty difficulty-${(quest.difficulty || 'medium').toLowerCase()}">${ quest.difficulty || 'Medium' }</span>
         <span class="quest-xp">${quest.xp || 0} XP</span>
         <span class="quest-stat stat-${quest.stat || 'discipline'}">${quest.stat || 'discipline'}</span>
         <span class="quest-category category-${(quest.category || 'personal').toLowerCase()}">${ quest.category || 'personal' }</span>
+        ${freqBadge}
         ${countdownHTML}
       </div>
+      ${tagsHTML}
+      ${subtasksHTML}
       ${ quest.comment ? `<div class="pinned-comment">${linkify(quest.comment)}</div>` : '' }
     </div>
   `;
