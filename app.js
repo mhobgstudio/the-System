@@ -118,188 +118,185 @@ try {
 const MAX_STAT = 10000;
 
 const rawDefaultQuests = [
-  // ═══════ SACRIFICE (merged from ×3 difficulties) ═══════
-  { title: "Sacrifice Ur Desires", difficulty: "Easy", xp: 3000, stat: "willpower", category: "spiritual",
-    description: "Renounce a desire, give up a luxury, or abandon a comfort for Allah's sake",
-    repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "core", "daily"] },
+  // ═══════════════════════════════════════════════════════════
+  // XP SYSTEM: Easy 150-500 | Medium 500-1200 | Hard 1500-3000
+  // Repeatable quests get ×0.33 (daily) / ×0.66 (weekly)
+  // Level formula: 10 × 1.5^level → Lv10~577, Lv20~33k
+  // ═══════════════════════════════════════════════════════════
 
-  // ═══════ SPIRITUAL — core daily practices ═══════
-  { title: "Daily Adhkar & Dua", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Complete morning/evening adhkar, make dua, do quiet dhikr", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"], subtasks: ["Dua", "Dhikr", "Sleeping prayer", "Pray before sleep"] },
-  { title: "Heart Reminders: Sujood & Hereafter", difficulty: "Easy", xp: 900, stat: "willpower", category: "spiritual",
-    description: "Ask Allah in sujuud + reflect on the Hereafter over this world + remember your closeness goal",
-    repeatable: true, frequency: "daily",
+  // ─── EASY: SPIRITUAL (9) ───
+  { title: "Sacrifice Your Desires", difficulty: "Easy", xp: 450, stat: "willpower", category: "spiritual",
+    description: "Renounce a desire or give up a comfort for Allah", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "core", "daily"], subtasks: ["Identify a desire", "Intention for Allah", "Act on it"] },
+  { title: "Daily Adhkar & Dua", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Morning/evening adhkar, make dua, do quiet dhikr", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"], subtasks: ["Morning adhkar", "Evening adhkar", "Make dua"] },
+  { title: "Heart Reflection", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Reflect on sujood, the Hereafter, and your goal of closeness to Allah", repeatable: true, frequency: "daily",
     tags: ["islamic", "daily", "mindset"] },
-  { title: "All Actions as Worship", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
+  { title: "All Actions as Worship", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
     description: "Intention every action as ibadah — work, eating, resting", repeatable: true, frequency: "daily",
     tags: ["islamic", "daily", "mindset"] },
-  { title: "Always Choose Allah's Pleasure", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "When faced with haram vs halal, choose Allah every time", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily"] },
-  { title: "Aura Farming With Allah", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Build spiritual presence — be conscious of Allah in every moment", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Silence Fast (Jihad of Silence)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Practice voluntary silence — guard tongue like salah guard", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily"] },
+  { title: "Silence Fast & Self-Observation", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
+    description: "Practice voluntary silence + observe your thoughts without reacting", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["islamic", "daily", "restraint"] },
   { title: "Night Prayer (Tahajjud)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
     description: "Wake for 1/3 page per raka — deep nawafil", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "daily"] },
-
-  // ═══════ NAFS (merged from: Don't Forget Allah, Take Haram Seriously, Lock In, Control Voices) ═══════
-  { title: "Control Nafs: Resist Haram & Whispers", difficulty: "Easy", xp: 1400, stat: "willpower", category: "spiritual",
-    description: "Don't forget Allah in sin + remember haram's weight + relentless devotion + silence the whispers",
-    repeatable: true, frequency: "daily",
+  { title: "Control Your Nafs", difficulty: "Easy", xp: 400, stat: "willpower", category: "spiritual",
+    description: "Don't forget Allah in sin + resist whispers + choose halal over haram", repeatable: true, frequency: "daily",
     tags: ["islamic", "daily", "mindset"] },
+  { title: "Daily Istighfar & Salawat", difficulty: "Easy", xp: 350, stat: "discipline", category: "spiritual",
+    description: "Astaghfirullah 100× + Salawat 100× + Make sincere tawbah", repeatable: true, frequency: "daily",
+    tags: ["islamic", "daily"], subtasks: ["Istighfar 100×", "Salawat 100×", "Sincere tawbah"] },
+  { title: "Give Sadaqah", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+    description: "Give charity — even a smile counts as sadaqah", repeatable: true, frequency: "weekly",
+    tags: ["islamic", "charity", "weekly"] },
 
-  // ═══════ OBSERVER (merged from: Be Observer + Don't Waste 1hr+ Loops) ═══════
-  { title: "Be an Observer - Avoid 1hr+ Loops", difficulty: "Easy", xp: 600, stat: "willpower", category: "spiritual",
-    description: "Step back, observe thoughts — don't get stuck in code loops, short videos, or mindless browsing",
-    repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily", "mindset", "anti-loop"], comment: "code, short videos" },
-
-  // ═══════ QURAN ═══════
-  { title: "Quran Reading (1pg min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
+  // ─── EASY: LEARNING (3) ───
+  { title: "Quran Reading (1pg min)", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
     description: "Read at least 1 page of Quran with reflection", repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "daily"] },
-  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 250, stat: "intelligence", category: "spiritual",
-    description: "Recite the 3 Quls (Surahs 112-114) for protection", repeatable: true, frequency: "daily", isPinned: true,
+  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 200, stat: "intelligence", category: "spiritual",
+    description: "Recite Surahs 112-114 for protection", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "quran", "daily"] },
-  { title: "99 Names Memorization", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
-    description: "Memorize/recite names of Allah — track progress", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "memorization", "daily"],
-    comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing" },
+  { title: "Systematic Review (15min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
+    description: "15 min of systematic review on any topic + effectiveness audit", repeatable: true, frequency: "daily",
+    tags: ["learning", "daily"] },
+
+  // ─── EASY: PERSONAL (3) ───
+  { title: "Journal & Gratitude", difficulty: "Easy", xp: 250, stat: "discipline", category: "personal",
+    description: "Write a journal entry + log 3 things you're grateful for", repeatable: true, frequency: "daily",
+    tags: ["reflection", "daily"] },
+  { title: "Digital Detox (1hr)", difficulty: "Easy", xp: 250, stat: "willpower", category: "personal",
+    description: "Spend 1 hour away from screens/phone", repeatable: true, frequency: "daily",
+    tags: ["detox", "daily"] },
+  { title: "Read 10 Pages", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
+    description: "Read 10 pages of any book", repeatable: true, frequency: "daily",
+    tags: ["reading", "daily"] },
+
+  // ─── EASY: HEALTH (3) ───
+  { title: "Balance: Screen vs Sleep", difficulty: "Easy", xp: 250, stat: "stamina", category: "health",
+    description: "Ensure screen time doesn't cut into sleep", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["health", "sleep", "daily"] },
+  { title: "Daily Health Essentials", difficulty: "Easy", xp: 350, stat: "stamina", category: "health",
+    description: "7+ hrs sleep + 2L water + posture check + hydration", repeatable: true, frequency: "daily",
+    tags: ["health", "daily"], subtasks: ["Sleep 7+ hrs", "Drink 2L water", "Posture check"] },
+  { title: "Fast Monday/Thursday", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
+    description: "Voluntary sunnah fast on Monday or Thursday", repeatable: true, frequency: "weekly",
+    tags: ["islamic", "health", "weekly"] },
+
+  // ─── EASY: WORK (1) ───
+  { title: "Email & Comms", difficulty: "Easy", xp: 150, stat: "discipline", category: "work",
+    description: "Clear inbox, respond to messages", repeatable: true, frequency: "daily",
+    tags: ["work", "daily"] },
+
+  // ─── EASY: SOCIAL (2) ───
+  { title: "Call/Text Family", difficulty: "Easy", xp: 200, stat: "discipline", category: "social",
+    description: "Reach out to a family member — check in, ask how they are", repeatable: true, frequency: "daily",
+    tags: ["social", "daily"] },
+  { title: "Help Someone Today", difficulty: "Easy", xp: 250, stat: "discipline", category: "social",
+    description: "Do something kind for someone — even small acts count", repeatable: true, frequency: "daily",
+    tags: ["social", "sadaqah", "daily"] },
+
+  // ─── EASY: FINANCE (1) ───
+  { title: "Track Expenses", difficulty: "Easy", xp: 200, stat: "discipline", category: "finance",
+    description: "Log today's expenses — know where your money goes", repeatable: true, frequency: "daily",
+    tags: ["finance", "daily"] },
+
+  // ─── EASY: CREATIVE (1) ───
+  { title: "Write 100 Words", difficulty: "Easy", xp: 200, stat: "intelligence", category: "creative",
+    description: "Write anything — journal, story, thoughts, ideas", repeatable: true, frequency: "daily",
+    tags: ["creative", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // MEDIUM QUESTS
+  // ═══════════════════════════════════════════════════════════
+
+  // ─── MEDIUM: SPIRITUAL (2) ───
   { title: "Quran Memorization (Hifz)", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
     description: "Memorize new ayahs or revise previously memorized portions", repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "memorization", "daily"] },
-  { title: "Mujawwad Recitation (0.5pg)", difficulty: "Medium", xp: 700, stat: "discipline", category: "spiritual",
-    description: "Recite half a page with proper Tajweed and melodious voice", repeatable: true, frequency: "daily",
+  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "discipline", category: "spiritual",
+    description: "Recite with Tajweed + revise students' Quran", repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "daily"] },
-  { title: "English Tafseer (1pg)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Read 1 page of English tafseer to understand Quran deeper", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "learning", "daily"] },
-  { title: "Word-for-Word Quran Study", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
-    description: "Study Quran word by word — understand Arabic meaning", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "arabic", "daily"] },
-  { title: "Madina Arabic Series", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Continue Madina Arabic textbook — build Quranic comprehension", repeatable: true, frequency: "daily",
-    tags: ["islamic", "arabic", "learning", "daily"] },
-  { title: "Teach Quran to Students", difficulty: "Medium", xp: 800, stat: "discipline", category: "spiritual",
-    description: "Revise students' Quran — at least 1 page with AudioBook", repeatable: true, frequency: "daily",
-    tags: ["islamic", "teaching", "daily"], comment: "Use AudioBook for review" },
 
-  // ═══════ FITNESS ═══════
-  { title: "Push-up Progression", difficulty: "Medium", xp: 1500, stat: "strength", category: "fitness",
-    description: "50–100 push-ups throughout the day (punishment/conditioning)", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["exercise", "daily"] },
-  { title: "Agility Training", difficulty: "Hard", xp: 1500, stat: "agility", category: "fitness",
-    description: "30-min intense agility drill OR 300m run", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["exercise", "daily"] },
-  { title: "Daily Workout", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
-    description: "Complete a full workout session", repeatable: true, frequency: "daily",
-    tags: ["exercise", "daily"] },
-  { title: "Monthly Workout Streak", difficulty: "Hard", xp: 3000, stat: "strength", category: "fitness",
-    description: "Maintain a rigorous daily workout routine for a full month", repeatable: false, frequency: "once",
-    tags: ["exercise", "milestone"], isPinned: true },
-
-  // ═══════ WORK ═══════
-  { title: "Email & Comms", difficulty: "Easy", xp: 200, stat: "discipline", category: "work",
-    description: "Clear inbox, respond to messages", repeatable: true, frequency: "daily",
-    tags: ["work", "daily"] },
-  { title: "Automation Tasks (n8n)", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
-    description: "Work on n8n automation flows", repeatable: true, frequency: "daily",
-    tags: ["work", "automation", "daily"] },
-  { title: "Agentic AI Research", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
-    description: "Study/build agentic AI systems", repeatable: true, frequency: "daily",
-    tags: ["work", "ai", "daily"] },
-  { title: "CyberExpo Development", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
-    description: "Work on CyberExpo project", repeatable: true, frequency: "daily",
-    tags: ["work", "development", "daily"] },
-  { title: "Zad University", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
-    description: "Continue Zad University coursework (game: 2048)", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["work", "education", "daily"] },
-  { title: "Deep Work Block (1hr+)", difficulty: "Hard", xp: 1500, stat: "discipline", category: "work",
-    description: "Complete a focused deep work session on a priority project", repeatable: true, frequency: "daily",
-    tags: ["work", "productivity", "daily"] },
-
-  // ═══════ LEARNING ═══════
-  { title: "Academic Research", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
-    description: "Grad school / MPhil proposal / thesis work — at least 1 slide/page", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["academic", "research", "daily"], comment: "EBOOK/PLAYLIST" },
-  { title: "Juz Daily Scan", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
-    description: "Get 1pg/min overview of each juz page", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "quran", "learning", "daily"], comment: "EBOOK" },
-  { title: "Arabic Language (Pimsleur)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+  // ─── MEDIUM: LEARNING (8) ───
+  { title: "Quran Deep Study", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
+    description: "English tafseer + word-for-word + juz scan — understand Quran deeper", repeatable: true, frequency: "daily",
+    tags: ["islamic", "quran", "learning", "daily"], subtasks: ["Tafseer 1pg", "Word-for-word study", "Juz scan"] },
+  { title: "Madina Arabic & Grammar", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
+    description: "Continue Madina Arabic textbook + study grammar rules", repeatable: true, frequency: "daily",
+    tags: ["language", "arabic", "daily"] },
+  { title: "Arabic Conversation (Pimsleur)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
     description: "Pimsleur Arabic — at least 1 line / 10min video", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["language", "arabic", "daily"] },
-  { title: "Nahwu (Arabic Grammar)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Study Arabic grammar rules", repeatable: true, frequency: "daily",
-    tags: ["language", "arabic", "daily"] },
+  { title: "Academic Research & Thesis", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
+    description: "Grad school / MPhil / thesis work — at least 1 slide/page", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["academic", "research", "daily"] },
   { title: "Yoruba Language Practice", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
     description: "Practice Yoruba language skills", repeatable: true, frequency: "daily",
     tags: ["language", "yoruba", "daily"] },
   { title: "Seerah & Spiritual Knowledge", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
     description: "Study Seerah / Khushu of the Ruh and Nafs", repeatable: true, frequency: "daily",
     tags: ["islamic", "learning", "daily"] },
-  { title: "Money & Finance Research", difficulty: "Medium", xp: 500, stat: "intelligence", category: "learning",
+  { title: "Money & Finance Research", difficulty: "Medium", xp: 500, stat: "intelligence", category: "finance",
     description: "Research at least 1 money/investment idea", repeatable: true, frequency: "daily",
     tags: ["finance", "learning", "daily"] },
+  { title: "Budget Review", difficulty: "Medium", xp: 400, stat: "discipline", category: "finance",
+    description: "Review weekly budget — income vs expenses", repeatable: true, frequency: "weekly",
+    tags: ["finance", "weekly"] },
 
-  // ═══════ FOCUS & REVIEW (merged from: Systematic Review, Effectiveness Audit, Liquid Drop) ═══════
-  { title: "Focus & Systematic Review (15min+)", difficulty: "Easy", xp: 850, stat: "intelligence", category: "learning",
-    description: "Systematic review + effectiveness audit + liquid drop concentration practice",
-    repeatable: true, frequency: "daily",
-    tags: ["focus", "learning", "daily"] },
-
-  // ═══════ TECH/PROJECTS ═══════
-  { title: "MERN Full Stack Practice", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
-    description: "At least 15min of MERN stack coding practice", repeatable: true, frequency: "daily",
-    tags: ["tech", "coding", "daily"] },
-  { title: "Quantum Code / Real Maths", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
-    description: "Deep work on advanced math or quantum computing", repeatable: true, frequency: "daily",
-    tags: ["tech", "math", "daily"] },
-  { title: "Thesis Project (NoteBookLM)", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "work",
-    description: "Advance thesis project using NoteBookLM", repeatable: true, frequency: "daily",
-    tags: ["academic", "project", "daily"] },
+  // ─── MEDIUM: WORK (4) ───
+  { title: "AI & Automation Work", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
+    description: "n8n automation flows + agentic AI research", repeatable: true, frequency: "daily",
+    tags: ["work", "ai", "daily"], subtasks: ["n8n tasks", "Agentic AI study"] },
+  { title: "CyberExpo Development", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
+    description: "Work on CyberExpo project", repeatable: true, frequency: "daily",
+    tags: ["work", "development", "daily"] },
+  { title: "Zad University", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
+    description: "Continue Zad University coursework (game: 2048)", repeatable: true, frequency: "daily", isPinned: true,
+    tags: ["work", "education", "daily"] },
   { title: "Extras Research", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
     description: "Explore extra research topics (floor796, etc.)", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["research", "daily"], comment: "https://floor796.com/" },
+    tags: ["research", "daily"] },
 
-  // ═══════ PERSONAL ═══════
-  { title: "Journal & Gratitude", difficulty: "Easy", xp: 400, stat: "discipline", category: "personal",
-    description: "Write journal entry + log 3 things you're grateful for (or TeleGratitude)",
-    repeatable: true, frequency: "daily",
-    tags: ["reflection", "gratitude", "daily"] },
-  { title: "Digital Detox (1hr)", difficulty: "Easy", xp: 300, stat: "willpower", category: "personal",
-    description: "Spend 1 hour away from screens/phone", repeatable: true, frequency: "daily",
-    tags: ["digital-detox", "daily"] },
-  { title: "Balance: Screen Time vs Sleep", difficulty: "Easy", xp: 300, stat: "stamina", category: "health",
-    description: "Ensure screen time doesn't cut into sleep", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["health", "sleep", "daily"] },
+  // ─── MEDIUM: FITNESS (1) ───
+  { title: "Daily Workout", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
+    description: "Complete a full workout session — push-ups, cardio, or strength", repeatable: true, frequency: "daily",
+    tags: ["exercise", "daily"], subtasks: ["Warm-up", "Main workout", "Cool-down"] },
 
-  // ═══════ DAILY HEALTH ESSENTIALS (merged from: Sleep 7+ Hours, Drink 2L Water, Body Maintenance) ═══════
-  { title: "Daily Health Essentials", difficulty: "Easy", xp: 600, stat: "stamina", category: "health",
-    description: "7+ hrs sleep + 2L water + health check/posture/hydration",
-    repeatable: true, frequency: "daily",
-    tags: ["health", "daily"], subtasks: ["Sleep 7h+", "Drink 2L water", "Posture check", "Stretch"] },
-  { title: "Fast Monday/Thursday", difficulty: "Easy", xp: 400, stat: "willpower", category: "spiritual",
-    description: "Voluntary sunnah fast on Monday or Thursday", repeatable: true, frequency: "weekly",
-    tags: ["islamic", "health", "weekly"] },
-  { title: "Walk 10k Steps", difficulty: "Medium", xp: 500, stat: "stamina", category: "fitness",
-    description: "Achieve 10,000 steps in a day", repeatable: true, frequency: "daily",
+  // ─── MEDIUM: SOCIAL (1) ───
+  { title: "Deep Conversation", difficulty: "Medium", xp: 500, stat: "discipline", category: "social",
+    description: "Have a meaningful conversation — ask deeper questions, listen actively", repeatable: true, frequency: "weekly",
+    tags: ["social", "weekly"] },
+
+  // ─── MEDIUM: CREATIVE (1) ───
+  { title: "Creative Session (30min)", difficulty: "Medium", xp: 500, stat: "intelligence", category: "creative",
+    description: "Draw, sketch, write, or create something — 30 min of creative work", repeatable: true, frequency: "daily",
+    tags: ["creative", "daily"] },
+
+  // ═══════════════════════════════════════════════════════════
+  // HARD QUESTS
+  // ═══════════════════════════════════════════════════════════
+
+  // ─── HARD: FITNESS (2) ───
+  { title: "Agility Training", difficulty: "Hard", xp: 1500, stat: "agility", category: "fitness",
+    description: "30-min intense agility drill OR 300m run", repeatable: true, frequency: "daily", isPinned: true,
     tags: ["exercise", "daily"] },
+  { title: "Monthly Workout Streak", difficulty: "Hard", xp: 3000, stat: "strength", category: "fitness",
+    description: "Maintain a rigorous daily workout routine for a full month", repeatable: false, frequency: "once",
+    tags: ["exercise", "milestone"], isPinned: true },
 
-  // ═══════ SPIRITUAL CULTIVATION ═══════
-  { title: "Daily Spiritual Remembrance (Istighfar + Salawat + Tawbah)", difficulty: "Easy", xp: 950, stat: "discipline", category: "spiritual",
-    description: "Astaghfirullah 100x + Salawat 100x + Make sincere Tawbah",
-    repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"],
-    subtasks: ["Istighfar 100x", "Salawat 100x", "Make Tawbah"] },
-  { title: "Give Sadaqah", difficulty: "Easy", xp: 400, stat: "discipline", category: "spiritual",
-    description: "Give charity — even a smile counts as sadaqah", repeatable: true, frequency: "weekly",
-    tags: ["islamic", "charity", "weekly"] }
+  // ─── HARD: WORK (1) ───
+  { title: "Deep Work Block (1hr+)", difficulty: "Hard", xp: 1500, stat: "discipline", category: "work",
+    description: "Complete a focused deep work session on a priority project", repeatable: true, frequency: "daily",
+    tags: ["work", "productivity", "daily"] },
+
+  // ─── HARD: LEARNING (1) ───
+  { title: "Advanced Tech Practice", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
+    description: "MERN full stack / quantum code / real maths — deep technical work", repeatable: true, frequency: "daily",
+    tags: ["tech", "coding", "daily"], subtasks: ["MERN practice", "Quantum/Math deep work"] },
 ];
 
 const GLOBAL_DEFAULT_QUESTS = (() => {
@@ -4541,89 +4538,74 @@ async function removeLegacyDefaultQuests() {
     const existingQuests = await db.quests.toArray();
     const toRemove = [];
 
-    // Build set of legacy composite keys (title-difficulty-xp-stat-category)
-    // These are the OLD default values that differ from new ones
-    const legacyKeys = new Set([
-      // Old SACREFICE UR DESIRES (typo + 99999999 XP)
-      "SACREFICE UR DESIRES-Easy-99999999-willpower-personal",
-      "SACREFICE UR DESIRES-Medium-99999999-willpower-personal",
-      "SACREFICE UR DESIRES-Hard-99999999-willpower-personal",
-      // Old spiritual cluster (335 XP, personal category)
-      "Dua Daily-Easy-335-willpower-personal",
-      "Quiet Dhikr-Easy-335-willpower-personal",
-      "Sleeping Prayer-Easy-335-willpower-personal",
-      "Pray b4 Sleep then Quran Buffs-Easy-335-willpower-personal",
-      "Please ask for help from Allah in each sujuud-Easy-335-willpower-personal",
-      "think of imam abroad, Allah's is better-Easy-335-willpower-personal",
-      "After all, you asked to be close to the throne-Easy-335-willpower-personal",
-      "All Actions As Worship-Easy-33333-discipline-personal",
-      "Aura Farming With Allah-Easy-3310-willpower-personal",
-      "Selective fast (Jihad of silence): be like salah-Easy-3310-willpower-personal",
-      "Don't Disregard Allah in times of sin_softHeart-Easy-3310-willpower-personal",
-      "Nawwafi_Murájá-Easy-3310-willpower-personal",
-      "Take Haram Seriously, it's a big deal in GodSight.-Easy-3310-willpower-personal",
-      "LOCK IN: Be to Allah what fang yuan is to u PLTARM-Easy-3315-willpower-personal",
-      "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME-Easy-3315-willpower-personal",
-      "Always Choose the Pleasure of Allah-Easy-3315-willpower-personal",
-      "Be an Observer-Easy-3315-willpower-personal",
-      "Dont get stuck in a 1hr+ loop-Easy-3315-willpower-personal",
-      // Old Quran cluster (338 XP, learning category)
-      "Resurrection Spell-Easy-338-intelligence-learning",
-      "99 Names-Easy-338-discipline-learning",
-      "English Tafseer 1pg/Quran-Easy-338-intelligence-learning",
-      "Quran Word Memorization-Easy-500-intelligence-cultivation",
-      "Word4word Quran-Medium-238-intelligence-learning",
-      "Madina series-Medium-238-intelligence-learning",
-      "Hifz revision-Medium-238-intelligence-learning",
-      "MUJAWWAD .5P-Medium-238-discipline-personal",
-      "Teach Quran-Medium-238-intelligence-learning",
-      "Juz Daily - get 1pg/min of each juz pg-Medium-238-intelligence-learning",
-      "Revise students Quran with AudioBook || At least 1 page-Medium-238-discipline-learning",
-      "Systematic Review || At least 15 mins-Easy-338-intelligence-learning",
-      "Liquid Drop concentration-Easy-338-intelligence-learning",
-      // Old fitness cluster
-      "50 Push-ups (Punishment)-Easy-500-strength-physical",
-      "Complete 5 sets of 25 push-ups-Hard-1310-strength-personal",
-      "Do 100 push-ups throughout the day-Hard-1310-strength-personal",
-      "Complete a 30-minute intense agility drill session-Hard-1310-agility-personal",
-      "Do a 300m run-Hard-1310-agility-personal",
-      "Maintain a rigorous daily workout routine for a month-Hard-1310-strength-personal",
-      "Workout-Medium-238-strength-health",
-      "Posture Alignment-Easy-300-stamina-physical",
-      // Old work cluster
-      "Email-Easy-333-discipline-work",
-      "n8n tasks-Medium-238-discipline-work",
-      "Agentic Ai-Medium-238-discipline-work",
-      "CyberExpo_Dev-Medium-238-intelligence-work",
-      "Zad University-Medium-238-intelligence-work",
-      "Project-Medium-238-intelligence-work",
-      // Old learning cluster
-      "Grad school-Medium-238-intelligence-learning",
-      "Nahwu-Medium-238-intelligence-learning",
-      "Pimsleur Arabic || At least 1 Line || 10mins/1 vid-Medium-238-intelligence-learning",
-      "Yoruba perfection-Medium-238-intelligence-learning",
-      "Seerah / Khushu of the Ruh and Nafs-Medium-238-intelligence-learning",
-      "MERN FULL STACK || At least 15mins-Hard-1310-intelligence-learning",
-      "MPhil Proposal Research work || At least 1 Slide-Hard-1310-intelligence-learning",
-      "Real Maths-Hard-1310-intelligence-learning",
-      "Quantum Code-Hard-1310-intelligence-learning",
-      "Thesis Project NoteBookLM-Hard-1310-intelligence-work",
-      "extras Research-Medium-238-intelligence-work",
-      // Old personal/health
-      "HealthCheck-Easy-333-stamina-health",
-      "watch teleGratitude-Easy-333-discipline-personal",
-      "MultiTask => Brain =< Sleep-Medium-238-stamina-health",
-      "Money Research || At least 1 Idea-Medium-238-intelligence-personal",
-      "There is more to life than your desires-Easy-338-discipline-personal",
-      "people doing what u don't want to do-Easy-338-discipline-personal",
-      // Old cultivation
-      "Effectiveness Audit-Easy-500-discipline-cultivation",
-      "Seerah / Khushu of the Ruh and Nafs-Medium-238-intelligence-learning",
+    // All legacy default quest titles (v0 original + v1 first merge + v2 second merge)
+    const legacyTitles = new Set([
+      // v0 originals (typo + 99999999 XP)
+      "SACREFICE UR DESIRES", "SACRIFICE YOUR DESIRES",
+      "Dua Daily", "Quiet Dhikr", "Sleeping Prayer", "Pray b4 Sleep then Quran Buffs",
+      "Please ask for help from Allah in each sujuud", "think of imam abroad, Allah's is better",
+      "After all, you asked to be close to the throne", "All Actions As Worship",
+      "Aura Farming With Allah", "Selective fast (Jihad of silence): be like salah",
+      "Don't Disregard Allah in times of sin_softHeart", "Nawwafi_Murájá",
+      "Take Haram Seriously, it's a big deal in GodSight.",
+      "LOCK IN: Be to Allah what fang yuan is to u PLTARM",
+      "I WILL NOT LET THE VOICES IN MY HEAD CONTROL ME",
+      "Always Choose the Pleasure of Allah", "Be an Observer", "Dont get stuck in a 1hr+ loop",
+      "Resurrection Spell", "99 Names", "English Tafseer 1pg/Quran",
+      "Quran Word Memorization", "Word4word Quran", "Madina series", "Hifz revision",
+      "MUJAWWAD .5P", "Teach Quran",
+      "Juz Daily - get 1pg/min of each juz pg",
+      "Revise students Quran with AudioBook || At least 1 page",
+      "Systematic Review || At least 15 mins", "Liquid Drop concentration",
+      "50 Push-ups (Punishment)", "Complete 5 sets of 25 push-ups",
+      "Do 100 push-ups throughout the day",
+      "Complete a 30-minute intense agility drill session", "Do a 300m run",
+      "Maintain a rigorous daily workout routine for a month", "Workout", "Posture Alignment",
+      "Email", "n8n tasks", "Agentic Ai", "CyberExpo_Dev", "Zad University", "Project",
+      "Grad school", "Nahwu",
+      "Pimsleur Arabic || At least 1 Line || 10mins/1 vid", "Yoruba perfection",
+      "Seerah / Khushu of the Ruh and Nafs",
+      "MERN FULL STACK || At least 15mins",
+      "MPhil Proposal Research work || At least 1 Slide",
+      "Real Maths", "Quantum Code", "Thesis Project NoteBookLM", "extras Research",
+      "HealthCheck", "watch teleGratitude", "MultiTask => Brain =< Sleep",
+      "Money Research || At least 1 Idea",
+      "There is more to life than your desires", "people doing what u don't want to do",
+      "Effectiveness Audit", "Quran Word Memorization",
+      // v1 merged (our first refactor)
+      "Sacrifice Ur Desires", "Heart Reminders: Sujood & Hereafter",
+      "Control Nafs: Resist Haram & Whispers", "Be an Observer - Avoid 1hr+ Loops",
+      "Silence Fast (Jihad of Silence)", "Always Choose Allah's Pleasure",
+      "English Tafseer (1pg)", "Word-for-Word Quran Study",
+      "Madina Arabic Series", "Teach Quran to Students",
+      "Mujawwad Recitation (0.5pg)", "99 Names Memorization",
+      "Push-up Progression", "Agility Training", "Monthly Workout Streak",
+      "Automation Tasks (n8n)", "Agentic AI Research", "CyberExpo Development",
+      "Deep Work Block (1hr+)", "Academic Research", "Juz Daily Scan",
+      "Arabic Language (Pimsleur)", "Nahwu (Arabic Grammar)",
+      "Yoruba Language Practice", "Seerah & Spiritual Knowledge",
+      "Money & Finance Research", "Extras Research",
+      "MERN Full Stack Practice", "Quantum Code / Real Maths",
+      "Thesis Project (NoteBookLM)",
+      "Journal & Gratitude", "Digital Detox (1hr)",
+      "Balance: Screen Time vs Sleep", "Daily Health Essentials",
+      "Fast Monday/Thursday", "Walk 10k Steps",
+      "Daily Spiritual Remembrance (Istighfar + Salawat + Tawbah)", "Give Sadaqah",
+      "Focus & Systematic Review (15min+)",
+      // v2 second merge (just replaced)
+      "Sacrifice Your Desires", "Heart Reflection",
+      "Silence Fast & Self-Observation", "Control Your Nafs",
+      "Daily Istighfar & Salawat", "The 3 Quls (Protection)",
+      "Quran Reading (1pg min)", "Systematic Review (15min)",
+      "Quran Deep Study", "Madina Arabic & Grammar",
+      "Arabic Conversation (Pimsleur)", "Academic Research & Thesis",
+      "Mujawwad Recitation & Teaching", "AI & Automation Work",
+      "Deep Conversation", "Creative Session (30min)",
+      "Email & Comms", "Advanced Tech Practice",
     ]);
 
     for (const quest of existingQuests) {
-      const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
-      if (legacyKeys.has(compositeKey)) {
+      if (legacyTitles.has(quest.title)) {
         toRemove.push(quest.id);
       }
     }
