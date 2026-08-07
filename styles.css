@@ -1726,18 +1726,27 @@ button:hover {
   display: flex;
   gap: 4px;
   align-items: center;
-}
-
-.edit-xp-group {
+}.edit-xp-group {
   display: flex;
   align-items: center;
   gap: 4px;
 }
-
 .edit-xp-group label {
   color: var(--text-secondary);
   font-size: 0.75rem;
   font-weight: 500;
+}
+.edit-repeat-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.edit-repeat-group label {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-right: 4px;
 }
 
 .edit-stat-group {
@@ -7012,6 +7021,28 @@ select:focus {
 .freq-weekly { background: rgba(155, 89, 182, 0.15); color: #9b59b6; border-color: rgba(155, 89, 182, 0.3); }
 .freq-monthly { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border-color: rgba(241, 196, 15, 0.3); }
 .freq-once { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border-color: rgba(46, 204, 113, 0.3); }
+.quest-reset-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 193, 7, 0.12);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.12);
+}
+.quest-reset-badge i {
+  animation: reset-badge-pulse 2s ease-in-out infinite;
+}
+@keyframes reset-badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 .quest-tag-list {
   display: flex;
   flex-wrap: wrap;

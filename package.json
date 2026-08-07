@@ -1,0 +1,32 @@
+{
+  "name": "solo-leveling-system",
+  "version": "2.0.0",
+  "description": "Solo Leveling: Your Path to Power — A gamified productivity system with quests, XP tracking, streak systems, and character stats",
+  "author": "Heavenly_Dev",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "gamified-productivity",
+    "solo-leveling",
+    "quest-tracker",
+    "pomodoro",
+    "self-improvement"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "consolidate-quotes": "python3 data/consolidate-quotes.py",
+    "start": "echo 'Open index.html in your browser or serve with: npx serve .'",
+    "serve": "npx serve ."
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "dexie": "^3.2.2",
+    "howler": "^2.2.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

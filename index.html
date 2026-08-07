@@ -9,7 +9,7 @@
     <meta property="og:type" content="website">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4a90e2">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -414,7 +414,7 @@
         <div class="achievements-header">
           <h3>Achievements</h3>
           <div class="achievement-progress">
-            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">35</span>
+            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">40</span>
             <div class="achievement-progress-bar">
               <div class="achievement-progress-fill" id="achievement-progress-fill"></div>
             </div>
@@ -488,11 +488,25 @@
           
           <div class="edit-meta-row">
             <div class="edit-category-group">
-              <button type="button" class="tag-button glow-button selected" data-category="Work">Work</button>
-              <button type="button" class="tag-button glow-button" data-category="Health">Health</button>
-              <button type="button" class="tag-button glow-button" data-category="Learning">Learning</button>
-              <button type="button" class="tag-button glow-button" data-category="Personal">Personal</button>
-              <button type="button" class="tag-button glow-button" data-category="Cultivation">Cultivation</button>
+              <button type="button" class="tag-button glow-button selected" data-category="work">Work</button>
+              <button type="button" class="tag-button glow-button" data-category="health">Health</button>
+              <button type="button" class="tag-button glow-button" data-category="learning">Learning</button>
+              <button type="button" class="tag-button glow-button" data-category="personal">Personal</button>
+              <button type="button" class="tag-button glow-button" data-category="spiritual">Spiritual</button>
+              <button type="button" class="tag-button glow-button" data-category="fitness">Fitness</button>
+              <button type="button" class="tag-button glow-button" data-category="social">Social</button>
+              <button type="button" class="tag-button glow-button" data-category="finance">Finance</button>
+              <button type="button" class="tag-button glow-button" data-category="creative">Creative</button>
+            </div>
+          </div>
+
+          <div class="edit-meta-row">
+            <div class="edit-repeat-group">
+              <label>Repeat</label>
+              <button type="button" class="tag-button tag-sm glow-button selected" data-repeat="once">Once</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="daily">Daily</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="weekly">Weekly</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="monthly">Monthly</button>
             </div>
           </div>
 
@@ -504,7 +518,7 @@
             </div>
             <div class="edit-xp-group">
               <label>XP</label>
-              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
+              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="500" min="50" max="3000">
             </div>
             <div class="edit-stat-group">
               <button type="button" class="tag-button tag-sm glow-button selected" data-stat="discipline">discipline</button>
@@ -517,7 +531,7 @@
           </div>
 
           <div id="quest-suggestion-popup" class="suggestion-popup" style="display:none;">
-            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup(this)">&times;</button></div>
             <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
 
@@ -722,7 +736,28 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Data layer (constants only - must load before app.js) -->
+    <script src="data/config.js?v=7"></script>
+    <script src="data/helpers.js?v=7"></script>
+    <script src="data/defaultQuests.js?v=7"></script>
+    <script src="data/quotes.js?v=7"></script>
+
+    <!-- Main application (defines db, sounds, showNotification, renderQuests and all game globals) -->
+    <script src="app.js?v=7"></script>
+
+    <!-- Feature modules (loaded AFTER app.js since they reference app.js globals) -->
+    <script src="data/improvements.js?v=7"></script>
+    <script src="data/quest-chains.js?v=7"></script>
+    <script src="data/quotes-integration.js?v=7"></script>
+    <script src="data/daily-reset.js?v=7"></script>
+    <script src="data/pomodoro-enhanced.js?v=7"></script>
+    <script src="data/webhook.js?v=7"></script>
+    <script src="data/stats-chart.js?v=7"></script>
+    <script src="data/stats-enhanced.js?v=7"></script>
+    <script src="data/streak-enhanced.js?v=7"></script>
+    <script src="data/shortcuts.js?v=7"></script>
     <script>
     (function(){
       function updateStreakTitle() {

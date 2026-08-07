@@ -58,7 +58,12 @@ const questToQuoteCategory = {
   discipline: "discipline",
   power: "power",
   cultivation: "discipline",
-  physical: "strength"
+  physical: "strength",
+  spiritual: "faith",
+  fitness: "strength",
+  social: "discipline",
+  finance: "discipline",
+  creative: "growth"
 };
 
 function linkify(text) {
@@ -117,3563 +122,19 @@ try {
 
 const MAX_STAT = 10000;
 
-const rawDefaultQuests = [
-  // ═══════════════════════════════════════════════════════════
-  // XP SYSTEM: Easy 150-500 | Medium 500-1200 | Hard 1500-3000
-  // Repeatable quests get ×0.33 (daily) / ×0.66 (weekly)
-  // Level formula: 10 × 1.5^level → Lv10~577, Lv20~33k
-  // ═══════════════════════════════════════════════════════════
+// rawDefaultQuests is now defined in data/defaultQuests.js
 
-  // ─── EASY: SPIRITUAL (9) ───
-  { title: "Sacrifice Your Desires", difficulty: "Easy", xp: 450, stat: "willpower", category: "spiritual",
-    description: "Renounce a desire or give up a comfort for Allah", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "core", "daily"], subtasks: ["Identify a desire", "Intention for Allah", "Act on it"] },
-  { title: "Daily Adhkar & Dua", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Morning/evening adhkar, make dua, do quiet dhikr", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"], subtasks: ["Morning adhkar", "Evening adhkar", "Make dua"] },
-  { title: "Heart Reflection", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Reflect on sujood, the Hereafter, and your goal of closeness to Allah", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "All Actions as Worship", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
-    description: "Intention every action as ibadah — work, eating, resting", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Silence Fast & Self-Observation", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Practice voluntary silence + observe your thoughts without reacting", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily", "restraint"] },
-  { title: "Night Prayer (Tahajjud)", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
-    description: "Wake for 1/3 page per raka — deep nawafil", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "daily"] },
-  { title: "Control Your Nafs", difficulty: "Easy", xp: 400, stat: "willpower", category: "spiritual",
-    description: "Don't forget Allah in sin + resist whispers + choose halal over haram", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily", "mindset"] },
-  { title: "Daily Istighfar & Salawat", difficulty: "Easy", xp: 350, stat: "discipline", category: "spiritual",
-    description: "Astaghfirullah 100× + Salawat 100× + Make sincere tawbah", repeatable: true, frequency: "daily",
-    tags: ["islamic", "daily"], subtasks: ["Istighfar 100×", "Salawat 100×", "Sincere tawbah"] },
-  { title: "Give Sadaqah", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
-    description: "Give charity — even a smile counts as sadaqah", repeatable: true, frequency: "weekly",
-    tags: ["islamic", "charity", "weekly"] },
 
-  // ─── EASY: LEARNING (3) ───
-  { title: "Quran Reading (1pg min)", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
-    description: "Read at least 1 page of Quran with reflection", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "daily"] },
-  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 200, stat: "intelligence", category: "spiritual",
-    description: "Recite Surahs 112-114 for protection", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["islamic", "quran", "daily"] },
-  { title: "Systematic Review (15min)", difficulty: "Easy", xp: 300, stat: "intelligence", category: "learning",
-    description: "15 min of systematic review on any topic + effectiveness audit", repeatable: true, frequency: "daily",
-    tags: ["learning", "daily"] },
+// GLOBAL_DEFAULT_QUESTS is now defined in data/defaultQuests.js
 
-  // ─── EASY: PERSONAL (3) ───
-  { title: "Journal & Gratitude", difficulty: "Easy", xp: 250, stat: "discipline", category: "personal",
-    description: "Write a journal entry + log 3 things you're grateful for", repeatable: true, frequency: "daily",
-    tags: ["reflection", "daily"] },
-  { title: "Digital Detox (1hr)", difficulty: "Easy", xp: 250, stat: "willpower", category: "personal",
-    description: "Spend 1 hour away from screens/phone", repeatable: true, frequency: "daily",
-    tags: ["detox", "daily"] },
-  { title: "Read 10 Pages", difficulty: "Easy", xp: 250, stat: "intelligence", category: "learning",
-    description: "Read 10 pages of any book", repeatable: true, frequency: "daily",
-    tags: ["reading", "daily"] },
-
-  // ─── EASY: HEALTH (3) ───
-  { title: "Balance: Screen vs Sleep", difficulty: "Easy", xp: 250, stat: "stamina", category: "health",
-    description: "Ensure screen time doesn't cut into sleep", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["health", "sleep", "daily"] },
-  { title: "Daily Health Essentials", difficulty: "Easy", xp: 350, stat: "stamina", category: "health",
-    description: "7+ hrs sleep + 2L water + posture check + hydration", repeatable: true, frequency: "daily",
-    tags: ["health", "daily"], subtasks: ["Sleep 7+ hrs", "Drink 2L water", "Posture check"] },
-  { title: "Fast Monday/Thursday", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
-    description: "Voluntary sunnah fast on Monday or Thursday", repeatable: true, frequency: "weekly",
-    tags: ["islamic", "health", "weekly"] },
-
-  // ─── EASY: WORK (1) ───
-  { title: "Email & Comms", difficulty: "Easy", xp: 150, stat: "discipline", category: "work",
-    description: "Clear inbox, respond to messages", repeatable: true, frequency: "daily",
-    tags: ["work", "daily"] },
-
-  // ─── EASY: SOCIAL (2) ───
-  { title: "Call/Text Family", difficulty: "Easy", xp: 200, stat: "discipline", category: "social",
-    description: "Reach out to a family member — check in, ask how they are", repeatable: true, frequency: "daily",
-    tags: ["social", "daily"] },
-  { title: "Help Someone Today", difficulty: "Easy", xp: 250, stat: "discipline", category: "social",
-    description: "Do something kind for someone — even small acts count", repeatable: true, frequency: "daily",
-    tags: ["social", "sadaqah", "daily"] },
-
-  // ─── EASY: FINANCE (1) ───
-  { title: "Track Expenses", difficulty: "Easy", xp: 200, stat: "discipline", category: "finance",
-    description: "Log today's expenses — know where your money goes", repeatable: true, frequency: "daily",
-    tags: ["finance", "daily"] },
-
-  // ─── EASY: CREATIVE (1) ───
-  { title: "Write 100 Words", difficulty: "Easy", xp: 200, stat: "intelligence", category: "creative",
-    description: "Write anything — journal, story, thoughts, ideas", repeatable: true, frequency: "daily",
-    tags: ["creative", "daily"] },
-
-  // ═══════════════════════════════════════════════════════════
-  // MEDIUM QUESTS
-  // ═══════════════════════════════════════════════════════════
-
-  // ─── MEDIUM: SPIRITUAL (2) ───
-  { title: "Quran Memorization (Hifz)", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
-    description: "Memorize new ayahs or revise previously memorized portions", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "memorization", "daily"] },
-  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "discipline", category: "spiritual",
-    description: "Recite with Tajweed + revise students' Quran", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "daily"] },
-
-  // ─── MEDIUM: LEARNING (8) ───
-  { title: "Quran Deep Study", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
-    description: "English tafseer + word-for-word + juz scan — understand Quran deeper", repeatable: true, frequency: "daily",
-    tags: ["islamic", "quran", "learning", "daily"], subtasks: ["Tafseer 1pg", "Word-for-word study", "Juz scan"] },
-  { title: "Madina Arabic & Grammar", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Continue Madina Arabic textbook + study grammar rules", repeatable: true, frequency: "daily",
-    tags: ["language", "arabic", "daily"] },
-  { title: "Arabic Conversation (Pimsleur)", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Pimsleur Arabic — at least 1 line / 10min video", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["language", "arabic", "daily"] },
-  { title: "Academic Research & Thesis", difficulty: "Medium", xp: 800, stat: "intelligence", category: "learning",
-    description: "Grad school / MPhil / thesis work — at least 1 slide/page", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["academic", "research", "daily"] },
-  { title: "Yoruba Language Practice", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Practice Yoruba language skills", repeatable: true, frequency: "daily",
-    tags: ["language", "yoruba", "daily"] },
-  { title: "Seerah & Spiritual Knowledge", difficulty: "Medium", xp: 600, stat: "intelligence", category: "learning",
-    description: "Study Seerah / Khushu of the Ruh and Nafs", repeatable: true, frequency: "daily",
-    tags: ["islamic", "learning", "daily"] },
-  { title: "Money & Finance Research", difficulty: "Medium", xp: 500, stat: "intelligence", category: "finance",
-    description: "Research at least 1 money/investment idea", repeatable: true, frequency: "daily",
-    tags: ["finance", "learning", "daily"] },
-  { title: "Budget Review", difficulty: "Medium", xp: 400, stat: "discipline", category: "finance",
-    description: "Review weekly budget — income vs expenses", repeatable: true, frequency: "weekly",
-    tags: ["finance", "weekly"] },
-
-  // ─── MEDIUM: WORK (4) ───
-  { title: "AI & Automation Work", difficulty: "Medium", xp: 600, stat: "discipline", category: "work",
-    description: "n8n automation flows + agentic AI research", repeatable: true, frequency: "daily",
-    tags: ["work", "ai", "daily"], subtasks: ["n8n tasks", "Agentic AI study"] },
-  { title: "CyberExpo Development", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
-    description: "Work on CyberExpo project", repeatable: true, frequency: "daily",
-    tags: ["work", "development", "daily"] },
-  { title: "Zad University", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
-    description: "Continue Zad University coursework (game: 2048)", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["work", "education", "daily"] },
-  { title: "Extras Research", difficulty: "Medium", xp: 600, stat: "intelligence", category: "work",
-    description: "Explore extra research topics (floor796, etc.)", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["research", "daily"] },
-
-  // ─── MEDIUM: FITNESS (1) ───
-  { title: "Daily Workout", difficulty: "Medium", xp: 700, stat: "strength", category: "fitness",
-    description: "Complete a full workout session — push-ups, cardio, or strength", repeatable: true, frequency: "daily",
-    tags: ["exercise", "daily"], subtasks: ["Warm-up", "Main workout", "Cool-down"] },
-
-  // ─── MEDIUM: SOCIAL (1) ───
-  { title: "Deep Conversation", difficulty: "Medium", xp: 500, stat: "discipline", category: "social",
-    description: "Have a meaningful conversation — ask deeper questions, listen actively", repeatable: true, frequency: "weekly",
-    tags: ["social", "weekly"] },
-
-  // ─── MEDIUM: CREATIVE (1) ───
-  { title: "Creative Session (30min)", difficulty: "Medium", xp: 500, stat: "intelligence", category: "creative",
-    description: "Draw, sketch, write, or create something — 30 min of creative work", repeatable: true, frequency: "daily",
-    tags: ["creative", "daily"] },
-
-  // ═══════════════════════════════════════════════════════════
-  // HARD QUESTS
-  // ═══════════════════════════════════════════════════════════
-
-  // ─── HARD: FITNESS (2) ───
-  { title: "Agility Training", difficulty: "Hard", xp: 1500, stat: "agility", category: "fitness",
-    description: "30-min intense agility drill OR 300m run", repeatable: true, frequency: "daily", isPinned: true,
-    tags: ["exercise", "daily"] },
-  { title: "Monthly Workout Streak", difficulty: "Hard", xp: 3000, stat: "strength", category: "fitness",
-    description: "Maintain a rigorous daily workout routine for a full month", repeatable: false, frequency: "once",
-    tags: ["exercise", "milestone"], isPinned: true },
-
-  // ─── HARD: WORK (1) ───
-  { title: "Deep Work Block (1hr+)", difficulty: "Hard", xp: 1500, stat: "discipline", category: "work",
-    description: "Complete a focused deep work session on a priority project", repeatable: true, frequency: "daily",
-    tags: ["work", "productivity", "daily"] },
-
-  // ─── HARD: LEARNING (1) ───
-  { title: "Advanced Tech Practice", difficulty: "Hard", xp: 1500, stat: "intelligence", category: "learning",
-    description: "MERN full stack / quantum code / real maths — deep technical work", repeatable: true, frequency: "daily",
-    tags: ["tech", "coding", "daily"], subtasks: ["MERN practice", "Quantum/Math deep work"] },
-];
-
-const GLOBAL_DEFAULT_QUESTS = (() => {
-  const uniqueQuests = [];
-  const seenKeys = new Set();
-
-  for (const quest of rawDefaultQuests) {
-    const compositeKey = `${quest.title}-${quest.difficulty}-${quest.xp}-${quest.stat}-${quest.category}`;
-    if (!seenKeys.has(compositeKey)) {
-      seenKeys.add(compositeKey);
-      uniqueQuests.push(quest);
-    }
-  }
-  return uniqueQuests;
-})();
 
 // Pool of quest titles that were excess (beyond the 64) turned into suggestions
-let questSuggestionPool = [];
+// questSuggestionPool is now defined in data/defaultQuests.js
 
-// Enhanced motivational quotes with categories and sources
-const motivationalQuotesSystem = {
-  categories: {
-    POWER: "power",
-    WISDOM: "wisdom",
-    DISCIPLINE: "discipline",
-    GROWTH: "growth",
-    PERSEVERANCE: "perseverance",
-    FAITH: "faith"
-  },
-  contexts: {
-    QUEST_COMPLETE: "questComplete",
-    LEVEL_UP: "levelUp",
-    STREAK_MILESTONE: "streakMilestone",
-    ACHIEVEMENT_UNLOCKED: "achievementUnlocked",
-    DAILY: "daily"
-  },
-  quotes: [
-    {
-      id: 4,
-      text: "Knowledge is power, and power is everything!",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "wisdom",
-      contexts: ["questComplete"],
-      favorite: false
-    },
-    {
-      id: 5,
-      text: "The strong do as they please, while the weak suffer what they must.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 6,
-      text: "There's no such thing as a free lunch in this world.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 9,
-      text: "Weakness is a sin.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 10,
-      text: "Power is a means, not an end.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "wisdom",
-      contexts: ["levelUp"],
-      favorite: false
-    },
-    {
-      id: 13,
-      text: "In a world of cultivation, only absolute power can guarantee freedom.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["achievementUnlocked"],
-      favorite: false
-    },
-    {
-      id: 15,
-      text: "He who controls resources controls destiny.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 17,
-      text: "Cunning is a weapon more powerful than any blade.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "wisdom",
-      contexts: ["questComplete"],
-      favorite: false
-    },
-    {
-      id: 19,
-      text: "The weak fall, the strong rise. Such is the way of the world.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 21,
-      text: "Trust is a luxury only fools can afford.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 24,
-      text: "A mind without ambition is a body without a soul.",
-      author: "Leylin Farlier",
-      source: "Warlock of the Magus World",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 31,
-      text: "A time comes when you need to stop waiting for the man you want to become and start being the man you want to be.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 32,
-      text: "The longer you wait to do something you should do now, the greater the odds that you will never actually do it.",
-      author: "Unknown",
-      source: "The Law of Diminishing Intent",
-      category: "discipline",
-      contexts: ["questComplete", "daily"],
-      favorite: false
-    },
-    {
-      id: 33,
-      text: "You cannot change your destination overnight, but you can change your direction overnight.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "growth",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 34,
-      text: "The first step toward change is awareness. The second step is acceptance.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 35,
-      text: "You cannot win if you do not begin! The people who get ahead in the world are the ones who look for the circumstances they want, and if they can't find them, they make them.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "power",
-      contexts: ["questComplete", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 36,
-      text: "Your vision will become clear only when you look into your heart. Who looks outside, dreams. Who looks inside, awakens.",
-      author: "Carl Jung",
-      source: "Modern Psychology",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 37,
-      text: "If you put a small value on yourself, rest assured the world will not raise the price.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 38,
-      text: "When a man has put a limit on what he will do, he has put a limit on what he can do.",
-      author: "Unknown",
-      source: "Personal Development Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 39,
-      text: "You will never change your life until you change something you do daily.",
-      author: "John Maxwell",
-      source: "Today Matters",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 40,
-      text: "Once you learn to quit it becomes a habit.",
-      author: "Vince Lombardi",
-      source: "Leadership Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 41,
-      text: "Life begins at the end of your comfort zone.",
-      author: "Neale Donald Walsch",
-      source: "Conversations with God",
-      category: "growth",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 42,
-      text: "Facing difficulties is inevitable. Learning from them is optional.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 43,
-      text: "Success in life comes not from holding a good hand, but in playing a poor hand well.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["questComplete", "daily"],
-      favorite: false
-    },
-    {
-      id: 44,
-      text: "If you go to work on your goals, your goals will go to work on you. Whatever good things we build end up building us.",
-      author: "Jim Rohn",
-      source: "Personal Development",
-      category: "growth",
-      contexts: ["streakMilestone", "daily"],
-      favorite: false
-    },
-    {
-      id: 45,
-      text: "The secret of your success is found in your daily routine.",
-      author: "John Maxwell",
-      source: "Today Matters",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 46,
-      text: "You only live once. But if you work it right, once is enough.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 47,
-      text: "If you don't design your own life plan, chances are you'll fall into someone else's plan.",
-      author: "Jim Rohn",
-      source: "Personal Development",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 48,
-      text: "It's never too late to be what you might have been.",
-      author: "George Eliot",
-      source: "Literature",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 49,
-      text: "God's gift to us: potential. Our gift to God: developing it.",
-      author: "Unknown",
-      source: "Faith Reflections",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 50,
-      text: "Habit is the daily battleground of character.",
-      author: "Unknown",
-      source: "Character Development",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 51,
-      text: "There is no finish line.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 52,
-      text: "The potential that exists within us is limitless and largely untapped… when you think of limits, you create them.",
-      author: "Unknown",
-      source: "Personal Growth",
-      category: "growth",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 53,
-      text: "The cure for boredom is curiosity. There is no cure for curiosity.",
-      author: "Dorothy Parker",
-      source: "Literature",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 54,
-      text: "I am always doing that which I cannot do, in order to learn how to do it.",
-      author: "Vincent van Gogh",
-      source: "Art & Creativity",
-      category: "growth",
-      contexts: ["questComplete", "daily"],
-      favorite: false
-    },
-    {
-      id: 55,
-      text: "Man's mind, once stretched by a new idea, never regains its original dimensions.",
-      author: "Oliver Wendell Holmes Jr.",
-      source: "Legal Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 56,
-      text: "The greatest gift you can give to someone is your own personal development.",
-      author: "Jim Rohn",
-      source: "Personal Development",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 57,
-      text: "Wisdom is the lost property of the believer.",
-      author: "Prophet Muhammad (saw)",
-      source: "Hadith",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 58,
-      text: "Today is the beginning of the rest of your life.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 59,
-      text: "Opportunity favors those who are prepared.",
-      author: "Louis Pasteur",
-      source: "Science",
-      category: "discipline",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 60,
-      text: "Greatness is a choice.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 61,
-      text: "My mercy prevails over my wrath.",
-      author: "Allah",
-      source: "Hadith Qudsi",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 62,
-      text: "I am as My servant thinks I am. I am with him when he makes mention of Me.",
-      author: "Allah",
-      source: "Hadith Qudsi",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 63,
-      text: "Spend (on charity), O son of Adam, and I shall spend on you.",
-      author: "Allah",
-      source: "Hadith Qudsi",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 64,
-      text: "If My servant likes to meet Me, I like to meet him.",
-      author: "Allah",
-      source: "Hadith Qudsi",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 65,
-      text: "I have prepared for My righteous servants what no eye has seen and no ear has heard.",
-      author: "Allah",
-      source: "Hadith Qudsi",
-      category: "faith",
-      contexts: ["achievementUnlocked", "daily"],
-      favorite: false
-    },
-    {
-      id: 66,
-      text: "We will not change the condition of the people until they change that which is within themselves.",
-      author: "Allah",
-      source: "Qur'an 13:11",
-      category: "faith",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 67,
-      text: "Allah has a plan for you, don't worry.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 68,
-      text: "Prostrate and get closer to Allah, That Is Your Purpose.",
-      author: "Unknown",
-      source: "Spiritual Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 69,
-      text: "When your Salah is straight, your life is straight.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 70,
-      text: "Whoever is protected from his natural greed—it is they who are successful.",
-      author: "Allah",
-      source: "Qur'an 59:9",
-      category: "faith",
-      contexts: ["achievementUnlocked", "daily"],
-      favorite: false
-    },
-    {
-      id: 71,
-      text: "If you have gained the love of Allah, what have you truly lost? Nothing.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 72,
-      text: "I wonder for the one who is certain that there is death, and yet laughs.",
-      author: "Prophet Dawud (David)",
-      source: "Zabura (Psalms)",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 73,
-      text: "I wonder for the one who is certain that there is Hellfire and its chastisement, and yet sleeps without fleeing from it.",
-      author: "Prophet Dawud (David)",
-      source: "Zabura (Psalms)",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 74,
-      text: "I wonder for the one who is certain that there is Paradise and its pleasure, and yet sleeps without seeking it.",
-      author: "Prophet Dawud (David)",
-      source: "Zabura (Psalms)",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 75,
-      text: "I wonder for the one who is certain about this world and its transience, and yet trusts in it implicitly.",
-      author: "Prophet Dawud (David)",
-      source: "Zabura (Psalms)",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
 
-    {
-      id: 82,
-      text: "The strong and weak would never be on equal footing; the difference was as wide as heaven and earth.",
-      author: "Wang Lin",
-      source: "Renegade Immortal",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 83,
-      text: "If you are weak, the other person is strong. If you are strong, the other person is weak.",
-      author: "Wang Lin",
-      source: "Renegade Immortal",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 84,
-      text: "Strike the iron while it's hot, cultivate when you are still young... even if you don't become emperor, you will find many surprises ahead while traveling at the apex.",
-      author: "Li Qiye",
-      source: "Emperor's Domination",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 85,
-      text: "The reason why the strong are strong, is exactly because they are able to endure what normal people aren't able to.",
-      author: "Jasmine",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["streakMilestone", "daily"],
-      favorite: false
-    },
-    {
-      id: 86,
-      text: "Man, no matter which world they lived in, conquer; conquer the enemy and conquer themselves.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "power",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 87,
-      text: "No matter which world, how could one gain anything without paying a price?",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 88,
-      text: "Stop being satisfied with such meagre progress.",
-      author: "Unknown",
-      source: "Personal Growth",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 89,
-      text: "As long as you haven't fallen yet, there is still a chance to turn everything around.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 90,
-      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 91,
-      text: "MASTER THE ART OF PATIENCE.",
-      author: "Unknown",
-      source: "Spiritual Wisdom",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 92,
-      text: "ENDURE THE HARDSHIP FOR EASE FOLLOWS.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 93,
-      text: "Sometimes in life, your situation will KEEP REPEATING ITSELF UNTIL YOU LEARN YOUR LESSON.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 94,
-      text: "WORK WHILE THEY SLEEP. LEARN WHILE THEY PARTY. SAVE WHILE THEY SPEND. THEN LIVE LIKE THEY DREAM.",
-      author: "Unknown",
-      source: "Success Principle",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 95,
-      text: "When Allah said: 'I test only those I love' I took the pain like it was an honour.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 96,
-      text: "I WOULD RATHER DIE THAN STOP NOW.",
-      author: "Unknown",
-      source: "Determination",
-      category: "perseverance",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 97,
-      text: "The man whom even the devil was afraid of.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "power",
-      contexts: ["levelUp", "daily"],
-      favorite: false
-    },
-    {
-      id: 98,
-      text: "Don't waste your potential.",
-      author: "Unknown",
-      source: "Personal Growth",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 99,
-      text: "O Human, you have done enough wrong... Paradise for you? I cannot tell, / Undoubtedly you will dwell in hell.",
-      author: "Unknown",
-      source: "Divine Exhortation",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 100,
-      text: "Change your living and make amends / For heaven, on your deeds depends.",
-      author: "Unknown",
-      source: "Divine Exhortation",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 101,
-      text: "O child of Adam! your religion is yours, your work is yours, your flesh is yours, and your blood is yours. If your religion becomes bad, your work, flesh, and blood, too, would become bad.",
-      author: "Allah",
-      source: "Divine Exhortation - Chapter 14",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 102,
-      text: "O child of Adam! do not be like a lamp which burns itself in order to provide light for people. Remove the love of the world from your heart.",
-      author: "Allah",
-      source: "Divine Exhortation - Chapter 14",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 103,
-      text: "The best wisdom is the fear of Allah. The best wealth is contentment. The best preparation (in life) is consciousness of Allah.",
-      author: "Allah",
-      source: "Divine Exhortation - Chapter 14",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 104,
-      text: "O child of Adam! obey Me in exact degree as your heart is inclined to the world, and if you will not do that, then remove My love from your heart.",
-      author: "Allah",
-      source: "Divine Exhortation - Chapter 30",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 105,
-      text: "O child of Adam! many a time you will stand before Allah while you think of another thing. If you had known the reality of Allah, you would not have concerned yourself with something different from Allah.",
-      author: "Allah",
-      source: "Divine Exhortation - Chapter 30",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 106,
-      text: "Challenge your limits again and again and again.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 107,
-      text: "Pain of Discipline OR Pain of Regret.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 108,
-      text: "PRIORITIES STRAIGHT.",
-      author: "Unknown",
-      source: "Personal Development",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 109,
-      text: "Stay calm under pressure.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 110,
-      text: "BE PROACTIVE IN YOUR AFFAIRS.",
-      author: "Unknown",
-      source: "Personal Development",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 111,
-      text: "My soul calls me to evil.",
-      author: "Prophet Yusuf (AS)",
-      source: "Qur'an 12:53",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 112,
-      text: "Self-confidence was the most basic requirement of a truly strong expert.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 113,
-      text: "Knowledge is the Noor of Allah to His Beloved",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 114,
-      text: "No matter how ruthless the devil is, you can be more ruthless.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 115,
-      text: "heaven will always leave a path for you, as long as you want to walk, there will always be a road for you to step on!",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 116,
-      text: "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings comes with calamities.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 117,
-      text: "His greatest quirk was that, when he made up his mind to concentrate, nothing could distract him.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 118,
-      text: "Heart filled with resolution from his pursuit of truth. There was no fear of death.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 119,
-      text: "Hardest choices require strongest wills",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 120,
-      text: "If Everyone else can do it, then why can't I?",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 121,
-      text: "She needed rivals and opponents, and she needed pressure that would force her to transform into someone greater than she was before.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 122,
-      text: "He always thought it right to keep improving instead of having fun so that you wouldn't be regretful when you found yourself in trouble yet lacked strength.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 123,
-      text: "It was when I achieved everything I ever wanted when I realised what was truly important to me.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 124,
-      text: "No matter how busy he was, he would always find time for it.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 125,
-      text: "Everytime you wake up to reality is a new day.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 126,
-      text: "Freedom while not depending on oneself is merely an illusion.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 127,
-      text: "The faster you act on your dreams the more successful you will be.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 128,
-      text: "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 129,
-      text: "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 130,
-      text: "Life is only a few hundred years, it is all a great gamble.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 131,
-      text: "It is merely another version of your self that has exceeded your current limits.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 132,
-      text: "There was no absolutely desperate situation in this world, there were only people who despair. The answer to resolving problems will always be in our own hands.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 133,
-      text: "Increase your Rank in the sight of ALLAH.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 134,
-      text: "Be more ruthless to thyself, verily...all the great ones were ruthless to others n more ruthless to themselves.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 135,
-      text: "ALLAH tells iblis about those who resist their lower selves that satan will have no authority over them.",
-      author: "Allah",
-      source: "Qur'an 16:99",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 136,
-      text: "The physical body is a carrier for the mind and spirit. With a rise in spiritual force, it would naturally require an even more sturdy body to support it!",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 137,
-      text: "Rather make ALLAH Happy. Satisfied.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 138,
-      text: "Do people think that they will be left (at ease) only on their saying, 'We believe' and will not be put to any test?",
-      author: "Allah",
-      source: "Qur'an 29:2",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 139,
-      text: "The journey was difficult, there Would always be some obstacles preventing people from progressing.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 140,
-      text: "Monks were people devils did not want to meet at all. They rejected the pleasures of life, their staunch souls not corroded by anything.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 141,
-      text: "No matter who you are, you do not truly know what kind of man u'v become...Until you reach the very end.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 142,
-      text: "Deceiving your self to believe you hav not been deceived.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 143,
-      text: "If you don't Trust ALLAH, then trust your self experience.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 144,
-      text: "humans possess great wisdom. If they used this wisdom only to fight, they would be letting down this gift from Allah.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 145,
-      text: "He withstood the loneliness of seclusion.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 146,
-      text: "The ability of a peerless genius is not something that we ordinary people can ever begin to imagine! But it doesn't come easy.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 147,
-      text: "ALLAH wanted to see if HIS WORDS carried any weight in Man's heart.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 148,
-      text: "Oh young Muslim, those of old sacrificed much for Islam, what have you sacrificed.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 149,
-      text: "Too bad, there were no pills that could cure one's regrets.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 150,
-      text: "Even if this increase was very little, a little progress every day would accumulate to a terrifying amount after several days.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 151,
-      text: "His mind had been trained to stay calm no matter what situation he was facing",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 152,
-      text: "What is your purpose.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 153,
-      text: "FOCUS ON TODAY",
-      author: "Unknown",
-      source: "Motivation",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 154,
-      text: "THE TRUTH LIES IN DETACHMENT.",
-      author: "Unknown",
-      source: "Spiritual Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 155,
-      text: "Stop being destracted, the world will chase you when you chase Allah.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 156,
-      text: "When your Salah is crooked, your life is crooked.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 157,
-      text: "When a man makes a choice, he should stick to it till the end, even if the results of his choice may seem bad.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 158,
-      text: "No matter how big of a genius you are, you will only be able to grow under constant competition.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 159,
-      text: "This is life after all, hard work does not mean results, nor success. But if one does not work hard, they are destined to fail.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 160,
-      text: "Making mistakes was a normal thing, even the men of old made mistakes in their lives. After making a mistake, realizing the mistake and correcting it was the behavior of an outstanding person!",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 161,
-      text: "Before obtaining the greatest strength at the apex, do not plan to slow your footsteps.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 162,
-      text: "Know that your words n actions shackle u.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 163,
-      text: "Every single person who was cheated, was it because they were stupid? No, it was only because they wanted to believe in it from the depths of their heart.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 164,
-      text: "People who could confidently say they did their best",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 165,
-      text: "If you were not this challenging, how then would you be worthy of my effort.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 166,
-      text: "Heaven does not want us to succeed, thus it sent such a calamity, but I will defy heaven. Competing with men, competing with heaven, this is the fun of life.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 167,
-      text: "The mentality of the Companions was a hundred times more powerful than mere mortals'. They could withstand tremendous physical pain, they could withstand cultivating in loneliness.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 168,
-      text: "There is time for everything.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 169,
-      text: "Opportunities favor those who are prepared.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 170,
-      text: "As long as you haven't fallen, there is a chance to turn everything around.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 171,
-      text: "Everything is merely an illusion.",
-      author: "Unknown",
-      source: "Spiritual Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 172,
-      text: "Collective seemingly insignificant choices lead to success.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 173,
-      text: "No matter how busy he was, he would always find time for it.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 174,
-      text: "To stop being ignorant and become wise, you will feel pain because that shows you are growing.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 175,
-      text: "Every time you wake up to reality is a new day.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 176,
-      text: "Everything exists in balance, heaven is impartial...strength comes with weakness, blessings come with calamities.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 177,
-      text: "People are anxious to improve their circumstances but are unwilling to improve themselves; they therefore remain bound by their own words and actions.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 178,
-      text: "There is no absolutely desperate situation in this world, there are only people who despair.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 179,
-      text: "Those who produce rather than consume in their free time",
-      author: "Unknown",
-      source: "Motivation",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 180,
-      text: "Be so strong even the demons are afraid of u.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 181,
-      text: "Keep silent and do the right thing at the right time",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 182,
-      text: "The worldly life was a cultivation method created by ALLAH Himself, so how could it be easy?",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 183,
-      text: "U will stay like this till the end if you do not make the 1st move",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 184,
-      text: "How could a farmer understand the thoughts of a conqueror.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 185,
-      text: "Only the foolishness of mortals is eternal in the rivers of time!",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 186,
-      text: "Allah takes away somethings in other for you to return, if you do not wish 4 it to be taken away...never leave in the first place.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 187,
-      text: "Don't Disappoint Allah n Surely He Shall Not Let Down Your Expectations.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 188,
-      text: "A mistake is simply another way of doing things.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 189,
-      text: "You cannot change your destination overnight, but you can change your direction overnight.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 190,
-      text: "There are two great days in a person's life: the day you were born and the day you discover why.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 191,
-      text: "If someone is going down the wrong road, he doesn't need motivation to speed up. He needs to stop.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 192,
-      text: "If you develop the habits of success, you'll make success a habit.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 193,
-      text: "The wise man questions himself, the fool others.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 194,
-      text: "A bend in the road is not the end of the road unless you fail to make the turn.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 195,
-      text: "If you plan on being anything less than you are capable of being, you will probably be unhappy all the days of your life.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 196,
-      text: "To know the road ahead, ask those coming back.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 197,
-      text: "Everything looks like a failure in the middle.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 198,
-      text: "If you want to keep giving, you have to keep growing.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 199,
-      text: "You have to give up to grow up.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 200,
-      text: "O son of Adam, so long as you call upon Me and ask of Me, I shall forgive you for what you have done.",
-      author: "Hadith Qudsi",
-      source: "Sacred Hadith",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 201,
-      text: "Strike the iron while it's hot, cultivate when you are still young.",
-      author: "Li Qiye",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 202,
-      text: "The road to the peak is one with battles, to begin with.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 203,
-      text: "IF YOUR PARENTS COUNT ON YOU, DON'T PLAY THE SAME GAME AS THOSE WHO COUNT ON THEIR PARENTS.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 204,
-      text: "Take care of the first half of your deen before seeking the other half.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 205,
-      text: "You will not achieve virtuous conduct until you give of what you cherish.",
-      author: "Unknown",
-      source: "Islamic Wisdom",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 206,
-      text: "THE JOURNEY AWAITS.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 207,
-      text: "Many geniuses are born but only a few reach their potential.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "growth",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 208,
-      text: "I wonder for the one who is pre-occupied by the faults of others while he forgets about his own.",
-      author: "Unknown",
-      source: "Excellence Exhortations",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 209,
-      text: "Faith is trusting in advance what will only make sense in reverse.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 210,
-      text: "Unhappiness is not knowing what we want and killing ourselves to get it.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 211,
-      text: "Spend (on charity), O son of Adam, and I shall spend on you.",
-      author: "Hadith Qudsi",
-      source: "Sacred Hadith",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 212,
-      text: "Like naruto, struggle through the pain.",
-      author: "Unknown",
-      source: "Motivation",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 213,
-      text: "Don't just go with the flow.",
-      author: "Unknown",
-      source: "Life Wisdom",
-      category: "discipline",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 214,
-      text: "Heaven's will is unable to control men completely.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "power",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 215,
-      text: "The sweet scent of a woman is the grave of a hero!",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 216,
-      text: "Remember your wish to travel throughout all the realms.",
-      author: "Unknown",
-      source: "Cultivation Wisdom",
-      category: "perseverance",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 217,
-      text: "If you don't Trust your self, then at least TRUST ALLAH.",
-      author: "Unknown",
-      source: "Faith Reflection",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 218,
-      text: "On the Day [some] faces will turn white and [some] faces will turn black.",
-      author: "Qur'an 3:106",
-      source: "Holy Quran",
-      category: "faith",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 219,
-      text: "The key to the good life, as far as Socrates understood it, was wisdom. As you become wiser, you become a better person. Wisdom is not so much about knowledge — what you think, but rather about how you think.",
-      author: "Steven Gambardella",
-      source: "5 Philosophy Quotes to Actually Make You Think (2024)",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 220,
-      text: "I know that I know nothing.",
-      author: "Socrates",
-      source: "Plato's Apology",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 221,
-      text: "If we possess our 'why' of life we can put up with almost any 'how'.",
-      author: "Friedrich Nietzsche",
-      source: "Twilight of the Idols",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 222,
-      text: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
-      author: "Albert Einstein",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 223,
-      text: "The opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference.",
-      author: "Elie Wiesel",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 224,
-      text: "The unexamined life is not worth living.",
-      author: "Socrates",
-      source: "Plato's Apology",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 225,
-      text: "Simplicity, patience, compassion. These three are your greatest treasures.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 226,
-      text: "Without deviation from the norm, progress is not possible.",
-      author: "Frank Zappa",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 227,
-      text: "Do not fear to be eccentric in opinion, for every opinion now accepted was once eccentric.",
-      author: "Bertrand Russell",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 228,
-      text: "Knowing others is intelligence. Knowing yourself is true wisdom. Mastering others is strength. Mastering yourself is true power.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 229,
-      text: "The only true wisdom is in knowing you know nothing.",
-      author: "Socrates",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 230,
-      text: "Turn your wounds into wisdom.",
-      author: "Oprah Winfrey",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 231,
-      text: "The function of wisdom is to discriminate between good and evil.",
-      author: "Marcus Tullius Cicero",
-      source: "De Officiis",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 232,
-      text: "By three methods we may learn wisdom: First, by reflection, which is noblest; Second, by imitation, which is easiest; and third by experience, which is the bitterest.",
-      author: "Confucius",
-      source: "Analects",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 233,
-      text: "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
-      author: "Aristotle",
-      source: "Metaphysics",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 234,
-      text: "Wisdom begins in wonder.",
-      author: "Socrates",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 235,
-      text: "The fool thinks himself to be wise, but the wise man knows himself to be a fool.",
-      author: "William Shakespeare",
-      source: "As You Like It",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 236,
-      text: "Knowledge speaks, but wisdom listens.",
-      author: "Jimi Hendrix",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 237,
-      text: "The wise man speaks because he has something to say; the fool speaks because he has to say something.",
-      author: "Plato",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 238,
-      text: "Not all those who wander are lost.",
-      author: "J.R.R. Tolkien",
-      source: "The Lord of the Rings",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 239,
-      text: "A man's worth is no greater than the worth of his ambitions.",
-      author: "Marcus Aurelius",
-      source: "Meditations",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 240,
-      text: "The happiness of your life depends upon the quality of your thoughts.",
-      author: "Marcus Aurelius",
-      source: "Meditations",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 241,
-      text: "Waste no more time arguing what a good man should be. Be one.",
-      author: "Marcus Aurelius",
-      source: "Meditations",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 242,
-      text: "Life is not a problem to be solved, but a reality to be experienced.",
-      author: "Søren Kierkegaard",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 243,
-      text: "He who has a why to live for can bear almost any how.",
-      author: "Friedrich Nietzsche",
-      source: "—",
-      category: "wisdom",
-      contexts: ["daily"],
-      favorite: false
-    },
-    {
-      id: 244,
-      text: "Becoming is better than being.",
-      author: "Carol Dweck",
-      source: "Mindset: The New Psychology of Success",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 245,
-      text: "The view you adopt for yourself profoundly affects the way you lead your life.",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 246,
-      text: "In a growth mindset, challenges are exciting rather than threatening. So rather than thinking, 'Oh, I'm going to reveal my weaknesses,' you say, 'Wow, here's a chance to grow.'",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 247,
-      text: "The passion for stretching yourself and sticking to it, even when it's not going well, is the hallmark of the growth mindset.",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 248,
-      text: "No matter what your ability is, effort is what ignites that ability and turns it into accomplishment.",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 249,
-      text: "Why waste time proving over and over how great you are, when you could be getting better?",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 250,
-      text: "Picture your brain forming new connections as you meet the challenge and learn. Keep on going.",
-      author: "Carol Dweck",
-      source: "Mindset",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 251,
-      text: "I have not failed. I've just found 10,000 ways that won't work.",
-      author: "Thomas Edison",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 252,
-      text: "It's not that I'm so smart, it's just that I stay with problems longer.",
-      author: "Albert Einstein",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 253,
-      text: "Success is not an accident. It is hard work, perseverance, learning, studying, sacrifice, and most of all, love of what you are doing.",
-      author: "Pelé",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 254,
-      text: "Education is the most powerful weapon which you can use to change the world.",
-      author: "Nelson Mandela",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 255,
-      text: "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
-      author: "Colin Powell",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 256,
-      text: "Your time is limited, don't waste it living someone else's life.",
-      author: "Steve Jobs",
-      source: "Stanford Commencement (2005)",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 257,
-      text: "In the middle of every difficulty lies opportunity.",
-      author: "Albert Einstein",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 258,
-      text: "Don't watch the clock; do what it does. Keep going.",
-      author: "Sam Levenson",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 259,
-      text: "The only thing that overcomes hard luck is hard work.",
-      author: "Harry Golden",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 260,
-      text: "If you believe it will work out, you'll see opportunities. If you believe it won't, you will see obstacles.",
-      author: "Wayne Dyer",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 261,
-      text: "You are never too old to set another goal or to dream a new dream.",
-      author: "C.S. Lewis",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 262,
-      text: "The best way to predict the future is to create it.",
-      author: "Peter Drucker",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 263,
-      text: "Your life does not get better by chance, it gets better by change.",
-      author: "Jim Rohn",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 264,
-      text: "Whether you think you can or think you can't, you're right.",
-      author: "Henry Ford",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 265,
-      text: "The mind is not a vessel to be filled, but a fire to be kindled.",
-      author: "Plutarch",
-      source: "On Listening",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 266,
-      text: "Change your thoughts and you change your world.",
-      author: "Norman Vincent Peale",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 267,
-      text: "You don't have to be great to start, but you have to start to be great.",
-      author: "Zig Ziglar",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 268,
-      text: "Your attitude, not your aptitude, will determine your altitude.",
-      author: "Zig Ziglar",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 269,
-      text: "Do the best you can until you know better. Then when you know better, do better.",
-      author: "Maya Angelou",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 270,
-      text: "True nobility is being superior to your former self.",
-      author: "Ernest Hemingway",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 271,
-      text: "Growth must be chosen again and again; fear must be overcome again and again.",
-      author: "Abraham Maslow",
-      source: "Toward a Psychology of Being",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 272,
-      text: "If there is no struggle, there is no progress.",
-      author: "Frederick Douglass",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 273,
-      text: "Anyone can start from now and make a brand new ending.",
-      author: "Carl Bard",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 274,
-      text: "Be not afraid of growing slowly; be afraid only of standing still.",
-      author: "Chinese Proverb",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 275,
-      text: "The expert in anything was once a beginner.",
-      author: "Helen Hayes",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 276,
-      text: "We can't become what we need to be by remaining what we are.",
-      author: "Oprah Winfrey",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 277,
-      text: "It does not matter how slowly you go as long as you do not stop.",
-      author: "Confucius",
-      source: "Analects",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 278,
-      text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
-      author: "Nelson Mandela",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 279,
-      text: "Continuous improvement is better than delayed perfection.",
-      author: "Mark Twain",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 280,
-      text: "Little strokes fell great oaks.",
-      author: "Benjamin Franklin",
-      source: "Poor Richard's Almanack",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 281,
-      text: "All growth is a leap in the dark, a spontaneous, unpremeditated act without benefit of experience.",
-      author: "Henry Miller",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 282,
-      text: "One can choose to go back toward safety or forward toward growth. Growth must be chosen again and again; fear must be overcome again and again.",
-      author: "Abraham Maslow",
-      source: "—",
-      category: "growth",
-      contexts: ["daily", "questComplete"],
-      favorite: false
-    },
-    {
-      id: 283,
-      text: "Courage doesn't always roar. Sometimes courage is the quiet voice at the end of the day saying 'I will try again tomorrow.'",
-      author: "Mary Anne Radmacher",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 284,
-      text: "Fall seven times and stand up eight.",
-      author: "Japanese Proverb",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 285,
-      text: "It does not matter how slowly you go as long as you do not stop.",
-      author: "Confucius",
-      source: "Analects",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 286,
-      text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-      author: "Winston Churchill",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 287,
-      text: "Never, never, never give up.",
-      author: "Winston Churchill",
-      source: "Address at Harrow School (1941)",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 288,
-      text: "If you're going through hell, keep going.",
-      author: "Winston Churchill",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 289,
-      text: "Our greatest glory is not in never falling, but in rising every time we fall.",
-      author: "Confucius",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 290,
-      text: "Many of life's failures are people who did not realize how close they were to success when they gave up.",
-      author: "Thomas Edison",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 291,
-      text: "Courage is not having the strength to go on; it is going on when you don't have the strength.",
-      author: "Theodore Roosevelt",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 292,
-      text: "It always seems impossible until it's done.",
-      author: "Nelson Mandela",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 293,
-      text: "Energy and persistence conquer all things.",
-      author: "Benjamin Franklin",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 294,
-      text: "The path to success is to take massive, determined action.",
-      author: "Tony Robbins",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 295,
-      text: "You may encounter many defeats, but you must not be defeated.",
-      author: "Maya Angelou",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 296,
-      text: "Success is how high you bounce when you hit bottom.",
-      author: "George S. Patton",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 297,
-      text: "Out of difficulties grow miracles.",
-      author: "Jean de La Bruyère",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 298,
-      text: "The human spirit is stronger than anything that can happen to it.",
-      author: "C.C. Scott",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 299,
-      text: "Tough times never last, but tough people do.",
-      author: "Robert H. Schuller",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 300,
-      text: "When you come to the end of your rope, tie a knot and hang on.",
-      author: "Franklin D. Roosevelt",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 301,
-      text: "Storms make trees take deeper roots.",
-      author: "D. O. Flynn",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 302,
-      text: "A river cuts through rock not because of its power, but because of its persistence.",
-      author: "James Watkins",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 303,
-      text: "No pressure, no diamonds.",
-      author: "Thomas Carlyle",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 304,
-      text: "Perseverance, secret of all triumphs.",
-      author: "Victor Hugo",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 305,
-      text: "The best way out is always through.",
-      author: "Robert Frost",
-      source: "\"A Servant to Servants\"",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 306,
-      text: "I am not afraid of storms, for I am learning how to sail my ship.",
-      author: "Louisa May Alcott",
-      source: "Little Women",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 307,
-      text: "He conquers who endures.",
-      author: "Persius",
-      source: "Satires",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 308,
-      text: "Victory belongs to the most persevering.",
-      author: "Napoleon Bonaparte",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 309,
-      text: "The difference between the impossible and the possible lies in a person's determination.",
-      author: "Tommy Lasorda",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 310,
-      text: "Permanence, perseverance and persistence in spite of all obstacles, discouragements and impossibilities: It is this, that in all things distinguishes the strong soul from the weak.",
-      author: "Thomas Carlyle",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 311,
-      text: "I am not a product of my circumstances. I am a product of my decisions.",
-      author: "Stephen R. Covey",
-      source: "The 7 Habits of Highly Effective People",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 312,
-      text: "Grit is living life like it's a marathon, not a sprint.",
-      author: "Angela Duckworth",
-      source: "Grit: The Power of Passion and Perseverance",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 313,
-      text: "Persistence is the twin sister of excellence. One is a matter of quality; the other, a matter of time.",
-      author: "Marabel Morgan",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 314,
-      text: "To succeed, work hard, never give up and above all, cherish a magnificent obsession.",
-      author: "Walt Disney",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 315,
-      text: "I am a slow walker, but I never walk back.",
-      author: "Abraham Lincoln",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 316,
-      text: "You never know how strong you are until being strong is your only choice.",
-      author: "Bob Marley",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 317,
-      text: "Rock bottom became the solid foundation on which I rebuilt my life.",
-      author: "J.K. Rowling",
-      source: "Harvard Commencement (2008)",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 318,
-      text: "The brick walls are there for a reason. They're not there to keep us out. The brick walls are there to give us a chance to show how badly we want something.",
-      author: "Randy Pausch",
-      source: "The Last Lecture",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 319,
-      text: "You can't cross the sea merely by standing and staring at the water.",
-      author: "Rabindranath Tagore",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 320,
-      text: "The gem cannot be polished without friction, nor man perfected without trials.",
-      author: "Confucius",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 321,
-      text: "Perseverance is not a long race; it is many short races one after the other.",
-      author: "Walter Elliott",
-      source: "—",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 322,
-      text: "The oak fought the wind and broke, the willow bent when it must and survived.",
-      author: "Robert Jordan",
-      source: "The Fires of Heaven",
-      category: "perseverance",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 323,
-      text: "He who conquers himself is the mightiest warrior.",
-      author: "Confucius",
-      source: "Analects",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 324,
-      text: "Self-control is strength. Right thought is mastery. Calmness is power.",
-      author: "James Allen",
-      source: "As a Man Thinketh",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 325,
-      text: "The first and best victory is to conquer self.",
-      author: "Plato",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 326,
-      text: "Discipline is the bridge between goals and accomplishment.",
-      author: "Jim Rohn",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 327,
-      text: "Mastering others is strength; mastering yourself is true power.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 328,
-      text: "Without self-discipline, success is impossible, period.",
-      author: "Lou Holtz",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 329,
-      text: "Discipline is choosing between what you want now and what you want most.",
-      author: "Abraham Lincoln",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 330,
-      text: "Small disciplines repeated with consistency every day lead to great achievements gained slowly over time.",
-      author: "John C. Maxwell",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 331,
-      text: "The more disciplined you become, the easier life gets.",
-      author: "Steve Pavlina",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 332,
-      text: "Self-discipline is the magic power that makes you virtually unstoppable.",
-      author: "Dan Kennedy",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 333,
-      text: "Discipline equals freedom.",
-      author: "Jocko Willink",
-      source: "Extreme Ownership",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 334,
-      text: "No man is fit to command another that cannot command himself.",
-      author: "William Penn",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 335,
-      text: "The discipline of desire is the backbone of character.",
-      author: "Will Durant",
-      source: "The Story of Philosophy",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 336,
-      text: "Freedom is not procured by a full enjoyment of what is desired, but by controlling the desire.",
-      author: "Epictetus",
-      source: "Discourses",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 337,
-      text: "He who reigns within himself, and rules passions, desires, and fears, is more than a king.",
-      author: "John Milton",
-      source: "Paradise Regained",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 338,
-      text: "He who overcomes others is strong, but he who overcomes himself is mightier still.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 339,
-      text: "Self-control is at the root of all virtues. Let a man yield to his impulses and passions, and from that moment he gives up his moral freedom.",
-      author: "Orison Swett Marden",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 340,
-      text: "There never has been, and cannot be, a good life without self-control.",
-      author: "Leo Tolstoy",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 341,
-      text: "The greatest power of ruling consists in the exercise of self-control.",
-      author: "Seneca",
-      source: "On Clemency",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 342,
-      text: "He that would govern others, first should be the master of himself.",
-      author: "Philip Massinger",
-      source: "The Bondman",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 343,
-      text: "If you master self-control, you can master anything.",
-      author: "Maxime Lagacé",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 344,
-      text: "Rule your mind, which, if it is not your servant, is your master.",
-      author: "Horace",
-      source: "Epistles",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 345,
-      text: "You have power over your mind — not outside events. Realize this, and you will find strength.",
-      author: "Marcus Aurelius",
-      source: "Meditations",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 346,
-      text: "The ability to subordinate an impulse to a value is the essence of the proactive person.",
-      author: "Stephen R. Covey",
-      source: "The 7 Habits of Highly Effective People",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 347,
-      text: "Seek freedom and become captive of your desires. Seek discipline and find your liberty.",
-      author: "Frank Herbert",
-      source: "Dune",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 348,
-      text: "I am, indeed, a king, because I know how to rule myself.",
-      author: "Pietro Aretino",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 349,
-      text: "The first and greatest victory is to conquer yourself; to be conquered by yourself is of all things most shameful and vile.",
-      author: "Plato",
-      source: "Laws",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 350,
-      text: "Not being able to govern events, I govern myself.",
-      author: "Michel de Montaigne",
-      source: "Essays",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 351,
-      text: "Ultimately, the only power to which man should aspire is that which he exercises over himself.",
-      author: "Elie Wiesel",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 352,
-      text: "By constant self-discipline and self-control you can develop greatness of character.",
-      author: "Grenville Kleiser",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 353,
-      text: "If you don't control what you think, you cannot control what you do.",
-      author: "Napoleon Hill",
-      source: "Think and Grow Rich",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 354,
-      text: "To enjoy freedom we have to control ourselves.",
-      author: "Virginia Woolf",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 355,
-      text: "The best fighter is never angry.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 356,
-      text: "Self-discipline without talent can often achieve astounding results, whereas talent without self-discipline inevitably dooms itself to failure.",
-      author: "Sydney Harris",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 357,
-      text: "First say to yourself what you would be; and then do what you have to do.",
-      author: "Epictetus",
-      source: "Discourses",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 358,
-      text: "Don't explain your philosophy. Embody it.",
-      author: "Epictetus",
-      source: "Enchiridion",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 359,
-      text: "Your ability to discipline yourself to set clear goals and then to work toward them every day will do more to guarantee your success than any other single factor.",
-      author: "Brian Tracy",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 360,
-      text: "No man is free who is not master of himself.",
-      author: "Epictetus",
-      source: "Discourses",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 361,
-      text: "The successful warrior is the average man, with laser-like focus.",
-      author: "Bruce Lee",
-      source: "—",
-      category: "discipline",
-      contexts: ["daily", "streakMilestone"],
-      favorite: false
-    },
-    {
-      id: 362,
-      text: "Knowing others is intelligence. Knowing yourself is true wisdom. Mastering others is strength. Mastering yourself is true power.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 363,
-      text: "Power is of two kinds. One is obtained by the fear of punishment and the other by acts of love. Power based on love is a thousand times more effective than the one derived from fear of punishment.",
-      author: "Mahatma Gandhi",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 364,
-      text: "Nearly all men can stand adversity, but if you want to test a man's character, give him power.",
-      author: "Abraham Lincoln",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 365,
-      text: "The greater the power, the more dangerous the abuse.",
-      author: "Edmund Burke",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 366,
-      text: "Power tends to corrupt, and absolute power corrupts absolutely. Great men are almost always bad men.",
-      author: "Lord Acton",
-      source: "Letter to Bishop Mandell Creighton (1887)",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 367,
-      text: "What a man can be, he must be. This need we call self-actualization.",
-      author: "Abraham Maslow",
-      source: "Toward a Psychology of Being",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 368,
-      text: "The key is to keep company only with people who uplift you, whose presence calls forth your best.",
-      author: "Epictetus",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 369,
-      text: "The world is a dangerous place to live, not because of the people who are evil, but because of the people who don't do anything about it.",
-      author: "Albert Einstein",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 370,
-      text: "Mastering others requires strength. Mastering yourself requires true power.",
-      author: "Lao Tzu",
-      source: "Tao Te Ching",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 371,
-      text: "What does not kill me makes me stronger.",
-      author: "Friedrich Nietzsche",
-      source: "Twilight of the Idols",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 372,
-      text: "He who has a strong enough why can bear almost any how.",
-      author: "Friedrich Nietzsche",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 373,
-      text: "You have power over your mind — not outside events. Realize this, and you will find strength.",
-      author: "Marcus Aurelius",
-      source: "Meditations",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 374,
-      text: "The measure of a man is what he does with power.",
-      author: "Plato",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 375,
-      text: "One who condones evils is just as guilty as the one who commits them.",
-      author: "Martin Luther King Jr.",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 376,
-      text: "In any moment of decision, the best thing you can do is the right thing, the next best thing is the wrong thing, and the worst thing you can do is nothing.",
-      author: "Theodore Roosevelt",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 377,
-      text: "The ultimate measure of a man is not where he stands in moments of comfort and convenience, but where he stands at times of challenge and controversy.",
-      author: "Martin Luther King Jr.",
-      source: "Strength to Love",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 378,
-      text: "I cannot always control what goes on outside. But I can always control what goes on inside.",
-      author: "Wayne Dyer",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 379,
-      text: "The secret of power is not might, but the ability to adapt oneself to the forces of nature and use them.",
-      author: "Miyamoto Musashi",
-      source: "The Book of Five Rings",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 380,
-      text: "True power is not about domination over others, but about mastery over oneself.",
-      author: "Miyamoto Musashi",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 381,
-      text: "Knowledge will give you power, but character respect.",
-      author: "Bruce Lee",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 382,
-      text: "Power is not revealed by striking hard or often, but by striking true.",
-      author: "Miyamoto Musashi",
-      source: "The Book of Five Rings",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 383,
-      text: "If you want to find the real power in life, help others. If you want to find the real power in work, master your craft.",
-      author: "Robert Greene",
-      source: "The Laws of Human Nature",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 384,
-      text: "Weakness is a choice. Strength is earned.",
-      author: "David Goggins",
-      source: "Can't Hurt Me",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 385,
-      text: "The most powerful person in the room is not the one shouting. It's the one who doesn't need to.",
-      author: "Unknown",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 386,
-      text: "Power without compassion is tyranny. Compassion without power is weakness.",
-      author: "Robert Greene",
-      source: "The 48 Laws of Power",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    },
-    {
-      id: 387,
-      text: "You must be shapeless, formless, like water. When you pour water in a cup, it becomes the cup. Water can flow or it can crash. Be water, my friend.",
-      author: "Bruce Lee",
-      source: "—",
-      category: "power",
-      contexts: ["daily", "levelUp"],
-      favorite: false
-    }
-  ],
-  
-  // Get a random quote
-  _shown: {},
-  
-  _pickUnseen: function(pool, key) {
-    if (!this._shown[key]) this._shown[key] = new Set();
-    const unseen = pool.filter(q => !this._shown[key].has(q.id));
-    if (unseen.length === 0) {
-      this._shown[key] = new Set();
-      const picked = pool[Math.floor(Math.random() * pool.length)];
-      this._shown[key].add(picked.id);
-      return picked;
-    }
-    const picked = unseen[Math.floor(Math.random() * unseen.length)];
-    this._shown[key].add(picked.id);
-    return picked;
-  },
-
-  getRandomQuote: function() {
-    return this._pickUnseen(this.quotes, 'all');
-  },
-  
-  // Get a random quote by context
-  getQuoteByContext: function(context) {
-    const contextQuotes = this.quotes.filter(quote => 
-      quote.contexts.includes(context)
-    );
-    return contextQuotes.length > 0 
-      ? this._pickUnseen(contextQuotes, 'ctx:' + context)
-      : this.getRandomQuote();
-  },
-  
-  // Get a random quote by category
-  getQuoteByCategory: function(category) {
-    const categoryQuotes = this.quotes.filter(quote => 
-      quote.category === category
-    );
-    return categoryQuotes.length > 0 
-      ? this._pickUnseen(categoryQuotes, 'cat:' + category)
-      : this.getRandomQuote();
-  },
-  
-  // Get all favorite quotes
-  getFavoriteQuotes: function() {
-    // This returns a Promise that resolves to favorite quotes
-    return db.favoriteQuotes.toArray()
-      .then(favorites => {
-        return this.quotes.filter(quote => 
-          favorites.some(fav => fav.quoteId === quote.id)
-        );
-      });
-  },
-  
-  // Toggle favorite status
-  toggleFavorite: function(quoteId) {
-    // This returns a Promise that resolves to boolean
-    return db.favoriteQuotes
-      .where('quoteId')
-      .equals(quoteId)
-      .first()
-      .then(existingFavorite => {
-        if (existingFavorite) {
-          return db.favoriteQuotes.delete(existingFavorite.id)
-            .then(() => {
-                console.log(`Removed favorite for quoteId: ${quoteId}, favoriteQuotes entry ID: ${existingFavorite.id}`);
-                return false; // Not favorited anymore
-            });
-        } else {
-          // If not favorited, add it
-          return db.favoriteQuotes.add({
-            quoteId: quoteId,
-            dateAdded: new Date()
-          }).then(newId => { // newId is the primary key of the newly added entry
-              console.log(`Added favorite for quoteId: ${quoteId}, new favoriteQuotes entry ID: ${newId}`);
-              return true; // Now favorited
-          });
-        }
-      });
-  }
-};
+// motivationalQuotesSystem (353 quotes) is defined in data/quotes.js — loaded before app.js.
+// (Removed duplicate ~3350-line block that caused a SyntaxError: Identifier already declared,
+//  which prevented ALL of app.js from executing.)
 
 // Achievement definitions
 const achievementDefinitions = [
@@ -4111,10 +572,12 @@ function closeQuestModal() {
 function saveQuestFromModal() {
   const title = document.getElementById('quest-modal-title').value.trim();
   if (!title) { showNotification('Enter a quest title', 'error'); return; }
-  const category = document.querySelector('#quest-modal .edit-category-group .tag-button.selected')?.dataset.category || 'Personal';
+  const category = (document.querySelector('#quest-modal .edit-category-group .tag-button.selected')?.dataset.category || 'Personal').toLowerCase();
   const difficulty = document.querySelector('#quest-modal .edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
-  const xp = parseInt(document.getElementById('quest-modal-xp').value) || 2;
+  const xp = Math.min(3000, Math.max(50, parseInt(document.getElementById('quest-modal-xp').value) || 500));
   const stat = document.querySelector('#quest-modal .edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
+  const repeatBtn = document.querySelector('#quest-modal .edit-repeat-group .tag-button.selected');
+  const repeatVal = repeatBtn ? repeatBtn.dataset.repeat : 'once';
   const dueDate = document.getElementById('quest-modal-due').value || null;
   const comment = document.getElementById('quest-modal-comment').value.trim() || '';
   const isPinned = document.querySelector('#quest-modal .pin-comment')?.checked || !!comment;
@@ -4129,6 +592,8 @@ function saveQuestFromModal() {
     isPinned,
     dueDate,
     status: 'inbox',
+    repeatable: repeatVal !== 'once',
+    frequency: repeatVal !== 'once' ? repeatVal : undefined,
     createdAt: new Date()
   };
 
@@ -4144,10 +609,11 @@ function saveQuestFromModal() {
     document.getElementById('quest-modal-comment').value = '';
     document.getElementById('quest-modal-due').value = '';
     document.querySelectorAll('#quest-modal .tag-button.selected').forEach(b => b.classList.remove('selected'));
-    document.querySelector('#quest-modal .edit-category-group .tag-button[data-category="Work"]')?.classList.add('selected');
+    document.querySelector('#quest-modal .edit-category-group .tag-button[data-category="work"]')?.classList.add('selected');
     document.querySelector('#quest-modal .edit-diff-group .tag-button[data-difficulty="Medium"]')?.classList.add('selected');
     document.querySelector('#quest-modal .edit-stat-group .tag-button[data-stat="discipline"]')?.classList.add('selected');
-    document.getElementById('quest-modal-xp').value = '2';
+    document.querySelector('#quest-modal .edit-repeat-group .tag-button[data-repeat="once"]')?.classList.add('selected');
+    document.getElementById('quest-modal-xp').value = '500';
     const pinCheck = document.querySelector('#quest-modal .pin-comment');
     if (pinCheck) pinCheck.checked = false;
     // Re-render from DB to pick up the new quest element
@@ -4528,9 +994,10 @@ function calculateXPForNextLevel(level) {
   return Math.floor(10 * Math.pow(1.5, level));
 }
 
-// MIGRATION: Remove old default quests that were merged/renamed
-// Uses composite key matching (title-difficulty-xp-stat-category)
-// to safely remove only old defaults without touching new ones
+// MIGRATION: Remove old default quests that were merged/renamed.
+// Only titles in legacyTitles AND not matching a CURRENT default quest
+// are removed — canonical default quests are never touched, so a user's
+// loaded defaults survive every page load.
 // ═══════════════════════════════════════════════════════════
 
 async function removeLegacyDefaultQuests() {
@@ -4602,10 +1069,23 @@ async function removeLegacyDefaultQuests() {
       "Mujawwad Recitation & Teaching", "AI & Automation Work",
       "Deep Conversation", "Creative Session (30min)",
       "Email & Comms", "Advanced Tech Practice",
+      // v3 third merge (titles merged away into richer quests — cleanup old DB copies)
+      "Madina Series", "Project Work", "n8n Tasks", "Hifz Revision",
+      "Revise Students' Quran", "Selective Silence Fast", "MERN Full Stack",
+      "Thesis Project",
+      // v4 fourth merge (this round): folded into richer quests
+      "Give up for Allah", "Health Check", "Liquid Drop Focus",
     ]);
 
+    // NEVER delete quests whose title matches a CURRENT default quest.
+    // Earlier versions of this migration listed canonical titles here, which
+    // wiped the user's default quests from the board on every page load.
+    const currentDefaultTitles = new Set(
+      (typeof rawDefaultQuests !== 'undefined' ? rawDefaultQuests : []).map(q => q.title)
+    );
+
     for (const quest of existingQuests) {
-      if (legacyTitles.has(quest.title)) {
+      if (legacyTitles.has(quest.title) && !currentDefaultTitles.has(quest.title)) {
         toRemove.push(quest.id);
       }
     }
@@ -4647,17 +1127,14 @@ async function initializeGame() {
     await removeLegacyDefaultQuests();
 
     const defaultQuests = GLOBAL_DEFAULT_QUESTS;
-    const existingQuests = await db.quests.toArray();
 
   // Populate suggestion pool with ALL default quest titles — grid stays empty for new users
   questSuggestionPool = [...new Set(defaultQuests.map(q => q.title))];
 
-  // Delete ALL existing quests from DB so the dashboard starts fresh
-  const allQuestIds = existingQuests.map(q => q.id);
-  if (allQuestIds.length > 0) {
-    await db.quests.bulkDelete(allQuestIds);
-    console.log(`Cleared ${allQuestIds.length} existing quests. All ${defaultQuests.length} defaults moved to suggestions.`);
-  }
+  // NOTE: We intentionally do NOT clear the quests table here. Earlier versions
+  // bulk-deleted every quest on each page load, wiping user-created quests and
+  // completed history on every reload. Legacy defaults are cleaned up by
+  // removeLegacyDefaultQuests() above; everything else persists.
 
   // Initialize achievements by ensuring all defined achievements exist in the database
   const existingAchievements = await db.achievements.toArray();
@@ -4865,6 +1342,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (soBtn) soBtn.addEventListener('click', signOut);
   // Ensure initializeGame is called only once
   initializeGame();
+
+  // Live countdown for completed repeatable quest cards (single global ticker)
+  if (!window.__resetBadgeTicker) {
+    window.__resetBadgeTicker = setInterval(refreshResetBadges, 30000);
+  }
 });
 
 async function scheduleDailyReset() {
@@ -4939,6 +1421,15 @@ function createQuestElement(quest, animate = true) {
 
   // Build new quest field elements
   const freqBadge = quest.frequency ? `<span class="quest-frequency freq-${quest.frequency}">${quest.frequency}</span>` : '';
+  // Visible live countdown badge on completed repeatable quest cards.
+  // Undefined frequency resets daily (see daily-reset.js getFrequencyWindow).
+  let resetBadge = '';
+  const resetFreq = quest.frequency || 'daily';
+  if (quest.status === 'completed' && quest.repeatable && ['daily', 'weekly', 'monthly'].includes(resetFreq)) {
+    const resetAt = getQuestResetTime(resetFreq);
+    const resetTitle = `Resets ${new Date(resetAt).toLocaleString([], { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}`;
+    resetBadge = `<span class="quest-reset-badge" data-reset-at="${resetAt}" title="${resetTitle}"><i class="fas fa-hourglass-half"></i> ${formatResetCountdown(resetAt)}</span>`;
+  }
   const descHTML = quest.description ? `<div class="quest-description">${escapeHtml(quest.description)}</div>` : '';
   const tagsHTML = (quest.tags && quest.tags.length > 0) ? `<div class="quest-tag-list">${quest.tags.map(t => `<span class="quest-tag">${t}</span>`).join('')}</div>` : '';
   const subtasksHTML = (quest.subtasks && quest.subtasks.length > 0) ? `<div class="quest-subtasks">${quest.subtasks.map(s => `<span class="quest-subtask">• ${escapeHtml(s)}</span>`).join('')}</div>` : '';
@@ -4967,6 +1458,7 @@ function createQuestElement(quest, animate = true) {
         <span class="quest-stat stat-${quest.stat || 'discipline'}">${quest.stat || 'discipline'}</span>
         <span class="quest-category category-${(quest.category || 'personal').toLowerCase()}">${ quest.category || 'personal' }</span>
         ${freqBadge}
+        ${resetBadge}
         ${countdownHTML}
       </div>
       ${tagsHTML}
@@ -4996,8 +1488,9 @@ function createQuestElement(quest, animate = true) {
       return;
     }
 
-    // Check if another edit panel is open
-    const existingPanel = document.querySelector('.quest-edit-panel');
+    // Check if another edit panel is open (scope to the quest list so the
+    // quest-modal's panel is never mistaken for a quest card edit panel)
+    const existingPanel = document.querySelector('#quests .quest-edit-panel');
     if (existingPanel && existingPanel !== questElem) {
       existingPanel.className = 'quest';
       existingPanel.innerHTML = existingPanel.dataset.originalContent;
@@ -5224,8 +1717,8 @@ function updateSuggestions(stat, difficulty, container) {
   const suggestions = generateSuggestedQuests(stat || 'discipline', difficulty || 'Medium');
   // Prefer suggestions in the provided container, then in the active edit panel, then global
   let suggestionDisplay = null;
-  if (container && container.querySelector) suggestionDisplay = container.querySelector('#quest-suggestions');
-  if (!suggestionDisplay) suggestionDisplay = document.querySelector('.quest-edit-panel #quest-suggestions') || document.getElementById('quest-suggestions');
+  if (container && container.querySelector) suggestionDisplay = container.querySelector('.suggestion-popup .suggestions-container');
+  if (!suggestionDisplay) suggestionDisplay = document.querySelector('.quest-edit-panel .suggestions-container') || document.getElementById('quest-suggestions');
   if (suggestionDisplay) {
     suggestionDisplay.innerHTML =
       "<strong>Suggested Quests:</strong><ul>" +
@@ -5357,7 +1850,7 @@ function openQuestEditPanel(quest, questElemToEdit) {
   const questElem = questElemToEdit; // Use the existing element passed for editing
 
   // Store original content and ensure single edit panel
-  const existingPanel = document.querySelector('.quest-edit-panel');
+  const existingPanel = document.querySelector('#quests .quest-edit-panel');
   if (existingPanel && existingPanel !== questElem) {
       existingPanel.className = 'quest';
       existingPanel.innerHTML = existingPanel.dataset.originalContent;
@@ -5379,9 +1872,18 @@ function openQuestEditPanel(quest, questElemToEdit) {
           
           <div class="edit-meta-row">
             <div class="edit-category-group">
-              ${['Work', 'Health', 'Learning', 'Personal', 'Cultivation'].map(cat => 
-                `<button type="button" class="tag-button glow-button ${cat.toLowerCase() === (quest.category || '').toLowerCase() ? 'selected' : ''}" 
-                         data-category="${cat}">${cat}</button>`).join('')}
+              ${['work', 'health', 'learning', 'personal', 'spiritual', 'fitness', 'social', 'finance', 'creative'].map(cat => 
+                `<button type="button" class="tag-button glow-button ${cat === (quest.category || '').toLowerCase() ? 'selected' : ''}" 
+                         data-category="${cat}">${cat[0].toUpperCase()}${cat.slice(1)}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="edit-meta-row">
+            <div class="edit-repeat-group">
+              <label>Repeat</label>
+              ${['once', 'daily', 'weekly', 'monthly'].map(r =>
+                `<button type="button" class="tag-button tag-sm glow-button ${r === 'once' ? (!quest.repeatable ? 'selected' : '') : (quest.repeatable && (quest.frequency || 'daily') === r ? 'selected' : '')}" 
+                         data-repeat="${r}">${r[0].toUpperCase()}${r.slice(1)}</button>`).join('')}
             </div>
           </div>
 
@@ -5393,7 +1895,7 @@ function openQuestEditPanel(quest, questElemToEdit) {
             </div>
             <div class="edit-xp-group">
               <label>XP</label>
-              <input type="number" class="quest-input xp-input" value="${quest.xp || 2}" min="1" max="10">
+              <input type="number" class="quest-input xp-input" value="${quest.xp || 500}" min="50" max="3000">
             </div>
             <div class="edit-stat-group">
               ${['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline']
@@ -5402,9 +1904,9 @@ function openQuestEditPanel(quest, questElemToEdit) {
             </div>
           </div>
 
-          <div id="quest-suggestion-popup" class="suggestion-popup" style="display: none;">
-            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
-            <div id="quest-suggestions" class="suggestions-container"></div>
+          <div class="suggestion-popup" style="display: none;">
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup(this)">&times;</button></div>
+            <div class="suggestions-container"></div>
           </div>
 
           <div class="edit-footer-row">
@@ -5450,9 +1952,9 @@ function setupEditPanelListeners(questElem) {
           
           const xpInput = questElem.querySelector('.xp-input');
           if (xpInput && selectedDifficulty) {
-            if (selectedDifficulty === 'Easy') xpInput.value = 5;
-            else if (selectedDifficulty === 'Medium') xpInput.value = 8;
-            else if (selectedDifficulty === 'Hard') xpInput.value = 10;
+            if (selectedDifficulty === 'Easy') xpInput.value = 300;
+            else if (selectedDifficulty === 'Medium') xpInput.value = 800;
+            else if (selectedDifficulty === 'Hard') xpInput.value = 2000;
           }
         }
       });
@@ -5462,10 +1964,11 @@ function setupEditPanelListeners(questElem) {
   setupToggleGroup('.edit-category-group > .tag-button');
   setupToggleGroup('.edit-diff-group > .tag-button');
   setupToggleGroup('.edit-stat-group > .tag-button');
+  setupToggleGroup('.edit-repeat-group > .tag-button');
 }
 
 function toggleSuggestions(btn) {
-  const popup = document.getElementById('quest-suggestion-popup');
+  const popup = btn ? btn.closest('.quest-edit-panel, .quest-modal, .quest-modal-overlay')?.querySelector('.suggestion-popup') : document.getElementById('quest-suggestion-popup');
   if (!popup) return;
   if (popup.style.display === 'block') {
     popup.style.display = 'none';
@@ -5504,7 +2007,7 @@ function applySuggestion(suggestion, questElem) {
 function updateSuggestionsWithClickable(stat, difficulty, questElem) {
   const category = questElem.querySelector('.edit-category-group .tag-button.selected')?.dataset.category;
   const suggestions = generateSuggestedQuests(stat, difficulty, category);
-  const suggestionContainer = questElem.querySelector('#quest-suggestions');
+  const suggestionContainer = questElem.querySelector('.suggestion-popup .suggestions-container');
   
   if (suggestionContainer) {
     suggestionContainer.innerHTML = suggestions.map(suggestion => `
@@ -5516,14 +2019,9 @@ function updateSuggestionsWithClickable(stat, difficulty, questElem) {
 }
 
 // Suggestion Popup management
-function closeSuggestionPopup() {
-  const popup = document.getElementById('quest-suggestion-popup');
+function closeSuggestionPopup(btn) {
+  const popup = btn ? btn.closest('.suggestion-popup') : document.getElementById('quest-suggestion-popup');
   if (popup) popup.style.display = 'none';
-}
-
-function openSuggestionPopup() {
-  const popup = document.getElementById('quest-suggestion-popup');
-  if (popup) popup.style.display = 'block';
 }
 
 // Function to cancel quest editing
@@ -5613,6 +2111,9 @@ async function completeSelectedQuests() {
       quest.status = 'completed';
       quest.completedAt = new Date();
       await db.quests.put(quest);
+      if (typeof sendQuestCompleteWebhook === 'function') {
+        try { await sendQuestCompleteWebhook(quest); } catch (e) { /* non-blocking */ }
+      }
       const playerStats = await db.playerStats.toArray();
       if (playerStats.length > 0) {
         const s = playerStats[0];
@@ -5635,8 +2136,7 @@ async function completeSelectedQuests() {
         await db.playerStats.put(s);
         if (stat) await increaseStat(stat);
       }
-      el.style.opacity = 0;
-      setTimeout(() => { el.remove(); updateQuestsEmptyState(); }, 300);
+      // Keep the card — the board re-renders below with completed states
     }
     if (completedCount > 0) {
       if (totalXp > 0) {
@@ -5675,6 +2175,7 @@ async function completeSelectedQuests() {
     updateQuestCount();
     if (typeof updateMainStatsDisplay === 'function') updateMainStatsDisplay();
     renderAchievements();
+    if (typeof refreshData === 'function') refreshData();
   } catch (e) {
     console.error('completeSelectedQuests error:', e);
     showNotification('Error completing quests: ' + e.message, 'error');
@@ -5707,20 +2208,24 @@ async function saveQuestEdit(buttonElement) {
   const difficultyBtn = questElem.querySelector('.edit-diff-group .tag-button.selected');
   const xpInput = questElem.querySelector('.xp-input');
   const statBtn = questElem.querySelector('.edit-stat-group .tag-button.selected');
+  const repeatBtn = questElem.querySelector('.edit-repeat-group .tag-button.selected');
+  const repeatVal = repeatBtn ? repeatBtn.dataset.repeat : 'once';
   const commentInput = questElem.querySelector('input[placeholder="Comment..."]');
   const pinCheckbox = questElem.querySelector('.pin-comment');
   const dueDateInput = questElem.querySelector('#due-date-input');
 
-  const updatedQuest = {
+  let updatedQuest = {
     id: questId === 'new' ? undefined : questId,
     title: titleInput ? titleInput.value.trim() : '',
-    category: categoryBtn ? categoryBtn.dataset.category : 'Personal',
+    category: categoryBtn ? categoryBtn.dataset.category.toLowerCase() : 'personal',
     difficulty: difficultyBtn ? difficultyBtn.dataset.difficulty : null,
-    xp: xpInput ? parseInt(xpInput.value) : 2,
+    xp: xpInput ? Math.min(3000, Math.max(50, parseInt(xpInput.value) || 500)) : 500,
     stat: statBtn ? statBtn.dataset.stat : null,
     comment: commentInput ? commentInput.value.trim() : '',
     isPinned: pinCheckbox ? pinCheckbox.checked : false,
     status: 'inbox',
+    repeatable: repeatVal !== 'once',
+    frequency: repeatVal !== 'once' ? repeatVal : undefined,
     dueDate: dueDateInput ? dueDateInput.value : null
   };
 
@@ -5746,6 +2251,21 @@ async function saveQuestEdit(buttonElement) {
         showNotification('Another quest already has this title', 'error');
         return;
       }
+      // Merge with the existing record so rich fields (description, tags,
+      // subtasks, timestamps, repeatability) survive the edit.
+      const existingQuest = await db.quests.get(updatedQuest.id);
+      if (existingQuest) {
+        updatedQuest = { ...existingQuest, ...updatedQuest };
+        updatedQuest.status = existingQuest.status;
+        updatedQuest.completedAt = existingQuest.completedAt;
+        // Converting a completed repeatable quest to 'once' would leave it
+        // permanently completed (re-completion is blocked) — free it up.
+        if (existingQuest.repeatable && !updatedQuest.repeatable && existingQuest.status === 'completed') {
+          updatedQuest.status = 'inbox';
+          updatedQuest.completedAt = null;
+          updatedQuest.lastCompletedAt = null;
+        }
+      }
       await db.quests.put(updatedQuest);
     }
     
@@ -5770,6 +2290,57 @@ async function saveQuestEdit(buttonElement) {
 // }
 
 
+// Per-frequency reset hint shown when re-completing an already-completed quest
+function getResetHint(quest) {
+  const label = quest.title || 'This quest';
+  const freq = quest.frequency || 'daily';
+  if (freq === 'weekly') return `"${label}" is already completed — it resets on Monday`;
+  if (freq === 'monthly') return `"${label}" is already completed — it resets next month`;
+  return `"${label}" is already completed — it resets tomorrow`;
+}
+
+// Returns the epoch-ms timestamp of the next reset window for a repeatable
+// quest, matching daily-reset.js getFrequencyWindow (daily -> next midnight,
+// weekly -> next Monday, monthly -> 1st of next month).
+function getQuestResetTime(frequency) {
+  const now = new Date();
+  const target = new Date(now);
+  if (frequency === 'weekly') {
+    const day = now.getDay(); // 0=Sun .. 6=Sat
+    const daysUntilMonday = (8 - day) % 7 || 7; // today=Mon -> next Mon (+7)
+    target.setDate(now.getDate() + daysUntilMonday);
+  } else if (frequency === 'monthly') {
+    target.setMonth(now.getMonth() + 1, 1);
+  } else {
+    target.setDate(now.getDate() + 1); // daily -> tomorrow
+  }
+  target.setHours(0, 0, 0, 0);
+  return target.getTime();
+}
+
+// Humanized live countdown for the reset badge.
+function formatResetCountdown(resetAt) {
+  const diff = resetAt - Date.now();
+  if (diff <= 0) return 'Resets now';
+  const min = Math.max(1, Math.round(diff / 60000));
+  if (min < 60) return `Resets in ${min}m`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  if (h < 24) return `Resets tomorrow · ${h}h ${m}m`;
+  const d = Math.floor(h / 24);
+  const hr = h % 24;
+  const shortDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(resetAt).getDay()];
+  return `Resets ${shortDay} · ${d}d ${hr}h`;
+}
+
+function refreshResetBadges() {
+  document.querySelectorAll('.quest-reset-badge').forEach(badge => {
+    const resetAt = parseInt(badge.dataset.resetAt, 10);
+    if (!resetAt) return;
+    badge.innerHTML = `<i class="fas fa-hourglass-half"></i> ${escapeHtml(formatResetCountdown(resetAt))}`;
+  });
+}
+
 async function completeQuest(xp, stat, questElem) {
   const questTitle = questElem ? questElem.dataset.title : "a quest";
   try {
@@ -5777,10 +2348,23 @@ async function completeQuest(xp, stat, questElem) {
     if (typeof event !== 'undefined' && event && event.stopPropagation) event.stopPropagation();
     
     // Check if there's an edit panel open and close it
-    const existingPanel = document.querySelector('.quest-edit-panel');
+    // (scoped to #quests so the quest-modal's panel is never clobbered)
+    const existingPanel = document.querySelector('#quests .quest-edit-panel');
     if (existingPanel) {
       existingPanel.className = 'quest';
       existingPanel.innerHTML = existingPanel.dataset.originalContent;
+    }
+
+    // Get the quest ID to update in database
+    const questId = questElem ? parseInt(questElem.dataset.questId) : null;
+
+    // Per-frequency cooldown: an already-completed quest can't be re-completed for XP
+    if (questId) {
+      const existingQuest = await db.quests.get(questId);
+      if (existingQuest && existingQuest.status === 'completed') {
+        showNotification(getResetHint(existingQuest), 'info');
+        return;
+      }
     }
 
     // Play sound effect
@@ -5793,8 +2377,6 @@ async function completeQuest(xp, stat, questElem) {
       questElem.style.transition = 'all 0.3s ease';
     }
 
-    // Get the quest ID to update in database
-    const questId = questElem ? parseInt(questElem.dataset.questId) : null;
     const questCategory = questElem ? questElem.dataset.category : null;
     const questDifficulty = questElem ? questElem.dataset.difficulty : null;
     const questStat = questElem ? questElem.dataset.stat : null;
@@ -5803,22 +2385,11 @@ async function completeQuest(xp, stat, questElem) {
     if (questId) {
       const quest = await db.quests.get(questId);
       if (quest) {
-        // Check if repeatable — apply frequency-based XP modifier
-        if (quest.repeatable && quest.frequency) {
-          const freqMultipliers = { daily: 0.33, weekly: 0.66, monthly: 1.0, once: 1.0 };
-          xp = Math.floor(xp * (freqMultipliers[quest.frequency] || 1.0));
-        }
-
-        if (quest.repeatable) {
-          // Repeatable: reset to inbox for next use
-          quest.status = 'inbox';
-          quest.completedAt = null;
-          quest.lastCompletedAt = new Date();
-        } else {
-          // One-time: mark as completed permanently
-          quest.status = 'completed';
-          quest.completedAt = new Date();
-        }
+        // Mark completed — repeatable quests reset on their frequency window
+        // (daily/weekly/monthly) via data/daily-reset.js; full listed XP is awarded.
+        quest.status = 'completed';
+        quest.completedAt = new Date();
+        quest.lastCompletedAt = new Date();
         await db.quests.put(quest);
       }
     }
@@ -5878,6 +2449,14 @@ async function completeQuest(xp, stat, questElem) {
       
       // Check for achievements
       checkAchievements();
+
+      // Feed the streak-enhanced weekly challenge & journal on each completion
+      if (typeof StreakEnhanced !== 'undefined') {
+        try {
+          StreakEnhanced.updateWeeklyProgress(questCategory);
+          StreakEnhanced.logStreakJournalEntry();
+        } catch (e) { /* non-blocking */ }
+      }
     } // End of if (if (playerStats.length > 0)
 
     // Update UI for XP
@@ -5970,16 +2549,28 @@ async function completeQuest(xp, stat, questElem) {
     const undoFn = async () => {
       if (questId) {
         const q = await db.quests.get(questId);
-        if (q) { q.status = 'inbox'; q.completedAt = null; await db.quests.put(q); }
+        if (q) { q.status = 'inbox'; q.completedAt = null; q.lastCompletedAt = null; await db.quests.put(q); }
       }
       if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; }
       currentXP = Math.max(0, currentXP - xp);
       const stats = (await db.playerStats.toArray())[0];
-      if (stats) { stats.xp = currentXP; await db.playerStats.put(stats); }
+      if (stats) {
+        stats.xp = currentXP;
+        // Roll back the counters incremented on completion
+        stats.completedQuests = Math.max(0, (stats.completedQuests || 1) - 1);
+        stats.totalXpEarned = Math.max(0, (stats.totalXpEarned || xp) - xp);
+        if (questDifficulty === 'Hard') stats.hardQuestsCompleted = Math.max(0, (stats.hardQuestsCompleted || 1) - 1);
+        else if (questDifficulty === 'Medium') stats.mediumQuestsCompleted = Math.max(0, (stats.mediumQuestsCompleted || 1) - 1);
+        else if (questDifficulty === 'Easy') stats.easyQuestsCompleted = Math.max(0, (stats.easyQuestsCompleted || 1) - 1);
+        await db.playerStats.put(stats);
+      }
       if (typeof updateXP === 'function') updateXP();
       showNotification(`Quest "${questTitle}" restored.`, "info");
     };
     showUndoToast(questTitle, undoFn);
+    // After the undo window closes, re-render so the card reflects the quest's
+    // completed (or restored) state instead of staying invisible.
+    setTimeout(() => { if (typeof refreshData === 'function') refreshData(); }, 5600);
   } catch (error) {
     console.error('Error completing quest:', error);
     if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; }
@@ -6551,6 +3142,13 @@ async function refreshData() {
   updateQuestCount(); // Update quest count display
 }
 
+// Global re-render hook used by enhancement modules (quest-chains, streak-enhanced,
+// stats-enhanced, daily-reset, improvements). Without it those modules' post-update
+// re-renders silently no-op, leaving stale quest cards on screen.
+function renderQuests() {
+  return refreshData();
+}
+
 // Dead functions removed: updateStatsDisplay, restartGame, resetGame
 
 // Clear All Game Data Function
@@ -6762,7 +3360,7 @@ async function loadDefaultQuestsIntoCurrent() {
     const questsToAdd = defaultQuests.map((q, i) => ({
       ...q,
       id: i + 1,
-      completed: false,
+      status: 'inbox',
       createdAt: new Date().toISOString()
     }));
     await db.quests.bulkAdd(questsToAdd);
@@ -8184,6 +4782,9 @@ async function renderAchievements(){
     const total = items.length || achievementDefinitions.length;
     const unlockedCount = items.filter(i=>i.unlocked).length;
     if (countEl) countEl.textContent = unlockedCount;
+    // Keep the hardcoded denominator in sync with the real achievement count
+    const totalEl = document.querySelector('.achievement-total');
+    if (totalEl && totalEl.textContent !== String(total)) totalEl.textContent = total;
     const fill = document.getElementById('achievement-progress-fill');
     if (fill) fill.style.width = `${Math.round((unlockedCount/total)*100)}%`;
 
