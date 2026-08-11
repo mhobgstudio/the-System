@@ -2525,6 +2525,45 @@ button:hover {
   border-color: var(--accent-primary);
 }
 
+/* Quest status filter (All / Uncompleted / Completed) */
+.quest-status-filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  background: rgba(40, 40, 50, 0.6);
+  border: 1px solid rgba(74, 144, 226, 0.2);
+  border-radius: 8px;
+}
+
+.quest-status-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.quest-status-btn:hover {
+  background: rgba(74, 144, 226, 0.12);
+  color: #e0e0e0;
+}
+
+.quest-status-btn.active {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.35);
+}
+
 .filter-actions {
   position: relative;
 }

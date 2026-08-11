@@ -1,4 +1,4 @@
-const CACHE_NAME = 'solo-leveling-v7';
+const CACHE_NAME = 'solo-leveling-v9';
 const ASSETS = [
   '/',
   '/index.html',

@@ -937,11 +937,13 @@ const questSearchInput = document.getElementById("quest-search");
 const categoryFilter = document.getElementById("category-filter");
 const difficultyFilter = document.getElementById("difficulty-filter");
 const statFilter = document.getElementById("stat-filter");
+const questStatusFilters = document.getElementById("quest-status-filters");
 const sortBtn = document.getElementById("sort-btn");
 const sortOptions = document.getElementById("sort-options");
 
 // Global variable to store current sort criteria
 let currentSortBy = 'title'; // Default sort by title
+let questStatusFilter = 'all'; // 'all' | 'uncompleted' | 'completed'
 let isStreakMessageShown = false;
 
 // Pomodoro timer references
@@ -1121,8 +1123,54 @@ function markNewDefaults() {
 }
 markNewDefaults();
 
+// ─── Boot-time regression guard ──────────────────────────────────────────────
+// If data/defaultQuests.js ever fails to define GLOBAL_DEFAULT_QUESTS (e.g. a
+// crash in its dedupe IIFE, which once silently broke the whole app by leaving
+// zero quests loaded), fail LOUDLY instead of booting a broken app.
+function assertDefaultQuestsLoaded() {
+  // NOTE: `typeof` must be checked FIRST. If defaultQuests.js crashed before
+  // declaring the const (the exact regression this guard protects against), a
+  // bare reference like Array.isArray(GLOBAL_DEFAULT_QUESTS) would itself throw
+  // ReferenceError and defeat the guard. The || short-circuit keeps the bare
+  // reference from ever evaluating when the identifier is undeclared.
+  if (typeof GLOBAL_DEFAULT_QUESTS === 'undefined' ||
+      GLOBAL_DEFAULT_QUESTS === null ||
+      !Array.isArray(GLOBAL_DEFAULT_QUESTS) ||
+      GLOBAL_DEFAULT_QUESTS.length === 0) {
+    const kind = typeof GLOBAL_DEFAULT_QUESTS;
+    const detail = kind === 'undefined' || kind === 'null'
+      ? 'GLOBAL_DEFAULT_QUESTS is ' + kind + ' — data/defaultQuests.js did not initialize.'
+      : 'GLOBAL_DEFAULT_QUESTS is ' + kind + ' with ' + (GLOBAL_DEFAULT_QUESTS ? GLOBAL_DEFAULT_QUESTS.length : 0) + ' entries — data/defaultQuests.js did not load the quest catalog.';
+    console.error('[BOOT GUARD] ' + detail);
+    showFatalBootError(detail);
+    throw new Error('BOOT GUARD: ' + detail);
+  }
+}
+
+// Renders an unmissable full-screen overlay so a broken boot is never silent.
+function showFatalBootError(message) {
+  if (document.getElementById('fatal-boot-error')) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'fatal-boot-error';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(10,2,4,0.96);display:flex;align-items:center;justify-content:center;padding:24px;';
+  const box = document.createElement('div');
+  box.style.cssText = 'max-width:640px;width:100%;background:#2a0f0f;border:2px solid #ff4444;border-radius:14px;padding:30px;color:#ffd7d7;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 0 80px rgba(255,60,60,0.45);';
+  box.innerHTML = '<div style="font-size:44px;margin-bottom:10px;">⚠️</div>' +
+    '<h2 style="margin:0 0 12px;color:#ff6b6b;font-size:22px;line-height:1.3;">Boot failure — quest system unavailable</h2>' +
+    '<p style="margin:0 0 8px;line-height:1.5;font-size:15px;">' + escapeHtml(message) + '</p>' +
+    '<p style="margin:0 0 20px;font-size:13px;opacity:0.8;">This is a regression guard: the quest catalog (data/defaultQuests.js) failed to load, so the app refuses to boot with a broken state. See the browser console for the root cause.</p>' +
+    '<button id="fatal-reload-btn" style="background:#ff4444;color:#fff;border:none;border-radius:8px;padding:11px 20px;font-size:14px;font-weight:bold;cursor:pointer;">Reload app</button>';
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  const btn = document.getElementById('fatal-reload-btn');
+  if (btn) btn.addEventListener('click', () => location.reload());
+}
+
 async function initializeGame() {
   try {
+    // Boot-time regression guard: fail loudly if the quest catalog is missing
+    assertDefaultQuestsLoaded();
+
     // Migration: remove old merged defaults before loading new ones
     await removeLegacyDefaultQuests();
 
@@ -1395,6 +1443,7 @@ function createQuestElement(quest, animate = true) {
   questElem.dataset.stat = quest.stat;
   questElem.dataset.xp = quest.xp;
   questElem.dataset.title = quest.title;
+  questElem.dataset.status = quest.status || 'inbox';
   if (quest.dueDate) {
     questElem.dataset.dueDate = quest.dueDate;
   }
@@ -1747,6 +1796,17 @@ function initializeQuestFilters(){
     if (difficultyFilter) difficultyFilter.addEventListener('change', filterQuests);
     if (statFilter) statFilter.addEventListener('change', filterQuests);
 
+    // Status filter buttons (All / Uncompleted / Completed)
+    if (questStatusFilters) {
+      questStatusFilters.querySelectorAll('.quest-status-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          questStatusFilter = btn.dataset.status || 'all';
+          questStatusFilters.querySelectorAll('.quest-status-btn').forEach(b => b.classList.toggle('active', b === btn));
+          filterQuests();
+        });
+      });
+    }
+
     // Clear search button functionality
     const clearSearchBtn = document.getElementById('clear-search-btn');
     if (clearSearchBtn && questSearchInput) {
@@ -1786,6 +1846,7 @@ function filterQuests(){
     const category = categoryFilter ? categoryFilter.value : 'all';
     const difficulty = difficultyFilter ? difficultyFilter.value : 'all';
     const stat = statFilter ? statFilter.value : 'all';
+    const status = questStatusFilter || 'all';
 
     const questNodes = questsElem.children;
     const visible = [];
@@ -1794,10 +1855,15 @@ function filterQuests(){
       const node = questNodes[i];
       if (!node.dataset) continue;
       const title = (node.dataset.title || '').toLowerCase();
+      const statusMatch = status === 'all' ||
+        (status === 'completed'
+          ? node.dataset.status === 'completed'
+          : node.dataset.status !== 'completed');
       const match = !(q && !title.includes(q)) &&
         (category === 'all' || (node.dataset.category || '').toLowerCase() === category) &&
         (difficulty === 'all' || node.dataset.difficulty === difficulty) &&
-        (stat === 'all' || node.dataset.stat === stat);
+        (stat === 'all' || node.dataset.stat === stat) &&
+        statusMatch;
       if (match) {
         visible.push(node);
         visibleSet.add(node);
