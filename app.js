@@ -3606,13 +3606,22 @@ function initializeQuotes() {
       if (speedSel) speedSel.value = String(speed);
     }
     syncSpeedButtons();
+    // Tap the label to expand on touch devices
+    document.querySelector('.audio-speed-label')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const ctrl = document.querySelector('.audio-speed-control');
+      if (ctrl) ctrl.classList.toggle('expanded');
+    });
+    document.addEventListener('click', (e) => {
+      const ctrl = document.querySelector('.audio-speed-control');
+      if (ctrl && !ctrl.contains(e.target)) ctrl.classList.remove('expanded');
+    });
     document.getElementById('audio-speed-buttons')?.addEventListener('click', (e) => {
       const btn = e.target.closest('.speed-btn');
       if (!btn) return;
       const speed = parseFloat(btn.dataset.speed);
       setAudioSpeed(speed);
       syncSpeedButtons();
-      // Update any currently playing audio
       if (currentQuoteAudio) currentQuoteAudio.playbackRate = speed;
     });
     // Settings modal dropdown
