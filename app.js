@@ -971,7 +971,7 @@ function unlockAudioOnce() {
   if (audioUnlocked) return;
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
+    if (ctx.state === 'suspended') ctx.resume().catch(function(){});
     ctx.close();
   } catch(_) {}
   audioUnlocked = true;
@@ -4355,6 +4355,8 @@ function initializeViewToggle(){
     if (msg.includes('cdn.jsdelivr.net') || msg.includes('unpkg.com') || msg.includes('cdnjs.cloudflare.com')) return true;
     // Skip module evaluation errors with no meaningful trace
     if (msg === 'undefined' || msg === 'null' || msg === '') return true;
+    // Skip AudioContext / unlock errors (autoplay policy on page load)
+    if (msg.includes('AudioContext') || msg.includes('unlockAudioOnce')) return true;
     return false;
   }
 
@@ -4371,6 +4373,13 @@ function initializeViewToggle(){
       console.error('Unhandled rejection', msg);
       if (!isExternalModuleError(msg)) showErrorOverlay(msg);
     } catch (err) {}
+  });
+  // Click-to-dismiss the error overlay
+  document.addEventListener('click', function(e) {
+    const ov = document.getElementById('error-log-overlay');
+    if (ov && ov.style.display === 'block' && !ov.contains(e.target)) {
+      ov.style.display = 'none';
+    }
   });
 })();
 
