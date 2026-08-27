@@ -41,7 +41,7 @@ window.speakWithKokoro = async function speakWithKokoro(text) {
 
     const source = ctx.createBufferSource();
     source.buffer = buffer;
-    source.playbackRate.value = 0.75;
+    try { source.playbackRate.value = (parseFloat(localStorage.getItem('audioSpeed')) || 3); } catch(_) { source.playbackRate.value = 3; }
 
     const filter = ctx.createBiquadFilter();
     filter.type = 'lowpass';

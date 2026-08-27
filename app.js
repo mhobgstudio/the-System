@@ -2436,11 +2436,12 @@ async function completeQuest(xp, stat, questElem) {
     // Play sound effect
     if (sounds && sounds.complete && typeof sounds.complete.play === 'function') sounds.complete.play();
 
-    // Hide quest from DOM (keep reference for undo)
+    // Hide quest from DOM instantly (keep reference for undo)
     if (questElem) {
+      questElem.style.transition = 'none';
       questElem.style.opacity = '0';
       questElem.style.transform = 'translateX(20px)';
-      questElem.style.transition = 'all 0.3s ease';
+      questElem.style.display = 'none';
     }
 
     const questCategory = questElem ? questElem.dataset.category : null;
@@ -2639,7 +2640,7 @@ async function completeQuest(xp, stat, questElem) {
     setTimeout(() => { if (typeof refreshData === 'function') refreshData(); }, 5600);
   } catch (error) {
     console.error('Error completing quest:', error);
-    if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; }
+    if (questElem) { questElem.style.opacity = '1'; questElem.style.transform = 'translateX(0)'; questElem.style.display = ''; questElem.style.transition = ''; }
   }
 }
 async function deleteQuest(questId, questElem) {
@@ -3463,6 +3464,16 @@ function setQuoteAudioMuted(muted) {
   catch(_) {}
 }
 
+function getAudioSpeed() {
+  try { return parseFloat(localStorage.getItem('audioSpeed')) || 3; }
+  catch(_) { return 3; }
+}
+
+function setAudioSpeed(speed) {
+  try { localStorage.setItem('audioSpeed', String(speed)); }
+  catch(_) {}
+}
+
 function syncMuteButton() {
   const btn = document.getElementById('mute-quote');
   if (!btn) return;
@@ -3485,6 +3496,7 @@ function speakText(text, quoteId) {
       }
       const audio = new Audio(audioPath);
       audio.volume = 0.8;
+      audio.playbackRate = getAudioSpeed();
       currentQuoteAudio = audio;
       unlockAudioOnce();
       audio.play().catch(function(e) {
@@ -3583,6 +3595,33 @@ function initializeQuotes() {
         syncMuteButton();
       });
     }
+
+    // Audio speed buttons (quote-actions inline)
+    function syncSpeedButtons() {
+      const speed = getAudioSpeed();
+      document.querySelectorAll('.speed-btn').forEach(b => {
+        b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
+      });
+      const speedSel = document.getElementById('audio-speed-select');
+      if (speedSel) speedSel.value = String(speed);
+    }
+    syncSpeedButtons();
+    document.getElementById('audio-speed-buttons')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.speed-btn');
+      if (!btn) return;
+      const speed = parseFloat(btn.dataset.speed);
+      setAudioSpeed(speed);
+      syncSpeedButtons();
+      // Update any currently playing audio
+      if (currentQuoteAudio) currentQuoteAudio.playbackRate = speed;
+    });
+    // Settings modal dropdown
+    document.getElementById('audio-speed-select')?.addEventListener('change', (e) => {
+      const speed = parseFloat(e.target.value);
+      setAudioSpeed(speed);
+      syncSpeedButtons();
+      if (currentQuoteAudio) currentQuoteAudio.playbackRate = speed;
+    });
 
     // Remove favorite via event delegation
     if (favoritesGrid) {
