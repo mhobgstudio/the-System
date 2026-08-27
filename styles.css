@@ -5438,12 +5438,14 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+  position: relative;
 }
 
 .audio-speed-label {
   color: var(--accent-primary, #9c27b0);
   font-size: 0.85rem;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .audio-speed-buttons {
@@ -5452,6 +5454,31 @@ select:focus {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 8px;
   padding: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  position: absolute;
+  left: 100%;
+  margin-left: 6px;
+  z-index: 10;
+}
+
+.audio-speed-control:hover .audio-speed-buttons,
+.audio-speed-buttons.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* extend hover zone to cover gap between label and buttons */
+.audio-speed-control::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 6px;
+  height: 100%;
 }
 
 .speed-btn {
