@@ -1,33 +1,6 @@
-/* ═══════════════════════════════════════════════
- * Solo Leveling System — Default Quests (Merged & Enriched)
- * Single source of truth.
- *
- * Every duplicate/overlapping quest from previous versions was merged into
- * ONE quest carrying the full detail (subtasks, tags, description).
- * New quests were added from the Notes/TASKS files (Nafilah, Salatu Tasbih,
- * Istikhara, Affiliate Marketing, Mobile App Development, Study & Exams,
- * Train Your Brain, Daily Cultivation).
- *
- * ═══════════════════════════════════════════════
- * XP SYSTEM: Easy 150-500 | Medium 500-1200 | Hard 1500-3000
- * Repeatable quests get ×0.33 (daily) / ×0.66 (weekly)
- * Level formula: 10 × 1.5^level → Lv10~577, Lv20~33k
- * ═══════════════════════════════════════════════
- * NOTE: Titles referenced by data/quest-chains.js must stay exact:
- *   Night Prayer (Tahajjud), Daily Adhkar & Dua, Quran Reading (1pg min),
- *   Daily Health Essentials, Email & Comms, The 3 Quls (Protection),
- *   Quran Memorization (Hifz), Quran Deep Study, Mujawwad Recitation & Teaching,
- *   Madina Arabic & Grammar, Arabic Conversation (Pimsleur), Nahwu (Arabic Grammar),
- *   Word4Word Quran, Control Your Nafs, Digital Detox (1hr),
- *   Silence Fast & Self-Observation, Be an Observer, Effectiveness Audit,
- *   50 Push-ups (Punishment), 5x25 Push-ups, 100 Push-ups,
- *   Monthly Workout Streak, Daily Workout, Agility Training, 300m Run
- * ═══════════════════════════════════════════════ */
-
 const rawDefaultQuests = [
   // ═══════════════════════════════════════════════════════════
-  // ETERNAL QUEST (was: 3× "SACRIFICE YOUR DESIRES" @ 99,999,999 XP)
-  // Merged into ONE quest with sane XP + escalating subtasks.
+  // ETERNAL QUEST
   // ═══════════════════════════════════════════════════════════
   { title: "Sacrifice Your Desires (Eternal)", difficulty: "Hard", xp: 2000, stat: "willpower", category: "spiritual",
     description: "Renounce a desire or give up a comfort for Allah. Escalate daily: Easy (skip a treat) → Medium (quit a habit) → Hard (major sacrifice). Give up something significant and hold it the whole day. Fitna is refinement — this is the eternal quest of self-mastery. (Merged: Give up for Allah)",
@@ -46,13 +19,13 @@ const rawDefaultQuests = [
     tags: ["islamic", "daily"],
     subtasks: ["Morning adhkar", "Evening adhkar", "Make dua — pour your heart out", "Quiet dhikr throughout the day"] },
 
-  { title: "Daily Istighfar & Salawat", difficulty: "Easy", xp: 350, stat: "discipline", category: "spiritual",
+  { title: "Daily Istighfar & Salawat", difficulty: "Easy", xp: 350, stat: "willpower", category: "spiritual",
     description: "Astaghfirullah 100× + Salawat 100× + sincere tawbah + tasbih (Allah 1000×). (Added: tasbih from the Book of Tasks)",
     repeatable: true, frequency: "daily",
     tags: ["islamic", "daily"],
     subtasks: ["Istighfar 100×", "Salawat 100×", "Sincere tawbah", "Tasbih — 'Allah' 1000×"] },
 
-  { title: "All Actions as Worship", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+  { title: "All Actions as Worship", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
     description: "Set the intention for every action as ibadah — work, eating, resting, studying.",
     repeatable: true, frequency: "daily",
     tags: ["islamic", "daily", "mindset"],
@@ -76,7 +49,7 @@ const rawDefaultQuests = [
     tags: ["islamic", "daily", "mindset"],
     subtasks: ["Don't forget Allah in sin", "Resist the whispers", "Choose halal over haram"] },
 
-  { title: "Give Sadaqah", difficulty: "Easy", xp: 300, stat: "discipline", category: "spiritual",
+  { title: "Give Sadaqah", difficulty: "Easy", xp: 300, stat: "willpower", category: "spiritual",
     description: "Give charity — even a smile counts as sadaqah. Prefer hidden charity (sadaqah sirr).",
     repeatable: true, frequency: "weekly",
     tags: ["islamic", "charity", "weekly"],
@@ -94,7 +67,7 @@ const rawDefaultQuests = [
     tags: ["islamic", "daily", "mindset"],
     subtasks: ["Make dua in sujood", "Ask Allah's help earnestly", "Reflect on sujood — closeness to Allah", "Reflect on the Hereafter", "Thank Him for one blessing"] },
 
-  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 200, stat: "intelligence", category: "spiritual",
+  { title: "The 3 Quls (Protection)", difficulty: "Easy", xp: 200, stat: "willpower", category: "spiritual",
     description: "Recite Surahs 112–114 (Ikhlas, Falaq, Nas) for protection — morning and evening.",
     repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "quran", "daily"],
@@ -113,7 +86,7 @@ const rawDefaultQuests = [
     tags: ["learning", "daily"],
     subtasks: ["15 min systematic review", "Effectiveness audit", "Note one improvement"] },
 
-  { title: "99 Names of Allah", difficulty: "Easy", xp: 338, stat: "discipline", category: "learning",
+  { title: "99 Names of Allah", difficulty: "Easy", xp: 338, stat: "intelligence", category: "learning",
     description: "Study the 99 Names of Allah — learn the meaning and call upon Him by them.",
     repeatable: true, frequency: "daily", isPinned: true,
     tags: ["islamic", "learning", "daily"],
@@ -254,7 +227,7 @@ const rawDefaultQuests = [
     tags: ["islamic", "quran", "memorization", "daily"],
     subtasks: ["Memorize new ayahs", "Revise memorized portions", "Recite aloud with tajweed"] },
 
-  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "discipline", category: "spiritual",
+  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "intelligence", category: "spiritual",
     description: "Recite with Tajweed + revise students' Quran + teach. (Merged: Teach Quran, Revise Students' Quran)",
     repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "teaching", "daily"],
