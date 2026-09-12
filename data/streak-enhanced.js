@@ -494,6 +494,7 @@
         setTimeout(addStreakFreezeUI, 500);
         setTimeout(addMilestoneRewardsUI, 1000);
         setTimeout(addWeeklyChallengeUI, 1500);
+        setTimeout(addStreakDetailPanel, 800);
       });
     } else {
       overrideStreakTitleObserver();
@@ -501,9 +502,152 @@
       setTimeout(addStreakFreezeUI, 500);
       setTimeout(addMilestoneRewardsUI, 1000);
       setTimeout(addWeeklyChallengeUI, 1500);
+      setTimeout(addStreakDetailPanel, 800);
     }
 
+    // Toggle streak detail panel visibility on view change
+    document.addEventListener('viewchange', (e) => {
+      const panel = document.getElementById('streak-detail-panel');
+      if (panel) {
+        panel.style.display = e.detail.view === 'detailed' ? 'block' : 'none';
+      }
+    });
+
     console.log('[StreakEnhanced] Freezes, milestones, challenges, journal, and expanded titles loaded');
+  }
+
+  // ─── STREAK DETAIL PANEL (detailed view only) ───
+
+  function addStreakDetailPanel() {
+    const streakContainer = document.querySelector('.streak-container');
+    if (!streakContainer || document.getElementById('streak-detail-panel')) return;
+
+    const streak = parseInt(document.getElementById('current-streak')?.textContent || '0');
+    const freezes = getFreezeCount();
+    const journal = getStreakJournal();
+    const todayEntry = journal.find(e => e.date === new Date().toISOString().split('T')[0]);
+
+    // Next milestone
+    const nextMilestone = MILESTONE_REWARDS.find(r => r.days > streak);
+    const prevMilestone = [...MILESTONE_REWARDS].reverse().find(r => r.days <= streak);
+    const milestoneProgress = nextMilestone
+      ? Math.round(((streak - (prevMilestone?.days || 0)) / (nextMilestone.days - (prevMilestone?.days || 0))) * 100)
+      : 100;
+
+    // Next rank
+    const nextRank = EXPANDED_STREAK_TITLES.find(r => r.days > streak);
+    const currentRank = getStreakTitleAndBonus(streak);
+    const rankProgress = nextRank
+      ? Math.round(((streak - currentRank.days) / (nextRank.days - currentRank.days)) * 100)
+      : 100;
+
+    // Weekly challenge progress
+    const weeklyChallenge = getWeeklyChallenge();
+    const weeklyPct = weeklyChallenge ? Math.round((weeklyChallenge.progress / weeklyChallenge.count) * 100) : 0;
+
+    // Days until next freeze refresh
+    const now = new Date();
+    const daysUntilRefresh = 7 - now.getDay();
+
+    const panel = document.createElement('div');
+    panel.id = 'streak-detail-panel';
+    panel.style.display = 'none'; // hidden by default, shown in detailed view via CSS
+    panel.innerHTML = `
+      <div class="streak-detail-grid">
+        <div class="streak-detail-card">
+          <div class="streak-detail-card-header">
+            <i class="fas fa-mountain"></i>
+            <span>Next Rank</span>
+          </div>
+          <div class="streak-detail-card-body">
+            <div class="streak-detail-rank">
+              <span class="streak-rank-current">${currentRank.title}</span>
+              ${nextRank ? `<span class="streak-rank-arrow">→</span><span class="streak-rank-next">${nextRank.title}</span>` : '<span class="streak-rank-max">MAX</span>'}
+            </div>
+            <div class="streak-detail-progress-bar">
+              <div class="streak-detail-progress-fill" style="width:${rankProgress}%;background:linear-gradient(90deg,var(--accent-secondary),var(--accent-primary))"></div>
+            </div>
+            <div class="streak-detail-progress-text">
+              ${nextRank ? `${streak}/${nextRank.days} days` : 'Maximum rank achieved!'}
+            </div>
+          </div>
+        </div>
+
+        <div class="streak-detail-card">
+          <div class="streak-detail-card-header">
+            <i class="fas fa-gift"></i>
+            <span>Next Milestone</span>
+          </div>
+          <div class="streak-detail-card-body">
+            ${nextMilestone ? `
+            <div class="streak-detail-milestone">
+              <span class="streak-milestone-label">${nextMilestone.label}</span>
+            </div>
+            <div class="streak-detail-progress-bar">
+              <div class="streak-detail-progress-fill" style="width:${milestoneProgress}%;background:linear-gradient(90deg,var(--accent-tertiary),var(--accent-orange))"></div>
+            </div>
+            <div class="streak-detail-progress-text">
+              ${streak}/${nextMilestone.days} days (${nextMilestone.xp} XP)
+            </div>
+            ` : '<div class="streak-detail-milestone-done"><i class="fas fa-trophy"></i> All milestones claimed!</div>'}
+          </div>
+        </div>
+
+        <div class="streak-detail-card">
+          <div class="streak-detail-card-header">
+            <i class="fas fa-snowflake"></i>
+            <span>Streak Freeze</span>
+          </div>
+          <div class="streak-detail-card-body">
+            <div class="streak-detail-freeze">
+              <span class="streak-freeze-count">${freezes}</span>
+              <span class="streak-freeze-label">freeze${freezes !== 1 ? 's' : ''} left</span>
+            </div>
+            <div class="streak-detail-freeze-refresh">
+              Refreshes in ${daysUntilRefresh === 0 ? 'less than a day' : daysUntilRefresh + ' days'}
+            </div>
+          </div>
+        </div>
+
+        <div class="streak-detail-card">
+          <div class="streak-detail-card-header">
+            <i class="fas fa-calendar-day"></i>
+            <span>Today</span>
+          </div>
+          <div class="streak-detail-card-body">
+            <div class="streak-detail-today">
+              <span class="streak-today-count">${todayEntry?.completed || 0}</span>
+              <span class="streak-today-label">quests done</span>
+            </div>
+            ${todayEntry?.categories?.length ? `
+            <div class="streak-today-categories">
+              ${todayEntry.categories.map(c => `<span class="streak-today-cat cat-${c}">${c}</span>`).join('')}
+            </div>
+            ` : '<div class="streak-detail-today-empty">No activity yet</div>'}
+          </div>
+        </div>
+
+        ${weeklyChallenge ? `
+        <div class="streak-detail-card streak-detail-card-wide">
+          <div class="streak-detail-card-header">
+            <i class="fas fa-flag"></i>
+            <span>Weekly Challenge</span>
+            <span class="streak-detail-badge">${weeklyChallenge.title}</span>
+          </div>
+          <div class="streak-detail-card-body">
+            <div class="streak-detail-progress-bar">
+              <div class="streak-detail-progress-fill" style="width:${weeklyPct}%;background:linear-gradient(90deg,#4a90e2,#7c4dff)"></div>
+            </div>
+            <div class="streak-detail-progress-text">
+              ${weeklyChallenge.progress}/${weeklyChallenge.count} — ${weeklyChallenge.desc}
+            </div>
+          </div>
+        </div>
+        ` : ''}
+      </div>
+    `;
+
+    streakContainer.appendChild(panel);
   }
 
   // ─── EXPORTS ───
@@ -524,6 +668,7 @@
     addJournalEntry,
     checkStreakWithFreeze,
     logStreakJournalEntry,
+    addStreakDetailPanel,
   };
 
   init();

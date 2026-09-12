@@ -158,9 +158,8 @@
     const customSection = document.createElement('div');
     customSection.id = 'pom-custom-section';
     customSection.style.cssText = `
-      margin-top: 10px; padding: 8px 12px;
-      background: rgba(40,40,50,0.4); border-radius: 8px;
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-top: 8px; padding: 0;
+      display: flex; justify-content: center; align-items: center; gap: 0.5rem; flex-wrap: wrap;
     `;
 
     customSection.innerHTML = `
@@ -303,6 +302,8 @@
     const popup = document.getElementById('pom-distraction-popup');
     const input = document.getElementById('pom-distraction-input');
     if (!popup) return;
+    // Reset scroll-dismiss guard so next popup can be dismissed again
+    popup._scrollDismissed = false;
     popup.style.display = 'block';
     if (input) { input.value = ''; setTimeout(() => input.focus(), 100); }
   }
@@ -328,6 +329,21 @@
       if (e.key === 'Enter') logBtn?.click();
       if (e.key === 'Escape') hideDistractionPopup();
     });
+
+    // Auto-dismiss distraction popup on scroll or when another modal opens
+    window.addEventListener('scroll', () => {
+      const popup = document.getElementById('pom-distraction-popup');
+      if (popup && popup.style.display === 'block' && !popup._scrollDismissed) {
+        popup._scrollDismissed = true;
+        hideDistractionPopup();
+      }
+    }, { passive: true });
+
+    // Dismiss when settings or quest modal opens
+    const settingsIcon = document.getElementById('settings-icon');
+    settingsIcon?.addEventListener('click', hideDistractionPopup);
+    const addQuestBtn = document.getElementById('add-quest-btn');
+    addQuestBtn?.addEventListener('click', hideDistractionPopup);
   }
 
   // ─── AUTO-START HOOK INTO TIMER COMPLETION ───

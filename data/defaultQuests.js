@@ -227,7 +227,7 @@ const rawDefaultQuests = [
     tags: ["islamic", "quran", "memorization", "daily"],
     subtasks: ["Memorize new ayahs", "Revise memorized portions", "Recite aloud with tajweed"] },
 
-  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "intelligence", category: "spiritual",
+  { title: "Mujawwad Recitation & Teaching", difficulty: "Medium", xp: 700, stat: "intelligence", category: "learning",
     description: "Recite with Tajweed + revise students' Quran + teach. (Merged: Teach Quran, Revise Students' Quran)",
     repeatable: true, frequency: "daily",
     tags: ["islamic", "quran", "teaching", "daily"],

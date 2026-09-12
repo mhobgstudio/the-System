@@ -371,7 +371,7 @@
 
     if (nextPerk) {
       perksEl.innerHTML += `
-        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:6px;">
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:6px;">
           Next at level ${nextPerk.level}: <span style="color:var(--accent-tertiary);">${nextPerk.title}</span> — ${nextPerk.perk}
         </div>
       `;

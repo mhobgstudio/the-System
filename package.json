@@ -28,5 +28,6 @@
   },
   "devDependencies": {
     "serve": "^14.2.1"
-  }
+  },
+  "main": "app.js"
 }

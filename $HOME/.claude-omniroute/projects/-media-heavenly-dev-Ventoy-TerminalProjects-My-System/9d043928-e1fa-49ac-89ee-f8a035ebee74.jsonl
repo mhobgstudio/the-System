@@ -1,0 +1,5 @@
+{"type":"last-prompt","lastPrompt":"hello","leafUuid":"79ce0867-4ff8-49e4-849d-1a2eeb295988","sessionId":"9d043928-e1fa-49ac-89ee-f8a035ebee74"}
+{"type":"mode","mode":"normal","sessionId":"9d043928-e1fa-49ac-89ee-f8a035ebee74"}
+{"type":"permission-mode","permissionMode":"bypassPermissions","sessionId":"9d043928-e1fa-49ac-89ee-f8a035ebee74"}
+{"type":"atis-latch","atis":"","sessionId":"9d043928-e1fa-49ac-89ee-f8a035ebee74"}
+{"type":"cost-state","sessionId":"9d043928-e1fa-49ac-89ee-f8a035ebee74","totalCostUSD":0,"totalAPIDuration":0,"totalAPIDurationWithoutRetries":0,"totalToolDuration":0,"totalLinesAdded":0,"totalLinesRemoved":0,"totalDuration":2932562,"startTime":1789111542792,"modelUsage":{},"hasUnknownModelCost":false}

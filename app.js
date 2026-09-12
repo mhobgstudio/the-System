@@ -545,15 +545,15 @@ function openQuestModal() {
   if (modal) modal.style.display = 'flex';
   document.getElementById('modal-overlay')?.classList.add('show');
 
-  // Show suggestion popup by default — user can toggle it off
+  // Pre-populate suggestions data but keep popup collapsed — user toggles via lightbulb
   const popup = document.getElementById('quest-suggestion-popup');
   const suggestBtn = modal?.querySelector('.suggest-btn');
   if (popup && modal) {
     const stat = modal.querySelector('.edit-stat-group .tag-button.selected')?.dataset.stat || 'discipline';
     const difficulty = modal.querySelector('.edit-diff-group .tag-button.selected')?.dataset.difficulty || 'Medium';
     updateSuggestionsWithClickable(stat, difficulty, modal);
-    popup.style.display = 'block';
-    if (suggestBtn) suggestBtn.classList.add('active');
+    popup.style.display = 'none';
+    if (suggestBtn) suggestBtn.classList.remove('active');
   }
 }
 
@@ -917,9 +917,98 @@ async function updateStreakDisplay() {
       const weekCountEl = document.getElementById('week-quest-count');
       if (weekCountEl) weekCountEl.textContent = weekQuests.length;
 
+      // Per-day quest data for detailed streak bar
+      const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+      const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      const isDetailedView = document.querySelector('.container')?.classList.contains('detailed-view');
+      const streakBarEl = document.querySelector('.streak-bar');
+      if (streakBarEl && isDetailedView) {
+        streakBarEl.style.cssText = 'display:grid;grid-template-columns:repeat(7,1fr);gap:0.6rem;justify-items:center;padding:0.8rem;background:rgba(74,144,226,0.04);border:1px solid rgba(74,144,226,0.1);border-radius:12px;';
+      } else if (streakBarEl) {
+        streakBarEl.style.cssText = '';
+      }
+      streakDayElems.forEach((dayElem, index) => {
+        // Remove old detail elements
+        dayElem.querySelectorAll('.streak-day-count, .streak-day-dots, .streak-day-letter, .streak-day-info').forEach(e => e.remove());
+
+        const dayDate = new Date(monday);
+        dayDate.setDate(monday.getDate() + index);
+        dayDate.setHours(0, 0, 0, 0);
+        const nextDay = new Date(dayDate);
+        nextDay.setDate(dayDate.getDate() + 1);
+
+        const dayQuests = weekQuests.filter(q => {
+          const cd = new Date(q.completedAt);
+          return cd >= dayDate && cd < nextDay;
+        });
+
+        const count = dayQuests.length;
+        const categories = [...new Set(dayQuests.map(q => q.category).filter(Boolean))];
+        const totalXP = dayQuests.reduce((sum, q) => sum + (q.xp || 0), 0);
+
+        // Wrap existing text in a letter circle
+        const letter = dayLabels[index];
+        const letterEl = document.createElement('div');
+        letterEl.className = 'streak-day-letter';
+        letterEl.textContent = letter;
+        dayElem.prepend(letterEl);
+
+        // Clear original text content (keep only new elements)
+        const textNodes = Array.from(dayElem.childNodes).filter(n => n.nodeType === 3);
+        textNodes.forEach(n => n.remove());
+
+        // Add info section (date, quests, XP, categories)
+        const infoEl = document.createElement('div');
+        infoEl.className = 'streak-day-info';
+        infoEl.innerHTML = `
+          <span class="streak-day-date">${dayNames[index]} ${weekDates[index]}</span>
+          <span class="streak-day-quests ${count === 0 ? 'zero' : ''}">${count > 0 ? count + ' quest' + (count !== 1 ? 's' : '') : '—'}</span>
+          ${count > 0 ? `<span class="streak-day-xp">${totalXP} XP</span>` : ''}
+          ${categories.length > 0 ? `
+          <div class="streak-day-categories">
+            ${categories.slice(0, 3).map(c => `<span class="streak-day-cat-label cat-${c}">${c}</span>`).join('')}
+            ${categories.length > 3 ? `<span class="streak-day-cat-label">+${categories.length - 3}</span>` : ''}
+          </div>` : ''}
+        `;
+        dayElem.appendChild(infoEl);
+
+        // Mark day as completed (has quests) for styling
+        dayElem.classList.toggle('has-quests', count > 0);
+
+        // Apply inline styles for detailed view day cards
+        if (isDetailedView) {
+          dayElem.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:140px;height:auto;min-height:110px;padding:0.6rem 0.4rem;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,152,0,0.15);transition:all 0.3s ease;position:relative;overflow:visible;';
+          if (count > 0) {
+            dayElem.style.borderColor = 'rgba(78,205,196,0.4)';
+            dayElem.style.background = 'rgba(78,205,196,0.06)';
+            dayElem.style.boxShadow = '0 0 10px rgba(78,205,196,0.15)';
+          }
+          if (isToday) {
+            dayElem.style.background = 'linear-gradient(135deg,rgba(255,152,0,0.12),rgba(255,193,7,0.08))';
+            dayElem.style.borderColor = 'rgba(255,152,0,0.5)';
+            dayElem.style.boxShadow = '0 0 12px rgba(255,152,0,0.2)';
+          }
+        } else {
+          dayElem.style.cssText = '';
+        }
+      });
+
       // Best streak
       const bestEl = document.getElementById('best-streak');
       if (bestEl) bestEl.textContent = stats.longestStreak || stats.currentStreak || 0;
+
+      // Previous / next rank days
+      const rankTiers = [3, 7, 14, 30, 60, 100, 365];
+      const cs = stats.currentStreak || 0;
+      let prevRank = 0;
+      let nextRank = rankTiers.find(r => r > cs) || (cs + 10);
+      for (let i = rankTiers.length - 1; i >= 0; i--) {
+        if (rankTiers[i] < cs) { prevRank = rankTiers[i]; break; }
+      }
+      const sinceEl = document.getElementById('streak-since-rank');
+      const toEl = document.getElementById('streak-to-next');
+      if (sinceEl) sinceEl.textContent = Math.max(0, cs - prevRank);
+      if (toEl) toEl.textContent = Math.max(0, nextRank - cs);
 
       // Total active days (from statHistory)
       const activeEl = document.getElementById('active-days');
@@ -1483,6 +1572,71 @@ function createQuestElement(quest, animate = true) {
   const tagsHTML = (quest.tags && quest.tags.length > 0) ? `<div class="quest-tag-list">${quest.tags.map(t => `<span class="quest-tag">${t}</span>`).join('')}</div>` : '';
   const subtasksHTML = (quest.subtasks && quest.subtasks.length > 0) ? `<div class="quest-subtasks">${quest.subtasks.map(s => `<span class="quest-subtask">• ${escapeHtml(s)}</span>`).join('')}</div>` : '';
 
+  // Detailed view: extra info section
+  const isDetailedView = document.querySelector('.container')?.classList.contains('detailed-view');
+  let detailHTML = '';
+  if (isDetailedView) {
+    const subtaskTotal = (quest.subtasks && quest.subtasks.length) || 0;
+    const subtaskDone = subtaskTotal > 0 ? Object.values(quest.subtaskCompletion || {}).filter(Boolean).length : 0;
+    const subtaskPct = subtaskTotal > 0 ? Math.round((subtaskDone / subtaskTotal) * 100) : 0;
+
+    const statLabel = (quest.stat || 'discipline').charAt(0).toUpperCase() + (quest.stat || 'discipline').slice(1);
+    const diffLabel = quest.difficulty || 'Medium';
+    const diffColor = diffLabel === 'Hard' ? 'var(--accent-quaternary)' : diffLabel === 'Easy' ? 'var(--accent-secondary)' : 'var(--accent-primary)';
+
+    const dueDateStr = quest.dueDate
+      ? new Date(quest.dueDate.includes('T') ? quest.dueDate : quest.dueDate + 'T00:00:00').toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })
+      : '';
+
+    const createdStr = quest.createdAt
+      ? new Date(quest.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })
+      : '';
+
+    detailHTML = `
+      <div class="quest-detail-section">
+        <div class="quest-detail-row">
+          <div class="quest-detail-item">
+            <i class="fas fa-dumbbell"></i>
+            <span class="quest-detail-label">Stat</span>
+            <span class="quest-detail-value stat-${quest.stat || 'discipline'}">${statLabel}</span>
+          </div>
+          <div class="quest-detail-item">
+            <i class="fas fa-star" style="color:${diffColor}"></i>
+            <span class="quest-detail-label">Difficulty</span>
+            <span class="quest-detail-value">${diffLabel}</span>
+          </div>
+          <div class="quest-detail-item">
+            <i class="fas fa-bolt" style="color:#ffd700"></i>
+            <span class="quest-detail-label">XP Reward</span>
+            <span class="quest-detail-value">${quest.xp || 0}</span>
+          </div>
+        </div>
+        ${subtaskTotal > 0 ? `
+        <div class="quest-detail-progress">
+          <div class="quest-detail-progress-header">
+            <span><i class="fas fa-tasks"></i> Subtasks</span>
+            <span>${subtaskDone}/${subtaskTotal} (${subtaskPct}%)</span>
+          </div>
+          <div class="quest-detail-progress-bar">
+            <div class="quest-detail-progress-fill" style="width:${subtaskPct}%;background:linear-gradient(90deg,var(--accent-primary),var(--accent-secondary))"></div>
+          </div>
+        </div>` : ''}
+        <div class="quest-detail-meta">
+          ${dueDateStr ? `<span class="quest-detail-meta-item"><i class="fas fa-calendar-alt"></i> Due: ${dueDateStr}</span>` : ''}
+          ${createdStr ? `<span class="quest-detail-meta-item"><i class="fas fa-clock"></i> Created: ${createdStr}</span>` : ''}
+          <span class="quest-detail-meta-item"><i class="fas fa-redo"></i> ${quest.frequency || 'once'}</span>
+          ${quest.repeatable ? '<span class="quest-detail-meta-item"><i class="fas fa-sync"></i> Repeatable</span>' : ''}
+        </div>
+        ${quest.description ? `<div class="quest-detail-desc">${escapeHtml(quest.description)}</div>` : ''}
+        <div class="quest-detail-extra">
+          <span class="quest-detail-badge"><i class="fas fa-layer-group"></i> Category: ${quest.category || 'personal'}</span>
+          <span class="quest-detail-badge"><i class="fas fa-tachometer-alt"></i> ID: #${quest.id}</span>
+          <span class="quest-detail-badge"><i class="fas fa-check-circle"></i> Status: ${quest.status || 'inbox'}</span>
+        </div>
+      </div>
+    `;
+  }
+
   questElem.innerHTML = `
     <div class="quest-content">
       <div class="quest-header">
@@ -1510,6 +1664,7 @@ function createQuestElement(quest, animate = true) {
         ${resetBadge}
         ${countdownHTML}
       </div>
+      ${detailHTML}
       ${tagsHTML}
       ${subtasksHTML}
       ${ quest.comment ? `<div class="pinned-comment">${linkify(quest.comment)}</div>` : '' }
@@ -4287,6 +4442,7 @@ function applyView(view) {
   const containerEl = document.querySelector('.container');
   const questsEl = document.getElementById('quests');
   const statsEl = document.querySelector('.stats');
+  const streakBar = document.querySelector('.streak-bar');
   if (!containerEl) return;
   containerEl.classList.remove('dashboard-view', 'detailed-view', 'compact-view');
   containerEl.classList.add(`${view}-view`);
@@ -4298,6 +4454,22 @@ function applyView(view) {
     statsEl.classList.remove('view-detailed', 'view-compact', 'view-dashboard');
     statsEl.classList.add(`view-${view}`);
   }
+
+  // Streak bar layout per view
+  if (streakBar) {
+    if (view === 'detailed') {
+      streakBar.style.cssText = 'display:grid;grid-template-columns:repeat(7,1fr);gap:0.6rem;justify-items:center;padding:0.8rem;background:rgba(74,144,226,0.04);border:1px solid rgba(74,144,226,0.1);border-radius:12px;';
+      streakBar.querySelectorAll('.streak-day').forEach(d => {
+        d.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:140px;height:auto;min-height:110px;padding:0.6rem 0.4rem;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,152,0,0.15);transition:all 0.3s ease;position:relative;overflow:visible;';
+      });
+    } else {
+      streakBar.style.cssText = '';
+      streakBar.querySelectorAll('.streak-day').forEach(d => {
+        d.style.cssText = '';
+      });
+    }
+  }
+
   try { localStorage.setItem('preferredView', view); } catch (e) { /* private browsing */ }
   // Dispatch event so other components can react
   document.dispatchEvent(new CustomEvent('viewchange', { detail: { view } }));

@@ -1,0 +1,6 @@
+{"type":"last-prompt","lastPrompt":"deeply analyze the stats assigned to quests and reassign them properly to reflect what those quests actually increase","leafUuid":"7aabded7-7088-4a5a-9375-91a4851d5044","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f"}
+{"type":"ai-title","aiTitle":"Quest stats reassignment","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f"}
+{"type":"mode","mode":"normal","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f"}
+{"type":"permission-mode","permissionMode":"bypassPermissions","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f"}
+{"type":"atis-latch","atis":"","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f"}
+{"type":"cost-state","sessionId":"7ca0aeb2-87d6-49b4-80de-5aec9efe8f7f","totalCostUSD":30.959994499999997,"totalAPIDuration":355331,"totalAPIDurationWithoutRetries":355023,"totalToolDuration":122068,"totalLinesAdded":119,"totalLinesRemoved":42,"totalDuration":83314739,"startTime":1789030765706,"modelUsage":{"free-stack":{"inputTokens":5693785,"outputTokens":17041,"thinkingTokens":0,"cacheReadInputTokens":4130089,"cacheCreationInputTokens":0,"webSearchRequests":0,"costUSD":30.959994499999997}},"hasUnknownModelCost":true}

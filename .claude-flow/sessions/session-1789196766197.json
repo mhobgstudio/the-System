@@ -1,0 +1,15 @@
+{
+  "id": "session-1789196766197",
+  "startedAt": "2026-09-12T07:06:06.197Z",
+  "cwd": "/media/heavenly-dev/Ventoy/TerminalProjects/My System",
+  "context": {},
+  "metrics": {
+    "edits": 53,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "restoredAt": "2026-09-12T10:36:33.038Z",
+  "endedAt": "2026-09-12T17:20:55.809Z",
+  "duration": 36889612
+}
