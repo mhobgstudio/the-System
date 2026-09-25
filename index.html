@@ -7,7 +7,9 @@
     <meta property="og:title" content="Solo Leveling: Your Path to Power">
     <meta property="og:description" content="Gamified productivity system with quests, XP tracking, and habit building.">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a90e2">
+    <link rel="stylesheet" href="styles.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +29,119 @@
     </script>
     <!-- Google Identity Services for sign-in -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+/* === RESPONSIVE FIX (auto-injected) === */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow on body */
+  body, html { max-width: 100vw; overflow-x: hidden; }
+  
+  /* Tables scroll horizontally instead of overflowing */
+  table { max-width: 100%; overflow-x: auto; display: block; }
+  
+  /* Grain overlays — constrain to viewport */
+  .grain-overlay { width: 100vw !important; max-width: 100vw !important; left: 0 !important; right: 0 !important; }
+  
+  /* Chat pages — make responsive */
+  .chat_page, .page_body { max-width: 100vw !important; width: 100% !important; }
+  .content { max-width: 100vw !important; width: 100% !important; }
+  .history { max-width: 100% !important; }
+  .message { max-width: 100% !important; word-wrap: break-word; overflow-wrap: break-word; }
+  .body { max-width: 100% !important; }
+  .media.clearfix { max-width: 100% !important; }
+  
+  /* Nebula/glows — constrain */
+  .nebula, .glow { max-width: 100vw !important; }
+  
+  /* Orb animations — constrain */
+  .orb { max-width: 100vw !important; }
+  
+  /* Larger touch targets */
+  a, button, input, select, textarea, [role="button"], [onclick] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Fix small text */
+  body { font-size: max(14px, inherit); }
+  
+  /* Chips/buttons wrap */
+  .chips { flex-wrap: wrap !important; overflow: hidden !important; }
+  .chip { flex-shrink: 1 !important; }
+  
+  /* Reminder bars — constrain */
+  .due-date-reminder { max-width: 100vw !important; width: 100% !important; left: 0 !important; right: 0 !important; }
+  
+  /* Timer/countdown blocks */
+  .timer, .timer-unit, .moon-countdown { max-width: 100% !important; }
+  
+  /* KPI tables, data tables */
+  .kpi-table, .cyber-table, .org-table, .bp-table, .ptrack { max-width: 100% !important; overflow-x: auto; display: block; }
+  
+  /* Notebook/book pages */
+  .page.cover, .page { max-width: 100% !important; width: 100% !important; }
+  
+  /* Tape tracks — hide overflow on mobile */
+  .tape-track { overflow: hidden !important; }
+  
+  /* Banner/topbar */
+  .topbar-right { max-width: 100% !important; flex-wrap: wrap; }
+}
+
+/* === RESPONSIVE FIX ROUND 2 === */
+@media (max-width: 768px) {
+  /* Aggressive body overflow control */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { overflow-x: hidden !important; max-width: 100vw; }
+  html { overflow-x: hidden !important; }
+  
+  /* ALL tables — wrap in scrollable container */
+  table { display: block !important; overflow-x: auto !important; max-width: 100% !important; }
+  thead, tbody, tr, td, th { max-width: 100% !important; }
+  
+  /* Pre/code blocks */
+  pre, code { max-width: 100% !important; overflow-x: auto !important; word-wrap: break-word; }
+  
+  /* Nav bars — stack on mobile */
+  nav, .nav, .navbar, .site-nav, .nav-links { 
+    flex-wrap: wrap !important; 
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  
+  /* Ticker/marquee tracks */
+  .ticker-track, .tape-track { overflow: hidden !important; max-width: 100vw !important; }
+  
+  /* Object labels (AstRealm) */
+  .object-label { position: relative !important; max-width: 90vw !important; }
+  
+  /* Loading rings */
+  .loading-ring { max-width: 100% !important; }
+  
+  /* Stats HUDs */
+  #stats-hud, .stats-hud { max-width: 100% !important; left: 0 !important; right: 0 !important; }
+  
+  /* Detail sidebars */
+  aside, .detail { max-width: 100% !important; }
+  
+  /* Bar charts */
+  .bar-col { max-width: 100% !important; }
+  
+  /* Container divs */
+  .container { max-width: 100% !important; padding-left: 10px !important; padding-right: 10px !important; }
+}
+
+/* Also handle tablet+ */
+@media (max-width: 1024px) {
+  table { display: block !important; overflow-x: auto !important; max-width: 100% !important; }
+  pre, code { max-width: 100% !important; overflow-x: auto !important; }
+  nav, .nav, .navbar, .site-nav, .nav-links { overflow-x: hidden !important; max-width: 100% !important; }
+  .ticker-track, .tape-track { overflow: hidden !important; }
+  .grain-overlay { width: 100vw !important; max-width: 100vw !important; }
+  .object-label { max-width: 90vw !important; }
+  aside, .detail { max-width: 100% !important; }
+}
+
+</style>
 </head>
 
   <body class="theme-dark">
@@ -86,7 +201,7 @@
             </div>
           </div>
           <h2>
-            Welcome, <span id="username-display" class="glow">Heavenly_Dev</span>
+            Welcome, <span id="username-display" class="glow">Heavenly_Dev|</span>
           </h2>
           <div id="character-title" class="glow"></div>
         </div>
@@ -277,17 +392,22 @@
           </div>
           
           <div class="filter-group">
-            <select id="category-filter" class="quest-input" aria-label="Filter quests by category">
+            <select id="category-filter" class="quest-input">
               <option value="all">All Categories</option>
-              <option value="work">Work</option>
-              <option value="health">Health</option>
+              <option value="spiritual">Spiritual</option>
               <option value="learning">Learning</option>
+              <option value="work">Work</option>
+              <option value="fitness">Fitness</option>
+              <option value="health">Health</option>
               <option value="personal">Personal</option>
+              <option value="social">Social</option>
+              <option value="finance">Finance</option>
+              <option value="creative">Creative</option>
             </select>
           </div>
           
           <div class="filter-group">
-            <select id="difficulty-filter" class="quest-input" aria-label="Filter quests by difficulty">
+            <select id="difficulty-filter" class="quest-input">
               <option value="all">All Difficulties</option>
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -296,7 +416,7 @@
           </div>
           
           <div class="filter-group">
-            <select id="stat-filter" class="quest-input" aria-label="Filter quests by stat">
+            <select id="stat-filter" class="quest-input">
               <option value="all">All Stats</option>
               <option value="strength">Strength</option>
               <option value="agility">Agility</option>
@@ -305,6 +425,20 @@
               <option value="willpower">Willpower</option>
               <option value="discipline">Discipline</option>
             </select>
+          </div>
+          
+          <div class="filter-group">
+            <div class="quest-status-filters" id="quest-status-filters" role="group" aria-label="Filter quests by status">
+              <button type="button" class="quest-status-btn active" data-status="all" title="Show all quests">
+                <i class="fas fa-layer-group"></i> All
+              </button>
+              <button type="button" class="quest-status-btn" data-status="uncompleted" title="Show active quests only">
+                <i class="fas fa-circle-notch"></i> Uncompleted
+              </button>
+              <button type="button" class="quest-status-btn" data-status="completed" title="Show completed quests only">
+                <i class="fas fa-check-circle"></i> Completed
+              </button>
+            </div>
           </div>
           
           <div class="filter-actions">
@@ -407,7 +541,7 @@
         <div class="achievements-header">
           <h3>Achievements</h3>
           <div class="achievement-progress">
-            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">35</span>
+            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">40</span>
             <div class="achievement-progress-bar">
               <div class="achievement-progress-fill" id="achievement-progress-fill"></div>
             </div>
@@ -481,11 +615,25 @@
           
           <div class="edit-meta-row">
             <div class="edit-category-group">
-              <button type="button" class="tag-button glow-button selected" data-category="Work">Work</button>
-              <button type="button" class="tag-button glow-button" data-category="Health">Health</button>
-              <button type="button" class="tag-button glow-button" data-category="Learning">Learning</button>
-              <button type="button" class="tag-button glow-button" data-category="Personal">Personal</button>
-              <button type="button" class="tag-button glow-button" data-category="Cultivation">Cultivation</button>
+              <button type="button" class="tag-button glow-button selected" data-category="work">Work</button>
+              <button type="button" class="tag-button glow-button" data-category="health">Health</button>
+              <button type="button" class="tag-button glow-button" data-category="learning">Learning</button>
+              <button type="button" class="tag-button glow-button" data-category="personal">Personal</button>
+              <button type="button" class="tag-button glow-button" data-category="spiritual">Spiritual</button>
+              <button type="button" class="tag-button glow-button" data-category="fitness">Fitness</button>
+              <button type="button" class="tag-button glow-button" data-category="social">Social</button>
+              <button type="button" class="tag-button glow-button" data-category="finance">Finance</button>
+              <button type="button" class="tag-button glow-button" data-category="creative">Creative</button>
+            </div>
+          </div>
+
+          <div class="edit-meta-row">
+            <div class="edit-repeat-group">
+              <label>Repeat</label>
+              <button type="button" class="tag-button tag-sm glow-button selected" data-repeat="once">Once</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="daily">Daily</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="weekly">Weekly</button>
+              <button type="button" class="tag-button tag-sm glow-button" data-repeat="monthly">Monthly</button>
             </div>
           </div>
 
@@ -497,7 +645,7 @@
             </div>
             <div class="edit-xp-group">
               <label>XP</label>
-              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
+              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="500" min="50" max="3000">
             </div>
             <div class="edit-stat-group">
               <button type="button" class="tag-button tag-sm glow-button selected" data-stat="discipline">discipline</button>
@@ -510,7 +658,7 @@
           </div>
 
           <div id="quest-suggestion-popup" class="suggestion-popup" style="display:none;">
-            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup(this)">&times;</button></div>
             <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
 
@@ -715,7 +863,28 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
-    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Data layer (constants only - must load before app.js) -->
+    <script src="data/config.js?v=9"></script>
+    <script src="data/helpers.js?v=9"></script>
+    <script src="data/defaultQuests.js?v=9"></script>
+    <script src="data/quotes.js?v=9"></script>
+
+    <!-- Main application (defines db, sounds, showNotification, renderQuests and all game globals) -->
+    <script src="app.js?v=9"></script>
+
+    <!-- Feature modules (loaded AFTER app.js since they reference app.js globals) -->
+    <script src="data/improvements.js?v=9"></script>
+    <script src="data/quest-chains.js?v=9"></script>
+    <script src="data/quotes-integration.js?v=9"></script>
+    <script src="data/daily-reset.js?v=9"></script>
+    <script src="data/pomodoro-enhanced.js?v=9"></script>
+    <script src="data/webhook.js?v=9"></script>
+    <script src="data/stats-chart.js?v=9"></script>
+    <script src="data/stats-enhanced.js?v=9"></script>
+    <script src="data/streak-enhanced.js?v=9"></script>
+    <script src="data/shortcuts.js?v=9"></script>
     <script>
     (function(){
       function updateStreakTitle() {
@@ -764,7 +933,6 @@
           const mo = new MutationObserver(updateStreakTitle);
           mo.observe(cs, { childList: true, characterData: true, subtree: true });
         }
-        setInterval(updateStreakTitle, 60000);
       });
     })();
     </script>
@@ -779,6 +947,11 @@
         });
       }
     })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      }
     </script>
 </body>
 </html>
