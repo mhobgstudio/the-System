@@ -2,14 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Solo Leveling: Your Path to Power - Gamified Productivity System</title>
-    <meta name="description" content="A gamified productivity system inspired by Solo Leveling. Track quests, earn XP, level up, and build real-world habits.">
-    <meta property="og:title" content="Solo Leveling: Your Path to Power">
-    <meta property="og:description" content="Gamified productivity system with quests, XP tracking, and habit building.">
-    <meta property="og:type" content="website">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4a90e2">
-    <link rel="stylesheet" href="styles.css?v=9">
+    <title>Solo Leveling: Your Path to Power</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,7 +82,7 @@
             </div>
           </div>
           <h2>
-            Welcome, <span id="username-display" class="glow">Heavenly_Dev|</span>
+            Welcome, <span id="username-display" class="glow">Heavenly_Dev</span>
           </h2>
           <div id="character-title" class="glow"></div>
         </div>
@@ -281,7 +275,7 @@
           </div>
           
           <div class="filter-group">
-            <select id="category-filter" class="quest-input">
+            <select id="category-filter" class="quest-input" aria-label="Filter quests by category">
               <option value="all">All Categories</option>
               <option value="spiritual">Spiritual</option>
               <option value="learning">Learning</option>
@@ -296,7 +290,7 @@
           </div>
           
           <div class="filter-group">
-            <select id="difficulty-filter" class="quest-input">
+            <select id="difficulty-filter" class="quest-input" aria-label="Filter quests by difficulty">
               <option value="all">All Difficulties</option>
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -305,7 +299,7 @@
           </div>
           
           <div class="filter-group">
-            <select id="stat-filter" class="quest-input">
+            <select id="stat-filter" class="quest-input" aria-label="Filter quests by stat">
               <option value="all">All Stats</option>
               <option value="strength">Strength</option>
               <option value="agility">Agility</option>
@@ -415,7 +409,7 @@
         </div>
       </div>
 
-      <div class="level-up">
+    <div class="level-up">
         <button id="level-up-btn" style="display: none">Level Up!</button>
       </div>
 
@@ -543,8 +537,8 @@
               <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Hard">Hard</button>
             </div>
             <div class="edit-xp-group">
-              <label>XP</label>
-              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="500" min="50" max="3000">
+              <label for="quest-modal-xp">XP</label>
+              <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
             </div>
             <div class="edit-stat-group">
               <button type="button" class="tag-button tag-sm glow-button selected" data-stat="discipline">discipline</button>
@@ -563,7 +557,7 @@
 
           <div class="edit-footer-row">
             <div class="edit-date-group">
-              <label>Due</label>
+              <label for="quest-modal-due">Due</label>
               <input type="date" id="quest-modal-due" class="quest-input">
             </div>
             <div class="edit-comment-group">
@@ -772,28 +766,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.2/dexie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-    <!-- Data layer (constants only - must load before app.js) -->
-    <script src="data/config.js?v=9"></script>
-    <script src="data/helpers.js?v=9"></script>
-    <script src="data/defaultQuests.js?v=9"></script>
-    <script src="data/quotes.js?v=9"></script>
-
-    <!-- Main application (defines db, sounds, showNotification, renderQuests and all game globals) -->
-    <script src="app.js?v=9"></script>
-
-    <!-- Feature modules (loaded AFTER app.js since they reference app.js globals) -->
-    <script src="data/improvements.js?v=9"></script>
-    <script src="data/quest-chains.js?v=9"></script>
-    <script src="data/quotes-integration.js?v=9"></script>
-    <script src="data/daily-reset.js?v=9"></script>
-    <script src="data/pomodoro-enhanced.js?v=9"></script>
-    <script src="data/webhook.js?v=9"></script>
-    <script src="data/stats-chart.js?v=9"></script>
-    <script src="data/stats-enhanced.js?v=9"></script>
-    <script src="data/streak-enhanced.js?v=9"></script>
-    <script src="data/shortcuts.js?v=9"></script>
+    <script src="app.js"></script>
     <script>
     (function(){
       function updateStreakTitle() {

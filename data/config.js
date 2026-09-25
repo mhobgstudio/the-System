@@ -49,8 +49,8 @@ const SL_CONFIG = {
     { days: 365, title: 'Dao Ancestor (道祖)' },
   ],
 
-  // Quest categories (must match the category filter options in index.html)
-  CATEGORIES: ['work', 'health', 'learning', 'personal', 'spiritual', 'fitness', 'social', 'finance', 'creative'],
+  // Quest categories
+  CATEGORIES: ['work', 'health', 'learning', 'personal', 'spiritual', 'fitness', 'cultivation', 'physical'],
   DIFFICULTIES: ['Easy', 'Medium', 'Hard'],
   STATS: ['strength', 'agility', 'intelligence', 'stamina', 'willpower', 'discipline'],
 
@@ -70,9 +70,6 @@ const SL_CONFIG = {
     physical: 'strength',
     spiritual: 'faith',
     fitness: 'strength',
-    social: 'discipline',
-    finance: 'discipline',
-    creative: 'growth',
   },
 
   // Auth

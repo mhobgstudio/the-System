@@ -1,3 +1,4 @@
+# Archive ref: tool_archive.json + utility_archive.json /home/heavenly-dev/TermProj/
 // --- Google Auth State ---
 // Replace this with your Google OAuth 2.0 Web Client ID
 // Get one at https://console.cloud.google.com/apis/credentials
@@ -122,8 +123,93 @@ try {
 
 const MAX_STAT = 10000;
 
-// rawDefaultQuests is now defined in data/defaultQuests.js
+const rawDefaultQuests = [
+  // ═══════ SACRIFICE (merged from ×3: Easy/Medium/Hard) ═══════
+  { title: "SACRIFICE YOUR DESIRES", difficulty: "Easy", xp: 99999999, stat: "willpower", category: "personal", isPinned: true },
 
+  // ═══════ DAILY ADHKAR (merged from: Dua, Dhikr, Sleeping Prayer, Pray b4 Sleep) ═══════
+  { title: "Daily Adhkar: Dua + Dhikr + Sleeping Prayer", difficulty: "Easy", xp: 1340, stat: "willpower", category: "personal" },
+
+  // ═══════ HEART REMINDERS (merged from: sujuud, imam abroad, close to throne) ═══════
+  { title: "Heart Reminders: Turn to Allah in All Things", difficulty: "Easy", xp: 1005, stat: "willpower", category: "personal" },
+
+  // ═══════ CORE SPIRITUAL — distinct daily practices ═══════
+  { title: "All Actions As Worship", difficulty: "Easy", xp: 33333, stat: "discipline", category: "personal" },
+  { title: "Always Choose the Pleasure of Allah", difficulty: "Easy", xp: 3315, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Selective Fast (Jihad of Silence)", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", isPinned: true },
+  { title: "Nawwafi_Murájá (Night Prayer)", difficulty: "Easy", xp: 3310, stat: "willpower", category: "personal", comment: "1/3 page per raka; Deep", isPinned: true },
+  { title: "99 Names of Allah", difficulty: "Easy", xp: 338, stat: "discipline", category: "learning", isPinned: true,
+    comment: "https://drive.google.com/file/d/1OOfWSArPLilmJHmeOtrLgGhfaHmqMTY4/view?usp=sharing" },
+
+  // ═══════ MINDSET (merged from: voices, disregard Allah, take haram seriously) ═══════
+  { title: "Control Nafs: Resist Voices & Haram", difficulty: "Easy", xp: 9935, stat: "willpower", category: "personal" },
+
+  // ═══════ OBSERVER (merged from: be observer + avoid 1hr loops) ═══════
+  { title: "Be an Observer - Avoid 1hr+ Loops", difficulty: "Easy", xp: 6630, stat: "willpower", category: "personal", isPinned: true,
+    comment: "code, short videos" },
+
+  // ═══════ WORLD VIEW (merged from: more to life + people doing) ═══════
+  { title: "Worldly Perspective Check", difficulty: "Easy", xp: 676, stat: "discipline", category: "personal" },
+
+  // ═══════ FOCUS & REVIEW (merged from: systematic review, liquid drop, effectiveness audit) ═══════
+  { title: "Focus & Systematic Review (15min+)", difficulty: "Easy", xp: 1176, stat: "intelligence", category: "learning" },
+
+  // ═══════ PHYSICAL MAINTENANCE (merged from: posture, 50 push-ups, health check) ═══════
+  { title: "Physical Maintenance", difficulty: "Easy", xp: 1133, stat: "strength", category: "physical" },
+
+  // ═══════ QURAN STUDY (merged from: word memorization + tafseer) ═══════
+  { title: "Quran Study: Memorization & Tafseer", difficulty: "Easy", xp: 838, stat: "intelligence", category: "learning" },
+
+  // ═══════ WORK EASY ═══════
+  { title: "Email & Comms", difficulty: "Easy", xp: 333, stat: "discipline", category: "work" },
+  { title: "watch teleGratitude", difficulty: "Easy", xp: 333, stat: "discipline", category: "personal" },
+
+  // ═══════════════════ MEDIUM ═══════════════════
+
+  // ═══════ SPIRITUAL MEDIUM ═══════
+  { title: "Give up something for Allah - Fitna is Refinement", difficulty: "Medium", xp: 2310, stat: "willpower", category: "personal" },
+
+  // ═══════ LEARNING MEDIUM (merged: nahwu+pimsleur+madina, hifz+mujawwad, grad+research) ═══════
+  { title: "Grad School / Research Work", difficulty: "Medium", xp: 476, stat: "intelligence", category: "learning", isPinned: true,
+    comment: "EBOOK/PLAYLIST" },
+  { title: "Arabic: Nahwu + Pimsleur + Madina Series", difficulty: "Medium", xp: 714, stat: "intelligence", category: "learning", isPinned: true },
+  { title: "Hifz Revision & Mujawwad Recitation", difficulty: "Medium", xp: 476, stat: "intelligence", category: "learning" },
+  { title: "Juz Daily: 1pg/min Overview", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning", isPinned: true,
+    comment: "EBOOK" },
+  { title: "Word-for-Word Quran + Madina Series", difficulty: "Medium", xp: 476, stat: "intelligence", category: "learning" },
+  { title: "Seerah / Spiritual Knowledge", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
+  { title: "Teach & Revise Students Quran", difficulty: "Medium", xp: 238, stat: "discipline", category: "learning",
+    comment: "At least 1 page with AudioBook" },
+
+  // ═══════ WORK MEDIUM (merged: AI+automation, dev+project) ═══════
+  { title: "AI & Automation (Agentic + n8n)", difficulty: "Medium", xp: 476, stat: "discipline", category: "work" },
+  { title: "CyberExpo Development", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work" },
+  { title: "Zad University", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work", isPinned: true,
+    comment: "GAME: 2048" },
+  { title: "Extras Research", difficulty: "Medium", xp: 238, stat: "intelligence", category: "work", isPinned: true,
+    comment: "https://floor796.com/" },
+  { title: "Money Research (1 Idea+)", difficulty: "Medium", xp: 238, stat: "intelligence", category: "personal" },
+
+  // ═══════ HEALTH MEDIUM ═══════
+  { title: "Workout", difficulty: "Medium", xp: 238, stat: "strength", category: "health" },
+  { title: "Screen Time vs Sleep Balance", difficulty: "Medium", xp: 238, stat: "stamina", category: "health", isPinned: true,
+    comment: "shorts" },
+
+  // ═══════ LANGUAGE MEDIUM ═══════
+  { title: "Yoruba Perfection", difficulty: "Medium", xp: 238, stat: "intelligence", category: "learning" },
+
+  // ═══════════════════ HARD ═══════════════════
+
+  // ═══════ ACADEMIC HARD (merged: math+quantum, MERN+MPhil) ═══════
+  { title: "Advanced Math & Quantum Computing", difficulty: "Hard", xp: 2620, stat: "intelligence", category: "learning" },
+  { title: "Thesis Project (NoteBookLM)", difficulty: "Hard", xp: 1310, stat: "intelligence", category: "work" },
+  { title: "Full-Stack & Research Project", difficulty: "Hard", xp: 2620, stat: "intelligence", category: "learning" },
+
+  // ═══════ PHYSICAL HARD (merged: push-ups ×3, agility ×2) ═══════
+  { title: "Push-ups Progression (100/day)", difficulty: "Hard", xp: 2620, stat: "strength", category: "physical", isPinned: true },
+  { title: "Agility Training (30min or 300m)", difficulty: "Hard", xp: 2620, stat: "agility", category: "physical", isPinned: true },
+  { title: "Monthly Workout Streak", difficulty: "Hard", xp: 1310, stat: "strength", category: "physical", isPinned: true },
+];
 
 // GLOBAL_DEFAULT_QUESTS is now defined in data/defaultQuests.js
 
@@ -1338,7 +1424,7 @@ async function initializeGame() {
       currentStreak: 0,
       longestStreak: 0,
       voicePref: 'female',
-      username: "HeavenlyDev|",
+      username: "HeavenlyDev",
       completedQuests: 0,
       categoriesCompleted: [],
       pomodoroCompleted: 0,
@@ -2746,7 +2832,7 @@ async function completeQuest(xp, stat, questElem) {
     const progressText = document.getElementById(`${stat}-progress-text`);
     if (progressText && currentStats) {
       const increaseText = statIncreases[stat] > 0 ? ` (+${statIncreases[stat]})` : '';
-      // Show as "current/max" with max being 10000
+      // Show: current/total with increase if any (consistent across views)
       progressText.textContent = `${currentStats[stat]}/${MAX_STAT}${increaseText}`;
     }
 
@@ -3371,7 +3457,41 @@ function renderQuests() {
   return refreshData();
 }
 
-// Dead functions removed: updateStatsDisplay, restartGame, resetGame
+// Updated restartGame function to add all tasks as new quests
+async function restartGame() {
+  await initializeGame(); // You might keep your existing initialization logic
+  const quests = await db.quests.toArray(); // Fetch all quests from the database
+
+  quests.forEach((quest, i) => {
+    const newQuestElem = createQuestElement(quest);
+    newQuestElem.style.animationDelay = `${i * 0.05}s`;
+    appendQuestWithAnimation(questsElem, newQuestElem);
+  });
+}
+
+// New resetGame function to remove all stats and quests
+async function resetGame() {
+  await db.delete(); // Deletes the entire database
+  await db.open(); // Reopen the database
+  // Re-initialize the player stats
+  await db.playerStats.add({
+    level: 0,
+    xp: 0,
+    strength: 0,
+    agility: 0,
+    intelligence: 0,
+    stamina: 0,
+    willpower: 0,
+    discipline: 0,
+    lastActive: new Date().toISOString().split("T")[0],
+    consecutiveMissedDays: 0,
+    username: "Heavenly_Dev",
+    lastStreakCheck: null
+  });
+
+  // Optionally clear the displayed quests from the UI
+  questsElem.innerHTML = ""; // Clear current quests
+}
 
 // Clear All Game Data Function
 async function clearAllGameData() {
@@ -4939,10 +5059,9 @@ function updateMainStatsDisplay(){
         }
         const progressText = document.getElementById(`${stat}-progress-text`);
         if (progressText) {
-          // Show: current/total [bucket] with increase if any
-          const currentBucket = Math.floor(currentStats[stat] / bucketSize) + 1;
+          // Show: current/total with increase if any (consistent across views)
           const increaseText = statIncreases[stat] > 0 ? ` (+${statIncreases[stat]})` : '';
-          progressText.textContent = `${currentStats[stat]}/${MAX_STAT} [${currentBucket}00s]${increaseText}`;
+          progressText.textContent = `${currentStats[stat]}/${MAX_STAT}${increaseText}`;
         }
       });
     }

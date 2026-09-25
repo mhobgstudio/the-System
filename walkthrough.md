@@ -1,3 +1,11 @@
+---
+local_hosting: "Host locally: python3 -m http.server 8000 (or python -m SimpleHTTPServer) in this directory. Open http://localhost:8000 to view."
+description: "Local hosting instructions — always read first."
+---
+
+# Local Hosting
+Host this locally with `python3 -m http.server 8000` in this directory, then open `http://localhost:8000`.
+
 # Project Walk-through
 
 ## Session State
