@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Solo Leveling: Your Path to Power</title>
+    <title>Solo Leveling: Your Path to Power - Gamified Productivity System</title>
+    <meta name="description" content="A gamified productivity system inspired by Solo Leveling. Track quests, earn XP, level up, and build real-world habits.">
+    <meta property="og:title" content="Solo Leveling: Your Path to Power">
+    <meta property="og:description" content="Gamified productivity system with quests, XP tracking, and habit building.">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -130,8 +134,6 @@
           <span class="streak-detail-item"><i class="fas fa-tasks"></i> This Week: <strong id="week-quest-count">0</strong> completed</span>
           <span class="streak-detail-item"><i class="fas fa-trophy"></i> Best: <strong id="best-streak">0</strong> days</span>
           <span class="streak-detail-item"><i class="fas fa-calendar-check"></i> Active: <strong id="active-days">0</strong>d</span>
-          <span class="streak-detail-item"><i class="fas fa-arrow-up"></i> Since prev rank: <strong id="streak-since-rank">0</strong> d</span>
-          <span class="streak-detail-item"><i class="fas fa-arrow-right"></i> To next rank: <strong id="streak-to-next">0</strong> d</span>
         </div>
       </div>
 
@@ -277,15 +279,10 @@
           <div class="filter-group">
             <select id="category-filter" class="quest-input" aria-label="Filter quests by category">
               <option value="all">All Categories</option>
-              <option value="spiritual">Spiritual</option>
-              <option value="learning">Learning</option>
               <option value="work">Work</option>
-              <option value="fitness">Fitness</option>
               <option value="health">Health</option>
+              <option value="learning">Learning</option>
               <option value="personal">Personal</option>
-              <option value="social">Social</option>
-              <option value="finance">Finance</option>
-              <option value="creative">Creative</option>
             </select>
           </div>
           
@@ -308,20 +305,6 @@
               <option value="willpower">Willpower</option>
               <option value="discipline">Discipline</option>
             </select>
-          </div>
-          
-          <div class="filter-group">
-            <div class="quest-status-filters" id="quest-status-filters" role="group" aria-label="Filter quests by status">
-              <button type="button" class="quest-status-btn active" data-status="all" title="Show all quests">
-                <i class="fas fa-layer-group"></i> All
-              </button>
-              <button type="button" class="quest-status-btn" data-status="uncompleted" title="Show active quests only">
-                <i class="fas fa-circle-notch"></i> Uncompleted
-              </button>
-              <button type="button" class="quest-status-btn" data-status="completed" title="Show completed quests only">
-                <i class="fas fa-check-circle"></i> Completed
-              </button>
-            </div>
           </div>
           
           <div class="filter-actions">
@@ -377,16 +360,6 @@
           <button id="mute-quote" class="quote-button" title="Mute quote audio">
             <i class="fas fa-volume-up"></i>
           </button>
-          <div class="audio-speed-control">
-            <span class="audio-speed-label" title="Audio playback speed"><i class="fas fa-gauge-high"></i></span>
-            <div class="audio-speed-buttons" id="audio-speed-buttons">
-              <button class="speed-btn" data-speed="1">1x</button>
-              <button class="speed-btn" data-speed="2">2x</button>
-              <button class="speed-btn active" data-speed="3">3x</button>
-              <button class="speed-btn" data-speed="4">4x</button>
-              <button class="speed-btn" data-speed="6">6x</button>
-            </div>
-          </div>
            <div class="quote-categories">
              <button data-category="power" class="category-button">Power</button>
              <button data-category="wisdom" class="category-button">Wisdom</button>
@@ -409,7 +382,7 @@
         </div>
       </div>
 
-    <div class="level-up">
+      <div class="level-up">
         <button id="level-up-btn" style="display: none">Level Up!</button>
       </div>
 
@@ -434,7 +407,7 @@
         <div class="achievements-header">
           <h3>Achievements</h3>
           <div class="achievement-progress">
-            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">40</span>
+            <span class="achievement-count" id="achievement-count">0</span>/<span class="achievement-total">35</span>
             <div class="achievement-progress-bar">
               <div class="achievement-progress-fill" id="achievement-progress-fill"></div>
             </div>
@@ -508,25 +481,11 @@
           
           <div class="edit-meta-row">
             <div class="edit-category-group">
-              <button type="button" class="tag-button glow-button selected" data-category="work">Work</button>
-              <button type="button" class="tag-button glow-button" data-category="health">Health</button>
-              <button type="button" class="tag-button glow-button" data-category="learning">Learning</button>
-              <button type="button" class="tag-button glow-button" data-category="personal">Personal</button>
-              <button type="button" class="tag-button glow-button" data-category="spiritual">Spiritual</button>
-              <button type="button" class="tag-button glow-button" data-category="fitness">Fitness</button>
-              <button type="button" class="tag-button glow-button" data-category="social">Social</button>
-              <button type="button" class="tag-button glow-button" data-category="finance">Finance</button>
-              <button type="button" class="tag-button glow-button" data-category="creative">Creative</button>
-            </div>
-          </div>
-
-          <div class="edit-meta-row">
-            <div class="edit-repeat-group">
-              <label>Repeat</label>
-              <button type="button" class="tag-button tag-sm glow-button selected" data-repeat="once">Once</button>
-              <button type="button" class="tag-button tag-sm glow-button" data-repeat="daily">Daily</button>
-              <button type="button" class="tag-button tag-sm glow-button" data-repeat="weekly">Weekly</button>
-              <button type="button" class="tag-button tag-sm glow-button" data-repeat="monthly">Monthly</button>
+              <button type="button" class="tag-button glow-button selected" data-category="Work">Work</button>
+              <button type="button" class="tag-button glow-button" data-category="Health">Health</button>
+              <button type="button" class="tag-button glow-button" data-category="Learning">Learning</button>
+              <button type="button" class="tag-button glow-button" data-category="Personal">Personal</button>
+              <button type="button" class="tag-button glow-button" data-category="Cultivation">Cultivation</button>
             </div>
           </div>
 
@@ -537,7 +496,7 @@
               <button type="button" class="tag-button tag-sm glow-button" data-difficulty="Hard">Hard</button>
             </div>
             <div class="edit-xp-group">
-              <label for="quest-modal-xp">XP</label>
+              <label>XP</label>
               <input type="number" id="quest-modal-xp" class="quest-input xp-input" value="2" min="1" max="10">
             </div>
             <div class="edit-stat-group">
@@ -551,13 +510,13 @@
           </div>
 
           <div id="quest-suggestion-popup" class="suggestion-popup" style="display:none;">
-            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup(this)">&times;</button></div>
+            <div class="popup-header">Suggested Quests<button onclick="closeSuggestionPopup()">&times;</button></div>
             <div id="quest-suggestions" class="suggestions-container"></div>
           </div>
 
           <div class="edit-footer-row">
             <div class="edit-date-group">
-              <label for="quest-modal-due">Due</label>
+              <label>Due</label>
               <input type="date" id="quest-modal-due" class="quest-input">
             </div>
             <div class="edit-comment-group">
@@ -598,16 +557,6 @@
           <select id="voice-select">
             <option value="male">Male (Guy)</option>
             <option value="female" selected>Female (Aria)</option>
-          </select>
-        </div>
-        <div class="settings-row">
-          <label for="audio-speed-select"><i class="fas fa-gauge-high"></i> Audio Speed</label>
-          <select id="audio-speed-select">
-            <option value="1">1x (Normal)</option>
-            <option value="2">2x (Fast)</option>
-            <option value="3" selected>3x (Faster)</option>
-            <option value="4">4x (Very Fast)</option>
-            <option value="6">6x (Fastest)</option>
           </select>
         </div>
         <button id="save-btn">
@@ -815,6 +764,7 @@
           const mo = new MutationObserver(updateStreakTitle);
           mo.observe(cs, { childList: true, characterData: true, subtree: true });
         }
+        setInterval(updateStreakTitle, 60000);
       });
     })();
     </script>
@@ -829,11 +779,6 @@
         });
       }
     })();
-    </script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(() => {});
-      }
     </script>
 </body>
 </html>
